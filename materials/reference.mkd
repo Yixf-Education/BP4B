@@ -1,0 +1,6 @@
+### Beginning Perl for Bioinformatics
+* [Online ebook](http://www.bioon.com/book/biology/Beginning%20Perl%20for%20Bioinformatics/index.html)
+* [Example Code](http://examples.oreilly.com/9780596000806/)
+* [Errata](http://www.oreilly.com/catalog/errata.csp?isbn=9780596000806)
+* [Book info](http://shop.oreilly.com/product/9780596000806.do)
+* [Example Code](http://uwf.edu/msutton/bsc4434/book-examples/)
