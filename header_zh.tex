@@ -1,0 +1,130 @@
+\documentclass[11pt,a4paper,twoside]{book}
+
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Courier New}
+
+\usepackage[BoldFont,SlantFont,CJKchecksingle,CJKnumber]{xeCJK}
+\setCJKmainfont[BoldFont={Adobe Heiti Std},ItalicFont={Adobe Kaiti Std}]{Adobe Song Std}
+\setCJKsansfont{Adobe Heiti Std}
+\setCJKmonofont{Adobe Fangsong Std}
+\punctstyle{hangmobanjiao}
+
+\defaultfontfeatures{Mapping=tex-text}
+\usepackage{xunicode}
+\usepackage{xltxtra}
+
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+
+%\usepackage{indentfirst}
+\makeatletter
+\let\@afterindentfalse\@afterindenttrue
+\@afterindenttrue
+\makeatother
+\setlength{\parindent}{2em}
+
+\linespread{1.2}
+
+\usepackage[a4paper,top=2.5cm,bottom=1.5cm,left=3cm,right=1.5cm,marginparwidth=4.7cm,marginparsep=0.3cm]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\small 第 \thechapter 章\quad #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\small \thesection \quad #1}{}}
+\fancyhf{}
+\fancyhead[ER]{\leftmark}
+\fancyhead[OL]{\rightmark}
+\fancyhead[EL,OR]{$\cdot$ \thepage \ $\cdot$}
+\renewcommand{\headrulewidth}{0.5pt}
+
+%单面模式
+\newpagestyle{main}{
+\sethead[$\cdot$~\thepage~$\cdot$][][\chaptername\quad\chaptertitle]{\small\S\,\thesection\quad\sectiontitle}{}{$\cdot$~\thepage~$\cdot$}
+\setfoot{}{}{}\headrule}
+\pagestyle{main}
+
+\usepackage{xcolor}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+
+\newtheorem{example}{例}[chapter]
+
+\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+\renewcommand{\contentsname}{目录}
+\renewcommand{\listfigurename}{插图目录}
+\renewcommand{\listtablename}{表格目录}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\appendixname}{附录}
+\renewcommand{\indexname}{索引}
+\renewcommand{\chaptername}{第 \CJKnumber{\thechapter} 章}
+%\titleformat{\chapter}{\centering\normalfont\Huge\bfseries}{\chaptername}{20pt}{\Huge}
+\renewcommand{\itemautorefname}{项}
+\renewcommand{\appendixautorefname}{附录}
+\renewcommand{\theoremautorefname}{定理}
+\renewcommand{\figureautorefname}{图}
+\renewcommand{\tableautorefname}{表}
+\renewcommand{\footnoteautorefname}{脚注}
+
+%使表格可以跨页
+%\usepackage{booktabs,longtable}
+\usepackage{booktabs,tabu}
+
+%调整表格行高
+\renewcommand{\arraystretch}{0.8}
+
+%调整列表间及其上下的间距
+%\usepackage{mdwlist}
+\usepackage{enumitem}
+\setlist{nosep}
+
+%设置颜色的快捷命令
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\gray}{\textcolor{gray}}
+\newcommand{\black}{\textcolor{black}}
+
+%罗马数字
+\makeatletter
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+%插入源代码
+\usepackage{listings}
+\lstset{
+  language=Perl,                  % 程序语言名称：TeX, Perl, R, sh, bash, Awk
+  basicstyle=\normalsize\tt,      %\tt指monospace字体族，程序源代码使用此族字体表示更加美观
+  numbers=left,                   % 行号位置(左侧)
+  numberstyle=\small,             % 行号字体的字号
+  stepnumber=1,                   % 行号的显示步长
+  numbersep=5pt,                  % 行号与代码间距
+  backgroundcolor=\color{white},  % 背景色;需要 \usepackage{color}
+  showspaces=false,               % 不显示空格
+  showstringspaces=false,         % 不显示代码字符串中的空格标记
+  showtabs=false,                 % 不显示 TAB
+  tabsize=4, 
+  frame=shadowbox,                % 把代码用带有阴影的框圈起来
+  captionpos=b,                   % 标题位置
+  breaklines=true,                % 对过长的代码自动断行
+  breakatwhitespace=false,        % 断行只在空格处
+  extendedchars=false,            % 解决代码跨页时，章节标题，页眉等汉字不显示的问题
+  %escapeinside={\%*}{*},         % 跳脱字符，添加注释，暂时离开 listings 
+  escapeinside=``,
+  commentstyle=\color{red!50!green!50!blue!50}\tt,  %浅灰色的注释
+  rulesepcolor=\color{red!20!green!20!blue!20},     %代码块边框为淡青色
+  keywordstyle=\color{blue!70}\bfseries\tt,         %代码关键字的颜色为蓝色，粗体
+  identifierstyle=\tt,
+  stringstyle=\tt,                % 代码字符串的特殊格式
+  keepspaces=true,
+  breakindent=22pt,
+  %breakindent=4em,
+  breakautoindent=true,
+  flexiblecolumns=true,
+  aboveskip=1em,                  %代码块边框
+  xleftmargin=2em,
+  xrightmargin=2em
+}
+
