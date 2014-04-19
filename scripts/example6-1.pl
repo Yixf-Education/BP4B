@@ -19,7 +19,7 @@ exit;
 # Here is the definition for subroutine "addACGT"
 
 sub addACGT {
-    my($dna) = @_;
+    my ($dna) = @_;
 
     $dna .= 'ACGT';
     return $dna;

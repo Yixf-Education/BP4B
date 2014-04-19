@@ -3,11 +3,11 @@
 
 use strict;
 use warnings;
-use BeginPerlBioinfo;     # see Chapter 6 about this module
+use BeginPerlBioinfo;    # see Chapter 6 about this module
 
 # Declare and initialize variables
-my @file_data = (  );
-my $dna = '';
+my @file_data = ();
+my $dna       = '';
 
 # Read in the contents of the file "sample.dna"
 @file_data = get_file_data("sample.dna");
@@ -16,6 +16,6 @@ my $dna = '';
 $dna = extract_sequence_from_fasta_data(@file_data);
 
 # Print the sequence in lines 25 characters long
-print_sequence($dna, 25);
+print_sequence( $dna, 25 );
 
 exit;

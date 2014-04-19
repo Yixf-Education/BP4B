@@ -3,14 +3,14 @@
 
 use strict;
 use warnings;
-use BeginPerlBioinfo;     # see Chapter 6 about this module
+use BeginPerlBioinfo;    # see Chapter 6 about this module
 
 use File::Find;
 
-find ( \&my_sub, ('pdb') );
+find( \&my_sub, ('pdb') );
 
 sub my_sub {
-    -f and (print $File::Find::name, "\n");
+    -f and ( print $File::Find::name, "\n" );
 }
 
 exit;

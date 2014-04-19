@@ -3,25 +3,27 @@
 
 use strict;
 use warnings;
-use BeginPerlBioinfo;     # see Chapter 6 about this module
+use BeginPerlBioinfo;    # see Chapter 6 about this module
 
 # declare and initialize variables
 my $beginning_annotation = '';
-my $ending_annotation = '';
-my %alignments = (  );
-my $alignment = '';
-my $filename = 'blast.txt';
-my @HSPs = (  );
-my($expect, $query, $query_range, $subject, $subject_range) = ('','','','','');
+my $ending_annotation    = '';
+my %alignments           = ();
+my $alignment            = '';
+my $filename             = 'blast.txt';
+my @HSPs                 = ();
+my ( $expect, $query, $query_range, $subject, $subject_range ) =
+  ( '', '', '', '', '' );
 
-parse_blast(\$beginning_annotation, \$ending_annotation, \%alignments, $filename);
+parse_blast( \$beginning_annotation, \$ending_annotation, \%alignments,
+    $filename );
 
 $alignment = $alignments{'AK017941.1'};
 
 @HSPs = parse_blast_alignment_HSP($alignment);
 
-($expect, $query, $query_range, $subject, $subject_range)
- = extract_HSP_information($HSPs[1]);
+( $expect, $query, $query_range, $subject, $subject_range ) =
+  extract_HSP_information( $HSPs[1] );
 
 # Print the results
 print "\n-> Expect value:   $expect\n";
@@ -45,28 +47,28 @@ exit;
 
 sub parse_blast_alignment_HSP {
 
-    my($alignment ) = @_;
+    my ($alignment) = @_;
 
     # declare and initialize variables
-    my $beginning_annotation  = '';
-    my $HSP_section  = '';
-    my @HSPs = (  );
-    
+    my $beginning_annotation = '';
+    my $HSP_section          = '';
+    my @HSPs                 = ();
+
     # Extract the beginning annotation and HSPs
-    ($beginning_annotation, $HSP_section )
-        = ($alignment =~ /(.*?)(^ Score =.*)/ms);
+    ( $beginning_annotation, $HSP_section ) =
+      ( $alignment =~ /(.*?)(^ Score =.*)/ms );
 
     # Store the $beginning_annotation as the first entry in @HSPs
-    push(@HSPs, $beginning_annotation);
+    push( @HSPs, $beginning_annotation );
 
     # Parse the HSPs, store each HSP as an element in @HSPs
-    while($HSP_section =~ /(^ Score =.*\n)(^(?! Score =).*\n)+/gm) {
-        push(@HSPs, $&);
+    while ( $HSP_section =~ /(^ Score =.*\n)(^(?! Score =).*\n)+/gm ) {
+        push( @HSPs, $& );
     }
 
     # Return an array with first element = the beginning annotation,
     # and each successive element = an HSP
-    return(@HSPs);
+    return (@HSPs);
 }
 
 # extract_HSP_information
@@ -75,34 +77,34 @@ sub parse_blast_alignment_HSP {
 #        - return array with elements:
 #    Expect value
 #    Query string
-#    Query range 
+#    Query range
 #    Subject string
 #    Subject range
 
 sub extract_HSP_information {
 
-    my($HSP) = @_;
-    
+    my ($HSP) = @_;
+
     # declare and initialize variables
-    my($expect) = '';
-    my($query) = '';
-    my($query_range) = '';
-    my($subject) = '';
-    my($subject_range) = '';
+    my ($expect)        = '';
+    my ($query)         = '';
+    my ($query_range)   = '';
+    my ($subject)       = '';
+    my ($subject_range) = '';
 
-    ($expect) = ($HSP =~ /Expect = (\S+)/);
+    ($expect) = ( $HSP =~ /Expect = (\S+)/ );
 
-    $query = join ( '' , ($HSP =~ /^Query(.*)\n/gm) );
+    $query = join( '', ( $HSP =~ /^Query(.*)\n/gm ) );
 
-    $subject = join ( '' , ($HSP =~ /^Sbjct(.*)\n/gm) );
+    $subject = join( '', ( $HSP =~ /^Sbjct(.*)\n/gm ) );
 
-    $query_range = join('..', ($query =~ /(\d+).*\D(\d+)/s));
+    $query_range = join( '..', ( $query =~ /(\d+).*\D(\d+)/s ) );
 
-    $subject_range = join('..', ($subject =~ /(\d+).*\D(\d+)/s));
+    $subject_range = join( '..', ( $subject =~ /(\d+).*\D(\d+)/s ) );
 
     $query =~ s/[^acgt]//g;
 
     $subject =~ s/[^acgt]//g;
 
-    return ($expect, $query, $query_range, $subject, $subject_range);
+    return ( $expect, $query, $query_range, $subject, $subject_range );
 }

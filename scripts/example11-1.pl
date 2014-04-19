@@ -3,13 +3,13 @@
 
 use strict;
 use warnings;
-use BeginPerlBioinfo;     # see Chapter 6 about this module
+use BeginPerlBioinfo;    # see Chapter 6 about this module
 
-my @files = (  );
+my @files  = ();
 my $folder = 'pdb';
 
 # open the folder
-unless(opendir(FOLDER, $folder)) {
+unless ( opendir( FOLDER, $folder ) ) {
     print "Cannot open folder $folder!\n";
     exit;
 }
@@ -21,6 +21,6 @@ unless(opendir(FOLDER, $folder)) {
 closedir(FOLDER);
 
 # print them out, one per line
-print join( "\n", @files), "\n";
+print join( "\n", @files ), "\n";
 
 exit;

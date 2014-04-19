@@ -5,7 +5,7 @@
 $proteinfilename = 'NM_021964fragment.pep';
 
 # First we have to "open" the file
-open(PROTEINFILE, $proteinfilename);
+open( PROTEINFILE, $proteinfilename );
 
 # Read the protein sequence data from the file, and store it
 # into the array variable @protein

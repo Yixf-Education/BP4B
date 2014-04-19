@@ -11,22 +11,22 @@ my @percentages;
 my $result;
 
 # An array, initialized to the empty list, to store the DNA in
-my @random_DNA = (  );
+my @random_DNA = ();
 
 # Seed the random number generator.
 # time|$$ combines the current time with the current process id
-srand(time|$$);
+srand( time | $$ );
 
 #  Generate the data set of 10 DNA sequences.
 @random_DNA = make_random_DNA_set( 10, 10, 10 );
 
 # Iterate through all pairs of sequences
-for (my $k = 0 ; $k < scalar @random_DNA - 1 ; ++$k) {
-    for (my $i = ($k + 1) ; $i < scalar @random_DNA ; ++$i) {
+for ( my $k = 0 ; $k < scalar @random_DNA - 1 ; ++$k ) {
+    for ( my $i = ( $k + 1 ) ; $i < scalar @random_DNA ; ++$i ) {
 
         # Calculate and save the matching percentage
-        $percent = matching_percentage($random_DNA[$k], $random_DNA[$i]);
-        push(@percentages, $percent);
+        $percent = matching_percentage( $random_DNA[$k], $random_DNA[$i] );
+        push( @percentages, $percent );
     }
 }
 
@@ -34,12 +34,13 @@ for (my $k = 0 ; $k < scalar @random_DNA - 1 ; ++$k) {
 $result = 0;
 
 foreach $percent (@percentages) {
-  $result += $percent;
+    $result += $percent;
 }
 
 $result = $result / scalar(@percentages);
+
 #Turn result into a true percentage
-$result = int ($result * 100);
+$result = int( $result * 100 );
 print "In this run of the experiment, the average percentage of \n";
 print "matching positions is $result%\n\n";
 
@@ -56,15 +57,18 @@ exit;
 
 sub matching_percentage {
 
-    my($string1, $string2) = @_;
+    my ( $string1, $string2 ) = @_;
 
     # we assume that the strings have the same length
-    my($length) = length($string1);
-    my($position);
-    my($count) = 0;
+    my ($length) = length($string1);
+    my ($position);
+    my ($count) = 0;
 
-    for ($position=0; $position < $length ; ++$position) {
-        if(substr($string1,$position,1) eq substr($string2,$position,1)) {
+    for ( $position = 0 ; $position < $length ; ++$position ) {
+        if (
+            substr( $string1, $position, 1 ) eq substr( $string2, $position, 1 )
+          )
+        {
             ++$count;
         }
     }
@@ -85,11 +89,11 @@ sub matching_percentage {
 sub make_random_DNA_set {
 
     # Collect arguments, declare variables
-    my($minimum_length, $maximum_length, $size_of_set) = @_;
+    my ( $minimum_length, $maximum_length, $size_of_set ) = @_;
 
     # length of each DNA fragment
     my $length;
-    
+
     # DNA fragment
     my $dna;
 
@@ -97,13 +101,13 @@ sub make_random_DNA_set {
     my @set;
 
     # Create set of random DNA
-    for (my $i = 0; $i < $size_of_set ; ++$i) {
+    for ( my $i = 0 ; $i < $size_of_set ; ++$i ) {
 
         # find a random length between min and max
-        $length = randomlength ($minimum_length, $maximum_length);
+        $length = randomlength( $minimum_length, $maximum_length );
 
         # make a random DNA fragment
-        $dna = make_random_DNA ( $length );
+        $dna = make_random_DNA($length);
 
         # add $dna fragment to @set
         push( @set, $dna );
@@ -123,14 +127,14 @@ sub make_random_DNA_set {
 sub randomlength {
 
     # Collect arguments, declare variables
-    my($minlength, $maxlength) = @_;
+    my ( $minlength, $maxlength ) = @_;
 
     # Calculate and return a random number within the
     #  desired interval.
     # Notice how we need to add one to make the endpoints inclusive,
     #  and how we first subtract, then add back, $minlength to
     #  get the random number in the correct interval.
-    return ( int(rand($maxlength - $minlength + 1)) + $minlength );
+    return ( int( rand( $maxlength - $minlength + 1 ) ) + $minlength );
 }
 
 # make_random_DNA
@@ -143,12 +147,12 @@ sub randomlength {
 sub make_random_DNA {
 
     # Collect arguments, declare variables
-    my($length) = @_;
+    my ($length) = @_;
 
     my $dna;
 
-    for (my $i=0 ; $i < $length ; ++$i) {
-        $dna .= randomnucleotide(  );
+    for ( my $i = 0 ; $i < $length ; ++$i ) {
+        $dna .= randomnucleotide();
     }
 
     return $dna;
@@ -163,9 +167,9 @@ sub make_random_DNA {
 
 sub randomnucleotide {
 
-    my(@nucleotides) = ('A', 'C', 'G', 'T');
+    my (@nucleotides) = ( 'A', 'C', 'G', 'T' );
 
-    # scalar returns the size of an array. 
+    # scalar returns the size of an array.
     # The elements of the array are numbered 0 to size-1
     return randomelement(@nucleotides);
 }
@@ -179,7 +183,7 @@ sub randomnucleotide {
 
 sub randomelement {
 
-    my(@array) = @_;
+    my (@array) = @_;
 
-    return $array[rand @array];
+    return $array[ rand @array ];
 }

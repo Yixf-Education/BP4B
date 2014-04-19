@@ -17,7 +17,7 @@ my $mutant;
 
 # Seed the random number generator.
 # time|$$ combines the current time with the current process id
-srand(time|$$);
+srand( time | $$ );
 
 # Let's test it, shall we?
 $mutant = mutate($DNA);
@@ -33,7 +33,7 @@ print "$mutant\n";
 # Let's put it in a loop and watch that bad boy accumulate mutations:
 print "\nHere are 10 more successive mutations:\n\n";
 
-for ($i=0 ; $i < 10 ; ++$i) {
+for ( $i = 0 ; $i < 10 ; ++$i ) {
     $mutant = mutate($mutant);
     print "$mutant\n";
 }
@@ -53,21 +53,21 @@ exit;
 
 sub mutate {
 
-    my($dna) = @_;
+    my ($dna) = @_;
 
-    my(@nucleotides) = ('A', 'C', 'G', 'T');
+    my (@nucleotides) = ( 'A', 'C', 'G', 'T' );
 
     # Pick a random position in the DNA
-    my($position) = randomposition($dna);
+    my ($position) = randomposition($dna);
 
     # Pick a random nucleotide
-    my($newbase) = randomnucleotide(@nucleotides);
+    my ($newbase) = randomnucleotide(@nucleotides);
 
     # Insert the random nucleotide into the random position in the DNA
     # The substr arguments mean the following:
     #  In the string $dna at position $position change 1 character to
     #  the string in $newbase
-    substr($dna,$position,1,$newbase);
+    substr( $dna, $position, 1, $newbase );
 
     return $dna;
 }
@@ -79,9 +79,9 @@ sub mutate {
 
 sub randomelement {
 
-    my(@array) = @_;
+    my (@array) = @_;
 
-    return $array[rand @array];
+    return $array[ rand @array ];
 }
 
 # randomnucleotide
@@ -93,9 +93,9 @@ sub randomelement {
 
 sub randomnucleotide {
 
-    my(@nucleotides) = ('A', 'C', 'G', 'T');
+    my (@nucleotides) = ( 'A', 'C', 'G', 'T' );
 
-    # scalar returns the size of an array. 
+    # scalar returns the size of an array.
     # The elements of the array are numbered 0 to size-1
     return randomelement(@nucleotides);
 }
@@ -109,7 +109,7 @@ sub randomnucleotide {
 
 sub randomposition {
 
-    my($string) = @_;
+    my ($string) = @_;
 
     # Notice the "nested" arguments:
     #

@@ -10,7 +10,7 @@ $dna_filename = <STDIN>;
 chomp $dna_filename;
 
 # open the file, or exit
-unless ( open(DNAFILE, $dna_filename) ) {
+unless ( open( DNAFILE, $dna_filename ) ) {
 
     print "Cannot open file \"$dna_filename\"\n\n";
     exit;
@@ -25,7 +25,7 @@ close DNAFILE;
 
 # From the lines of the DNA file,
 # put the DNA sequence data into a single string.
-$DNA = join( '', @DNA);
+$DNA = join( '', @DNA );
 
 # Remove whitespace
 $DNA =~ s/\s//g;
@@ -49,15 +49,19 @@ $errors     = 0;
 # appropriate count.
 foreach $base (@DNA) {
 
-    if     ( $base eq 'A' ) {
+    if ( $base eq 'A' ) {
         ++$count_of_A;
-    } elsif ( $base eq 'C' ) {
+    }
+    elsif ( $base eq 'C' ) {
         ++$count_of_C;
-    } elsif ( $base eq 'G' ) {
+    }
+    elsif ( $base eq 'G' ) {
         ++$count_of_G;
-    } elsif ( $base eq 'T' ) {
+    }
+    elsif ( $base eq 'T' ) {
         ++$count_of_T;
-    } else {
+    }
+    else {
         print "!!!!!!!! Error - I don\'t recognize this base: $base\n";
         ++$errors;
     }

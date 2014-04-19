@@ -3,16 +3,16 @@
 
 use strict;
 use warnings;
-use BeginPerlBioinfo;     # see Chapter 6 about this module
+use BeginPerlBioinfo;    # see Chapter 6 about this module
 
 # Initialize variables
-my $dna = 'CGACGTCTTCGTACGGGACTAGCTCGTGTCGGTCGC';
+my $dna     = 'CGACGTCTTCGTACGGGACTAGCTCGTGTCGGTCGC';
 my $protein = '';
 my $codon;
 
-# Translate each three-base codon into an amino acid, and append to a protein 
-for(my $i=0; $i < (length($dna) - 2) ; $i += 3) {
-    $codon = substr($dna,$i,3);
+# Translate each three-base codon into an amino acid, and append to a protein
+for ( my $i = 0 ; $i < ( length($dna) - 2 ) ; $i += 3 ) {
+    $codon = substr( $dna, $i, 3 );
     $protein .= codon2aa($codon);
 }
 

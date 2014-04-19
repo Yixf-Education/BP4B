@@ -5,19 +5,19 @@
 
 use strict;
 use warnings;
-use BeginPerlBioinfo;     # see Chapter 6 about this module
+use BeginPerlBioinfo;    # see Chapter 6 about this module
 
-my @files = (  );
+my @files  = ();
 my $folder = 'pdb';
 
 # Open the folder
-unless(opendir(FOLDER, $folder)) {
+unless ( opendir( FOLDER, $folder ) ) {
     print "Cannot open folder $folder!\n";
     exit;
 }
 
 # Read the folder, ignoring special entries "." and ".."
-@files = grep (!/^\.\.?$/, readdir(FOLDER));
+@files = grep ( !/^\.\.?$/, readdir(FOLDER) );
 
 closedir(FOLDER);
 
@@ -28,24 +28,25 @@ closedir(FOLDER);
 foreach my $file (@files) {
 
     # If the folder entry is a regular file
-    if (-f "$folder/$file") {
+    if ( -f "$folder/$file" ) {
         print "$folder/$file\n";
 
-    # If the folder entry is a subfolder
-    }elsif( -d "$folder/$file") {
+        # If the folder entry is a subfolder
+    }
+    elsif ( -d "$folder/$file" ) {
 
         my $folder = "$folder/$file";
 
         # open the subfolder and list its contents
-        unless(opendir(FOLDER, "$folder")) {
+        unless ( opendir( FOLDER, "$folder" ) ) {
             print "Cannot open folder $folder!\n";
             exit;
         }
-        
-        my @files = grep (!/^\.\.?$/, readdir(FOLDER));
-        
+
+        my @files = grep ( !/^\.\.?$/, readdir(FOLDER) );
+
         closedir(FOLDER);
-        
+
         foreach my $file (@files) {
             print "$folder/$file\n";
         }

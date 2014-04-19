@@ -5,10 +5,9 @@ use strict;
 use warnings;
 
 # Declare variables
-my $id = 'A0000';
+my $id          = 'A0000';
 my $description = 'Highly weird DNA.  This DNA is so unlikely!';
-my $DNA = 
-'AAAAAACCCCCCCCCCCCCCGGGGGGGGGGGGGGGGGGGGGGTTTTTTTTTTTTTTTTTTTTT';
+my $DNA = 'AAAAAACCCCCCCCCCCCCCGGGGGGGGGGGGGGGGGGGGGGTTTTTTTTTTTTTTTTTTTTT';
 
 # Define the format
 format STDOUT =

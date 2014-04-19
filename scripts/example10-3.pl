@@ -3,13 +3,13 @@
 
 use strict;
 use warnings;
-use BeginPerlBioinfo;     # see Chapter 6 about this module
+use BeginPerlBioinfo;    # see Chapter 6 about this module
 
 # Declare and initialize variables
-my @genbank = (  );
-my $locus = '';
+my @genbank   = ();
+my $locus     = '';
 my $accession = '';
-my $organism = '';
+my $organism  = '';
 
 # Get GenBank file data
 @genbank = get_file_data('record.gb');
@@ -19,16 +19,18 @@ my $organism = '';
 # thing) and the definition and the organism.
 
 for my $line (@genbank) {
-  if($line =~ /^LOCUS/) {
-    $line =~ s/^LOCUS\s*//;
-    $locus = $line;
-  }elsif($line =~ /^ACCESSION/) {
-    $line =~ s/^ACCESSION\s*//;
-    $accession = $line;
-  }elsif($line =~ /^  ORGANISM/) {
-    $line =~ s/^\s*ORGANISM\s*//;
-    $organism = $line;
-  }
+    if ( $line =~ /^LOCUS/ ) {
+        $line =~ s/^LOCUS\s*//;
+        $locus = $line;
+    }
+    elsif ( $line =~ /^ACCESSION/ ) {
+        $line =~ s/^ACCESSION\s*//;
+        $accession = $line;
+    }
+    elsif ( $line =~ /^  ORGANISM/ ) {
+        $line =~ s/^\s*ORGANISM\s*//;
+        $organism = $line;
+    }
 }
 
 print "*** LOCUS ***\n";

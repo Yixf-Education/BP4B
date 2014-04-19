@@ -11,21 +11,22 @@
 my $dna = 'CGACGTCTTCTAAGGCGA';
 my @dna;
 my $receivingcommittment;
-my $previousbase = ''; 
+my $previousbase = '';
 
-my$subsequence = '';
+my $subsequence = '';
 
 if (@ARGV) {
-    my$subsequence = $ARGV[0];
-}else{
+    my $subsequence = $ARGV[0];
+}
+else {
     $subsequence = 'TA';
 }
 
-my $base1 = substr($subsequence, 0, 1);
-my $base2 = substr($subsequence, 1, 1);
+my $base1 = substr( $subsequence, 0, 1 );
+my $base2 = substr( $subsequence, 1, 1 );
 
 # explode DNA
-@dna = split ( '', $dna );
+@dna = split( '', $dna );
 
 ######### Pseudocode of the following loop:
 #
@@ -40,9 +41,10 @@ foreach (@dna) {
     if ($receivingcommittment) {
         print;
         next;
-    } elsif ($previousbase eq $base1) {
-        if ( /$base2/ ) {
-            print $base1, $base2; 
+    }
+    elsif ( $previousbase eq $base1 ) {
+        if (/$base2/) {
+            print $base1, $base2;
             $recievingcommitment = 1;
         }
     }

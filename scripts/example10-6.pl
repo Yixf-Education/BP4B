@@ -3,7 +3,7 @@
 
 use strict;
 use warnings;
-use BeginPerlBioinfo;     # see Chapter 6 about this module
+use BeginPerlBioinfo;    # see Chapter 6 about this module
 
 # Declare and initialize variables
 my $fh;
@@ -19,13 +19,13 @@ $fh = open_file($library);
 $record = get_next_record($fh);
 
 # Parse the sequence and annotation
-($annotation, $dna) = get_annotation_and_dna($record);
+( $annotation, $dna ) = get_annotation_and_dna($record);
 
 # Extract the fields of the annotation
 %fields = parse_annotation($annotation);
 
 # Print the fields
-foreach my $key (keys %fields) {
+foreach my $key ( keys %fields ) {
     print "******** $key *********\n";
     print $fields{$key};
 }
@@ -44,12 +44,12 @@ exit;
 
 sub parse_annotation {
 
-    my($annotation) = @_; 
-    my(%results) = (  );
+    my ($annotation) = @_;
+    my (%results)    = ();
 
-    while( $annotation =~ /^[A-Z].*\n(^\s.*\n)*/gm ) {
+    while ( $annotation =~ /^[A-Z].*\n(^\s.*\n)*/gm ) {
         my $value = $&;
-        (my $key = $value) =~ s/^([A-Z]+).*/$1/s;
+        ( my $key = $value ) =~ s/^([A-Z]+).*/$1/s;
         $results{$key} = $value;
     }
 

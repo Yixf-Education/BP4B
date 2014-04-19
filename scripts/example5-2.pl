@@ -6,7 +6,7 @@ $proteinfilename = 'NM_021964fragment.pep';
 
 # First we have to "open" the file, and in case the
 # open fails, print an error message and exit the program.
-unless ( open(PROTEINFILE, $proteinfilename) ) {
+unless ( open( PROTEINFILE, $proteinfilename ) ) {
 
     print "Could not open file $proteinfilename!\n";
     exit;
@@ -14,7 +14,7 @@ unless ( open(PROTEINFILE, $proteinfilename) ) {
 
 # Read the protein sequence data from the file in a "while" loop,
 # printing each line as it is read.
-while( $protein = <PROTEINFILE> ) {
+while ( $protein = <PROTEINFILE> ) {
 
     print "  ######  Here is the next line of the file:\n";
 

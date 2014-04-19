@@ -12,7 +12,7 @@ print "$DNA\n\n";
 # Calculate the reverse complement
 #  Warning: this attempt will fail!
 #
-# First, copy the DNA into new variable $revcom 
+# First, copy the DNA into new variable $revcom
 # (short for REVerse COMplement)
 # Notice that variable names can use lowercase letters like
 # "revcom" as well as uppercase like "DNA".  In fact,

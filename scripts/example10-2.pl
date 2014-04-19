@@ -4,17 +4,17 @@
 
 use strict;
 use warnings;
-use BeginPerlBioinfo;     # see Chapter 6 about this module
+use BeginPerlBioinfo;    # see Chapter 6 about this module
 
 # Declare and initialize variables
-my $annotation = '';
-my $dna = '';
-my $record = '';
-my $filename = 'record.gb';
+my $annotation           = '';
+my $dna                  = '';
+my $record               = '';
+my $filename             = 'record.gb';
 my $save_input_separator = $/;
 
 # Open GenBank library file
-unless (open(GBFILE, $filename)) {
+unless ( open( GBFILE, $filename ) ) {
     print "Cannot open GenBank file \"$filename\"\n\n";
     exit;
 }
@@ -24,11 +24,11 @@ $/ = "//\n";
 
 $record = <GBFILE>;
 
-# reset input separator 
+# reset input separator
 $/ = $save_input_separator;
 
 # Now separate the annotation from the sequence data
-($annotation, $dna) = ($record =~ /^(LOCUS.*ORIGIN\s*\n)(.*)\/\/\n/s);
+( $annotation, $dna ) = ( $record =~ /^(LOCUS.*ORIGIN\s*\n)(.*)\/\/\n/s );
 
 # Print the two pieces, which should give us the same as the
 #  original GenBank file, minus the // at the end

@@ -3,12 +3,13 @@
 
 use strict;
 use warnings;
+
 # Don't use BeginPerlBioinfo
 # Since all subroutines defined in this file
 # use BeginPerlBioinfo;     # see Chapter 6 about this module
 
 # Declare and initialize variables
-my $fh; # variable to store filehandle
+my $fh;    # variable to store filehandle
 my $record;
 my $dna;
 my $annotation;
@@ -20,14 +21,14 @@ $fh = open_file($library);
 
 $offset = tell($fh);
 
-while( $record = get_next_record($fh) ) {
+while ( $record = get_next_record($fh) ) {
 
-    ($annotation, $dna) = get_annotation_and_dna($record);
+    ( $annotation, $dna ) = get_annotation_and_dna($record);
 
-    if( search_sequence($dna, 'AAA[CG].')) {
+    if ( search_sequence( $dna, 'AAA[CG].' ) ) {
         print "Sequence found in record at offset $offset\n";
     }
-    if( search_annotation($annotation, 'homo sapiens')) {
+    if ( search_annotation( $annotation, 'homo sapiens' ) ) {
         print "Annotation found in record at offset $offset\n";
     }
 
@@ -46,10 +47,10 @@ exit;
 
 sub open_file {
 
-    my($filename) = @_;
+    my ($filename) = @_;
     my $fh;
 
-    unless(open($fh, $filename)) {
+    unless ( open( $fh, $filename ) ) {
         print "Cannot open file $filename\n";
         exit;
     }
@@ -62,11 +63,11 @@ sub open_file {
 
 sub get_next_record {
 
-    my($fh) = @_;
+    my ($fh) = @_;
 
-    my($offset);
-    my($record) = '';
-    my($save_input_separator) = $/;
+    my ($offset);
+    my ($record)               = '';
+    my ($save_input_separator) = $/;
 
     $/ = "//\n";
 
@@ -83,20 +84,20 @@ sub get_next_record {
 
 sub get_annotation_and_dna {
 
-    my($record) = @_;
+    my ($record) = @_;
 
-    my($annotation) = '';
-    my($dna) = '';
+    my ($annotation) = '';
+    my ($dna)        = '';
 
     # Now separate the annotation from the sequence data
-    ($annotation, $dna) = ($record =~ /^(LOCUS.*ORIGIN\s*\n)(.*)\/\/\n/s);
+    ( $annotation, $dna ) = ( $record =~ /^(LOCUS.*ORIGIN\s*\n)(.*)\/\/\n/s );
 
-    # clean the sequence of any whitespace or / characters 
+    # clean the sequence of any whitespace or / characters
     #  (the / has to be written \/ in the character class, because
     #   / is a metacharacter, so it must be "escaped" with \)
     $dna =~ s/[\s\/]//g;
 
-    return($annotation, $dna)
+    return ( $annotation, $dna );
 }
 
 # search_sequence
@@ -105,11 +106,11 @@ sub get_annotation_and_dna {
 
 sub search_sequence {
 
-    my($sequence, $regularexpression) = @_;
+    my ( $sequence, $regularexpression ) = @_;
 
-    my(@locations) = (  );
+    my (@locations) = ();
 
-    while( $sequence =~ /$regularexpression/ig ) {
+    while ( $sequence =~ /$regularexpression/ig ) {
         push( @locations, pos );
     }
 
@@ -122,12 +123,12 @@ sub search_sequence {
 
 sub search_annotation {
 
-    my($annotation, $regularexpression) = @_;
+    my ( $annotation, $regularexpression ) = @_;
 
-    my(@locations) = (  );
+    my (@locations) = ();
 
     # note the /s modifier-. matches any character including newline
-    while( $annotation =~ /$regularexpression/isg ) {
+    while ( $annotation =~ /$regularexpression/isg ) {
         push( @locations, pos );
     }
 

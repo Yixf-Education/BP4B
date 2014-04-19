@@ -1,4 +1,4 @@
-# Example 9-2 Subroutine to parse a REBASE datafile 
+# Example 9-2 Subroutine to parse a REBASE datafile
 # parseREBASE-Parse REBASE bionet file
 #
 # A subroutine to return a hash where
@@ -7,15 +7,15 @@
 
 sub parseREBASE {
 
-    my($rebasefile) = @_;
+    my ($rebasefile) = @_;
 
     use strict;
     use warnings;
-    use BeginPerlBioinfo;     # see Chapter 6 about this module
+    use BeginPerlBioinfo;    # see Chapter 6 about this module
 
     # Declare variables
-    my @rebasefile = (  );
-    my %rebase_hash = (  );
+    my @rebasefile  = ();
+    my %rebase_hash = ();
     my $name;
     my $site;
     my $regexp;
@@ -23,16 +23,16 @@ sub parseREBASE {
     # Read in the REBASE file
     my $rebase_filehandle = open_file($rebasefile);
 
-    while(<$rebase_filehandle>) {
+    while (<$rebase_filehandle>) {
 
         # Discard header lines
         ( 1 .. /Rich Roberts/ ) and next;
 
         # Discard blank lines
         /^\s*$/ and next;
-    
+
         # Split the two (or three if includes parenthesized name) fields
-        my @fields = split( " ", $_);
+        my @fields = split( " ", $_ );
 
         # Get and store the name and the recognition site
 

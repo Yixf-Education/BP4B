@@ -11,7 +11,7 @@ $proteinfilename = <STDIN>;
 chomp $proteinfilename;
 
 # open the file, or exit
-unless ( open(PROTEINFILE, $proteinfilename) ) {
+unless ( open( PROTEINFILE, $proteinfilename ) ) {
 
     print "Cannot open file \"$proteinfilename\"\n\n";
     exit;
@@ -27,7 +27,7 @@ close PROTEINFILE;
 # Put the protein sequence data into a single string, as it's easier
 # to search for a motif in a string than in an array of
 # lines (what if the motif occurs over a line break?)
-$protein = join( '', @protein);
+$protein = join( '', @protein );
 
 # Remove whitespace
 $protein =~ s/\s//g;
@@ -50,12 +50,13 @@ do {
 
         print "I found it!\n\n";
 
-    } else {
+    }
+    else {
 
         print "I couldn\'t find it.\n\n";
     }
 
-# exit on an empty user input
+    # exit on an empty user input
 } until ( $motif =~ /^\s*$/ );
 
 # exit the program

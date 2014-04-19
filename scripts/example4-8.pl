@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Example 4-8   Demonstration of "scalar context" and "list context"
 
-@bases = ('A', 'C', 'G', 'T');
+@bases = ( 'A', 'C', 'G', 'T' );
 
 print "@bases\n";
 
