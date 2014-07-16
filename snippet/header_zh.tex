@@ -32,6 +32,7 @@
 %在每一章的开头列出section的列表
 \usepackage{minitoc}
 \setcounter{minitocdepth}{1}
+\renewcommand{\mtctitle}{目录}
 
 %整段缩进
 \usepackage{changepage}
@@ -58,11 +59,15 @@
 %\setfoot{}{}{}\headrule}
 %\pagestyle{main}
 
+\usepackage{titlesec}
+\titleformat{\chapter}{\centering\LARGE\bfseries}{第 \thechapter 章}{1em}{}
+%\titlespacing*{\section}{0pt}{0.2\baselineskip}{0.2\baselineskip}
+
 \usepackage{xcolor}
 \usepackage{graphicx}
 \graphicspath{{figures/}}
 \usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
-
+\def\chapterautorefname~#1\null{第{#1}章\null}
 \newtheorem{example}{例}[chapter]
 
 \renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
@@ -73,7 +78,8 @@
 \renewcommand{\tablename}{表}
 \renewcommand{\appendixname}{附录}
 \renewcommand{\indexname}{索引}
-\renewcommand{\chaptername}{第 \CJKnumber{\thechapter} 章}
+%\renewcommand{\chaptername}{第 \CJKnumber{\thechapter} 章}
+%\renewcommand{\chaptername}{第 \thechapter 章}
 %\titleformat{\chapter}{\centering\normalfont\Huge\bfseries}{\chaptername}{20pt}{\Huge}
 \renewcommand{\itemautorefname}{项}
 \renewcommand{\appendixautorefname}{附录}

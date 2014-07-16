@@ -1,0 +1,190 @@
+\chapter*{Preface}
+\minitoc % Creating an actual minitoc
+
+\section*{What Is Bioinformatics?}
+Biological data is proliferating rapidly. Public databases such as GenBank and the Protein Data Bank have been growing exponentially for some time now. With the advent of the World Wide Web and fast Internet connections, the data contained in these databases and a great many special-purpose programs can be accessed quickly, easily, and cheaply from any location in the world. As a consequence, computer-based tools now play an increasingly critical role in the advancement of biological research.
+
+Bioinformatics, a rapidly evolving discipline, is the application of computational tools and techniques to the management and analysis of biological data. The term bioinformatics is relatively new, and as defined here, it encroaches on such terms as "computational biology" and others. The use of computers in biology research predates the term bioinformatics by many years. For example, the determination of 3D protein structure from X-ray crystallographic data has long relied on computer analysis. In this book I refer to the use of computers in biological research as bioinformatics. It's important to be aware, however, that others may make different distinctions between the terms.  In particular, bioinformatics is often the term used when referring to the data and the techniques used in large-scale sequencing and analysis of entire genomes, such as C. elegans, Arabidopsis, and Homo sapiens. 
+
+\subsection*{What Bioinformatics Can Do}
+Here's a short example of bioinformatics in action. Let's say you have discovered a very interesting segment of mouse DNA and you suspect it may hold a clue to the development of fatal brain tumors in humans.  After sequencing the DNA, you perform a search of Genbank and other data sources using web-based sequence alignment tools such as BLAST. Although you find a few related sequences, you don't get a direct match or any information that indicates a link to the brain tumors you suspect exist. You know that the public genetic databases are growing daily and rapidly. You would like to perform your searches every day, comparing the results to the previous searches, to see if anything new appears in the databases. But this could take an hour or two each day! Luckily, you know Perl. With a day's work, you write a program (using the Bioperl module among other things) that automatically conducts a daily BLAST search of Genbank for your DNA sequence, compares the results with the previous day's results, and sends you email if there has been any change. This program is so useful that you start running it for other sequences as well, and your colleagues also start using it. Within a few months, your day's worth of work has saved many weeks of work for your community. This example is taken from real life. There are now existing programs you can use for this purpose, even web sites where you can submit your DNA sequence and your email address, and they'll do all the work for you!
+
+This is only a small example of what happens when you apply the power of computation to a biological problem. This is bioinformatics.
+
+\section*{About This Book}
+This book is a tutorial for biologists on how to program, and is designed for beginning programmers. The examples and exercises with only a few exceptions use biological data. The book's goal is twofold: it teaches programming skills and applies them to interesting biological areas.
+
+I want to get you up and programming as quickly and painlessly as possible. I aim for simplicity of explanation, not completeness of coverage. I don't always strictly define the programming concepts, because formal definitions can be distracting.
+
+The Perl language makes it possible to start writing real programs quickly. As you continue reading this book and the online Perl documentation, you'll fill in the details, learn better ways of doing things, and improve your understanding of programming concepts.
+
+Depending on your style of learning, you can approach this material in different ways. One way, as the King gravely said to Alice, is to "Begin at the beginning and go on till you come to the end: then stop." (This line from Alice in Wonderland is often used as a whimsical definition of an algorithm.) The material is organized to be read in this fashion, as a narrative.
+
+Another approach is to get the programs into your computer, run them, see what they do, and perhaps try to alter this or that in the program to see what effect your changes have. This may be combined with a quick skim of the text of the chapter. This is a common approach used by programmers when learning a new language. Basically, you learn by imitation, looking at actual programs.
+
+Anyone wishing to learn Perl programming for bioinformatics should try the exercises found at the end of most chapters. They are given in approximate order of difficulty, and some of the higher-numbered exercises are fairly challenging and may be appropriate for classroom projects. Because there's more than one way to do things in Perl, there is no one correct answer to an exercise. If you're a beginning programmer, and you manage to solve an exercise in any way whatsoever, you've succeeded at that exercise. My suggested solutions to the exercises may be found at \href{http://www.oreilly.com/catalog/begperlbio}{http://www.oreilly.com/catalog/begperlbio}.
+
+I hope that the material in this book will serve not only as a practical tutorial, but also as a first step to a research program if you decide that bioinformatics is a promising research direction in itself or an adjunct to ongoing investigations. 
+
+\section*{Who This Book Is For}
+This books is a practical introduction to programming for biologists.
+
+Programming skills are now in strong demand in biology research and development. Historically, programming has not often been viewed as a critical skill for biologists at the bench. However, recent trends in biology have made computer analysis of large amounts of data central to many research programs. This book is intended as a hands-on, one-volume course for the busy biologist to acquire practical bioinformatics programming abilities. So, if you are a biologist who needs to learn programming, this book is for you. Its goal is to teach you how to write useful and practical bioinformatics programs as quickly and as painlessly as possible.
+
+This book introduces programming as an important new laboratory skill; it presents a programming tutorial that includes a collection of "protocols," or programming techniques, that can be immediately useful in the lab. But its primary purpose is to teach programming, not to build a comprehensive toolkit.
+
+There is a real blending of skills and approaches between the laboratory bench and the computer program. Many people do indeed find themselves shifting from running gels to writing Perl in the course of a day—or a career—in biology research. Of course, programming is its own discipline with its own methods and terminology, and so must be approached on its own terms. But there is cross-fertilization going on (if you'll pardon the metaphor between the two disciplines).
+
+This book's exercises are of varying difficulty for those using it as a class textbook or for self study. (Almost) all examples and exercises are based on real biological problems, and this book will give you a good introduction to the most common bioinformatics programming problems and the most common computer-based biological data.
+
+This book's web site, \href{http://www.oreilly.com/catalog/begperlbio}{http://www.oreilly.com/catalog/begperlbio}, includes all the program code in the book for convenient download, including the exercises and solutions, plus errata and other information.\footnote{Program code, or simply code, means a computer program—the actual Perl language commands a programmer writes in a file.} 
+
+\section*{Why Should I Learn to Program?}
+Since many researchers who describe their work as "bioinformatics" don't program at all, but rather, use programs written by others, it's tempting to ask, "Do I really need to learn programming to do bioinformatics?" At one level, the answer is no, you don't. You can accomplish quite a bit using existing tools, and there are books and documentation available to help you learn those tools. But at another, higher level, the answer to the question changes. What happens when you want to do something a preexisting tool doesn't do? What happens when you can't find a tool to accomplish a particular task, and you can't find someone to write it for you?
+
+At that point, you need to learn to program. And even if you still rely mainly on existing programs and tools, it can be worthwhile to learn enough to write small programs. Small programs can be incredibly useful.  For example, with a bit of practice, you can learn to write programs that run other programs and spare yourself hours sitting in front of the computer doing things by hand.
+
+Many scientists start out writing small programs and find that they really like programming. As a programmer, you never need to worry about finding the right tools for your needs; you can write them yourself. This book will get you started. 
+
+\section*{Structure of This Book}
+There are thirteen chapters and two appendixes in this book. The following provides a brief introduction:
+
+\autoref{chap:chapter1}
+\begin{adjustwidth}{1cm}{0cm}
+This chapter covers some key concepts in molecular biology, as well as how biology and computer science fit together.
+\end{adjustwidth}
+
+\autoref{chap:chapter2}
+\begin{adjustwidth}{1cm}{0cm}
+This chapter shows you how to get Perl up and running on your computer.
+\end{adjustwidth}
+
+\autoref{chap:chapter3}
+\begin{adjustwidth}{1cm}{0cm}
+\autoref{chap:chapter3} provides an overview as to how programmers accomplish their jobs. Some of the most important practical strategies good programmers use are explained, and where to find answers to questions that arise while you are programming is carefully laid out. These ideas are made concrete by brief narrative case studies that show how programmers, given a problem, find its solution.
+\end{adjustwidth}
+
+\autoref{chap:chapter4}
+\begin{adjustwidth}{1cm}{0cm}
+In \autoref{chap:chapter4} you start writing Perl programs with DNA and proteins. The programs transcribe DNA to RNA, concatenate sequences, make the reverse complement of DNA, read sequences data from files, and more.
+\end{adjustwidth}
+
+\autoref{chap:chapter5}
+\begin{adjustwidth}{1cm}{0cm}
+This chapter continues demonstrating the basics of the Perl language with programs that search for motifs in DNA or protein, interact with users at the keyboard, write data to files, use loops and conditional tests, use regular expressions, and operate on strings and arrays.
+\end{adjustwidth}
+
+\autoref{chap:chapter6}
+\begin{adjustwidth}{1cm}{0cm}
+This chapter extends the basic knowledge of Perl in two main directions: subroutines, which are an important way to structure programs, and the use of the Perl debugger, which can examine in detail a running Perl program.
+\end{adjustwidth}
+
+\autoref{chap:chapter7}
+\begin{adjustwidth}{1cm}{0cm}
+Genetic mutations, fundamental to biology, are modelled as random events using the random number generator in Perl. This chapter uses random numbers to generate DNA sequence data sets, and to repeatedly mutate DNA sequence. Loops, subroutines, and lexical scoping are also discussed.
+\end{adjustwidth}
+
+\autoref{chap:chapter8}
+\begin{adjustwidth}{1cm}{0cm}
+This chapter shows how to translate DNA to proteins, using the genetic code. It also covers a good bit more of the Perl programming language, such as the hash data type, sorted and unsorted arrays, binary search, relational databases, and DBM, and how to handle FASTA formatted sequence data.
+\end{adjustwidth}
+
+\autoref{chap:chapter9}
+\begin{adjustwidth}{1cm}{0cm}
+This chapter contains an introduction to Perl regular expressions. The main focus of the chapter is the development of a program to calculate a restriction map for a DNA sequence.
+\end{adjustwidth}
+
+\autoref{chap:chapter10}
+\begin{adjustwidth}{1cm}{0cm}
+The Genetic Sequence Data Bank (GenBank) is central to modern biology and bioinformatics. In this chapter, you learn how to write programs to extract information from GenBank files and libraries. You will also make a database to create your own rapid access lookups on a GenBank library.
+\end{adjustwidth}
+
+\autoref{chap:chapter11}
+\begin{adjustwidth}{1cm}{0cm}
+This chapter develops a program that can parse Protein Data Bank (PDB) files. Some interesting Perl techniques are encountered while doing so, such as finding and iterating over lots of files and controlling other bioinformatics programs from a Perl program.
+\end{adjustwidth}
+
+\autoref{chap:chapter12}
+\begin{adjustwidth}{1cm}{0cm}
+\autoref{chap:chapter12} develops some code to parse a BLAST output file. Also mentioned are the Bioperl project and its BLAST parser, and some additional ways to format output in Perl.
+\end{adjustwidth}
+
+\autoref{chap:chapter13}
+\begin{adjustwidth}{1cm}{0cm}
+\autoref{chap:chapter13} looks ahead to topics beyond the scope of this book.
+\end{adjustwidth}
+
+\autoref{chap:chapteraa}
+\begin{adjustwidth}{1cm}{0cm}
+Collected here are resources for Perl and for bioinformatics programming, such as books and Internet sites.
+\end{adjustwidth}
+
+\autoref{chap:chapterab}
+\begin{adjustwidth}{1cm}{0cm}
+This is a summary of the parts of Perl covered in this book, plus a little more.
+\end{adjustwidth}
+
+\section*{Conventions Used in This Book}
+The following conventions are used in this book:
+
+\textit{Italic}
+\begin{adjustwidth}{1cm}{0cm}
+Used for commands, filenames, directory names, variables, modules, URLs, and for the first use of a term 
+\end{adjustwidth}
+
+\texttt{Constant width}
+\begin{adjustwidth}{1cm}{0cm}
+Used in code examples and to show the output of commands
+\end{adjustwidth}
+
+\begin{adjustwidth}{2cm}{2cm}
+%\shadowbox{
+\parpic[l]{
+%\includegraphics[width=1cm]{../figures/note.png}
+\includegraphics[width=1cm]{note.png}
+}
+\noindent
+This icon designates a note, which is an important aside to the nearby text.
+%}
+\end{adjustwidth}
+
+\begin{adjustwidth}{2cm}{2cm}
+%\shadowbox{
+\parpic[l]{
+%\includegraphics[width=1cm]{../figures/warning.png}
+\includegraphics[width=1cm]{warning.png}
+}
+\noindent
+This icon designates a warning relating to the nearby text.
+%\hspace{2.55cm}
+%}
+\end{adjustwidth}
+
+\section*{Comments and Questions}
+Please address comments and questions concerning this book to the publisher:
+
+O'Reilly \& Associates, Inc.\\
+1005 Gravenstein Highway North\\
+Sebastopol, CA 95472\\
+(800) 998-9938 (in the United States or Canada)\\
+(707) 829-0515 (international/local)\\
+(707) 829-0104 (fax)
+
+There is a web page for this book, which lists errata, examples, or any additional information. You can access this page at:
+
+\href{http://www.oreilly.com/catalog/begperlbio}{http://www.oreilly.com/catalog/begperlbio}
+
+To comment or ask technical questions about this book, send email to:
+
+\href{bookquestions@oreilly.com}{bookquestions@oreilly.com}
+
+For more information about books, conferences, Resource Centers, and the O'Reilly Network, see the O'Reilly web site at:
+
+\href{http://www.oreilly.com}{http://www.oreilly.com}
+
+\section*{Acknowledgments}
+I would like to thank my editor, Lorrie LeJeune, and everyone at O'Reilly \& Associates for their skill, enthusiasm, support, and patience; and my technical reviewers Cynthia Gibas, Joel Greshock, Ian Korf, Andrew Martin, Jon Orwant, and Clay Shirky, for their helpful and detailed reviews. I also thank M. Immaculada Barrasa, Michael Caudy, Muhammad Muquit, and Nat Torkington for their excellent help with particular chapters.
+
+Thanks also to James Watson, whose classic book The Molecular Biology of the Gene first got me interested in biology; Larry Wall for inventing and developing Perl; and my colleagues at Bell Laboratories in Murray Hill, NJ, for teaching me computer science. Thanks to Beverly Emmanuel, David Searls, and the late Chris Overton, who started the Computational Biology and Informatics Laboratory in the Human Genome Project for Chromosome 22 at the University of Pennsylvania and Children's Hospital of Philadelphia. They gave me my first bioinformatics job. Thanks to Mitch Marcus of Bell Labs and the Department of Computer and Information Science at UPenn who insisted that I borrow his copy of Programming Perl and try it out. I'd also like to thank my colleagues at Mercator Genetics and The Fox Chase Cancer Center for supporting my work in bioinformatics.
+
+Finally, I'd like to thank my friends for encouraging my writing; and especially my parents Edward and Geraldine, my siblings Judi, John, and Thom, my wife Elizabeth, and my children Rose, Eamon, and Joe. 
