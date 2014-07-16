@@ -6,9 +6,26 @@
 \setmonofont{Courier New}
 
 \linespread{1.2}
+%取消每个段落的缩进
+\setlength\parindent{0pt}
+%调整段落之间的间距
+%\setlength{\parskip}{1em}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
 
 \usepackage[a4paper,top=2.5cm,bottom=1.5cm,left=3cm,right=1.5cm,marginparwidth=4.7cm,marginparsep=0.3cm]{geometry}
 
+%在每一章的开头列出section的列表
+\usepackage{minitoc}
+\setcounter{minitocdepth}{1}
+
+%整段缩进
+\usepackage{changepage}
+
+%图文混排
+\usepackage{picins}
+
+%文本框
+\usepackage{fancybox}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -19,15 +36,17 @@
 \renewcommand{\headrulewidth}{0.5pt}
 
 %单面模式
-\newpagestyle{main}{
-\sethead[$\cdot$~\thepage~$\cdot$][][\chaptername\quad\chaptertitle]{\small\S\,\thesection\quad\sectiontitle}{}{$\cdot$~\thepage~$\cdot$}
-\setfoot{}{}{}\headrule}
-\pagestyle{main}
+%\newpagestyle{main}{
+%\sethead[$\cdot$~\thepage~$\cdot$][][\chaptername\quad\chaptertitle]{\small\S\,\thesection\quad\sectiontitle}{}{$\cdot$~\thepage~$\cdot$}
+%\setfoot{}{}{}\headrule}
+%\pagestyle{main}
 
 \usepackage{xcolor}
 \usepackage{graphicx}
 \graphicspath{{figures/}}
 \usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+%\def\sectionautorefname{Section}
+\def\chapterautorefname{Chapter}
 
 %使表格可以跨页
 %\usepackage{booktabs,longtable}
