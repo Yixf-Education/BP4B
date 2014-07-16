@@ -1,0 +1,247 @@
+\chapter{Getting Started with Perl}
+\label{chap:chapter2}
+\minitoc
+
+Perl is a popular programming language that's extensively used in areas such as bioinformatics and web programming. Perl has become popular with biologists because it's so well-suited to several bioinformatics tasks.
+
+Perl is also an application, just like any other application you might install on your computer. It is available (at no cost) and runs on all the operating systems found in the average biology lab (Unix and Linux, Macintosh, Windows, VMS, and more).\footnote{An operating system manages the running of programs and other basic services that a computer provides, such as how files are stored.} The Perl application on your computer takes a Perl language program (such as one of the programs you will write in this book), translates it into instructions the computer can understand, and runs (or "executes") it.
+
+So, the word Perl refers both to the language in which you will write programs and to the application on your computer that runs those programs. You can always tell from context which meaning is being used.
+
+Every computer language such as Perl needs to have a translator application (called an interpreter or compiler) that can turn programs into instructions the computer can actually run. So the Perl application is often referred to as the Perl interpreter, and it includes a Perl compiler as well. You will often see Perl programs referred to as Perl scripts or Perl code. The terms program, application, script, and executable are somewhat interchangeable. I refer to them as "programs" in this book. 
+
+\section{A Low and Long Learning Curve}
+A nice thing about Perl is that you can learn to write programs fairly quickly; in essence, Perl has a \textit{low learning curve}. This means you can get started easily, without having to master a large body of information before writing useful programs.
+
+Perl provides different styles of writing programs. Since these are beyond the scope of this book, I won't go into details, except to mention the popular style called imperative programming that you'll learn in this book. The equally popular style called object-oriented programming is also well-supported in Perl. Other styles of programming include functional programming and logic programming.
+
+Although you can get started quickly, learning all of Perl will certainly take awhile, if that's your goal. Most people learn the basics, as presented in this book, and then learn additional topics as needed.
+
+Let's get a few elementary definitions out of the way:
+
+\textcolor{red}{What is a computer program?}
+
+\begin{adjustwidth}{1cm}{}
+It's a set of instructions written in a particular programming language that can be read by the computer. A program can be as simple as the following Perl language program to print some DNA sequence data onto the
+computer screen:
+
+%\begin{lstlisting}
+\verb|print 'ACCTGGTAACCCGGAGATTCCAGCT';|
+%\end{lstlisting}
+
+The Perl language programs are written and saved in files, which are ways of saving any kind of data (not only programs) on a computer. Files are organized hierarchically in groups called folders on Macintosh or Windows systems or directories in Unix or Linux systems. The terms folder and directory will be used interchangeably.
+\end{adjustwidth}
+
+\textcolor{red}{What is a programming language?}
+
+\begin{adjustwidth}{1cm}{}
+It's a carefully defined set of rules for how to write computer programs. By learning the rules of the language, you can write programs that will run on your computer. Programming languages are similar to our own natural, or spoken languages, such as English, but are more strictly defined and specific to certain computer systems. With a little bit of training, it's not difficult to read or write computer programs. In this book you'll write in Perl; there are many other programming languages.
+
+A program that a programmer writes is also called source code, or just source or code. The source code has to be turned into machine language, a special language the computer can run. It's hard to write or read a machine language program because it's all binary numbers; it's often called a binary executable. You use the Perl interpreter (or compiler) to turn a Perl program into a running program, as you'll see later in this chapter.
+\end{adjustwidth}
+
+\textcolor{red}{What is a computer?}
+
+\begin{adjustwidth}{1cm}{}
+Well, \ldots
+
+Okay, silly question. It's that machine you buy in computer stores. But actually, it's important to have a clear idea of what kind of machine a computer is. Essentially, a computer is a machine that can run many different programs.  This is the fundamental flexibility and adaptability that makes the computer such a useful and general-purpose tool. It's programmable; you will learn how to program it using the Perl programming language. 
+\end{adjustwidth}
+
+\section{Perl's Benefits}
+The following sections illustrate some of Perl's strong points.
+
+\subsection{Ease of Programming}
+Computer languages differ in which things they make easy. By "easy" I mean easy for a programmer to program. Perl has certain features that simplifies several common bioinformatics tasks. It can deal with information in ASCII text files or flat files, which are exactly the kinds of files in which much important biological data appears, in the GenBank and PDB databases, among others. (See the discussion of ASCII in Chapter 4; Genbank and PDB are the subjects in Chapter 10 and Chapter 11.) Perl makes it easy to process and manipulate long sequences such as DNA and proteins. Perl makes it convenient to write a program that controls one or more other programs. As a final example, Perl is used to put biology research labs, and their results, on their own dynamic web sites. Perl does all this and more.
+
+Although Perl is a language that's remarkably suited to bioinformatics, it isn't the only choice nor is it always the best choice. Other programming languages such as C and Java are also used in bioinformatics. The choice of language depends on the problem to be programmed, the skills of the programmers, and the available system.
+
+\subsection{Rapid Prototyping}
+Another important benefit of using Perl for biological research is the speed with which a programmer can write a typical Perl program (referred to as rapid prototyping). Many problems can be solved in far fewer lines of Perl code than in C or Java. This has been important to its success in research. In a research environment there are frequent needs for programs that do something new, that are needed only once or occasionally, or that need to be frequently modified. In Perl, you can often toss such a program off in a few minutes or a few hours work, and the research can proceed. This rapid prototyping ability is often a key consideration when choosing Perl for a job. It is common to find programmers familiar with both Perl and C who claim that Perl is five to ten times faster to program in than C. The difference can be critical in the typical understaffed research lab.
+
+\subsection{Portability, Speed, and Program Maintenance}
+Portability means how many types of computer systems the language can run on. Perl has no problems there, as it's available for virtually all modern computers found in biology labs. If you write a DNA analyzer in Perl on your Mac, then move it to a Windows computer, you'll find it usually runs as is or with only minor retrofitting.
+
+Speed means the speed with which the program runs. Here Perl is pretty good but not the best. For speed of execution, the usual language of choice is C. A program written in C typically runs two or more times faster than the comparable Perl program. (There are ways of speeding up Perl with compilers and such, but still\ldots .)
+
+In many organizations, programs are first written in Perl, and then only the programs that absolutely need to have maximum speed are rewritten in C. The fact is, maximum speed is only occasionally an important consideration.
+
+Programming is relatively expensive to do: it takes time, and skilled personnel. It's labor-intensive. On the other hand, computers and computer time (often called CPU time after the central processing unit) are relatively inexpensive. Most desktop computers sit idle for a large part of the day, anyway. So it's usually best to let the computer do the work, and save the programmer's time. Unless your program absolutely must run in say, four seconds instead of ten seconds, you're okay with Perl.
+
+Program maintenance is the general activity of keeping everything working: such activities as adding features to a program, extending it to handle more types of input, porting it to run on other computer systems, fixing bugs, and so forth. Programs take a certain amount of time, effort and cost to write, but successful programs end up costing more to maintain than they did to write in the first place. It's important to write in a language, and in a style, that makes maintenance relatively easy, and Perl allows you to do so. (You can write obscure, hard-to-maintain code in Perl, as in other languages, but I'll give you pointers on how to make your code easy for other programmers to read.)
+
+\subsection{Versions of Perl}
+Perl, like almost all popular software, has gone through much growth and change over the course of its nearly 15-year life. The authors—Larry Wall and a large group of cohorts—publish new versions periodically.  These new versions have been carefully designed to support most programs written under old versions, but occasionally some major new features are added that don't work with older versions of Perl.
+
+This book assumes you have Perl Version 5 or higher installed. If you have Perl installed on your computer, it's likely Perl 5, but it's best to check. On a Unix or Linux system, or from an MS-DOS or MacOS X command window, the perl -v command displays the version number, in my case, Version 5.6.1. The number 5.6.1 is "bigger" than 5; that means it's okay. If you get a smaller number (very likely 4.036), you have to install a recent version of Perl to enable the majority of programs in this book to run as shown.
+
+What about future versions? Perl is always evolving, and Perl Version 6 is on the horizon. Will the code in this book still work in Perl 6? The answer is yes. Although Perl 6 is going to add some new things to the language, it should have no trouble with the Perl 5 code in this book. 
+
+\section{Installing Perl on Your Computer}
+The following sections provide pointers for installing Perl on the most common types of computer systems.
+
+\subsection{Perl May Already Be Installed!}
+Many computers—especially Unix and Linux computers—come with Perl already installed. (Note that Unix and Linux are essentially the same kind of operating system; Linux is a clone, or functional copy, of a Unix system.) So first check to see if Perl is already there. On Unix and Linux, type the following at a command prompt:
+
+\verb|$ perl -v|
+
+If Perl is already installed, you'll see a message like the one I get on my Linux machine:
+
+\begin{verbatim}
+This is perl, v5.6.1 built for i686-linux
+
+Copyright 1987-2001, Larry Wall
+
+Perl may be copied only under the terms of either the Artistic License or the
+GNU General Public License, which may be found in the Perl 5 source kit.
+
+Complete documentation for Perl, including FAQ lists, should be found on
+this system using 'man perl' or 'perldoc perl'.  If you have access to the
+Internet, point your browser at http://www.perl.com/, the Perl Home Page.
+\end{verbatim}
+
+If Perl isn't installed, you'll get a message like this:
+
+\begin{verbatim}
+perl: command not found
+\end{verbatim}
+
+If you get this message, and you're on a shared Unix system at a university or business, be sure to check with the system administrator, because Perl may indeed be installed, but your environment may not be set to find it. (Or, the system administrator may say, "You need Perl? Okay, I'll install it for you.")
+
+On Windows or Macintosh, look at the program menus, or use the find program to search for perl. You can also try typing perl -v, at an MS-DOS command window or at a shell window on the MacOS X. (Note that
+the MacOS X is a Unix system!)
+
+\subsection{No Internet Access?}
+If you don't have Internet access, you can take your computer to a friend who has access and connect long enough to install Perl. You can also use a Zip drive or burn a CD from a friend's computer to bring the Perl software to your computer. There are commercial shrink-wrapped CDs of Perl available from several sources (ask at your local software store) and several books such as O'Reilly's Perl Resource Kits, include CDs with Perl.
+
+Apart from installing Perl, you don't need Internet access for everything in this book. If you want to do the exercises while commuting on the train, or whatever, it can certainly be done. Apart from installing Perl, the main use of the Internet for this book is to download its examples from the book's web site without having to type them; to download and try the exercises; to explore biological data from various biological databases; and to access Perl documentation, if it's not installed on your machine.
+
+Know that if you want to do bioinformatics, the Internet is a practical necessity. You can learn programming fundamentals from this book without an Internet connection, but you will need Internet access to download bioinformatics software and data.
+
+\subsection{Downloading}
+Perl is an application, so downloading and installing it on your computer is pretty much the same as installing any other application.
+
+The web site that serves as a central jumping off point for all things Perl is \href{http://www.perl.com/}{http://www.perl.com/}. The main page has a Downloads clickable button that guides you to everything you need to install Perl on your computer. At the Downloads page, there's a Getting Help link and other links. So even if the information in this book becomes outdated, you can visit the Perl site and find all you need to install Perl.
+
+Downloading and installing Perl is usually quite easy, in fact, the majority of the time it's perfectly painless. However, sometimes you may have to put some effort into getting it to work. If you're new at programming, and you run into difficulties, you should ask for help from a professional computer programmer, administrator, teacher, or someone in your lab who already programs in Perl.
+
+So, in a nutshell, here are the basic steps for installing Perl on your computer:
+
+\begin{enumerate}
+  \item Check to see if Perl is already installed; if so, check the that version is at least Perl 5.
+  \item Get Internet access and go to the Perl home page at \href{http://www.perl.com/}{http://www.perl.com/}.
+  \item Go to the Downloads page and determine which distribution of Perl to download.
+  \item Download the correct Perl distribution.
+  \item Install the distribution on your computer.
+\end{enumerate}
+
+\subsection{Installation}
+The next sections provide specific installation instructions for specific platforms.
+
+\subsubsection{Unix and Linux}
+If Perl isn't installed on your Unix or Linux machine, first try to find a binary to install. At the Downloads page of http://www.perl.com, you'll see the subheading Binary Distributions. Select Unix or Linux, and then see if your particular flavor of operating system has a binary available. Several versions are available, and the web-site instructions should be enough to get Perl installed once you've downloaded the binary. Most versions of Linux maintain up-to-date Perl binaries on their web sites. For instance, if you have a Red Hat Linux system, you need to identify which version of the system you have (by typing uname -a) and then get the appropriate rpm file to download and install. Red Hat has an rpm for Perl that Red Hat Linux users can install by typing:
+
+\verb|rpm -Uvh perl.rpm|
+
+(the actual name of the perl.rpm file varies).
+
+If no binary version of Perl is available for your flavor of Unix or Linux, you must compile Perl from its source code. In this case, starting from the Perl web page, click on the Downloads button and then select Source Code Distribution. The source code has an INSTALL file with instructions that guide you through the process of downloading the source code, installing it on your system, compiling the source code into a binary, and finally installing the binary.
+
+As mentioned previously, compiling from source code is a considerably longer process than installing an already made binary, and requires a bit more reading of instructions, but it usually works quite well. You will need a C compiler on your computer to install from source code.  Nowadays, some Unix systems ship without a complete C compiler. Linux will always have the free C compiler called gcc installed, and you can also install gcc on any Unix (or Windows, or Mac) system that lacks a C compiler.
+
+\subsubsection{Macintosh}
+The MacPerl installation steps are clearly explained on the MacPerl web page, \href{http://www.macperl.com/}{http://www.macperl.com/} (which you can also get to from the Perl web page and its Downloads button). Here's a very brief overview.
+
+From the MacPerl page, click on Get MacPerl, and follow the directions to download the application. It will appear on your desktop.  Double-click it to unstuff it. If you don't have Aladdin Stuffit Expander (most Macs already do), this won't work, and you'll have to go to http://www.aladdinsys.com to download and install Stuffit.
+
+MacPerl can be installed as a standalone application under the MacOS Finder or as a tool under the Macintosh Programmer's Workbench; you will probably want the standalone application. Perl Version 5 is available for MacOS 7.0 and later. Details about which Perl version is available for your particular hardware and MacOS version are available at the MacPerl web page.
+
+\subsubsection{Windows}
+Several binaries for different Windows versions are available. Since Windows is closely coupled with Intel 32-bit chips, these binaries are often called Wintel or Win32 binaries. The current standard Perl distribution is ActivePerl from ActiveState, at http://www.activestate.com/ActivePerl/, where you can find complete installation directions. You can also get to ActivePerl via the Downloads button from the Perl web site. Under the subheading Binary Distributions, go to Perl for Win32, and then click on the ActivePerl site.
+
+From the ActiveState web site's ActivePerl page, click the Downloads button. You can then download the Windows-Intel binary. Note that installing it requires a program called Windows Installer, which is available at ActivePerl if it's not already on your computer. 
+
+\section{How to Run Perl Programs}
+The details of how to run Perl vary depending on your operating system.  The instructions that come with your Perl installation contain all you need to know. I'll give short summaries here, just enough to get you started.
+
+\subsection{Unix or Linux}
+On Unix or Linux, you usually run Perl programs from the command line.  If you're in the same directory as the program, you can run a Perl program in a file called this\_program by typing \verb|perl this_program|. If you're not in the same directory, you may have to give the pathname of the program, for example:
+
+\verb|perl /usr/local/bin/this_program|
+
+Usually, you set the first line of this\_program to have the correct pathname for Perl on your system, because different machines may have installed Perl in different directories. On my computer, I use the following as the first line of my Perl programs:
+
+\verb|#!/usr/bin/perl|
+
+You can type which perl to find the pathname where Perl is installed on your system.
+
+You can make the program executable using the chmod program: for instance, you can type:
+
+\verb|chmod 755 this_program|
+
+If you've set the first line correctly and used chmod, you can just type
+the name of the Perl program to run it. So, if you're in the same
+directory as the program, you can type \verb|./this_program|. If the
+program is in a directory that's included in your \verb|$PATH| or
+\verb|$path| variable, you can type \verb|this_program|.\footnote{\verb|$PATH| is the variable used for the sh, bash, and ksh shells; \verb|$path| is used for csh and tcsh.}
+
+If your Perl program doesn't run, the error messages you get from the shell in the command window may be confusing. For instance, the bash shell on my Linux system gives the error message:
+
+\verb|bash: ./my_program: No such file or directory|
+
+in two cases: if there really is no program called my\_program in the current directory or if the first line of my\_program has incorrectly given the location of Perl. Watch for that, especially when running programs from CPAN (see \ref{chap:chapteraa}), which may have different pathnames for Perl embedded in their first lines. Also, if you type my\_program, you may get this error message:
+
+\verb|bash: my_program: command not found|
+
+which means that the operating system can't find the program. But it's
+there in your current directory! The problem is probably that your
+\verb|$PATH| or \verb|$path| variable doesn't include the current
+directory, and so the system isn't even looking in the current directory
+for the program. In this case, change the \verb|$PATH| or \verb|$path| variable (depending on which shell you're using), or just type \verb|/my_program| instead of \verb|my_program|.  
+
+\subsection{Macs}
+On Macs, the recommended way to save Perl programs is as "droplets"; the MacPerl documentation gives the simple instructions. Basically, you open the Perl program with the MacPerl application and then choose Save As and select the Type option Droplet.
+
+You can drag and drop a file onto a droplet in order to use the file as input (via the @ARGV array—see the discussion in \ref{chap:chapter6}).
+
+The new MacOS X is a Unix system on which you have the option of running Perl programs from the command line as described earlier for Unix and Linux systems.
+
+\subsection{Windows}
+On Windows systems, it's usual to associate the filename extension .pl with Perl programs. This is done as part of the Perl installation process, which modifies the registry settings to include this file association. You can then launch this\_program.pl by typing \verb|this\_program| in an MS-DOS command window or by typing \verb|perl this\_program.pl|. Windows has a PATH variable specifying folders in which the system looks for programs, and this is modified by the Perl installation process to include the path to the folder for the Perl application, usually \verb|c:\perl|. If you're trying to run a Perl program that isn't installed in a folder known to the PATH variable, you can type the complete pathname to the program, for instance \verb|perl c:\windows\desktop\my\_program.pl|.
+
+\section{Text Editors}
+Now that you've set up your computer and installed Perl, you need to select and learn the basics of a text editor. A text editor is used to type documents, such as programs, and to save the contents of those documents into files. So to write a Perl program, you need to use a text editor. This can be a medium-sized learning job if you have never used an editor before, although some text editors are easy to learn. Here are some examples of the most popular editors, arranged by operating-system type:
+
+\textcolor{red}{Unix or Linux}
+\begin{adjustwidth}{1cm}{}
+vi and emacs are complex (but very good) editors. pico, xedit, and several others (nedit, gedit, kedit) are easy to use and simple to learn but less powerful. There is also a free, Microsoft Word-compatible editor included in StarOffice (but be sure to save your files as ASCII or text-only).
+\end{adjustwidth}
+
+\textcolor{red}{Macintosh}
+\begin{adjustwidth}{1cm}{}
+The built-in editor that comes with MacPerl is fine. There is also a nice commercial editor called BBEdit that is optimized for Perl, as well as a freeware version called BBEdit Lite. You can also use the Alpha shareware editor or Microsoft Word (be sure to save as ASCII text only).
+\end{adjustwidth}
+
+\textcolor{red}{Windows}
+\begin{adjustwidth}{1cm}{}
+Notepad works satisfactorily and may already be familiar; Microsoft Word is also usable, but always save as ASCII or text-only. Emacs on Windows is highly recommended for Perl programming on Windows-based computers, but it's a little complicated to learn. There are many other editors as well; I use a free version of the Unix editor vi called vim that has been ported to Windows.
+\end{adjustwidth}
+
+Many other text editors are available. Most computers come with a choice of several editors. (Many programmers try their hand at writing an editor or extending an already existing editor at some point in their careers, so the choices are truly legion.)
+
+Some editors are very simple to learn and use. Others have a huge variety of features, their own instruction books and discussion groups and web sites and so on, and can take quite a while to learn. If you're a new programmer, pick an easy one and save yourself the headache. Later, if you feel adventurous, you can graduate to a fancier editor with features that can speed your work. Not sure what is available on your computer? Ask for help from a programmer or another user, or consult the documentation that came with your computer system. 
+
+\section{Finding Help}
+Make sure you have the necessary documentation. If you installed Perl as outlined earlier, documentation is installed as part of the general Perl installation, and the instructions that come with your Perl distribution explain how to get the documentation. There is also excellent online documentation; look for it at the Perl home page.
+
+Programming resources are places to look for answers to programming questions. Perl resources are essential to doing Perl programming. Check out \ref{chap:chapteraa} to learn where to find resources such as books, online documentation, working programs, newsgroups, archives, journals, and conferences.
+
+As you get involved in programming, you will learn the most important books, web sites, Internet newsgroups and their searchable archives, local gurus (experts in the subject at hand), and program documentation.  This includes programming manuals (printed or online) and frequently asked question (FAQs).
+
+Most languages have a standard document set that includes the whole story about the language definition and use. Perl's is included with the program as the online manual. Although programming manuals often suffer from poor writing, it's best to be prepared to dig into them. A well-honed ability to skim is a great asset. The Perl manual isn't bad; its main problem is that, as with most manuals, all the details are there, so it can be a bit overwhelming at first. However, the Perl documentation does a decent job of helping the beginner navigate, by means of tutorial documents.
+
+Finally, I urge you, the beginning programmer, to find some experienced Perl programmer who can answer the occasional question. This may be your teacher or teaching assistant in a course, a coworker, someone down at the local computer store, or someone replying to your posting on an online newsgroup (there are newsgroups specifically for Perl beginners).  Chances are that an occasional conversation with an experienced user can save you many hours of chasing deadends during your initial learning stages. Many programmers are happy to lend a hand or offer advice to beginners, there's a friendly and collegial atmosphere that prevails in the programming community.
+
+Be warned, however: experts can become irritated at people who continually pose questions whose answers are readily available in FAQs and other standard documentation. You might sometimes see the advice to RTFM—acronym for Read The F(ine) Manual—in response to such questions.  So do a little checking around in the FAQs before repeatedly asking for someone's valuable time.
+
+(I can't resist the occasional anecdote.) At my first programming job, which I took to learn programming, I was stumped by a problem for which there seemed to be no obvious solution. I approached the person who had been cited as the best programmer in the laboratory. I carefully explained my predicament as he patiently listened. When I was done, he smiled and advised, "Be a man. Do it yourself." I was crestfallen and retired in confusion. But as it turned out, his advice was given with tongue in cheek, and he later approached me and gave me pointers that led to a solution. 
