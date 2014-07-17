@@ -1,91 +1,90 @@
-\chapter{Getting Started with Perl}
+\chapter{Perl语言入门}
 \label{chap:chapter2}
 \minitoc
 
-Perl is a popular programming language that's extensively used in areas such as bioinformatics and web programming. Perl has become popular with biologists because it's so well-suited to several bioinformatics tasks.
+Perl语言是一种流行的编程语言，在生物信息学和网络编程中广泛应用。Perl之所以能被生物学家广泛使用，是因为它特别适合用来解决生物信息学问题。
 
-Perl is also an application, just like any other application you might install on your computer. It is available (at no cost) and runs on all the operating systems found in the average biology lab (Unix and Linux, Macintosh, Windows, VMS, and more).\footnote{An operating system manages the running of programs and other basic services that a computer provides, such as how files are stored.} The Perl application on your computer takes a Perl language program (such as one of the programs you will write in this book), translates it into instructions the computer can understand, and runs (or "executes") it.
+Perl也是一个应用程序，就像你在计算机中安装的其他应用程序一样。对于大多数生物学实验室使用的各种操作系统来说，Perl（完全免费）都存在其中并时刻运行着。\footnote{操作系统管理者程序的运行和其他一些计算机提供的基本服务，如文件存储等。}计算机中的Perl应用程序\footnote{译者注：此处指的是实际编译并运行程序的解释器，一般使用perl（小写p）来表示。}读取Perl语言程序（比如你将在本书学习过程中写的任何一个程序）\footnote{译者注：此处指Perl脚本。指代程序语言时一般用Perl（大写P）来表示。}，把它翻译成计算机可以理解的指令，并运行（或“执行”）它。
 
-So, the word Perl refers both to the language in which you will write programs and to the application on your computer that runs those programs. You can always tell from context which meaning is being used.
+所以，Perl这个词语既指你用来编写脚本的程序语言，也表示计算机中运行这些脚本的应用程序/解释器。\footnote{译者注：一般情况下，前者使用Perl表示，后者使用perl表示。}你可以通过上下文的语境来区分Perl的具体含义。
 
-Every computer language such as Perl needs to have a translator application (called an interpreter or compiler) that can turn programs into instructions the computer can actually run. So the Perl application is often referred to as the Perl interpreter, and it includes a Perl compiler as well. You will often see Perl programs referred to as Perl scripts or Perl code. The terms program, application, script, and executable are somewhat interchangeable. I refer to them as "programs" in this book. 
+所有的计算机语言，包括Perl，都需要一个翻译器应用程序（包括解释器和编译器两种）来把程序翻译成计算机可以实际运行的指令。Perl的翻译器应用程序通常指的就是Perl解释器，当然它也包括Perl编译器。你会发现一般把Perl程序叫做Perl脚本或者Perl源码。程序、应用程序、脚本和可执行文件这四个术语在某种程度上是通用的，在本书中我都把它们叫做“程序”。
 
-\section{A Low and Long Learning Curve}
-A nice thing about Perl is that you can learn to write programs fairly quickly; in essence, Perl has a \textit{low learning curve}. This means you can get started easily, without having to master a large body of information before writing useful programs.
+\section{低而长的学习曲线}
+对于Perl来说，令人高兴的一点就是你很快就可以学会Perl程序的编写。大体上来看，Perl的学习曲线是比较低的。这也就是说你可以轻松入门，不需要学习掌握太多的知识就可以写出非常实用的程序。
 
-Perl provides different styles of writing programs. Since these are beyond the scope of this book, I won't go into details, except to mention the popular style called imperative programming that you'll learn in this book. The equally popular style called object-oriented programming is also well-supported in Perl. Other styles of programming include functional programming and logic programming.
+Perl提供了不同的编程范式，这已经超出了本书的范畴，所以我并不打算对此进行深入探讨，但我还是要说一句，最流行的编程范式叫做命令式编程，这也是你将在本书中学习到的编程范式。另一种比较流行的编程范式叫做面向对象编程，Perl对这种编程范式也有很好的支持。其他编程范式还包括函数式编程和逻辑编程。
 
-Although you can get started quickly, learning all of Perl will certainly take awhile, if that's your goal. Most people learn the basics, as presented in this book, and then learn additional topics as needed.
+尽管你可以轻松入门，但如果想学习Perl中的所有知识，那将花费你大量的精力。大多数人都只学习像本书中的知识点一样的基本知识，当需要时再学习其他的相关主题。
 
-Let's get a few elementary definitions out of the way:
+在继续进行之前，我们先讨论几个基本概念：
 
-\textcolor{red}{What is a computer program?}
+\textcolor{red}{什么是计算机程序？}
 
 \begin{adjustwidth}{1cm}{}
-It's a set of instructions written in a particular programming language that can be read by the computer. A program can be as simple as the following Perl language program to print some DNA sequence data onto the
-computer screen:
+计算机程序就是用特定编程语言写成的一系列指令，这些指令可以被计算机读取。一个程序可以非常简单，简单到就像下面这个把DNA序列打印到计算机屏幕上的Perl语言程序一样：
 
-%\begin{lstlisting}
+\noindent
 \verb|print 'ACCTGGTAACCCGGAGATTCCAGCT';|
-%\end{lstlisting}
 
-The Perl language programs are written and saved in files, which are ways of saving any kind of data (not only programs) on a computer. Files are organized hierarchically in groups called folders on Macintosh or Windows systems or directories in Unix or Linux systems. The terms folder and directory will be used interchangeably.
+就像在计算机中存储各种数据（不限于程序）一样，要在文件中编写和保存Perl语言程序。文件以成组分层的形式进行存储，这些不同的组在Macintosh和Windows系统中叫做文件夹，在Unix和Linux系统中叫做目录，其实两者是完全可以互换使用的。
 \end{adjustwidth}
 
-\textcolor{red}{What is a programming language?}
+\textcolor{red}{什么是编程语言？}
 
 \begin{adjustwidth}{1cm}{}
-It's a carefully defined set of rules for how to write computer programs. By learning the rules of the language, you can write programs that will run on your computer. Programming languages are similar to our own natural, or spoken languages, such as English, but are more strictly defined and specific to certain computer systems. With a little bit of training, it's not difficult to read or write computer programs. In this book you'll write in Perl; there are many other programming languages.
+有一系列详细定义的语法规则来指导计算机程序的编写。通过学习编程语言的这些语法规则，你可以编写出在计算机上运行的程序。编程语言和英语等我们日常使用的口语是非常相似的，只是针对计算机系统进行了严格而特定的定义。经过一定的训练，就可以轻松阅读并编写计算机程序。有许多不同的编程语言，在本书中你将学习Perl语言。
 
-A program that a programmer writes is also called source code, or just source or code. The source code has to be turned into machine language, a special language the computer can run. It's hard to write or read a machine language program because it's all binary numbers; it's often called a binary executable. You use the Perl interpreter (or compiler) to turn a Perl program into a running program, as you'll see later in this chapter.
+程序员编写的程序也叫做源代码，有时也简称为源或代码。源代码需要翻译成机器语言，计算机才能够运行它。机器语言都是二进制数字，非常难于阅读和编写，通常把它叫做二进制可执行程序。就像在本章中你将看到的那样，使用Perl解释器（或编译器），你可以把Perl程序变成可以运行的程序。
 \end{adjustwidth}
 
-\textcolor{red}{What is a computer?}
+\textcolor{red}{什么是计算机？}
 
 \begin{adjustwidth}{1cm}{}
-Well, \ldots
+哦，……
 
-Okay, silly question. It's that machine you buy in computer stores. But actually, it's important to have a clear idea of what kind of machine a computer is. Essentially, a computer is a machine that can run many different programs.  This is the fundamental flexibility and adaptability that makes the computer such a useful and general-purpose tool. It's programmable; you will learn how to program it using the Perl programming language. 
+好吧，这是个愚蠢的问题。计算机就是你在计算机商城里买到的机器。但实际上，你应该有一个清晰的认识，明白计算机到底是怎样的一台机器。本质上来说，计算机就是一台可以运行不同程序的机器。正是这种最基本的灵活性和适用性，使得计算机成为如此有用且通用的工具。它是可编程的，你将学习如何使用Perl编程语言来对它进行编程。
 \end{adjustwidth}
 
-\section{Perl's Benefits}
-The following sections illustrate some of Perl's strong points.
+\section{Perl的优势}
+接下来的几个小节将对Perl的几个优点进行说明。
 
-\subsection{Ease of Programming}
-Computer languages differ in which things they make easy. By "easy" I mean easy for a programmer to program. Perl has certain features that simplifies several common bioinformatics tasks. It can deal with information in ASCII text files or flat files, which are exactly the kinds of files in which much important biological data appears, in the GenBank and PDB databases, among others. (See the discussion of ASCII in Chapter 4; Genbank and PDB are the subjects in Chapter 10 and Chapter 11.) Perl makes it easy to process and manipulate long sequences such as DNA and proteins. Perl makes it convenient to write a program that controls one or more other programs. As a final example, Perl is used to put biology research labs, and their results, on their own dynamic web sites. Perl does all this and more.
+\subsection{易于编程}
+编程语言的易用性体现在不同的方面。我说“容易”指的是对于程序员来说易于编程。Perl的一些特性，使得解决常见的生物信息学问题非常容易。它可以处理ASCII文本文件或平面文件中的信息，而许多重要的生物学数据就是存储在这样的文件中，GenBank和PDB等数据库就是如此。（关于ASCII的讨论请参看\ref{chap:chapter4}；GenBank和PDB分别是\ref{chap:chapter10}和\ref{chap:chapter11}的讨论主题。）使用Perl，可以容易得处理DNA和蛋白质的长序列，方便得控制一个或多个其他程序。最后再举一个例子，Perl曾用来把生物学研究实验室概况和研究成果放在实验室的动态网站上。Perl可以胜任所有的这些任务，当然绝不止这些。
 
-Although Perl is a language that's remarkably suited to bioinformatics, it isn't the only choice nor is it always the best choice. Other programming languages such as C and Java are also used in bioinformatics. The choice of language depends on the problem to be programmed, the skills of the programmers, and the available system.
+尽管Perl是一种非常适用于生物信息学的编程语言，但它绝不是唯一的选择，也不一定总是最好的选择。其他编程语言，如C和Java，也在生物信息学中使用。如何选择一种编程语言，这取决于需要解决的问题、程序员的能力、可利用的系统等因素。
 
-\subsection{Rapid Prototyping}
-Another important benefit of using Perl for biological research is the speed with which a programmer can write a typical Perl program (referred to as rapid prototyping). Many problems can be solved in far fewer lines of Perl code than in C or Java. This has been important to its success in research. In a research environment there are frequent needs for programs that do something new, that are needed only once or occasionally, or that need to be frequently modified. In Perl, you can often toss such a program off in a few minutes or a few hours work, and the research can proceed. This rapid prototyping ability is often a key consideration when choosing Perl for a job. It is common to find programmers familiar with both Perl and C who claim that Perl is five to ten times faster to program in than C. The difference can be critical in the typical understaffed research lab.
+\subsection{快速原型}
+在生物学研究中使用Perl的另一个非常重要的优势就是，程序员可以非常迅速得写出一个典型的Perl程序（这被称为快速原型）。与C和Java相比，许多问题用很少的几行Perl代码就可以解决，这也直接导致了它在生物学研究中的流行。在一个研究中，经常需要写一些处理新问题的程序，这些程序仅会偶尔使用或使用一次，或者需要被频繁修改。使用Perl，你只需折腾几分钟或者几个小时就可以写出这样的程序，继续后续的研究工作。当在工作中选择使用Perl时，这种快速原型的能力常常是需要重点考虑的因素。常常可以遇到同时精通Perl和C的程序员，他们声称在编程时Perl要比C快五到十倍。这种差距在人手不足的研究实验室中尤其显著。
 
-\subsection{Portability, Speed, and Program Maintenance}
-Portability means how many types of computer systems the language can run on. Perl has no problems there, as it's available for virtually all modern computers found in biology labs. If you write a DNA analyzer in Perl on your Mac, then move it to a Windows computer, you'll find it usually runs as is or with only minor retrofitting.
+\subsection{可移植性，速度和程序维护}
+可移植性表示编程语言可以在各种不同的计算机操作系统上运行。Perl的可移植性就不错，在生物学实验室中使用的所有现代计算机中，它都可以使用。如果你在自己的Mac中用Perl编写一个分析DNA的程序，然后把它放到Windows计算机中，你会发现它通常可以正常运行，或者仅需很小的修改就可运行。
 
-Speed means the speed with which the program runs. Here Perl is pretty good but not the best. For speed of execution, the usual language of choice is C. A program written in C typically runs two or more times faster than the comparable Perl program. (There are ways of speeding up Perl with compilers and such, but still\ldots .)
+速度表示程序运行的速度。在这方面，Perl虽然不是最好的，但表现也不错。考虑到运行的速度，最常见的选择就是C。用C编写的程序，其运行速度通常比对应的Perl程序快两倍甚至更多。（有许多利用编译器等来提高Perl运行速度的方法，但依然……。）
 
-In many organizations, programs are first written in Perl, and then only the programs that absolutely need to have maximum speed are rewritten in C. The fact is, maximum speed is only occasionally an important consideration.
+在许多组织中，都是先用Perl来编写程序，然后再把那些确实需要提高运行速度的部分用C重写。事实上，运行速度只是偶尔才会成为需要考虑的关键因素。
 
-Programming is relatively expensive to do: it takes time, and skilled personnel. It's labor-intensive. On the other hand, computers and computer time (often called CPU time after the central processing unit) are relatively inexpensive. Most desktop computers sit idle for a large part of the day, anyway. So it's usually best to let the computer do the work, and save the programmer's time. Unless your program absolutely must run in say, four seconds instead of ten seconds, you're okay with Perl.
+编程相对是比较昂贵的，因为它需要时间和熟练的人员，它是劳动密集型的。另一方面，计算机和计算机时间（在有了中央处理单元之后通常叫做CPU时间）却是相对便宜的。无论如何，在一天内的大部分时间里，大多数桌面计算机都出于空现状态。所以最好的策略就是节省程序员的时间，让计算机工作。一般来说使用Perl就可以了，除非你的程序必须运行四秒而非十秒。
 
-Program maintenance is the general activity of keeping everything working: such activities as adding features to a program, extending it to handle more types of input, porting it to run on other computer systems, fixing bugs, and so forth. Programs take a certain amount of time, effort and cost to write, but successful programs end up costing more to maintain than they did to write in the first place. It's important to write in a language, and in a style, that makes maintenance relatively easy, and Perl allows you to do so. (You can write obscure, hard-to-maintain code in Perl, as in other languages, but I'll give you pointers on how to make your code easy for other programmers to read.)
+程序维护是保证程序正常运行的常规工作，比如给程序添加特性、扩展程序以便能够处理更多类型的输入、移植程序以便在其他计算机系统上运行、修复bug等工作。编写程序需要花费一定的时间、精力和财力，而好的程序在维护阶段的花费远比第一次编写时的花费要高。编写程序时使用一种语言和特定的风格是非常重要的，因为这将使得维护工作相对容易一些，Perl就是这样的编程语言。（就像其他编程语言一样，你可以用Perl写出晦涩难懂、难于维护的代码，但我会给你一些指导，使你的程序可以被其他程序员轻松读懂。）
 
-\subsection{Versions of Perl}
-Perl, like almost all popular software, has gone through much growth and change over the course of its nearly 15-year life. The authors—Larry Wall and a large group of cohorts—publish new versions periodically.  These new versions have been carefully designed to support most programs written under old versions, but occasionally some major new features are added that don't work with older versions of Perl.
+\subsection{Perl的版本}
+向其他所有流行软件一样，Perl也在不断成长，在近15年的历史中不断发展变化\footnote{译者注：Perl诞生于1987年。}。Perl的作者拉里$\textbullet$沃尔和庞大的开发社区会定期发布新的版本。这些新的版本都进行了认真的设计，以便向下兼容旧版本写成的大部分程序，但是偶尔也会添加一些新的特性，这些特性在旧版本的Perl中无法正常工作。
 
-This book assumes you have Perl Version 5 or higher installed. If you have Perl installed on your computer, it's likely Perl 5, but it's best to check. On a Unix or Linux system, or from an MS-DOS or MacOS X command window, the perl -v command displays the version number, in my case, Version 5.6.1. The number 5.6.1 is "bigger" than 5; that means it's okay. If you get a smaller number (very likely 4.036), you have to install a recent version of Perl to enable the majority of programs in this book to run as shown.
+本书假设你安装了Perl 5或者更高的版本。如果你的计算机中安装了Perl，那很有可能是Perl 5，但最好去确认一下。在Unix或者Linux系统中，以及MS-DOS或者MacOS X的命令行窗口中，命令\verb|perl -v|会显示Perl的版本号。在我的计算机中，使用的是Perl 5.6.1\footnote{译者注：现在最新的版本是5.14.2}。数字5.6.1比5“大”，也就是说它满足要求。如何计算机中Perl的版本号小（很有可能是4.036），你最好安装一个最新版本的Perl，这样本书中的大部分程序才能正常运行。
 
-What about future versions? Perl is always evolving, and Perl Version 6 is on the horizon. Will the code in this book still work in Perl 6? The answer is yes. Although Perl 6 is going to add some new things to the language, it should have no trouble with the Perl 5 code in this book. 
+未来的版本会如何呢？Perl总实在进化，Perl 6已经近在眼前了\footnote{译者注：Perl 6正在开发中，它将会与现在的Perl版本有很大的不同，但相信还要开发一段很长的时间。}。本书中的代码在Perl 6中能否依然正常工作？答案是肯定的。尽管Perl 6要添加一些新的东西进去，运行本书中的Perl 5代码不会存在太大的问题。
 
-\section{Installing Perl on Your Computer}
-The following sections provide pointers for installing Perl on the most common types of computer systems.
+\section{在你的计算机中安装Perl}
+接下来的几个小节将指导你在最常见的计算机系统中安装Perl。
 
-\subsection{Perl May Already Be Installed!}
-Many computers—especially Unix and Linux computers—come with Perl already installed. (Note that Unix and Linux are essentially the same kind of operating system; Linux is a clone, or functional copy, of a Unix system.) So first check to see if Perl is already there. On Unix and Linux, type the following at a command prompt:
+\subsection{也许Perl已经安装上了！}
+许多计算机，尤其是Unix和Linux计算机，已经预装了Perl。（注意Unix和Linux本质上是一样的操作系统；Linux是Unix操作系统的克隆，或者说是功能性的拷贝。）所以，首先确认一下Perl是不是已经被安装上了。在Unix和Linux系统中，在命令提示符后面输入一下命令：
 
+\noindent
 \verb|$ perl -v|
 
-If Perl is already installed, you'll see a message like the one I get on my Linux machine:
+如果Perl已经安装上了，你会看到和我自己Linux计算机上类似的信息：
 
 \begin{verbatim}
 This is perl, v5.6.1 built for i686-linux
@@ -100,148 +99,152 @@ this system using 'man perl' or 'perldoc perl'.  If you have access to the
 Internet, point your browser at http://www.perl.com/, the Perl Home Page.
 \end{verbatim}
 
-If Perl isn't installed, you'll get a message like this:
+如果没有安装Perl，你会看到如下类似的信息：
 
 \begin{verbatim}
 perl: command not found
 \end{verbatim}
 
-If you get this message, and you're on a shared Unix system at a university or business, be sure to check with the system administrator, because Perl may indeed be installed, but your environment may not be set to find it. (Or, the system administrator may say, "You need Perl? Okay, I'll install it for you.")
+如果你看到这样的信息，并且你使用的是大学或公司的公用Unix系统，一定要向系统管理员进行确认，也许Perl已经安装上了，但是你的环境设置导致你无法找到它。（或者，系统管理员可能会说：“你要用Perl？没问题，我来给你安装。”）
 
-On Windows or Macintosh, look at the program menus, or use the find program to search for perl. You can also try typing perl -v, at an MS-DOS command window or at a shell window on the MacOS X. (Note that
-the MacOS X is a Unix system!)
+在Windows或者Macintosh中，可以在程序目录中或者使用查找程序查找\textit{perl}。在MS-DOS的命令窗口或者MacOS X的shell窗口中，你同样可以尝试输入\verb|perl -v|。（注意MacOS X其实是Unix系统！）
 
-\subsection{No Internet Access?}
-If you don't have Internet access, you can take your computer to a friend who has access and connect long enough to install Perl. You can also use a Zip drive or burn a CD from a friend's computer to bring the Perl software to your computer. There are commercial shrink-wrapped CDs of Perl available from several sources (ask at your local software store) and several books such as O'Reilly's Perl Resource Kits, include CDs with Perl.
+\subsection{没有网络可用？}
+如果你没有网络可用，你可以把计算机给你可以联网的朋友，让他帮忙安装Perl。你也可以利用朋友的计算机，通过Zip磁盘片或者刻录一张光盘把Perl软件复制到你的计算机中。通过各种途径（咨询当地的软件商店），你也可以获得商业的含有Perl的包装光盘，此外，像O'Reilly出版的《Perl Resource Kits》等书籍中也会包含Perl的光盘。
 
-Apart from installing Perl, you don't need Internet access for everything in this book. If you want to do the exercises while commuting on the train, or whatever, it can certainly be done. Apart from installing Perl, the main use of the Internet for this book is to download its examples from the book's web site without having to type them; to download and try the exercises; to explore biological data from various biological databases; and to access Perl documentation, if it's not installed on your machine.
+除了安装Perl，本书中的所有内容都不要联网。在上下班坐地铁的时候，或者其他类似的情况，如果你想做做练习，也未尝不可。除了安装Perl，本书中需要联网的内容主要包括：从书籍网站上下载示例代码了，这样你就不用一行一行输入计算机了；下载并练习测试题；从各种生物学数据库中查找生物学数据；在计算机中没有安装Perl文档的情况下联网查阅Perl文档。
 
-Know that if you want to do bioinformatics, the Internet is a practical necessity. You can learn programming fundamentals from this book without an Internet connection, but you will need Internet access to download bioinformatics software and data.
+要知道，如果你想做生物信息，因特网是必不可少的。你可以在没有联网的情况下通过本书学习编程的基本原理，但是你需要联网才能下载生物信息学软件和数据。
 
-\subsection{Downloading}
-Perl is an application, so downloading and installing it on your computer is pretty much the same as installing any other application.
+\subsection{下载}
+Perl是一个应用程序，所以在你的计算机中下载和安装Perl的过程和安装其他应用程序是完全一样的。
 
-The web site that serves as a central jumping off point for all things Perl is \href{http://www.perl.com/}{http://www.perl.com/}. The main page has a Downloads clickable button that guides you to everything you need to install Perl on your computer. At the Downloads page, there's a Getting Help link and other links. So even if the information in this book becomes outdated, you can visit the Perl site and find all you need to install Perl.
+有一个网站是学习Perl相关知识的起点，它就是\href{http://www.perl.com/}{http://www.perl.com/}。网站主页上有一个下载点击按钮，通过它你可以找到在计算机上安装Perl所需要的所有东西。在下载页面，有获取帮助的链接和其他相关链接。所以即使本书中的内容过时了，你仍然可以访问Perl站点，找到安装Perl所需要的相关内容。
 
-Downloading and installing Perl is usually quite easy, in fact, the majority of the time it's perfectly painless. However, sometimes you may have to put some effort into getting it to work. If you're new at programming, and you run into difficulties, you should ask for help from a professional computer programmer, administrator, teacher, or someone in your lab who already programs in Perl.
+下载和安装Perl通常都比较容易，事实上，大部分时间都还是比较惬意的。然而，有时为了让它能够正常工作，你还是需要付出一些努力的。如果你是编程方面的新手，并且碰到了一些棘手的问题，你最好向实验室中使用Perl的专业程序员、管理员、教师等人寻求帮助。
 
-So, in a nutshell, here are the basic steps for installing Perl on your computer:
+简言之，在计算机中安装Perl的基本步骤如下所示：
 
 \begin{enumerate}
-  \item Check to see if Perl is already installed; if so, check the that version is at least Perl 5.
-  \item Get Internet access and go to the Perl home page at \href{http://www.perl.com/}{http://www.perl.com/}.
-  \item Go to the Downloads page and determine which distribution of Perl to download.
-  \item Download the correct Perl distribution.
-  \item Install the distribution on your computer.
+  \item 确认一下Perl是否已经安装上了；如果已经安装了，确认一下Perl的版本不低于Perl 5。
+  \item 连接网络，打开Perl官网的主页\href{http://www.perl.com/}{http://www.perl.com/}。
+  \item 进入下载页面，确定你要下载的Perl发行版。
+  \item 下载正确的Perl发行版。
+  \item 在你的计算机中安装此发行版。
 \end{enumerate}
 
-\subsection{Installation}
-The next sections provide specific installation instructions for specific platforms.
+\subsection{二进制 vs. 源代码}
+当从站点\href{http://www.perl.com}{http://www.perl.com}中下载Perl的时候，你需要在二进制发行版和源代码发行版中进行选择。在计算机中安装Perl的最好选择就是使用已经编译好的二进制版本，因为它最容易安装。然而，如果没有二进制版本可用，或者你想配置安装Perl时的各种选项，就可以下载Perl的源代码。源代码本身是用C语言编写的，你可以使用C编译器对它进行编译。对于新手来说，从源代码进行编译实在是太过复杂了，所以还是尽量寻找适合计算机操作系统的二进制版本吧。
 
-\subsubsection{Unix and Linux}
-If Perl isn't installed on your Unix or Linux machine, first try to find a binary to install. At the Downloads page of http://www.perl.com, you'll see the subheading Binary Distributions. Select Unix or Linux, and then see if your particular flavor of operating system has a binary available. Several versions are available, and the web-site instructions should be enough to get Perl installed once you've downloaded the binary. Most versions of Linux maintain up-to-date Perl binaries on their web sites. For instance, if you have a Red Hat Linux system, you need to identify which version of the system you have (by typing uname -a) and then get the appropriate rpm file to download and install. Red Hat has an rpm for Perl that Red Hat Linux users can install by typing:
+\subsection{安装}
+接下来的几个小节是在特定平台上安装Perl的操作指南。
 
+\subsubsection{Unix和Linux}
+如果你的Unix或者Linux计算机中没有安装Perl，首先去寻找二进制包进行安装。在\href{http://www.perl.com}{http://www.perl.com}站点的下载页面上，你会看到二进制发行版的副标题。选择Unix或Linux，看看是否有适用于你的操作系统的二进制版本。有许多版本可以下载安装，一旦你下载了二进制版本，根据网站上的指南就可以把Perl安装上了。许多Linux发行版都在它们的网站上维护着最新的Perl二进制版本。比如，如果你使用的是红帽Linux系统，你需要首先确认系统的版本（使用\verb|uname -a|），然后找到对应的rpm文件，下载之后进行安装。红帽Linux系统有Perl的rpm文件，用户可以使用以下命令进行安装：
+
+\noindent
 \verb|rpm -Uvh perl.rpm|
 
-(the actual name of the perl.rpm file varies).
+\noindent
+（perl.rpm文件的实际名称可能有所变化）。
 
-If no binary version of Perl is available for your flavor of Unix or Linux, you must compile Perl from its source code. In this case, starting from the Perl web page, click on the Downloads button and then select Source Code Distribution. The source code has an INSTALL file with instructions that guide you through the process of downloading the source code, installing it on your system, compiling the source code into a binary, and finally installing the binary.
+如果没有适用于你使用的Unix或Linux的Perl二进制版本，你就必须要从源代码进行编译了。这种情况下，还是从Perl网站开始，点击下载按钮，选择源代码发行版。源代码中有一个\textit{INSTALL}文件，它是指导你进行操作的指南，从下载源代码、在系统中进行安装、从源代码编译成二进制可执行文件，到最后安装二进制可执行文件，每一个步骤都有详细的说明。
 
-As mentioned previously, compiling from source code is a considerably longer process than installing an already made binary, and requires a bit more reading of instructions, but it usually works quite well. You will need a C compiler on your computer to install from source code.  Nowadays, some Unix systems ship without a complete C compiler. Linux will always have the free C compiler called gcc installed, and you can also install gcc on any Unix (or Windows, or Mac) system that lacks a C compiler.
+前面已经提到，相比安装已经编译好的二进制版本，从源代码进行编译是一个漫长的过程，并且需要仔细阅读操作指南，但通常这还是值得的。为了从源代码安装Perl，你需要一个C编译器。如今，某些Unix系统中并没有一个完整的C编译器，而在Linux中通常都安装有一个叫做\textit{gcc}的免费的C编译器。当然，你也可以在任何缺少C编译器的Unix（或Windows，或Mac）系统中安装\textit{gcc}。
 
 \subsubsection{Macintosh}
-The MacPerl installation steps are clearly explained on the MacPerl web page, \href{http://www.macperl.com/}{http://www.macperl.com/} (which you can also get to from the Perl web page and its Downloads button). Here's a very brief overview.
+MacPerl网站\href{http://www.macperl.com/}{http://www.macperl.com/}上（你可以从Perl网站上点击下载按钮进入该网站）清晰得解释了MacPerl的安装步骤，此处是一个简要的概述。
 
-From the MacPerl page, click on Get MacPerl, and follow the directions to download the application. It will appear on your desktop.  Double-click it to unstuff it. If you don't have Aladdin Stuffit Expander (most Macs already do), this won't work, and you'll have to go to http://www.aladdinsys.com to download and install Stuffit.
+在MacPerl网站上，点击获取MacPerl，按照指引即可下载该应用程序。它会下载到你的桌面上，双击即可进行安装。如果你没有Aladdin Stuffit Expander（大多数Mac都有），双击它就不会有什么效果，所以你需要去网站\href{http://www.aladdinsys.com}{http://www.aladdinsys.com}下载并安装Stuffit。
 
-MacPerl can be installed as a standalone application under the MacOS Finder or as a tool under the Macintosh Programmer's Workbench; you will probably want the standalone application. Perl Version 5 is available for MacOS 7.0 and later. Details about which Perl version is available for your particular hardware and MacOS version are available at the MacPerl web page.
+在MacOS Finder中MacPerl作为一个独立的应用程序进行安装，而在Macintosh程序员工作台中则作为一个工具进行安装。你想要的很可能是一个独立的应用程序。Perl 5可以适用于MacOS 7.0及其后续版本。至于哪个Perl版本适用于你自己的硬件和MacOS版本，在MacPerl网站上可以找到详细的说明。
 
 \subsubsection{Windows}
-Several binaries for different Windows versions are available. Since Windows is closely coupled with Intel 32-bit chips, these binaries are often called Wintel or Win32 binaries. The current standard Perl distribution is ActivePerl from ActiveState, at http://www.activestate.com/ActivePerl/, where you can find complete installation directions. You can also get to ActivePerl via the Downloads button from the Perl web site. Under the subheading Binary Distributions, go to Perl for Win32, and then click on the ActivePerl site.
+对于不同的Windows版本，有好多二进制发行版可供选用。因为Windows是和因特尔32位芯片密切相关的，所以这些二进制发行版通常叫做Wintl或者Win32二进制包。现在标准的Perl发行版是来自ActiveState的ActivePerl，网站是\href{http://www.activestate.com/ActivePerl/}{http://www.activestate.com/ActivePerl/}，在上面你可以找到完整的安装说明。你也可以在Perl网站上通过下载按钮找到ActivePerl，在二进制发行版副标题下，找到Perl for Win32，点击ActivePerl站点链接即可。
 
-From the ActiveState web site's ActivePerl page, click the Downloads button. You can then download the Windows-Intel binary. Note that installing it requires a program called Windows Installer, which is available at ActivePerl if it's not already on your computer. 
+在ActiveState网站的ActivePerl页面中，点击下载按钮，你将下载Windows-Intel二进制包。注意安装它需要一个叫做Windows Installer的程序，如果你的计算机中没有安装，可以在ActivePerl中找到它。
 
-\section{How to Run Perl Programs}
-The details of how to run Perl vary depending on your operating system.  The instructions that come with your Perl installation contain all you need to know. I'll give short summaries here, just enough to get you started.
+\section{如何运行Perl程序}
+如何运行Perl的详细步骤，取决于你的操作系统。你安装Perl时参考的操作指南中包含了你需要知道的所有相关内容，此处我仅进行简短的总结，这对于起步来说足够了。
 
-\subsection{Unix or Linux}
-On Unix or Linux, you usually run Perl programs from the command line.  If you're in the same directory as the program, you can run a Perl program in a file called this\_program by typing \verb|perl this_program|. If you're not in the same directory, you may have to give the pathname of the program, for example:
+\subsection{Unix或Linux}
+在Unix或Linux中，你通常会在命令行中运行Perl程序。如果你位于程序所在的目录中，假设这个Perl程序文件叫做\textit{this\_program}，你通过输入\verb|perl this_program|就可以运行它。如果你在另外的目录中，就必须要给出程序的路径名，比如：
 
+\noindent
 \verb|perl /usr/local/bin/this_program|
 
-Usually, you set the first line of this\_program to have the correct pathname for Perl on your system, because different machines may have installed Perl in different directories. On my computer, I use the following as the first line of my Perl programs:
+因为不同的计算机可能会把Perl安装在不同的目录中，所以通常情况下，你会在\textit{this\_program}文件的第一行指定系统中Perl的正确路径。在我的计算机中，我的Perl程序中的第一行是：
 
+\noindent
 \verb|#!/usr/bin/perl|
 
-You can type which perl to find the pathname where Perl is installed on your system.
+你可以通过键入\verb|which perl|来找到你系统中Perl的安装路径。
 
-You can make the program executable using the chmod program: for instance, you can type:
+使用\textit{chmod}命令，你可以赋予程序可执行权限。比如，你可以键入：
 
+\noindent
 \verb|chmod 755 this_program|
 
-If you've set the first line correctly and used chmod, you can just type
-the name of the Perl program to run it. So, if you're in the same
-directory as the program, you can type \verb|./this_program|. If the
-program is in a directory that's included in your \verb|$PATH| or
-\verb|$path| variable, you can type \verb|this_program|.\footnote{\verb|$PATH| is the variable used for the sh, bash, and ksh shells; \verb|$path| is used for csh and tcsh.}
+如果你的第一行设置正确，并且也使用了\textit{chmod}命令，你可以直接键入Perl程序的文件名来运行它。所以，如果你在程序所在的目录中，你可以键入\verb|./this_program|；如果程序所在的目录包含在\verb|$PATH|或者\verb|$path|环境变量中，你可以键入\verb|this_program|。\footnote{\verb|$PATH|是sh、bash和ksh等shell的环境变量；而\verb|$path|则适用于csh和tcsh。}
 
-If your Perl program doesn't run, the error messages you get from the shell in the command window may be confusing. For instance, the bash shell on my Linux system gives the error message:
+如果你的Perl程序没有正常运行，命令窗口中的shell会给出错误信息，这些错误信息也许会让你晕头转向。比如，我的Linux系统中的bash给出了如下所示的错误信息：
 
+\noindent
 \verb|bash: ./my_program: No such file or directory|
 
-in two cases: if there really is no program called my\_program in the current directory or if the first line of my\_program has incorrectly given the location of Perl. Watch for that, especially when running programs from CPAN (see \ref{chap:chapteraa}), which may have different pathnames for Perl embedded in their first lines. Also, if you type my\_program, you may get this error message:
+出现该错误信息有两种可能：在当前目录中确实没有叫做\textit{my\_program}的程序，或者\textit{my\_program}的第一行没有给出Perl的正确路径。你需要好好检查一下，尤其是当运行来源于CPAN（参看\ref{chap:chapteraa}）的程序时，这些程序第一行中Perl的路径往往都不相同。另外，如果你键入\verb|my_program|，可能会得到这样的错误信息：
 
+\noindent
 \verb|bash: my_program: command not found|
 
-which means that the operating system can't find the program. But it's
-there in your current directory! The problem is probably that your
-\verb|$PATH| or \verb|$path| variable doesn't include the current
-directory, and so the system isn't even looking in the current directory
-for the program. In this case, change the \verb|$PATH| or \verb|$path| variable (depending on which shell you're using), or just type \verb|/my_program| instead of \verb|my_program|.  
+这表示操作系统找不到该程序。但它就在当前目录中呀！问题可能出在你的\verb|$PATH|或\verb|$path|环境变量并不包含当前目录，所以系统根本就没在当前路径中寻找该程序。这种情况下，根据使用的shell不同，你需要修改\verb|$PATH|或\verb|$path|环境变量，或者键入\verb|./my_program|而非\verb|my_program|。
 
 \subsection{Macs}
-On Macs, the recommended way to save Perl programs is as "droplets"; the MacPerl documentation gives the simple instructions. Basically, you open the Perl program with the MacPerl application and then choose Save As and select the Type option Droplet.
+在Mac系统中，保存Perl程序时，推荐使用的方式是作为“droplets”；MacPerl文档中给出了简要的说明。基本上你只需要用MacPerl应用程序打开Perl程序，另存为时选择Droplet类型选项即可。
 
-You can drag and drop a file onto a droplet in order to use the file as input (via the @ARGV array—see the discussion in \ref{chap:chapter6}).
+你可以通过拖放文件到droplet上来把它作为输入文件（通过\verb|@ARGV|数组，参看\ref{chap:chapter6}的讨论）。
 
-The new MacOS X is a Unix system on which you have the option of running Perl programs from the command line as described earlier for Unix and Linux systems.
+最新的MacOS X其实是一个Unix系统，因此你也可以通过命令行来运行Perl程序，就像前述在Unix和Linux系统中的操作那样。
 
 \subsection{Windows}
-On Windows systems, it's usual to associate the filename extension .pl with Perl programs. This is done as part of the Perl installation process, which modifies the registry settings to include this file association. You can then launch this\_program.pl by typing \verb|this\_program| in an MS-DOS command window or by typing \verb|perl this\_program.pl|. Windows has a PATH variable specifying folders in which the system looks for programs, and this is modified by the Perl installation process to include the path to the folder for the Perl application, usually \verb|c:\perl|. If you're trying to run a Perl program that isn't installed in a folder known to the PATH variable, you can type the complete pathname to the program, for instance \verb|perl c:\windows\desktop\my\_program.pl|.
+在Windows系统中，Perl程序通常和\textit{.pl}文件名后缀相关联。在Perl安装过程中，通过修改注册表的设置实现了这种关联。有了这种关联，在MS-DOS命令窗口中，你就可以键入\verb|this_program|或者\verb|perl this_program.pl|来运行\textit{this\_program.pl}程序。Windows中有一个PATH变量，存储着系统从中寻找程序的文件夹，在Perl安装过程中，该变量被修改以便收录包含Perl应用程序的文件夹的路径，该路径通常为\textit{c:$\backslash$perl}。如果你想运行一个Perl程序，该程序所在的文件夹并为被PATH变量所收录，你可以键入该程序的完整路径，如\textit{perl c:$\backslash$windows$\backslash$desktop$\backslash$my\_program.pl}.
 
-\section{Text Editors}
-Now that you've set up your computer and installed Perl, you need to select and learn the basics of a text editor. A text editor is used to type documents, such as programs, and to save the contents of those documents into files. So to write a Perl program, you need to use a text editor. This can be a medium-sized learning job if you have never used an editor before, although some text editors are easy to learn. Here are some examples of the most popular editors, arranged by operating-system type:
+\section{文本编辑器}
+既然已经设置好了计算机，也安装上了Perl，接下来就需要选择一个文本编辑器并学习其基本知识了。文本编辑器用来键入程序等文档，并把文档内容保存到文件中。所以要编写一个Perl程序，你需要使用一个文本编辑器。尽管某些文本编辑器学习起来比较容易，但如果以前你从未使用过文本编辑器，学习起来工作量也是不小的。下面是一些最为流行的编辑器，此处依然按照操作系统的类型进行介绍：
 
-\textcolor{red}{Unix or Linux}
+\noindent
+\textcolor{red}{Unix或Linux}
 \begin{adjustwidth}{1cm}{}
-vi and emacs are complex (but very good) editors. pico, xedit, and several others (nedit, gedit, kedit) are easy to use and simple to learn but less powerful. There is also a free, Microsoft Word-compatible editor included in StarOffice (but be sure to save your files as ASCII or text-only).
+vi和Emacs都是比较复杂（但是很棒）的编辑器。pico、xedit和其他一些编辑器（nedit、gedit、kedit）非常容易使用，学习起来也不难，但功能并不是很强大。在StarOffice\footnote{译者注：现在比较流行的是OpenOffice和LibreOffice。}中包含了一个和Microsoft Word相兼容的编辑器，而且是免费的（但一定要确保把文件保存为ASCII或者纯文本）。
 \end{adjustwidth}
 
+\noindent
 \textcolor{red}{Macintosh}
 \begin{adjustwidth}{1cm}{}
-The built-in editor that comes with MacPerl is fine. There is also a nice commercial editor called BBEdit that is optimized for Perl, as well as a freeware version called BBEdit Lite. You can also use the Alpha shareware editor or Microsoft Word (be sure to save as ASCII text only).
+MacPerl内置的编辑器就很不错。有一个很好的收费编辑器叫做BBEdit，它对Perl进行了优化，相对应的免费版本叫做BBEdit Lite。你也可以使用共享编辑器Alpha或Microsoft Word（确保把文件保存为ASCII纯文本）。
 \end{adjustwidth}
 
+\noindent
 \textcolor{red}{Windows}
 \begin{adjustwidth}{1cm}{}
-Notepad works satisfactorily and may already be familiar; Microsoft Word is also usable, but always save as ASCII or text-only. Emacs on Windows is highly recommended for Perl programming on Windows-based computers, but it's a little complicated to learn. There are many other editors as well; I use a free version of the Unix editor vi called vim that has been ported to Windows.
+Notepad已经比较流行了，用起来也令人满意；Microsoft Word也是可以使用的，但一定要保存为ASCII或纯文本。在基于Windows的计算机中进行Perl编程，强烈推荐使用Emacs的Windows版本，虽然学习起来有些复杂。当然，还有好多其他的编辑器，我就使用Unix编辑器vi的一个免费版本——移植到Windows中的Vim。
 \end{adjustwidth}
 
-Many other text editors are available. Most computers come with a choice of several editors. (Many programmers try their hand at writing an editor or extending an already existing editor at some point in their careers, so the choices are truly legion.)
+还有许多其他的文本编辑器可以使用。许多计算机上都有多种编辑器可供选择。（有些程序员在他们的职业生涯中会试图编写一个编辑器，或者对已有的编辑器进行某些功能上的扩展，所以可供选择的编辑器真的是非常众多的。）
 
-Some editors are very simple to learn and use. Others have a huge variety of features, their own instruction books and discussion groups and web sites and so on, and can take quite a while to learn. If you're a new programmer, pick an easy one and save yourself the headache. Later, if you feel adventurous, you can graduate to a fancier editor with features that can speed your work. Not sure what is available on your computer? Ask for help from a programmer or another user, or consult the documentation that came with your computer system. 
+有些编辑器非常容易学习和使用；而有些编辑器则有众多的特性、相应的指南书籍、讨论组和网站等，学习它们还是要花费一定精力的。如果你是一个程序员菜鸟，不要自找麻烦，选择一个易用的编辑器吧。日后，如果你喜欢冒险，可以进一步学习使用一个“神”级的编辑器，它的某些特性会让你事半功倍。不知道在你的计算机中有哪些可用的编辑器？可以向程序员或其他用户咨询一下，或者去查阅计算机系统中附带的文档。
 
-\section{Finding Help}
-Make sure you have the necessary documentation. If you installed Perl as outlined earlier, documentation is installed as part of the general Perl installation, and the instructions that come with your Perl distribution explain how to get the documentation. There is also excellent online documentation; look for it at the Perl home page.
+\section{寻求帮助}
+确保你有必需的文档。如果你向前述那样安装了Perl，作为Perl默认安装的一部分，文档已经安装到了计算机中，而Perl发行版中附带的指南解释了如何去获取这些文档。还有一个很棒的在线文档，可以在Perl网站主页上找到它。
 
-Programming resources are places to look for answers to programming questions. Perl resources are essential to doing Perl programming. Check out \ref{chap:chapteraa} to learn where to find resources such as books, online documentation, working programs, newsgroups, archives, journals, and conferences.
+各种编程资源是寻找编程问题答案的好地方，而Perl的资源对使用Perl编程来说是必需的。去\ref{chap:chapteraa}看一下吧，从中你可以找到书籍、在线文档、可用的程序、新闻组、存档、期刊和会议等各种资源。
 
-As you get involved in programming, you will learn the most important books, web sites, Internet newsgroups and their searchable archives, local gurus (experts in the subject at hand), and program documentation.  This includes programming manuals (printed or online) and frequently asked question (FAQs).
+既然你已经开始编程，你将接触到最重要的书籍、网站、网络新闻组及其可搜索的存档、当地的大师（附近该方面的专家）以及程序文档。这些文档包括程序手册（打印版或在线版）和常见问答集（FAQs）。
 
-Most languages have a standard document set that includes the whole story about the language definition and use. Perl's is included with the program as the online manual. Although programming manuals often suffer from poor writing, it's best to be prepared to dig into them. A well-honed ability to skim is a great asset. The Perl manual isn't bad; its main problem is that, as with most manuals, all the details are there, so it can be a bit overwhelming at first. However, the Perl documentation does a decent job of helping the beginner navigate, by means of tutorial documents.
+多数编程语言都有一个标准的文档集，包括语言定义和使用的完整说明。Perl的该文档集作为在线手册包含在了程序中。尽管编程手册通常写的不咋地，但最好是做好不得不面并“生啃”它们的准备。视若无睹、充耳不闻的能力有时候也是一种宝贵的财富。Perl的手册并不是很糟糕，它最大的问题就是，像其他语言的手册一样，把所有的细节都放在了里面，所以刚一开始可能会有种卷帙浩繁的感觉。不过，教程文档可以帮助初学者对Perl文档进行梳理，这绝对是初学者的福音。
 
-Finally, I urge you, the beginning programmer, to find some experienced Perl programmer who can answer the occasional question. This may be your teacher or teaching assistant in a course, a coworker, someone down at the local computer store, or someone replying to your posting on an online newsgroup (there are newsgroups specifically for Perl beginners).  Chances are that an occasional conversation with an experienced user can save you many hours of chasing deadends during your initial learning stages. Many programmers are happy to lend a hand or offer advice to beginners, there's a friendly and collegial atmosphere that prevails in the programming community.
+最后，我极力主张程序员菜鸟去找一些经验丰富的Perl程序员，他们可以帮你解决一些偶尔遇到的问题。他可以是课程的教师或助教、同事，或者是沦落到当地计算机商店的某个人、在在线新闻组（有专门针对Perl初学者的新闻组）中回答你提问的那个人。在你的初学阶段，偶然和一个经验丰富的用户进行的交谈，会使你避免数个小时钻牛角尖的苦思冥想，这是非常有可能的。大部分程序员都非常乐意向初学者伸出援手，或者提供一定的建议。在编程界，友好、学术的气氛十分盛行。
 
-Be warned, however: experts can become irritated at people who continually pose questions whose answers are readily available in FAQs and other standard documentation. You might sometimes see the advice to RTFM—acronym for Read The F(ine) Manual—in response to such questions.  So do a little checking around in the FAQs before repeatedly asking for someone's valuable time.
+但是还有一个警告：如果有人重复提问可以在FAQs或其他标准文档中可以找到答案的问题，这往往会激怒那些专家们。对于这种类型的问题，你有时会看到RTFM——Read The F(ine) Manual\footnote{译者注：RTFM: Read The F***ing Manual。与之类似的还有STFW: Search The F***ing Web等。}——的答复。所以在重复提问之前，一定要去FAQs中查看一下是否已有解答，以避免浪费别人宝贵的时间。
 
-(I can't resist the occasional anecdote.) At my first programming job, which I took to learn programming, I was stumped by a problem for which there seemed to be no obvious solution. I approached the person who had been cited as the best programmer in the laboratory. I carefully explained my predicament as he patiently listened. When I was done, he smiled and advised, "Be a man. Do it yourself." I was crestfallen and retired in confusion. But as it turned out, his advice was given with tongue in cheek, and he later approached me and gave me pointers that led to a solution. 
+（我忍不住要提起一件偶然发生的轶事。）在我学习编程时接受的第一个任务中，有一个问题令我寸步难行，而这个问题看上去并没有很明显的解决方案。于是我向被公认为实验室里最好的程序员求助。我对遇到的困境详细得进行了描述，而他则耐心得聆听着。当我解释完后，他笑着向我说道：“男儿有泪不轻谈，自力更生当为先！”听到此话，我不免有些垂头丧气，丈二和尚摸不着头脑。但完全想不到的是，他给出的建议完全是在假装深沉，而他最终也向我进行了解释，并指点我找到了解决办法。
