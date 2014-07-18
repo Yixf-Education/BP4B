@@ -1,157 +1,157 @@
-\chapter{The Art of Programming}
+\chapter{编程的艺术}
 \label{chap:chapter3}
 \minitoc
 
-This chapter provides an overview of how programmers accomplish their jobs. If you already have Perl installed, and you want to get started writing programs for bioinformatics, feel free to skip ahead to \ref{chap:chapter4}.  
+本章将概述程序员是如何完成他们的任务的。如果你已经安装了Perl，而且想立即编写生物信息学中的实用程序，可以跳过本章直接阅读\ref{chap:chapter4}。
 
-Just as visitors to a biology lab tend to have a clueless awe of "all those test tubes," so the newcomer to programming may regard the world of the programmer as a kind of arcane black box full of weird terminology and abstruse skills. So, to make the whole enterprise a little more congenial, let's take a short tour of some important realities that affect all programmers. Two of the most important are practical strategies that good programmers use and where to go to find answers to questions that arise while you are programming. Using a couple of brief narrative case studies, we'll look at how programmers find solutions to problems. \ref{chap:chapteraa} lists some of the best Perl and bioinformatics resources to help you solve your particular problems. 
+初进生物学实验室的人对各种试管仪器会有一种莫名的崇拜，与之类似，刚刚接触编程的初学者也会对程序员的世界充满了好奇，认为它们如同一个充满了怪异术语和高深技能的神秘黑盒子。为了让读者尽快融入这个大家庭，我会对重要的知识和技能进行简短的介绍，每个程序员都要学习并使用到这些内容。其中有两个是最为重要的，一个是优秀程序员在实践过程中所使用的编程策略，另一个则是如何找到在编程过程中遇到的各种问题的答案。通过一些简单的描述性实例的学习，我们将总结出程序员寻找问题解决方案的方法。\ref{chap:chapteraa}中罗列了一些非常好的Perl和生物信息学的资源，在解决实践过程中遇到的问题时，它们会对你有所帮助的。
 
-\section{Individual Approaches to Programming}
-What's the best way to learn programming? The answer depends on what you hope to accomplish. There are several ways to get started. You can:
+\section{学习编程的不同方法}
+学习编程的最佳方法是什么？答案取决于你要完成的任务。有许多引领你入门的方法，比如：
 
 \begin{itemize}
-  \item Take classes of many different kinds
-  \item Read a tutorial book like this one
-  \item Get the programming manuals and plunge in
-  \item Be tutored by a programmer
-  \item Identify a program you need
-  \item Try any and all of the above until you've managed to write the program
+  \item 参加各种类型的学习班
+  \item 阅读像本书这样的教程性的书籍
+  \item 死啃编程手册
+  \item 拜其他的程序员为师
+  \item 研究你所需要的一个程序
+  \item 尝试上述几种或所有方法，直到对编程能够驾轻就熟为止
 \end{itemize}
 
-The answer also depends on how you choose to learn. Some people prefer classes, because the information is often presented in a well-organized way, and questions can be answered by the teacher. Others learn best with self-paced study.
+答案还取决于你打算如何学习编程。有人喜欢参加培训班，因为培训班会把知识点整理得有条有理，同时授课老师也会解答学生的各种问题。另外一些人则可能会更加喜欢自学。
 
-Some things about learning to program are common to all these approaches. If you've never programmed at all, the information in the following sections is a "heads-up" about what's ahead. 
+不管是那种学习编程的方法，有些东西却是共通的。如果以前你从未写过程序，下面几个小节的内容是你首先必须要了解的。
 
-\section{Edit—Run—Revise (and Save)}
-The most important thing about programming is that it's a hands-on learning activity such as dancing, playing music, cooking, or some other family-oriented activity. You can read about it, but you can't actually do it until you actually do it.
+\section{编辑-运行-修正（还有保存）}
+就像跳舞、弹琴、烹饪或者其他家庭中的活动一样，学习编程需要你实际动手去做，这是最重要的一点。你可以阅读源码，但如果不动手去编写、调试程序，你永远也无法真正编写出程序。
 
-While learning to program in Perl, you need to read about how Perl works, as you will in the chapters that follow. You also need to look at plenty of examples of programs. But you especially need to attempt to write your own programs, as you are asked to do in the exercises at the end of the later chapters. Only this kind of direct experience will make you a programmer.
+当学习Perl语言编程时，你要弄明白Perl是如何工作的，就像在接下来的几章中你将看到的那样。此外，你还要学习大量的程序实例。在接下来几章的最后有一些练习题供你练手，此时你要尝试编写自己的程序。只有这样的实战练习才能使你成长为一个真正的程序员。
 
-So I want to give you an overview of the most important tasks involved in writing programs, to help you approach your first programs with a clearer idea of what's really involved.
+为了帮助你写出第一个程序，同时弄明白它的工作原理，我会对一些内容进行简要的概述，这些在编写程序过程中都是至关重要的。
 
-What exactly will you be doing at the computer? The bulk of a programmer's work involves the steps of writing or revising a program in an editor, then running the program and watching how it behaves, and on the basis of that behavior going back and revising the program again. A typical programmer spends more than half of his or her time editing the program.
+你用计算机做什么？程序员使用计算机时，大部分工作都无外乎在编辑器中编写或修正程序，然后运行程序并检查它的运行状态，再根据运行状态回去检查和修正程序，如此循环往复。对于一个程序员来说，通常一半以上的时间都用在了编辑程序上。
 
-\subsection{Saves and Backups}
-Once you have even a few lines of code written, it's important to save it. In fact, you should always remember to save a version of your program at regular intervals during editing, so if you make a bunch of edits and the computer crashes, you don't lose hours of work. Also, make sure you back up your work on another disk. Hard disks fail, and when yours does, the information on it will be lost. Therefore it's essential to make regular (daily) backups of your work onto some other medium—tape, floppy disk, Zip disk, another hard disk, writable CD—whatever, just so you won't lose all your work if a disk failure occurs.
+\subsection{保存和备份}
+即使你只写了几行代码，也一定要保存它，请牢记这一点。实际上，在编辑代码的过程中，应该有定期保存程序每一个版本的观念。这样在进行了大量编辑后，即使计算机崩溃了，你也不会丢失数个小时的劳动成果。此外，要确保在另一个磁盘上对你的工作进行了备份。如果你的硬盘损坏了，上面的所有数据都会丢失。所以，对你的工作进行定期（每日）备份至关重要，可以备份到磁带、软盘、ZIP磁盘片、另一个硬盘、光盘等其他媒介上。不管怎样，当你的磁盘损坏时，因为备份的存在，你的工作内容将不会全部丢失。
 
-In addition to backups of your disks, it's also a good idea to save a dated version of your program at regular intervals. This will allow you to go back to an earlier version of your program should that prove necessary.
+除了备份硬盘，还应记住，要对你的程序进行定期保存，保留它的每一个版本\footnote{译者注：推荐使用Git等版本控制工具。}。这样，当你需要回退到程序的历史版本时，你可以轻松做到。
 
-It's also a good idea to make sure the backups you're making actually work. So, for instance, if you're backing up to a tape drive, try restoring the files from your tape drive every once in a while, just to make sure that the software and the tapes themselves are all working.  You may also want to print out ("make a hardcopy") of your programs at regular intervals for extra insurance against system failures. Finally, it's good policy to keep the backups somewhere away from the computer, so in case of fire or other disaster, the backups will be safe.
+还有一点，一定要确保你的备份确实可以使用。举个例子，如果你把数据备份到了磁带上，每次备份一段时间后，都要尝试从磁带上恢复文件，来确保软件以及磁带本身都可以正常使用。以防系统崩溃，你可能要定期把程序打印出来（“白纸黑字”），这样会多一份保险。最后一点，比较好的一个策略是不要把鸡蛋放在一个篮子里，把你的备份放在一个远离计算机的地方，这样即使遇到火灾或者其他灾难，你仍有备份可用。
 
-\subsection{Error Messages}
-Fixing errors is an essential step in writing programs. After you've written and edited a program, the next step is to run it to see if it works. Very often, you'll find that you've made some typographical error, like forgetting to put in a semicolon. As a result, your program isn't valid, and you'll get various error messages from the system. You then have to read the error messages and reedit your program to repair the offending code.
+\subsection{错误信息}
+修复错误是编写程序过程中的基本步骤。在编辑完一个程序后，接下来你要做的就是运行它，看看程序能否正常工作。多数情况下，你会发现有一些像忘记添加分号这样的拼写错误。结果可想而知，因为程序中存在语法错误，运行时你会看到系统给出的各种错误信息。这时，你将不得不仔细查看错误信息，去重新编辑程序以消除这些讨厌的错误。
 
-These error messages are sometimes rather cryptic. In the event of an error, the Perl interpreter may have some trouble knowing exactly where you went wrong. It may only recognize that there is something wrong. So it guesses where the problem is, and in the process, it may give you some extraneous information.
+有时，这些错误信息是比较隐秘的。这种错误导致的结果就是，Perl解释器很难精确定位错误所在，它仅知道某个地方出错了，也仅此而已。所以，它会猜测问题的根源所在，在这个过程中，它可能会给出一些与错误本身无关的信息。
 
-The most important thing about using error messages is to look at the first one or two error messages and ignore the rest; fix the top problems, and try running the program again. Error messages are often verbose and can run on for several pages. Just ignore everything but the first errors reported. Another important point is that the line numbers reported in those first error messages are usually right. Sometimes they're off by a line, and they're rarely way off. Later on, we'll practice generating and reading error messages.
+牢记一点，在处理错误信息时，要对后面的视而不见，只关注第一个或前两个错误信息即可。修复这一两个最先出现的问题，然后尝试重新运行一次程序。错误信息通常都比较冗长，甚至可能有数页之多。除了第一个错误，把其他的都忽略掉吧！还有一点需要注意，第一个错误信息中给出的代码行号通常都是正确的，有时它会有一行之差，但不会偏差太大。稍后，我们会练习制作错误并解读错误信息。
 
-\subsection{Debugging}
-Perhaps your edits created a valid program, and the Perl interpreter reads in your program and runs it. You find, however, that the program isn't doing what you want it to do. Now you have to go back, look at the program, and try to figure out what's wrong.
+\subsection{调试}
+也许你编写了一个程序，Perl解释器可以正常运行它而没有任何报错。然而你却发现，程序并没有像你期望的那样工作。现在，你需要回过头来，去查阅程序代码，尝试找出问题所在。
 
-Perhaps you made a simple mistake, such as adding instead of subtracting. You may have misread the documentation, and you're using the language the wrong way (reread the documentation). You may simply have an inadequate plan for accomplishing your goal (rethink your strategy and reprogram that part of the code). Sometimes you can't see what's wrong, and you have to look elsewhere (try searching newsgroup archives or FAQs or asking colleagues for help).
+也许你仅仅是犯了一个低级错误，比如，本应该使用减法的地方你却用了加法。也有可能你误解了文档中的内容，以错误的方式编写了程序（重新阅读文档吧）。还有可能你对要完成的任务考虑不周、计划不足（想清楚具体策略后重新编写相应部分的代码吧）。有时你并不能找到问题所在，那就四处求助吧（可以尝试在新闻组存档和FAQs中搜索一下，或者向同事求助）。
 
-For errors that are difficult to find, there are programs called debuggers that allow you to run the program step by step, looking at everything that's happening in the program. (\ref{chap:chapter6} takes an in-depth look at Perl's debugger.)
+对于那些难于发现的错误，有一个叫做调试器的程序专门对付它们。调试器允许你一步一步运行程序，看看在运行过程中到底发生了什么。（\ref{chap:chapter6}中对Perl的调试器进行了深入讲解。）
 
-There are other tools and techniques you can use. For instance, you can examine your program by adding print statements that print out intermediate values or results. There are also special helper programs that can observe your program while it's running and then report about it, telling you, for instance, about where the program is spending most of its time. These tools, and others like them, are essential to programming, and you need to learn how to use them. 
+当然，还有其他工具或者技术可供选用。比如，在程序中加入\verb|print|语句，把那些中间值或中间结果输出出来，这也可以帮助你检查程序。此外，也有专门的程序，在程序运行过程中它会对其进行观察，然后输出相应的报告，比如，告诉你程序的哪一部分消耗的时间最多。所有这些工具，以及其他类似的工具，对于编程来说都是必需的，一定要学会如何去使用它们。
 
-\section{An Environment of Programs}
-Programming is an exercise in problem solving. It's an iterative, gradual process. Although it can be done by one person alone, it's often a social activity (this surprises many newcomers). It requires developing specific problem-solving skills and learning a few tools.  Programming is sometimes tricky and can be frustrating. On the other hand, for those with an aptitude, there's a great sense of satisfaction that comes from building a working program.
+\section{编程文化}
+编程是解决问题的实践，它是一个重复、循序渐进的过程。单打独斗未尝不可，但它通常是一个群体性的活动（让很多初学者惊讶吧）。它需要你培养特定的解决问题的技能，还要求你学习一些新的工具。编程有时难以捉摸，会让人厌恶至极。另一方面，对于那些有能力的程序员来说，当成功编写出程序后，也会有极大的成就感。
 
-Computer programs can be many things, from barely useful, to aesthetically and intellectually stimulating, to important generators of new knowledge. They can be beautiful. (They can also be destructive, stupid, silly, or vicious; they are human creations, after all.) Because writing a program is an iterative, building, gradual process, there can be real satisfaction in seeing the work unfold from simple beginnings to complete structures. For the beginning student, this gradual unfolding of a new program mirrors the gradual mastery of the language.
+计算机程序无所不是，从一无是处，到给人美学及理智上的刺激，再到催生全新的知识。它们是如此美丽！（它们也有可能是破坏性的、愚蠢的、糊涂的甚至狠毒的，毕竟是人类创造了它们。）编写程序是一个重复、循序渐进的构建过程，从开始时的只砖片瓦，到最后的高楼大厦，看到这样的过程，谁能不由衷自豪呢？对于初学者来说，编程中的这种循序渐进的过程，简直就是一步一步学习语言的过程的缩影。
 
-As our culture began writing and accumulating programs in the middle of the 20th century, a programming environment began to develop. Gradually, we've been accumulating a substantial body of procedural knowledge.  Programs often reflect the fact that they swim in waters populated by many other programs, and beginning programmers can expect to learn a lot from this environment.
+自从20世纪中期人们开始编写并积累程序，编程文化就在不断形成。慢慢地，我们积累出了坚固的编程文化底蕴。程序会反映出其他程序对它的影响，这就是文化氛围的力量，而程序员菜鸟也会从中受益良多。
 
-\subsection{Open Source Programs}
-As programming has become important in the world, it has also become economically valuable. As a result, the source code for many programs is kept hidden to protect commercial assets and stymie the competition.
+\subsection{开源程序}
+编程越来越重要，随之就产生了经济价值，导致的后果便是，好多程序的源代码被隐藏了起来，一次来保存它的商业价值、提升竞争力。
 
-However, the source code for many of the best and most used programs are freely available for anyone to examine. Freely available source code is called open source. (There are various kinds of copyrights that may attach to open source program code, but they all allow anyone to examine the source code.) The open source movement treats program source code in a similar manner to the way scientists publish their results: publicly and open to unfettered examination and discussion.
+然而，对于那些最好、最有用的程序的源代码来说，每个人都可以免费获取进行查阅。可以免费获取的源代码通常被称作开源。（对于开源程序代码来说，有各种各样的版权附加其上，但这些版权都允许任何人去查阅源代码。）开源运动对待程序源代码的态度，和科学家发表研究结果的态度非常类似：公布于众以供他人检查和讨论。
 
-The source code for these programs can be a wonderful place for the beginning programmer to learn how professional programmers write. The programs available in open source include the Perl interpreter and a large amount of Perl code, the Linux operating system, the Apache web server, the Netscape web browser, the sendmail mail transfer agent, and much more. 
+对于程序员菜鸟来说，这些程序的源代码非常有用，因为从中可以学习到专业程序员是如何编写代码的。开源的程序包括Perl解释器和大量的Perl代码、Linux操作系统、Apache网络服务器、Netscape网页浏览器、sendmail邮件传输代理等等。
 
-\section{Programming Strategies}
-In order to give you, the beginning programmer, an idea of how programming is done, let's see how an experienced programmer goes about solving problems by giving a couple of instructive case studies.
+\section{编程策略}
+为了让初学者对编程过程有一个直观的认识，通过几个教学性的实例研究，让我们看看程序员高手是如何思考来解决问题的。
 
-Imagine that you want to count all the regulatory elements\footnote{A regulatory element is a stretch of DNA used by the cell in the control of a coding region, helping to determine if and when it's used to create a protein.} in a large chunk of DNA that you just got from the sequencing lab. You're a professional bioinformatics programmer. What do you do? There are two possible solutions: find a program or write one yourself.
+假设你从测序实验室中拿到了一大批DNA序列，现在想对其中的调控元件\footnote{所谓调控元件是指细胞用来控制编码区域的DNA区段，它将帮助决定这段编码区域是否以及何时翻译成蛋白质。}进行计数。如果你是一个专业的生物信息学程序员，你会怎么做？有两种可能的解决策略：找一个现成的程序，或者自己动手写一个。
 
-It's likely there is already a perfectly good, working, and maybe even free program that does exactly what you need. Very often, you can find exactly what you need on the Web and avoid the cost and expense of reinventing the wheel. This is programming at its best—minimal work for maximal effect. It's the classic case of the experimentalist's adage: a day in the library can save you six months in the lab.
+非常有可能已经有这样一个程序，正好是你需要的，可以正常运行而且是免费的。大多数时候，在网络上都可以找到你所需要的程序，从而避免了重复发明轮子的代价。这就是性价比最高的编程——最小的工作量换来了最大的成果。图书馆里呆一天，胜过实验室里忙半年，（他山之石可以攻玉）这是实验工作者的经典谚语。
 
-An important part of the art of programming is to keep aware of collections of programs that are available. Then you can simply use the code if it does exactly what you need, or you can take an existing program and alter it to suit your own needs. Of course, copyright laws must be observed, but much is available at no cost, especially to educational and nonprofit organizations. Most Perl module code has a copyright, but you are allowed to use it and modify it given certain restrictions. Details are available at the Perl web site and with the particular modules.
+时刻注意收集整理可用的程序，这是编程艺术中很重要的一部分。之后，你就可以使用合适的程序来完成自己的工作，或者对已有的程序进行修改来满足自己的需要。当然，还是要注意版权声明的，但是大部分都是免费的，尤其是针对学术和非营利机构。大部分的Perl模块都有版权，虽然有一定的限制，但都允许你使用并修改它。版权的细节可以在Perl网站上可以，也会和特定的模块附在一起。
 
-How do you find this wonderful, free, and already existing program? The Perl community has an organized collection of such programming code at the Comprehensive Perl Archive Network (CPAN) web site, \href{http://www.CPAN.org}{http://www.CPAN.org}. Try exploring: you'll find it's organized by topic, so it's possible to quickly find, for example, web, statistics, or graphics programs. In our case, you will find the Bioperl module, which includes several useful bioinformatics functions. A module is a collection of Perl code that can be easily loaded and used by your Perl programs.
+如何找到这些已经存在且免费的很棒的程序呢？Perl社区已经把这样的程序代码收集整理起来，放在了Perl综合典藏网（CPAN）上，网址是\href{http://www.CPAN.org}{http://www.CPAN.org}。去随便看看吧，你会发现它是按照主题进行整理的，所以可以快速查找网络、统计或图形等主题的程序。在我们这个例子中，你需要查找BioPerl模块，它包含了非常多的实用的生物信息学功能模块。所谓模块就是Perl代码的集合，你可以在Perl程序中轻松地加载并使用它们。
 
-The most useful kinds of code are convenient libraries or modules that package a suite of functions. These packages offer a great deal of flexibility in creating new programs. Although you still have to program, the job may be only a small fraction of the work of writing the whole program from scratch. For instance, to continue our example of looking for regulatory elements, your search may turn up a convenient module that lists the regulatory elements plus code that takes a list of elements and searches for them in a DNA library. Then all you have to do is combine the existing code, provide the DNA library, and with a little bit of programming, you're done.
+最有用的代码就是那些模块，它把许多相关的功能整合在了一起。在编写新程序的过程中，这些模块给予我们了极大的灵活性。尽管你仍然不得不去编程，但工作量已经大大减少，只需利用它们拼凑出一个完成的程序即可。还是以寻找调控元件为例，通过搜索你可能会发现一个方便使用的模块，它包含了所有的调控元件，还附带有相应的代码——给定调控元件后可以在DNA序列库中进行查找！而你需要做的仅仅是把这些现成的代码整合起来，给它提供一个DNA库，然后只需要很少的编程你就可以完成任务了。
 
-There are lots of other places to look for already existing code. You can search the Internet with your favorite search engines. You can browse collections of links for bioinformatics, looking for programs.  You can also search the other sources we've already covered, such as newsgroups, relevant experts, etc.
+还有好多其他地方可以找到现成的代码。你可以使用自己最喜欢的搜索引擎在网上进行搜索，可以通过浏览生物信息学链接合集来寻找程序，也可以在我们提到的新闻组、相关专家等资源那里进行寻找。
 
-If you haven't hit paydirt yet, and you know that the program will take a significant amount of time to write yourself, you may want to search the literature in the library, and perhaps enlist the aid of a librarian. You can search Medline for articles about regulatory elements, since often an article will advertise code (an actual program in a language like Perl) that the authors will forward. You can consult conference proceedings, books, and journals. Conferences and trade shows are also great places to look around, meet people, and ask questions.
+如果你没有找到问题的突破点，并且你也明白，自己写程序需要花费大量的时间，你就会想去图书馆的文献中自己查找一下，或者在图书管理员的帮助下进行查找。你可以在MEDLINE数据库中查找调控元件相关的文章，这些文章中通常会刊登有作者使用的代码（一个用Perl语言编写的程序）。你也可以在会议记录、书籍和期刊中进行查找。会议和商品展销会都是不错的地方，可以去逛逛，在那里你可以和其他人进行交流、向他们进行提问。
 
-In many cases you succeed, and despite the effort involved, you saved yourself and your laboratory days, weeks, or months of effort.
+多数情况下，你都会如愿以偿，尽管你也有一定的付出，但是你为自己和实验室节省了数天、数周甚至数月的时间。
 
-However, one big warning about modifying existing code: depending on how much alteration is required, it can sometimes be more difficult to modify existing code than to write a whole program from scratch. Why?  Well, depending on who wrote the program, it may be difficult just to see what the different parts of the code do. You can't make modifications if you can't understand what methods the program uses in the first place. (We'll talk more about writing readable code, and the importance of comments in code, later.) This factor alone accounts for a large part of the expense of programming; many programs can't be easily read, or understood, so they can't be maintained. Also, testing the program may be difficult for various reasons, and it may take a lot of time and effort to assure yourself that your modifications are working correctly.
+但是，针对修改现成的代码还有一句警告：有时修改现成的代码可能会比从头写一个完成的程序更加困难，这取决于有多少代码需要修改。为什么会这样呢？不同的程序有不同的作者，要弄明白程序各个部分的作用，有时候还是比较困难的。如果你都不理解程序第一部分使用的方法，修改又从何谈起？（稍后，我们会详谈如何编写可读的代码，以及在代码中添加注释的重要性。）这个因素本身在编程代价中就占了很大一部分。许多程序阅读、理解起来非常困难，因此也难以维护。而基于种种原因，测试这样的程序也会非常困难。要确保你的修改能够正常工作，有时会花费大量的时间与精力。
 
-Okay, let's say that you spent three days looking for an existing program, and there really wasn't anything available. (Well, there was one program, but it cost \$30,000 which is way outside your budget, and your local programming expert was too busy to write one for you.) So you absolutely have to write the program yourself.
+好吧，如果说你已经用三天的时间来寻找现成的程序，最终却一无所获，（也许有一个现成的程序，但是需要三万美元才能买到，这已经超出了你的预算；同时你身边的程序员专家忙得不可开交，也没有时间来给你写程序。）那你将不得不自己动手写一个程序了。
 
-How do you start from scratch and come up with a program that counts the regulatory elements in some DNA? Read on. 
+如何从头写一个在DNA序列中计算调控元件数目的程序呢？听我慢慢道来。
 
-\section{The Programming Process}
-You've been assigned to write a program that counts the regulatory elements in DNA. If you've never programmed you probably have no idea of how to start. Let's talk about what you need to know to write the program.
+\section{编程过程}
+现在，你被指派去写一个在DNA序列中计算调控元件数目的程序。如果以前从未编写过程序，那你很可能会毫无头绪。为了写出这个程序，我们先讨论一下你需要知道的内容。
 
-Here's a summary of the steps we'll cover:
+我们将逐步进行，这里是对这些步骤的简要概述：
 
 \begin{enumerate}
-  \item Identify the required inputs, such as data or information given by the user.
-  \item Make an overall design for the program, including the general method—the algorithm—by which the program computes the output.
-  \item Decide how the outputs will print; for example, to files or displayed graphically.
-  \item Refine the overall design by specifying more detail.  
-  \item Write the Perl program code.
+  \item 确定必需的输入，比如用户提供的数据或信息。
+  \item 对程序进行整体构思，包括程序计算输出结果的基本方法——算法。
+  \item 决定结果的输出形式；比如，输出到文件，或者进行图形化展示。
+  \item 通过添加更多的细节改善整体构思。
+  \item 编写Perl程序代码。
 \end{enumerate}
 
-These steps may be different for shorter or longer programs, but this is the general approach you will take for most of your programming.
+对于更短或者更长的程序来说，这些步骤可能有所不同，但对于你的大多数编程来说，这就是最基本的步骤。
 
-\subsection{The Design Phase}
-First, you need to conceive a plan for how the program is going to work.  This is the overall design of the program and an important step that's usually done before the actual writing of the program begins. Programs are often compared to kitchen recipes, in that they are specific instructions on how to accomplish some task. For instance, you need an idea of what inputs and outputs the program will have. In our example, the input would be the new DNA. You then need a strategy for how the program will do the necessary computing to calculate the desired output from the input.
+\subsection{构思阶段}
+首先，对于程序如何工作，你需要酝酿一个计划。这是对于程序的总体构思，而且是一个关键的步骤，这样的构思通常在实际开始编写程序之前就要完成。编程常和厨房中的食谱相类比，毕竟它们都是完成某项任务的特定操作指南。比如，你要知道程序需要什么样的输入和输出。在我们这个例子中，输入的是新的DNA序列。接下来，你需要一个策略，就是程序如何对输入进行计算处理得到我们想要的输出。
 
-In our example, the program first needs to collect information from the user: namely, where is the DNA? (This information can be the name of a file that contains the computer representation of the DNA sequence.) The program needs to allow the user to type in the name of a datafile, maybe from the computer screen or from a web page. Then the program has to check if the file exists (and complain if not, as might happen, for instance, if the user misspelled the name) and finally open the file and read in the DNA before continuing.
+在我们这个例子中，程序首先要从用户那里收集信息：也就是说，DNA序列在哪里？（这样的信息可以是存储DNA序列文件的文件名。）程序需要用户键入数据文件的文件名，可能是在计算机屏幕上进行输入，有可能是通过网页进行提交。然后，程序需要检查一下文件是否存在（有时文件并不存在，这时有发生，比如用户拼错了文件名，此时程序要给出警示），然后打开这个文件，在进行计算处理之前读入DNA序列。
 
-This simple step deserves some comment. You can put the DNA directly into the program code and avoid having to write this whole part of the program. But by designing the program to read in the DNA, it's more useful, because you won't have to rewrite the program every time you get some new DNA. It's a simple, even obvious idea, but very powerful.
+该步骤虽然简单，但仍值得进行一定的注解。你可以直接把DNA序列放在程序代码中，这样就不用去写这部分代码了。但是把程序设计成读入DNA序列还是非常有用的，因为当你拿到新的DNA序列时就不用每次都重写程序了。这种想法非常简单，甚至是显而易见的，但却非常有效。
 
-The data your program uses to compute is called the input . Input can come from files, from other programs, from users running the program, from forms filled out on web sites, from email messages, and so forth.  Most programs read in some form of input; some programs don't.
+程序用来处理的数据叫做输入。输入可以有多种来源，如文件、其他程序、运行程序的用户、网站上填写的表单、电子邮件信息等。多数程序都读入某种形式的输入，但也有程序没有输入。
 
-Let's add the list of regulatory elements to the actual program code.  You can ask for a file that contains this list, as we did with the DNA, and have the program be capable of searching different lists of regulatory elements. However, in this case, the list you will use isn't going to change, so why bother the user with inputting the name of another file?
+让我们把调控元件添加到实际的程序代码中吧。就像我们处理DNA序列一样，你可以从文件中读入调控元件；文件中存储的是调控元件的列表，这样程序就可以查找不同的调控元件了。但是，在这种情况下，我们要使用调控元件列表并不会改变，那为什么还要麻烦用户输入这样一个文件的文件名呢？
 
-Now that we have the DNA and the list of regulatory elements you have to decide in general terms how the program is actually going to search for each regulatory element in the DNA. This step is obviously the critical one, so make sure you get it right. For instance, you want the program to run quickly enough, if the speed of the program is an important consideration.
+既然有了DNA序列和调控元件列表，我们就要概括地决定程序如何在DNA序列中查找每一个调控元件。这一步显然是最为关键的一步，它将一步定乾坤。比如，如果程序的运行速度是一个重要的考虑因素，你就要让程序运行的足够快。
 
-This is the problem of choosing the correct algorithm for the job. An algorithm is a design for computing a problem (I'll say more about it in a minute). For instance, you may decide to take each regulatory element in turn and search through the DNA from beginning to end for that element before going on to the next one. Or perhaps you may decide to go through the DNA only once, and at each position check each of the regulatory elements to see if it is present. Is there be any advantage to one way or the other? Can you sort the list of regulatory elements so your search can proceed more quickly? For now, let's just say that your choice of algorithm is important.
+在这个工作中，此处的问题就是要选择正确的算法。算法就是处理问题的构思（马上我就会对此进行详述）。比如，你打算交替读入调控元件，在读入下一个调控元件之前，从头到尾在DNA中对当前元件进行查找。或者也有可能，你打算对DNA序列只进行一次从头到尾的读取，然后在DNA序列的每一个位置对每一个调控元件都进行一次查找，看看此处是否存在该调控元件。这两种方法有没有优劣之别？是否可以先对调控元件列表进行排序，这样查找就可以更快一些？此时，我们会说算法的选择至关重要。
 
-The final part of the design is to provide some form of output for the results. Perhaps you want the results displayed on a web page, as a simple list on the computer screen, in a printable file, or perhaps all of the above. At this stage, you may need to ask the user for a filename to save the output.
+构思的最后部分就是把结果以某种形式输出出来。也许你想把结果展示在网页上，或者在计算机屏幕上输出简单的列表，或者保存到一个可供打印的文件中，也可能是上述所有形式。在这个阶段，你可能需要让用户提供一个文件名来保存输出。
 
-This brings up the problem of how to display results. This question is actually a critically important one. The ideal solution is to display the results in a way that shows the user at a glance the salient features of the computation. You can use graphics, color, maps, little bouncing balls over the unexpected result: there are many options. A program that outputs results that are hard to read is clearly not doing a good job. In fact, output that makes the salient results hard to find or understand can completely negate all the effort you put into writing an elegant program. Enough said for now.
+这就是如何展示结果的问题，这也确实是一个至关重要的问题。最理想的解决办法就是以某种方式把结果展示出来，这种方式使得用户仅需一瞥就可抓住计算过程中的重要特性。你可以使用图形、颜色、地图，甚至可以把异常结果用跳跃的小球标示出来，总之有很多方法。如果一个程序的输出结果很难解读，显然这并不是一个好的程序。事实上，让重要结果很难寻找或理解的输出，会彻底抹杀掉你在编写这个优雅程序过程中的所有付出。现在说的已经足够多了。
 
-There are several strategies employed by programmers to help create good overall designs. Usually, any program but the smallest is written in several small but interconnecting parts. (We'll see lots of this as we proceed in later chapters.) What will the parts be, and how will they interconnect? The field of software engineering addresses these kinds of issues. At this point I only want to point out that they are very important and mention some of the ways programmers address the need for design.
+有非常多的策略，程序员可以使用这些策略来帮助他们进行好的整体构思。通常情况下，除了最小的程序外，所有的程序都会被分割成多个微小但却互相关联的部分。（在后续章节的学习中，我们会看到好多这样的例子。）每个部分是什么？它们之间如何进行关联？软件工程这个领域处理的就是这样的问题。此时此刻，我只想指出它们是非常重要的，提及一些程序员实现构思的途径。
 
-There are many design methodologies; each have their dedicated adherents. The best approach is to learn what is available and use the best methodology for the job at hand. For instance, in this book I'm teaching a style of programming called imperative programming , relying on dividing a problem into interacting procedures or subroutines (see \ref{chap:chapter6}), known as structured design. Another popular style is called object-oriented programming, which is also supported by Perl.
+有许多构思的方法，每种方法都有各自的拥护者。最好的办法就是了解一下有哪些可用的方法，并在处理任务时使用最合适的方法。比如，在本书中，我会教授一种叫做命令式编程的编程范式，它的理念是把一个问题分割成相互配合的程序或子程序（参看\ref{chap:chapter6}），这就是所谓的结构化设计。另外一种流行的编程范式叫做面向对象编程，Perl也支持这种范式。
 
-If you're working in a large group of programmers on a big project, the design phase can be very formal and may even be done by different people than the programmers themselves. On the other end of the scale, you will find solitary programmers who just start writing, developing a plan as they write the code. There is no one best way that works for everyone.  But no matter how you approach it, as a beginner you still need to have some sort of design in mind before you start writing code. 
+如果你在一个大的项目中和一堆程序员共事，构思阶段可能会非常正式，甚至可能会由其他人来完成，而不是由程序员自己来完成。另一方面，你可能会发现有些程序员一上来就编写程序，他们会边写程序边制定计划。没有一种适用于所有程序员的方法。（萝卜白菜，各有所爱。）但不管你怎样实现它，作为初学者，在开始编写代码之前，你最好还是要在头脑中有一定的构思。
 
-\subsection{Algorithms}
-An algorithm is the design, or plan, for the computation done by a computer program. (It's actually a tricky term to define, outside of a formal mathematical system, but this is a reasonable definition.) An algorithm is implemented by coding it in a specific computer language, but the algorithm is the idea of the computation. It's often well represented in pseudocode, which gives the idea of a program without actually being a real computer program.
+\subsection{算法}
+算法就是构思、计划，计算机程序的计算过程。（如果不使用正式的数学语言，这确实是一个难以定义的术语，不过此处也算是一个合理的定义。）一个算法要通过使用特定的计算机语言编程来实现，但算法本身是计算的思路。使用伪代码可以对算法进行很好的表述，它不是一个真正的计算机程序，但却展示了程序的思路。
 
-Most programs do simple things. They get filenames from users, open the files, and read in the data. They perform simple calculations and display the results. These are the types of algorithms you'll learn here.
+大部分程序都只做简单的事情。它们从用户那里获取文件名，打开文件并读入数据，然后进行简单的计算后把结果展示出来。此处你将学习算法的类型。
 
-However, the science of algorithms is a deep and fruitful one, with many important implications for bioinformatics. Algorithms can be designed to find new ways of analyzing biological data and of discovering new scientific results. There are certainly many problems in biology whose solutions could be, and will be, substantially advanced by inventing new algorithms.
+不管怎样，算法学都是一门深奥、成果卓越的学科，对生物信息学也产生了深远的影响。通过算法，可以找到新的分析生物学数据的方法，发现新的科学成果。在生物学中，确实有不少这样的问题，这些问题的解决必须要等待新算法的发明。
 
-The science of algorithms includes many clever techniques. As a beginning programmer, you needn't worry about them just yet. At this stage, an introductory chapter in a beginning tutorial on programming, it's not reasonable to go into details about algorithmic methods. Your first task is just to learn how to write in some programming language.  But if you keep at it, you'll start to learn the techniques. A decent textbook to keep around as a reference is a good investment for a serious programmer (see \ref{chap:chapteraa}).
+算法学中有许多巧妙的技术。作为一个程序员菜鸟，现在还没有必要为这些担心。在这个阶段，本章作为编程方面的入门教程中的导言章节，对算法方法进行深入讲解并不明智。你的首要任务就是学习如何用某种编程语言进行编程。当然，如果对算法念念不忘，你可以去学习相关的技术。买一本像样的教科书放在身边作为参考书，对一个严谨的程序员来说绝对是值得的。（参看\ref{chap:chapteraa}）。
 
-In the current example that counts regulatory elements in DNA, I suggest a way of proceeding. Take each regulatory element in turn, and search through the DNA for it, before proceeding to the next regulatory element. Other algorithms are also possible; in fact, this is one example from the general problem called string matching , which is one of the most important for bioinformatics, and the study of which has resulted in a variety of clever algorithms.
+在现在这个例子中，就是在DNA序列中对调控元件进行计数的这个例子，我给出了一种策略：交替读取调控元件，在处理下一个调控元件之前，在DNA序列中进行从头到尾的查找。其他算法也是可以的。事实上，这是字符串匹配这个普遍性问题的一个实例。字符串匹配在生物信息学中最重要的一部分，而对它的研究已经催生了许多巧妙的算法。
 
-Algorithms are usually grouped by such problems or by technique, and there is a wealth of material available. For the practical programmer, some of the most valuable materials are collections of algorithms written in specific languages, that can be incorporated into your programs. Use \ref{chap:chapteraa} as a starting place. Using the collections of code and books given there, it's possible to incorporate many algorithmic techniques in your Perl code with relative ease. 
+算法常常和这样的问题或技术一起被提起，并且也有许多资料也可查阅。对于实用主义的程序员来说，最无价的材料莫过于用特定语言写成的算法代码，你可以直接把他们用在自己的程序中。可以从\ref{chap:chapteraa}开始，使用其中列出的代码合集和书籍，能够相对轻松的把许多算法技术整合到你的Perl代码中。
 
-\subsection{Pseudocode and Code}
-Now you have an overall design, including input, algorithm, and output.  How do you actually turn this general idea into a design for a program?
+\subsection{伪代码和代码}
+现在你有了整体构思，包括输入、算法和输出。你该如何把这些想法应用到程序的设计中呢？
 
-A common implementation strategy is to begin by writing what is called pseudo-code. Pseudocode is an informal program, in which there are no details, and formal syntax isn't followed.\footnote{Syntax refers to the rules of grammar. English syntax decrees, "Go to school" not "School go to." Programming languages also have syntax rules.} It doesn't actually run as a program; its purpose is to flesh out an idea of the overall design of a program in a quick and informal way.
+一个常用的实践策略就是从编写伪代码开始。伪代码是一种非正式的程序，其中没有具体的细节，也不需要遵守正式的语法规则。\footnote{语法规则指的是就是语法的规则。根据英语语法，"Go to school"是对的，而"School go to"是错的。程序语言也有这样的语法规则。}伪代码不会向程序那样实际运行，它的目的仅仅是以一种快速、非正式的方法把程序的整体构思具体化而已。
 
-For example, in an actual Perl program you might write a bit of code called a subroutine (see Chapter 6), in this case, a subroutine that gets an answer from a user typing at the keyboard. Such a subroutine may look like this: 
+举个例子，在实际的Perl程序中你可能会写一些叫做子程序的代码（参看\ref{chap:chapter6}）。在这个例子中，子程序会从用户的键入内容中获取答案；这个子程序可能会像这样：
 
 \begin{lstlisting}
 sub getanswer {
@@ -162,15 +162,15 @@ sub getanswer {
 }
 \end{lstlisting}
 
-But in pseudocode, you might just say:
+但是在伪代码中，你可能仅仅需要这样写：
 
 \begin{lstlisting}
 getanswer
 \end{lstlisting}
 
-and worry about the details later.
+至于细节日后再说。
 
-Here's an example of pseudocode for the program I've been discussing:
+对于上面讨论的内容，这里是程序伪代码的一个例子：
 
 \begin{lstlisting}
 get the name of DNAfile from the user
@@ -184,16 +184,16 @@ for each regulatory element
 print count
 \end{lstlisting}
 
-\subsection{Comments}
-Comments are parts of Perl source code that are used as an aid to understanding what the program does. Anything from a \# sign to the end of a line is considered a comment and is ignored by the Perl interpreter. (The exception is the first line of many Perl programs, which looks something like this: \verb|#!/usr/bin/perl|; see \ref{sec:section4.2.3} in \ref{chap:chapter4}.)
+\subsection{注释}
+注释是Perl源代码的一部分，旨在帮助理解程序的所作所为。从\#开始到行末的所有内容都被看作注释，会被Perl解释起忽略掉。（唯一的例外是大多数Perl程序的第一行，是像这样的一行：\verb|#!/usr/bin/perl|；参看\ref{chap:chapter4}中的\ref{sec:section4.2.3}。）
 
-Comments are of considerable importance in keeping code useful. They typically include a discussion of the overall purpose and design of the program, examples of how to use the program, and detailed notes interspersed throughout the code explaining why that code is there and what it does. In general, a good programmer writes good comments as an integral part of the program. You'll see comments in all the programming examples in this book.
+注释对于保持代码可用是非常重要的。注释通常包括对于程序主要目的和整体构思的讨论、如何使用程序的实例，以及散布程序各处的细节注解，来解释为什么那段代码在这里、它是做什么用的。一般来说，好的程序员会把好的注释作为程序完整的一部分来进行编写。在本书的所有编程实例中，你都会看到注释。
 
-This is important: your code has to be readable by humans as well as computers.
+你的代码不只会被计算机读入，也会被人查阅，这一点非常重要！
 
-Comments can also be useful when debugging misbehaving programs. If you're having trouble figuring out where a program is going wrong, you can try to selectively comment out different parts of the code. If you find a section that, when commented out, removes the problem, you can then narrow down the part you've commented out until you have a fairly short section of code in which you know where the problem is. This is often a useful debugging approach.
+在调试行为异常的程序时，注释往往非常有用。如果无法确认程序出错的地方，你可以尝试选择性地注释掉不同部分的代码。如果你发现当注释掉某一部分代码后问题消失了，就可以把出错范围缩小到你注释掉的那部分代码，当这部分代码足够短时，你就找到问题的所在了。这常常是一个非常有用的调试方法。
 
-Comments can be used when you turn pseudocode into Perl source code.  Pseudocode is not Perl code, so the Perl interpreter will complain about any pseudocode that is not commented out. You can comment out the pseudocode by placing \# signs at the beginning of all pseudocode lines: 
+在你把伪代码转换成Perl源代码时，也可以使用注释。伪代码不是Perl代码，所以对于任何没有注释掉的伪代码，Perl解释器都会报错。在伪代码所在行的开头加上\#就可以把它注释掉了：
 
 \begin{lstlisting}
 #get the name of DNAfile from the user
@@ -207,8 +207,8 @@ Comments can be used when you turn pseudocode into Perl source code.  Pseudocode
 #print count
 \end{lstlisting}
 
-As you expand your pseudocode design into Perl code, you can uncomment the Perl code by removing the \# signs. In this way you may have a mixture of Perl and pseudocode, but you can run and test the Perl parts; the Perl interpreter simply ignores commented-out lines.
+在你把伪代码扩展成Perl代码时，移除\#就可以对Perl代码取消注释了。用这种方法时，Perl代码和伪代码会混杂在一起，但你可以正常运行或测试Perl代码部分，因为Perl解释器会把注释行简单地忽略掉。
 
-You can even leave the complete pseudocode design, commented out, intact in the program. This leaves an outline of the program's design that may come in handy when you or someone else tries to read or modify the code.
+你可以把伪代码整个保留在程序中，只需把它们注释掉即可。这种做法会保留下程序构思的提纲，当你或其他人试图阅读或修改代码时它们就会派上用场。
 
-We've now reached the point where we're ready for actual Perl programming. In \ref{chap:chapter4} you will learn Perl syntax and begin programming in Perl. As you do, remember the initial phase of designing your program, followed by the cycle you will spend most of your time in: editing the program, running the program, and revising the program. 
+现在我们已经可以开始进行真正的Perl编程了。在\ref{chap:chapter4}中，你会学习Perl的语法规则，并开始用Perl进行编程。当你开始编程时，牢记首先要对你的程序进行构思，之后才是你将花费大量时间重复去做的事情：编辑程序、运行程序，然后修正程序。
