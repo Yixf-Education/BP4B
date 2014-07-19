@@ -2,9 +2,9 @@
 \label{chap:chapter3}
 \minitoc
 
-This chapter provides an overview of how programmers accomplish their jobs. If you already have Perl installed, and you want to get started writing programs for bioinformatics, feel free to skip ahead to \ref{chap:chapter4}.
+This chapter provides an overview of how programmers accomplish their jobs. If you already have Perl installed, and you want to get started writing programs for bioinformatics, feel free to skip ahead to \autoref{chap:chapter4}.
 
-Just as visitors to a biology lab tend to have a clueless awe of "all those test tubes," so the newcomer to programming may regard the world of the programmer as a kind of arcane black box full of weird terminology and abstruse skills. So, to make the whole enterprise a little more congenial, let's take a short tour of some important realities that affect all programmers. Two of the most important are practical strategies that good programmers use and where to go to find answers to questions that arise while you are programming. Using a couple of brief narrative case studies, we'll look at how programmers find solutions to problems. \ref{chap:chapteraa} lists some of the best Perl and bioinformatics resources to help you solve your particular problems. 
+Just as visitors to a biology lab tend to have a clueless awe of "all those test tubes," so the newcomer to programming may regard the world of the programmer as a kind of arcane black box full of weird terminology and abstruse skills. So, to make the whole enterprise a little more congenial, let's take a short tour of some important realities that affect all programmers. Two of the most important are practical strategies that good programmers use and where to go to find answers to questions that arise while you are programming. Using a couple of brief narrative case studies, we'll look at how programmers find solutions to problems. \autoref{chap:chapteraa} lists some of the best Perl and bioinformatics resources to help you solve your particular problems. 
 
 \section{Individual Approaches to Programming}
 What's the best way to learn programming? The answer depends on what you hope to accomplish. There are several ways to get started. You can:
@@ -50,7 +50,7 @@ Perhaps your edits created a valid program, and the Perl interpreter reads in yo
 
 Perhaps you made a simple mistake, such as adding instead of subtracting. You may have misread the documentation, and you're using the language the wrong way (reread the documentation). You may simply have an inadequate plan for accomplishing your goal (rethink your strategy and reprogram that part of the code). Sometimes you can't see what's wrong, and you have to look elsewhere (try searching newsgroup archives or FAQs or asking colleagues for help).
 
-For errors that are difficult to find, there are programs called debuggers that allow you to run the program step by step, looking at everything that's happening in the program. (\ref{chap:chapter6} takes an in-depth look at Perl's debugger.)
+For errors that are difficult to find, there are programs called debuggers that allow you to run the program step by step, looking at everything that's happening in the program. (\autoref{chap:chapter6} takes an in-depth look at Perl's debugger.)
 
 There are other tools and techniques you can use. For instance, you can examine your program by adding \verb|print| statements that print out intermediate values or results. There are also special helper programs that can observe your program while it's running and then report about it, telling you, for instance, about where the program is spending most of its time. These tools, and others like them, are essential to programming, and you need to learn how to use them. 
 
@@ -129,7 +129,7 @@ This brings up the problem of how to display results. This question is actually 
 
 There are several strategies employed by programmers to help create good overall designs. Usually, any program but the smallest is written in several small but interconnecting parts. (We'll see lots of this as we proceed in later chapters.) What will the parts be, and how will they interconnect? The field of software engineering addresses these kinds of issues. At this point I only want to point out that they are very important and mention some of the ways programmers address the need for design.
 
-There are many design methodologies; each have their dedicated adherents. The best approach is to learn what is available and use the best methodology for the job at hand. For instance, in this book I'm teaching a style of programming called imperative programming, relying on dividing a problem into interacting procedures or subroutines (see \ref{chap:chapter6}), known as structured design. Another popular style is called object-oriented programming, which is also supported by Perl.
+There are many design methodologies; each have their dedicated adherents. The best approach is to learn what is available and use the best methodology for the job at hand. For instance, in this book I'm teaching a style of programming called imperative programming, relying on dividing a problem into interacting procedures or subroutines (see \autoref{chap:chapter6}), known as structured design. Another popular style is called object-oriented programming, which is also supported by Perl.  
 
 If you're working in a large group of programmers on a big project, the design phase can be very formal and may even be done by different people than the programmers themselves. On the other end of the scale, you will find solitary programmers who just start writing, developing a plan as they write the code. There is no one best way that works for everyone. But no matter how you approach it, as a beginner you still need to have some sort of design in mind before you start writing code. 
 
@@ -140,18 +140,18 @@ Most programs do simple things. They get filenames from users, open the files, a
 
 However, the science of algorithms is a deep and fruitful one, with many important implications for bioinformatics. Algorithms can be designed to find new ways of analyzing biological data and of discovering new scientific results. There are certainly many problems in biology whose solutions could be, and will be, substantially advanced by inventing new algorithms.
 
-The science of algorithms includes many clever techniques. As a beginning programmer, you needn't worry about them just yet. At this stage, an introductory chapter in a beginning tutorial on programming, it's not reasonable to go into details about algorithmic methods. Your first task is just to learn how to write in some programming language. But if you keep at it, you'll start to learn the techniques. A decent textbook to keep around as a reference is a good investment for a serious programmer (see \ref{chap:chapteraa}).
+The science of algorithms includes many clever techniques. As a beginning programmer, you needn't worry about them just yet. At this stage, an introductory chapter in a beginning tutorial on programming, it's not reasonable to go into details about algorithmic methods. Your first task is just to learn how to write in some programming language.  But if you keep at it, you'll start to learn the techniques. A decent textbook to keep around as a reference is a good investment for a serious programmer (see \autoref{chap:chapteraa}).
 
 In the current example that counts regulatory elements in DNA, I suggest a way of proceeding. Take each regulatory element in turn, and search through the DNA for it, before proceeding to the next regulatory element. Other algorithms are also possible; in fact, this is one example from the general problem called string matching, which is one of the most important for bioinformatics, and the study of which has resulted in a variety of clever algorithms.
 
-Algorithms are usually grouped by such problems or by technique, and there is a wealth of material available. For the practical programmer, some of the most valuable materials are collections of algorithms written in specific languages, that can be incorporated into your programs. Use \ref{chap:chapteraa} as a starting place. Using the collections of code and books given there, it's possible to incorporate many algorithmic techniques in your Perl code with relative ease. 
+Algorithms are usually grouped by such problems or by technique, and there is a wealth of material available. For the practical programmer, some of the most valuable materials are collections of algorithms written in specific languages, that can be incorporated into your programs. Use \autoref{chap:chapteraa} as a starting place. Using the collections of code and books given there, it's possible to incorporate many algorithmic techniques in your Perl code with relative ease. 
 
 \subsection{Pseudocode and Code}
 Now you have an overall design, including input, algorithm, and output. How do you actually turn this general idea into a design for a program?
 
 A common implementation strategy is to begin by writing what is called pseudo-code. Pseudocode is an informal program, in which there are no details, and formal syntax isn't followed.\footnote{Syntax refers to the rules of grammar. English syntax decrees, "Go to school" not "School go to." Programming languages also have syntax rules.} It doesn't actually run as a program; its purpose is to flesh out an idea of the overall design of a program in a quick and informal way.
 
-For example, in an actual Perl program you might write a bit of code called a subroutine (see \ref{chap:chapter6}), in this case, a subroutine that gets an answer from a user typing at the keyboard. Such a subroutine may look like this: 
+For example, in an actual Perl program you might write a bit of code called a subroutine (see \autoref{chap:chapter6}), in this case, a subroutine that gets an answer from a user typing at the keyboard. Such a subroutine may look like this: 
 
 \begin{lstlisting}
 sub getanswer {
@@ -185,7 +185,7 @@ print count
 \end{lstlisting}
 
 \subsection{Comments}
-Comments are parts of Perl source code that are used as an aid to understanding what the program does. Anything from a \# sign to the end of a line is considered a comment and is ignored by the Perl interpreter. (The exception is the first line of many Perl programs, which looks something like this: \verb|#!/usr/bin/perl|; see \ref{sec:section4.2.3} in \ref{chap:chapter4}.)
+Comments are parts of Perl source code that are used as an aid to understanding what the program does. Anything from a \# sign to the end of a line is considered a comment and is ignored by the Perl interpreter. (The exception is the first line of many Perl programs, which looks something like this: \verb|#!/usr/bin/perl|; see \autoref{sec:section4.2.3} in \autoref{chap:chapter4}.)
 
 Comments are of considerable importance in keeping code useful. They typically include a discussion of the overall purpose and design of the program, examples of how to use the program, and detailed notes interspersed throughout the code explaining why that code is there and what it does. In general, a good programmer writes good comments as an integral part of the program. You'll see comments in all the programming examples in this book.
 
@@ -211,4 +211,4 @@ As you expand your pseudocode design into Perl code, you can uncomment the Perl 
 
 You can even leave the complete pseudocode design, commented out, intact in the program. This leaves an outline of the program's design that may come in handy when you or someone else tries to read or modify the code.
 
-We've now reached the point where we're ready for actual Perl programming. In \ref{chap:chapter4} you will learn Perl syntax and begin programming in Perl. As you do, remember the initial phase of designing your program, followed by the cycle you will spend most of your time in: editing the program, running the program, and revising the program. 
+We've now reached the point where we're ready for actual Perl programming. In \autoref{chap:chapter4} you will learn Perl syntax and begin programming in Perl. As you do, remember the initial phase of designing your program, followed by the cycle you will spend most of your time in: editing the program, running the program, and revising the program. 

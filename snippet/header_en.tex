@@ -50,10 +50,23 @@
 \usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 %\def\sectionautorefname{Section}
 \def\chapterautorefname{Chapter}
+\def\sectionautorefname{Section}
+\def\tableautorefname{Table}
+\def\lstlistingautorefname{Example}
+%\def\chapterautorefname{Chap.}
+%\def\sectionautorefname{Sec.}
+%\def\subsectionautorefname{sub--Sec.}
+%\def\figureautorefname{Fig.}
+%\def\tableautorefname{Tab.}
+%\def\equationautorefname{Eq.}
 
 %使表格可以跨页
 %\usepackage{booktabs,longtable}
 \usepackage{booktabs,tabu}
+%调整表头和表格之间的间距
+\setlength\belowcaptionskip{5pt}
+%\usepackage{caption} 
+%\captionsetup[table]{skip=5pt}
 
 %调整表格行高
 \renewcommand{\arraystretch}{0.8}
@@ -109,4 +122,8 @@
   xleftmargin=2em,
   xrightmargin=2em
 }
+%\renewcommand\lstlistingname{Example}
+%\renewcommand\lstlistlistingname{Examples}
 
+%\usepackage{chngcntr}% http://ctan.org/pkg/chngcntr
+%\AtBeginDocument{\counterwithin{lstlisting}{chapter}}
