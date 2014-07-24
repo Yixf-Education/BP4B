@@ -469,7 +469,7 @@ For the rest of the chapter, both protein and DNA sequence data are used.
 \section{Reading Proteins in Files}
 Programs interact with files on a computer disk. These files can be on hard disk, CD, floppy disk, Zip drive, magnetic tape—any kind of permanent storage.
 
-Let's take a look at how to read protein sequence data from a file.  First, create a file on your computer (use your text editor) and put some protein sequence data into it. Call the file \textit{NM\_021964fragment.pep} (you can download it from this book's web site).  You will be using the following data (part of the human zinc finger protein NM\_021964):
+Let's take a look at how to read protein sequence data from a file. First, create a file on your computer (use your text editor) and put some protein sequence data into it. Call the file \textit{NM\_021964fragment.pep} (you can download it from this book's web site). You will be using the following data (part of the human zinc finger protein NM\_021964):
 
 \begin{verbatim}
 MNIDDKLEGLFLKCGGIDEMQSSRTMVVMGGVSGQSTVSGELQD
@@ -481,7 +481,7 @@ You can use any name, except one that's already in use in the same folder.
 
 Just as well-chosen variable names can be critical to understanding a program, well-chosen file and folder names can also be critical. If you have a project that generates lots of computer files, you need to carefully consider how to name and organize the files and folders. This is as true for individual researchers as for large, multi-national teams. It's important to put some effort into assigning informative names to files.
 
-The filename \textit{NM\_021964fragment.pep} is taken from the GenBank ID of the record where this protein is found. It also indicates the fragmentary nature of the data and contains the filename extension .pep to remind you that the file contains peptide or protein sequence data. Of course, some other scheme might work better for you; the point is to get some idea of what's in the file without having to look into it.
+The filename \textit{NM\_021964fragment.pep} is taken from the GenBank ID of the record where this protein is found. It also indicates the fragmentary nature of the data and contains the filename extension \textit{.pep} to remind you that the file contains peptide or protein sequence data. Of course, some other scheme might work better for you; the point is to get some idea of what's in the file without having to look into it.
 
 Now that you've created or downloaded a file with protein sequence data in it, let's develop a program that reads the protein sequence data from the file and stores it into a variable. \autoref{exam:example4.5} shows a first attempt, which will be added to as we progress.
 
@@ -509,7 +509,7 @@ After opening the file, you can do various things with it, such as reading, writ
 
 If you look at the documentation for the \verb|open| function, you'll see many options. Mostly, they enable you to specify exactly what the file will be used for after it's opened.
 
-Let's examine the term \verb|PROTEINFILE|, which is called a \textit{filehandle}. With filehandles, it's not important to understand what they really are.  They're just things you use when you're dealing with files. They don't have to have capital letters, but it's a widely followed convention.  After the open statement assigns a filehandle, all the interaction with a file is done by naming the filehandle.  
+Let's examine the term \verb|PROTEINFILE|, which is called a \textit{filehandle}. With filehandles, it's not important to understand what they really are. They're just things you use when you're dealing with files. They don't have to have capital letters, but it's a widely followed convention. After the \textit{open} statement assigns a filehandle, all the interaction with a file is done by naming the filehandle.  
 
 The data is actually read in to the program with the statement:
 
@@ -517,7 +517,7 @@ The data is actually read in to the program with the statement:
 $protein = <PROTEINFILE>;
 \end{lstlisting}
 
-Why is the filehandle \verb|PROTEINFILE| enclosed within angle brackets? These angle brackets are called \textit{input operators}; a filehandle within angle brackets is how you bring in data from some source outside the program.  Here, we're reading the file called \verb|NM\_021964fragment.pep| whose name is stored in variable \verb|$proteinfilename|, and which has a filehandle associated with it by the open statement. The data is being stored in the variable \verb|$protein| and then printed out.
+Why is the filehandle \verb|PROTEINFILE| enclosed within angle brackets?  These angle brackets are called \textit{input operators}; a filehandle within angle brackets is how you bring in data from some source outside the program. Here, we're reading the file called \verb|NM\_021964fragment.pep| whose name is stored in variable \verb|$proteinfilename|, and which has a filehandle associated with it by the \verb|open| statement. The data is being stored in the variable \verb|$protein| and then printed out.
 
 However, as you've already noticed, only the first line of this multiline file is printed out. Why? Because there are a few more things to learn about reading in files.
 
@@ -527,7 +527,7 @@ There are several ways to read in a whole file. \autoref{exam:example4.6} shows 
 
 \lstinputlisting[label=exam:example4.6]{./scripts/example4-6.pl}
 
-Here's the output of Example 4-6:
+Here's the output of \autoref{exam:example4.6}:
 
 \begin{lstlisting}
 Here is the first line of the protein file:
@@ -554,7 +554,7 @@ In computer languages an array is a variable that stores multiple scalar values.
 
 \lstinputlisting[label=exam:example4.7]{./scripts/example4-7.pl}
 
-Here's the output of Example 4-7:
+Here's the output of \autoref{exam:example4.7}:
 
 \begin{lstlisting}
 MNIDDKLEGLFLKCGGIDEMQSSRTMVVMGGVSGQSTVSGELQD
@@ -768,14 +768,14 @@ Next, \autoref{exam:example4.8} tries to assign an array (to repeat, a kind of l
 ($a) = @bases;
 \end{lstlisting}
 
-In this kind of \textit{list context}, an array evaluates to a list of its elements. The list context is supplied by the list in parentheses on the left side of the statement. If there aren't enough variables on the left side to assign to, only part of the array gets assigned to variables.  This behavior of Perl pops up in many situations; by design, many features of Perl behave differently depending on whether they are in scalar or list context. See \autoref{chap:chapterab} for more about scalar and list content.
+In this kind of \textit{list context}, an array evaluates to a list of its elements. The list context is supplied by the list in parentheses on the left side of the statement. If there aren't enough variables on the left side to assign to, only part of the array gets assigned to variables. This behavior of Perl pops up in many situations; by design, many features of Perl behave differently depending on whether they are in scalar or list context. See \autoref{chap:chapterab} for more about scalar and list content.
 
 Now you've seen the use of strings and arrays to hold sequence and file data, and learned the basic syntax of Perl, including variables, assignment, printing, and reading files. You've transcribed DNA to RNA and calculated the reverse complement of a strand of DNA. By the end of \autoref{chap:chapter5}, you'll have covered the essentials of Perl programming. 
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 4.1}}
 \begin{adjustwidth}{1cm}{}
-Explore the sensitivity of programming languages to errors of syntax.  Try removing the semicolon from the end of any statement of one of our working programs and examining the error messages that result, if any.  Try changing other syntactical items: add a parenthesis or a curly brace; misspell "print" or some other reserved word; just type in, or delete, anything. Programmers get used to seeing such errors; even after getting to know the language well, it is still common to have some syntax errors as you gradually add code to a program. Notice how one error can lead to many lines of error reporting. Is Perl accurately reporting the line where the error is? 
+Explore the sensitivity of programming languages to errors of syntax. Try removing the semicolon from the end of any statement of one of our working programs and examining the error messages that result, if any.  Try changing other syntactical items: add a parenthesis or a curly brace; misspell "print" or some other reserved word; just type in, or delete, anything. Programmers get used to seeing such errors; even after getting to know the language well, it is still common to have some syntax errors as you gradually add code to a program. Notice how one error can lead to many lines of error reporting. Is Perl accurately reporting the line where the error is? 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 4.2}}
@@ -805,6 +805,6 @@ Read two files of data, and print the contents of the first followed by the cont
 
 \textcolor{red}{\textit{Exercise 4.7}}
 \begin{adjustwidth}{1cm}{}
-This is a more difficult exercise. Write a program to read a file, and then print its lines in reverse order, the last line first. Or you may want to look up the functions \textit{push}, \textit{pop}, \textit{shift}, and \textit{unshift}, and choose one or more of them to accomplish this exercise. You may want to look ahead to \autoref{chap:chapter5} so you can use a loop in this program, but this may not be necessary depending on the approach you take. Or, you may want to use reverse on an array of lines. 
+This is a more difficult exercise. Write a program to read a file, and then print its lines in reverse order, the last line first. Or you may want to look up the functions \textit{push}, \textit{pop}, \textit{shift}, and \textit{unshift}, and choose one or more of them to accomplish this exercise. You may want to look ahead to \autoref{chap:chapter5} so you can use a loop in this program, but this may not be necessary depending on the approach you take. Or, you may want to use \textit{reverse} on an array of lines. 
 \end{adjustwidth}
 

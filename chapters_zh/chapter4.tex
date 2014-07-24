@@ -454,20 +454,20 @@ This time it worked!
 \verb|reverse|函数进行的工作也是我们需要的，虽然有点大材小用了。它被设计用来反转元素的顺序，包括字符串，就像在\autoref{exam:example4.4}中看到的那样。
 
 \section{蛋白质，文件和数组}
-So far we've been writing programs with DNA sequence data. Now we'll also include the equally important protein sequence data. Here's an overview of what is covered in the following sections:
+到现在为止，我们已经编写了处理DNA序列数据的程序，现在，我们也将要处理同样重要的蛋白质序列数据。接下来的几个小节将要学习一些新的知识，这里是一个简单的概述：
 
 \begin{itemize}
-  \item How to use protein sequence data in a Perl program
-  \item How to read protein sequence data in from a file
-  \item Arrays in the Perl language
+  \item 在Perl程序中如何使用蛋白质序列数据
+  \item 如何从一个文件中读入蛋白质序列数据
+  \item Perl语言中的数组
 \end{itemize}
 
-For the rest of the chapter, both protein and DNA sequence data are used. 
+在本章的剩余部分中，蛋白质和DNA序列数据都将使用到。
 
-\section{Reading Proteins in Files}
-Programs interact with files on a computer disk. These files can be on hard disk, CD, floppy disk, Zip drive, magnetic tape—any kind of permanent storage.
+\section{从文件中读取蛋白质序列数据}
+程序要和计算机磁盘中的文件进行交互。这些文件可以存储在任何永久性存储介质中——硬盘、光盘、软盘、Zip磁盘、磁带等。
 
-Let's take a look at how to read protein sequence data from a file.  First, create a file on your computer (use your text editor) and put some protein sequence data into it. Call the file \textit{NM\_021964fragment.pep} (you can download it from this book's web site).  You will be using the following data (part of the human zinc finger protein NM\_021964):
+让我们看看如何从文件中读取蛋白质序列数据吧。首先，在你的计算机上创建一个文件（使用文本编辑器），并在其中存储一些蛋白质序列数据。给这个文件起名为\textit{NM\_021964fragment.pep}（你可以在书籍网站上下载到该文件）。你将使用下列数据（人类锌指蛋白NM\_021964的一部分）：
 
 \begin{verbatim}
 MNIDDKLEGLFLKCGGIDEMQSSRTMVVMGGVSGQSTVSGELQD
@@ -475,19 +475,20 @@ SVLQDRSMPHQEILAADEVLQESEMRQQDMISHDELMVHEETVKNDEEQMETHERLPQ
 GLQYALNVPISVKQEITFTDVSEQLMRDKKQIR
 \end{verbatim}
 
-You can use any name, except one that's already in use in the same folder.
+你可以给它起任意一个名字，只要和文件夹中已有的文件不重名即可。
 
-Just as well-chosen variable names can be critical to understanding a program, well-chosen file and folder names can also be critical. If you have a project that generates lots of computer files, you need to carefully consider how to name and organize the files and folders. This is as true for individual researchers as for large, multi-national teams. It's important to put some effort into assigning informative names to files.
+就像好的变量名对于理解程序至关重要一样，好的文件名和文件夹名也是非常重要的。如果你有一个项目，这个项目会生成大量的文件，那你就需要认真考虑如何对这些文件和文件夹命名和组织了。不管是对于某一个研究人员还是对于一个庞大的多国团队来说，这都是非常现实的问题。花一些功夫来给文件起一个富含信息量的名字是非常重要的。
 
-The filename \textit{NM\_021964fragment.pep} is taken from the GenBank ID of the record where this protein is found. It also indicates the fragmentary nature of the data and contains the filename extension .pep to remind you that the file contains peptide or protein sequence data. Of course, some other scheme might work better for you; the point is to get some idea of what's in the file without having to look into it.
+文件名\textit{NM\_021964fragment.pep}来源于蛋白质的GenBank
+ID。同时，它还表明了这只是数据的一部分，而文件的后缀\textit{.pep}则提醒你文件中保存的是肽或蛋白质序列数据。当然，其他的命名方案可能会更加适合于你。不管怎样，关键的一点就是不需要打开文件，仅仅通过文件名就可以对文件保存的数据有所了解。
 
-Now that you've created or downloaded a file with protein sequence data in it, let's develop a program that reads the protein sequence data from the file and stores it into a variable. \autoref{exam:example4.5} shows a first attempt, which will be added to as we progress.
+你已经创建或者下载了保存有蛋白质序列数据的文件，那我们就来编写一个程序吧，这个程序从文件中读入蛋白质序列数据并把它保存到变量中。\autoref{exam:example4.5}是第一次尝试，随着学习我们会逐步对它进行扩展。
 
-\textbf{Example 4-5. Reading protein sequence data from a file}
+\textbf{例4-5：从文件中读取蛋白质序列数据}
 
 \lstinputlisting[label=exam:example4.5]{./scripts/example4-5.pl}
 
-Here's the output of \autoref{exam:example4.5}:
+下面是\autoref{exam:example4.5}的输出：
 
 \begin{lstlisting}
 Here is the protein:
@@ -495,37 +496,37 @@ Here is the protein:
 MNIDDKLEGLFLKCGGIDEMQSSRTMVVMGGVSGQSTVSGELQD
 \end{lstlisting}
 
-Notice that only the first line of the file prints out. I'll show why in a moment.
+注意只有文件的第一行被打印输出出来，稍后我会解释为什么会这样。
 
-Let's look at \autoref{exam:example4.5} in more detail. After putting a filename into the variable \verb|$proteinfilename|, the file is opened with the following statement:
+让我们仔细研究一下\autoref{exam:example4.5}吧。在把文件名保存到\verb|$proteinfilename|变量中后，下面这个声明会打开文件：
 
 \begin{lstlisting}
 open(PROTEINFILE, $proteinfilename);
 \end{lstlisting}
 
-After opening the file, you can do various things with it, such as reading, writing, searching, going to a specific location in the file, erasing everything in the file, and so on. Notice that the program assumes the file named in the variable \verb|$proteinfilename| exists and can be opened. You'll see in a little bit how to check for that, but here's something to try: change the name of the filename in \verb|$proteinfilename| so that there's no file of that name on your computer, and then run the program. You'll get some error messages if the file doesn't exist.
+打开文件后，你就可以对它进行各种操作了，比如读取、写入、查找、定位到文件的特定位置、清除文件中的所有数据，等等。注意，程序假设保存在\verb|$proteinfilename|变量中的文件是存在的，而且可以打开。你将会看到如何来确认这一点，现在你可以进行一下这样的尝试：更改\verb|$proteinfilename|变量中文件的名字，这样计算机上就没有叫原来那个名字的文件了，之后运行一下程序。如果文件并不存在，你会看到一些错误信息。
 
-If you look at the documentation for the \verb|open| function, you'll see many options. Mostly, they enable you to specify exactly what the file will be used for after it's opened.
+如果你查阅\verb|open|函数的文档，你会看到好多选项，大多数选项都是在打开文件后让你精确指定如何使用文件的。
 
-Let's examine the term \verb|PROTEINFILE|, which is called a \textit{filehandle}. With filehandles, it's not important to understand what they really are.  They're just things you use when you're dealing with files. They don't have to have capital letters, but it's a widely followed convention.  After the open statement assigns a filehandle, all the interaction with a file is done by naming the filehandle.  
+让我们来看一下\verb|PROTEINFILE|这个数据，它叫做\textit{文件句柄}。没有必要理解文件句柄真正是什么，它们就是你处理文件时使用的东西。对于文件句柄，比一定必须使用大写字母，但这是一个广为接受的惯例。在使用\textit{open}声明对文件句柄赋值后，对文件进行的任何交互操作都将通过使用文件句柄来进行。
 
-The data is actually read in to the program with the statement:
+使用这个声明，就可以把数据读入到程序中了：
 
 \begin{lstlisting}
 $protein = <PROTEINFILE>;
 \end{lstlisting}
 
-Why is the filehandle \verb|PROTEINFILE| enclosed within angle brackets? These angle brackets are called \textit{input operators}; a filehandle within angle brackets is how you bring in data from some source outside the program.  Here, we're reading the file called \verb|NM\_021964fragment.pep| whose name is stored in variable \verb|$proteinfilename|, and which has a filehandle associated with it by the open statement. The data is being stored in the variable \verb|$protein| and then printed out.
+为什么要把文件句柄\verb|PROTEINFILE|包裹在尖括号中呢？这些尖括号叫做\textit{输入操作符}。通过把文件句柄包裹在尖括号中，你就可以从程序外部的来源中读入数据了。在这个例子中，我们读入了\verb|NM\_021964fragment.pep|文件中的数据，该文件的名字保存在\verb|$proteinfilename|变量中，而\verb|open|声明则把它和文件句柄关联了起来。数据现在就保存到了\verb|$protein|变量中，之后可以把它打印输出出来。
 
-However, as you've already noticed, only the first line of this multiline file is printed out. Why? Because there are a few more things to learn about reading in files.
+然而，就像我们前面已经注意到的那样，只有这个多行文件的第一行被打印了出来。这是问什么呢？因为对于读取文件还有一些知识需要学习。
 
-There are several ways to read in a whole file. \autoref{exam:example4.6} shows one way.
+有许多方法可以读取整个文件，\autoref{exam:example4.6}演示了其中的一种。
 
-\textbf{Example 4-6. Reading protein sequence data from a file, take 2}
+\textbf{例4-6：从文件中读取蛋白质序列数据，第二次尝试}
 
 \lstinputlisting[label=exam:example4.6]{./scripts/example4-6.pl}
 
-Here's the output of Example 4-6:
+下面是\autoref{exam:example4.6}的输出：
 
 \begin{lstlisting}
 Here is the first line of the protein file:
@@ -541,18 +542,18 @@ Here is the third line of the protein file:
 GLQYALNVPISVKQEITFTDVSEQLMRDKKQIR
 \end{lstlisting}
 
-The interesting thing about this program is that it shows how reading from a file works. Every time you read into a scalar variable such as \verb|$protein|, the next line of the file is read. Something is remembering where the previous read was and is picking it up from there.
+这个程序中比较有趣的一点就是，它演示了如何成功得从文件中读取数据。每当把数据读取到\verb|$protein|这样的标量变量中后，都会对文件的下一行进行读取。上一次读取到哪儿了，现在需要读取哪一行，程序对这些信息都有所记录。
 
-On the other hand, the drawbacks of this program are obvious. Having to write a few lines of code for each line of an input file isn't convenient. However, there are two Perl features that can handle this nicely: arrays (in the next section) and loops (in \autoref{chap:chapter5}). 
+另一方面，程序的缺陷也是显而易见的。对于输入文件的每一个行，都需要编写一行代码来读入，这样太不方便了。但是，在Perl中有两个特性可以很好的解决这个问题：数据（下一小节进行介绍）和循环（参看\autoref{chap:chapter5}）。
 
-\section{Arrays}
-In computer languages an array is a variable that stores multiple scalar values. The values can be numbers, strings, or, in this case, lines of an input file of protein sequence data. Let's examine how they can be used. \autoref{exam:example4.7} shows how to use an array to read all the lines of an input file.
+\section{数组}
+在计算机语言中，数组是存储多个标量值的变量。这些标量的值可以是数字、字符串，或者，像此处的例子一样，也可以是蛋白质序列数据输入文件中的每一行。让我们看看如何来使用数组吧。\autoref{exam:example4.7}演示了如何使用数组来把输入文件中的所有行都读入进来。
 
-\textbf{Example 4-7. Reading protein sequence data from a file, take 3}
+\textbf{例4-7：从文件中读取蛋白质序列数据，第三次尝试}
 
 \lstinputlisting[label=exam:example4.7]{./scripts/example4-7.pl}
 
-Here's the output of Example 4-7:
+下面是\autoref{exam:example4.7}的输出：
 
 \begin{lstlisting}
 MNIDDKLEGLFLKCGGIDEMQSSRTMVVMGGVSGQSTVSGELQD
@@ -560,15 +561,15 @@ SVLQDRSMPHQEILAADEVLQESEMRQQDMISHDELMVHEETVKNDEEQMETHERLPQ
 GLQYALNVPISVKQEITFTDVSEQLMRDKKQIR
 \end{lstlisting}
 
-which, as you can see, is exactly the data that's in the file. Success!
+就像你看到的，这就是文件中的全部数据。我们成功了！
 
-The convenience of this is clear—just one line to read all the data into the program. 
+使用数组的方便性显而易见——只需要一行代码就可以把所有的数据都读入到程序中了。
 
-Notice that the array variable starts with an at sign (@) rather than the dollar sign (\$) scalar variables begin with. Also notice that the \verb|print| function can handle arrays as well as scalar variables. Arrays are used a lot in Perl, so you will see plenty of array examples as the book continues.  
+注意，和标量变量以美元符号（\$）起始不同，数组变量是以@符号起始的。此外，还要注意，\verb|print|函数不仅可以处理标量变量，同样可以处理数组变量。在Perl中，数组被广泛使用，所以在本书的剩余部分你会看到大量的数组应用的实例。
 
-An array is a variable that can hold many scalar values. Each item or element is a scalar value that can be referenced by giving its position in the array (its subscript or offset). Let's look at some examples of arrays and their most common operations. We'll define an array \verb|@bases| that holds the four bases A, C, G, and T. Then we'll apply some of the most common array operators.
+数组是存储多个标量值的变量。数组中的每一个项目或者元素都是标量值，可以通过在数组中的位置（它的下标或者偏移量）对它进行引用。让我们来看几个数组和数组常用操作的实例吧。我们定义一个叫做\verb|@bases|的输出，其中存储着A、C、G和T四个碱基。现在我们对它应用几个常见的数组操作。
 
-Here's a piece of code that demonstrates how to initialize an array and how to use subscripts to access the individual elements of an array: 
+这是一个代码片段，它演示了如何初始化数组，以及如何使用下标来访问数组中的单个元素：
 
 \begin{lstlisting}
 # Here's one way to declare an array, initialized with a list of four scalar values.
@@ -586,7 +587,7 @@ print "\nFourth element: ";
 print $bases[3];
 \end{lstlisting}
 
-This code snippet prints out:
+这个代码片段将会输出：
 
 \begin{lstlisting}
 First element: A
@@ -595,7 +596,7 @@ Third element: G
 Fourth element: T
 \end{lstlisting}
 
-You can print the elements one a after another like this:
+你可以像这样把元素一个接一个的输出出来：
 
 \begin{lstlisting}
 @bases = ('A', 'C', 'G', 'T');
@@ -603,13 +604,13 @@ print "\n\nHere are the array elements: ";
 print @bases;
 \end{lstlisting}
 
-which produces the output:
+它会产生这样的输出：
 
 \begin{lstlisting}
 Here are the array elements: ACGT
 \end{lstlisting}
 
-You can also print the elements separated by spaces (notice the double quotes in the \verb|print| statement): 
+你也可以输出用空格分隔的元素（注意\verb|print|声明中的双引号）：
 
 \begin{lstlisting}
 @bases = ('A', 'C', 'G', 'T');
@@ -617,13 +618,13 @@ print "\n\nHere are the array elements: ";
 print "@bases";
 \end{lstlisting}
 
-which produces the output:
+它会产生这样的输出：
 
 \begin{lstlisting}
 Here are the array elements: A C G T
 \end{lstlisting}
 
-You can take an element off the end of an array with \verb|pop|: 
+使用\verb|pop|，你可以从数组的末尾拿掉一个元素：
 
 \begin{lstlisting}
 @bases = ('A', 'C', 'G', 'T');
@@ -634,7 +635,7 @@ print "Here's the remaining array of bases: ";
 print "@bases";
 \end{lstlisting}
 
-which produces the output:
+它会产生这样的输出：
 
 \begin{lstlisting}
 Here's the element removed from the end: T
@@ -642,7 +643,7 @@ Here's the element removed from the end: T
 Here's the remaining array of bases: A C G
 \end{lstlisting}
 
-You can take a base off of the beginning of the array with \verb|shift|:
+使用\verb|shift|，你可以从数组的开头拿掉一个碱基：
 
 \begin{lstlisting}
 @bases = ('A', 'C', 'G', 'T');
@@ -653,7 +654,7 @@ print "Here's the remaining array of bases: ";
 print "@bases";
 \end{lstlisting}
 
-which produces the output:
+它会产生这样的输出：
 
 \begin{lstlisting}
 Here's an element removed from the beginning: A
@@ -661,7 +662,7 @@ Here's an element removed from the beginning: A
 Here's the remaining array of bases: C G T
 \end{lstlisting}
 
-You can put an element at the beginning of the array with \verb|unshift|: 
+使用\verb|unshift|，你可以把一个元素添加到数组的开头：
 
 \begin{lstlisting}
 @bases = ('A', 'C', 'G', 'T');
@@ -671,13 +672,13 @@ print "Here's the element from the end put on the beginning: ";
 print "@bases\n\n";
 \end{lstlisting}
 
-which produces the output:
+它会产生这样的输出：
 
 \begin{lstlisting}
 Here's the element from the end put on the beginning: T A C G
 \end{lstlisting}
 
-You can put an element on the end of the array with \verb|push|: 
+使用\verb|push|，你可以把一个元素添加到数组的末尾：
 
 \begin{lstlisting}
 @bases = ('A', 'C', 'G', 'T');
@@ -687,13 +688,13 @@ print "Here's the element from the beginning put on the end: ";
 print "@bases\n\n";
 \end{lstlisting}
 
-which produces the output:
+它会产生这样的输出：
 
 \begin{lstlisting}
 Here's the element from the beginning put on the end: C G T A
 \end{lstlisting}
 
-You can reverse the array: 
+你可以反转数组：
 
 \begin{lstlisting}
 @bases = ('A', 'C', 'G', 'T');
@@ -702,13 +703,13 @@ print "Here's the array in reverse: ";
 print "@reverse\n\n";
 \end{lstlisting}
 
-which produces the output:
+它会产生这样的输出：
 
 \begin{lstlisting}
 Here's the array in reverse: T G C A
 \end{lstlisting}
 
-You can get the length of an array:
+你可以获取数组的长度：
 
 \begin{lstlisting}
 @bases = ('A', 'C', 'G', 'T');
@@ -716,13 +717,13 @@ print "Here's the length of the array: ";
 print scalar @bases, "\n";
 \end{lstlisting}
 
-which produces the output:
+它会产生这样的输出：
 
 \begin{lstlisting}
 Here's the length of the array: 4
 \end{lstlisting}
 
-Here's how to insert an element at an arbitrary place in an array using the Perl \verb|splice| function: 
+使用Perl的\verb|splice|函数，你可以在数组的任意一个位置插入一个元素：
 
 \begin{lstlisting}
 @bases = ('A', 'C', 'G', 'T');
@@ -731,20 +732,20 @@ print "Here's the array with an element inserted after the 2nd element: ";
 print "@bases\n";
 \end{lstlisting}
 
-which produces the output:
+它会产生这样的输出：
 
 \begin{lstlisting}
 Here's the array with an element inserted after the 2nd element: A C X G T
 \end{lstlisting}
 
-\section{Scalar and List Context}
-Many Perl operations behave differently depending on the context in which they are used. Perl has \textit{scalar context} and \textit{list context}; both are listed in \autoref{exam:example4.8}.
+\section{标量上下文和列表上下文}
+依赖于使用的上下文环境不同，Perl的许多操作符都会有不同的表现。在Perl中有\textit{标量上下文}和\textit{列表上下文}两种上下文环境。在\autoref{exam:example4.8}对它们都进行了演示。
 
-\textbf{Example 4-8. Scalar context and list context}
+\textbf{例4-8：变量上下文和列表上下文}
 
 \lstinputlisting[label=exam:example4.8]{./scripts/example4-8.pl}
 
-Here's the output of \autoref{exam:example4.8}:
+下面是\autoref{exam:example4.8}的输出：
 
 \begin{lstlisting}
 A C G T
@@ -752,57 +753,64 @@ A C G T
 A
 \end{lstlisting}
 
-First, \autoref{exam:example4.8} declares an array of the four bases. Then the assignment statement tries to assign an array (which is a kind of list) to a scalar variable \verb|$a|: 
+首先，\autoref{exam:example4.8}声明了一个包含四个碱基的数组。然后，赋值声明尝试把数组（它是一种列表）复制给\verb|$a|这个标量变量： 
 
 \begin{lstlisting}
 $a = @bases;
 \end{lstlisting}
 
-In this kind of \textit{scalar context}, an array evaluates to the size of the array, that is, the number of elements in the array. The scalar context is supplied by the scalar variable on the left side of the statement.
+在这种\textit{标量上下文}中，数组会对它的大小进行求值，也就是数组中的元素数目。声明的左边是一个标量变量，这表明是一个标量上下文。
 
-Next, \autoref{exam:example4.8} tries to assign an array (to repeat, a kind of list) to another list, in this case, having just one variable, \verb|$a|:
+之后，\autoref{exam:example4.8}尝试把数组（重复一下，它是一种列表）赋值给另一个列表，在这个例子中，这个列表仅有\verb|$a|这么一个变量：
 
 \begin{lstlisting}
 ($a) = @bases;
 \end{lstlisting}
 
-In this kind of \textit{list context}, an array evaluates to a list of its elements. The list context is supplied by the list in parentheses on the left side of the statement. If there aren't enough variables on the left side to assign to, only part of the array gets assigned to variables.  This behavior of Perl pops up in many situations; by design, many features of Perl behave differently depending on whether they are in scalar or list context. See \autoref{chap:chapterab} for more about scalar and list content.
+在这种\textit{列表上下文}中，数组会把它的元素展开成一个列表。声明的左边是包裹在括号中的列表，这表明是一个列表上下文。如果左侧没有足够变量用来赋值，那么将只有数组中的部分元素会被赋值给变量。Perl的这种行为在很多情况下都会出现。Perl的许多特性都被设计成在不同的上下文环境中表现出不同的行为。在\autoref{chap:chapterab}中有更多关于标量上下文和列表上文的讨论。
 
-Now you've seen the use of strings and arrays to hold sequence and file data, and learned the basic syntax of Perl, including variables, assignment, printing, and reading files. You've transcribed DNA to RNA and calculated the reverse complement of a strand of DNA. By the end of \autoref{chap:chapter5}, you'll have covered the essentials of Perl programming. 
+现在，你已经看到使用字符串和数组来保存序列和文件数据，学习了Perl的基本语法，包括变量、赋值、打印和读入文件。把DNA转录成了RNA，还计算出了DNA一条链的反向互补序列。到\autoref{chap:chapter5}的结尾，你将学习到Perl语言编程的所有基础知识。
 
-\section{Exercises}
-\textcolor{red}{\textit{Exercise 4.1}}
+\section{练习题}
+\noindent
+\textcolor{red}{\textit{习题4.1}}
 \begin{adjustwidth}{1cm}{}
-Explore the sensitivity of programming languages to errors of syntax.  Try removing the semicolon from the end of any statement of one of our working programs and examining the error messages that result, if any.  Try changing other syntactical items: add a parenthesis or a curly brace; misspell "print" or some other reserved word; just type in, or delete, anything. Programmers get used to seeing such errors; even after getting to know the language well, it is still common to have some syntax errors as you gradually add code to a program. Notice how one error can lead to many lines of error reporting. Is Perl accurately reporting the line where the error is? 
+探索编程语言对语法错误的敏感性。对于一个可以运行的程序，试着把其中任意一个声明末尾的分号删除掉，看看会产生什么样的错误信息。试着改变其他的语法项：添加一个小括号或者大括号，把“print”或其他保留字拼错，键入或者删除任何一些内容。程序员对这样的错误习以为常。即使精通语言后，在你一点点编写代码时，仍然会常常出现这样的语法错误。注意一个错误是如何导致多行错误报告的。Perl报告的出现错误的行是不是完全准确？
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 4.2}}
+\noindent
+\textcolor{red}{\textit{习题4.2}}
 \begin{adjustwidth}{1cm}{}
-Write a program that stores an integer in a variable and then prints it out. 
+编写一个程序，把一个整数保存到变量中并把它打印出来。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 4.3}}
+\noindent
+\textcolor{red}{\textit{习题4.3}}
 \begin{adjustwidth}{1cm}{}
-Write a program that prints DNA (which could be in upper- or lowercase originally) in lowercase (acgt); write another that prints the DNA in uppercase (ACGT). Use the function \textit{tr///}. 
+编写一个把DNA（原始序列可以是大写或者小写）以小写形式（acgt）输出的程序；再编写一个把DNA以大写形式（ACGT）输出的程序。使用\textit{tr///}函数。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 4.4}}
+\noindent
+\textcolor{red}{\textit{习题4.4}}
 \begin{adjustwidth}{1cm}{}
-Do the same thing as Exercise 4.3, but use the string directives \verb|\U| and \verb|\L| for upper- and lowercase. For instance, \verb|print "\U$DNA"| prints the data in \verb|$DNA| in uppercase. 
+任务和练习4.3中的一样，但这次使用\verb|\U|和\verb|\L|字符串指令符来进行大小写的转换。举个例子，\verb|print "\U$DNA"|会把\verb|$DNA|中的数据以大写形式输出出来。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 4.5}}
+\noindent
+\textcolor{red}{\textit{习题4.5}}
 \begin{adjustwidth}{1cm}{}
-Sometimes information flows from RNA to DNA. Write a program to reverse transcribe RNA to DNA. 
+有时，信息也可以从RNA流向DNA。编写一个把RNA反转录成DNA的程序。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 4.6}}
+\noindent
+\textcolor{red}{\textit{习题4.6}}
 \begin{adjustwidth}{1cm}{}
-Read two files of data, and print the contents of the first followed by the contents of the second. 
+读取两个文件的数据，在输出第一个文件的内容后紧接着输出第一个文件的内容。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 4.7}}
+\noindent
+\textcolor{red}{\textit{习题4.7}}
 \begin{adjustwidth}{1cm}{}
-This is a more difficult exercise. Write a program to read a file, and then print its lines in reverse order, the last line first. Or you may want to look up the functions \textit{push}, \textit{pop}, \textit{shift}, and \textit{unshift}, and choose one or more of them to accomplish this exercise. You may want to look ahead to \autoref{chap:chapter5} so you can use a loop in this program, but this may not be necessary depending on the approach you take. Or, you may want to use reverse on an array of lines. 
+这是一个更有难度的练习题。编写一个程序，读去一个文件，然后逆序输出它的每一行，也就是首先输出它的最后一行。你可能需要看一下\textit{push}、\textit{pop}、\textit{shift}和\textit{unshift}这四个函数，从中选择一个或多个来完成此练习。你可能需要预习一下\autoref{chap:chapter5}，这样就可以在程序中使用循环了。但取决于你采取的方案，这并不是必需的。或者，你可以对包含所有行的数组使用\textit{reverse}函数。
 \end{adjustwidth}
 
