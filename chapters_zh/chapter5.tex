@@ -1,43 +1,43 @@
-\chapter{Motifs and Loops}
+\chapter{基序和循环}
 \label{chap:chapter5}
 \minitoc
 
-This chapter continues demonstrating the basics of the Perl language begun in \autoref{chap:chapter4}. By the end of the chapter, you will know how to:
+本章将在\autoref{chap:chapter4}的基础上进一步介绍Perl语言的基础知识。到本章结束的时候，你将学会：
 
 \begin{itemize}
-  \item Search for motifs in DNA or protein
-  \item Interact with users at the keyboard
-  \item Write data to files
-  \item Use loops
-  \item Use basic regular expressions
-  \item Take different actions depending on the outcome of conditional tests
-  \item Examine sequence data in detail by operating on strings and arrays
+  \item 在DNA或蛋白质中查找基序
+  \item 通过键盘与用户进行交互
+  \item 把数据写入文件
+  \item 使用循环
+  \item 使用基本的正则表达式
+  \item 根据条件测试的结果采取不同的行动
+  \item 通过字符串和数组的操作对序列数据进行细致的处理
 \end{itemize}
 
-These topics, in addition to what you learned in \autoref{chap:chapter4}, will give you the skills necessary to begin to write useful bioinformatics programs; in this chapter, you will learn to write a program that looks for motifs in sequence data. 
+所有这些主题，加上在\autoref{chap:chapter4}学习的知识，将使你能够编写出实用的生物信息学程序。在本章中，你将学习编写一个在序列数据中查找基序的程序。
 
-\section{Flow Control}
-\textit{Flow control} is the order in which the statements of a program are executed. A program executes from the first statement at the top of the program to the last statement at the bottom, in order, unless told to do otherwise. There are two ways to tell a program to do otherwise: conditional statements and loops. A \textit{conditional statement} executes a group of statements only if the conditional test succeeds; otherwise, it just skips the group of statements. A \textit{loop} repeats a group of statements until an associated test fails.
+\section{流程控制}
+\textit{流程控制}指的就是程序中语句执行的顺序。除非明确指明不按顺序执行，否则程序将从最顶端的第一个语句开始，顺序执行到最底端的最后一个语句。有两种方式可以告诉程序不按照顺序执行：条件语句和循环。\textit{条件语句}只会在条件测试成功的前提下执行相应的语句，否则就会直接跳过这些语句。\textit{循环}会一直重复那些语句，直到相应的测试失败为止。
 
-\subsection{Conditional Statements}
-Let's take another look at the \textit{open} statement. Recall that if you try to open a nonexistent file, you get error messages. You can test for the existence of a file explicitly, before trying to open it. In fact, such tests are among the most powerful features of computer languages. The \textit{if} , \textit{if-else}, and \textit{unless} conditional statements are three such testing mechanisms in Perl.
+\subsection{条件语句}
+让我们再看一下\textit{open}语句吧。回忆一下，当你试图打开一个并不存在的文件时，你会看到错误信息。在你尝试打开文件之前，可以对文件是否存在进行明确的测试。事实上，类似的测试都是计算机语言最强大的特性之一。\textit{if}、\textit{if-else}和\textit{unless}条件语句就是Perl语言中用来进行类似测试的三个语句。
 
-The main feature of these kinds of constructs is the testing for a conditional. A conditional evaluates to a \verb|true| or \verb|false| value. If the conditional is \verb|true|, the statements following are executed; if the conditional is \verb|false|, they are skipped (or vice versa).
+这类语句的最主要特性就是可以对条件进行测试。条件测试的结果可以是\verb|真（true）|或者是\verb|假（false）|。如果测试结果为\verb|真|，那么后面的语句就会被执行；与之相反，如果测试结果为\verb|假|，这些语句就会被跳过而不执行。
 
-However, "What is truth?" It's a question that programming languages may answer in slightly different ways.
+那么，“什么是真呢”？对于这个问题，不同计算机语言的回答会稍有不同。
 
-This section contains a few examples that demonstrate some of Perl's conditionals. The true-false condition in each example is equality between two numbers. Notice that equality of numbers is represented by two equal signs \verb|==|, because the single equal sign \verb|=| is already used for assignment to a variable. 
+本节包含了一些演示Perl条件语句的实例，其中的真-假条件测试就是看看两个数字是否相等。注意，因为一个等号\verb|=|是用来对变量进行赋值的，所以两个数字的相等要用两个等号\verb|==|来表示。
 
 \begin{adjustwidth}{2cm}{2cm}
   \parpic[l]{
   \includegraphics[width=1cm]{warning.png}
   }
-  Confusion between = for assignment and == for numeric equality is a frequent programming bug, so watch for it! 
+  =表示赋值、==表示数字相等，这两者非常容易让人混淆，可是说是编程中最常见的“bug”了，所以一定要小心奥！
 \end{adjustwidth}
 
-The following examples demonstrate whether the conditional will evaluate to \verb|true| or \verb|false|. You don't ordinarily have much use for such simple tests. Usually you test the values that have been read into variables or the return value of function calls—things you don't necessarily know beforehand.
+下面这个例子演示了条件测试的结果是\verb|真|还是\verb|假|。平时你很少会用到这么简单的测试；通常，你会测试那些预先并不知道结果的值，比如读入变量的值，或者函数调用的返回值。
 
-The \verb|if| statement with a \verb|true| conditional: 
+条件测试为\verb|真|的\verb|if|语句：
 
 \begin{lstlisting}
 if( 1 == 1 ) {
@@ -45,15 +45,15 @@ if( 1 == 1 ) {
 }
 \end{lstlisting}
 
-produces the output:
+它会输出：
 
 \begin{lstlisting}
 1 equals 1
 \end{lstlisting}
 
-The test is \verb|1 == 1|, or, in English, "Does 1 equal 1?" Since it does, the conditional evaluates to \verb|true|, the statement associated with the \verb|if| statement is executed, and a message is printed out.
+我们进行的测试是\verb|1 == 1|，用口语来说就是，“1是否等于1”。1确实等于1，所以条件测试的结果为\verb|真|，因此和\verb|if|语句相关联的语句就会被执行，信息被打印了出来。
 
-You can also just say:
+你也可以这样写：
 
 \begin{lstlisting}
 if( 1 ) {
@@ -61,13 +61,13 @@ if( 1 ) {
 }
 \end{lstlisting}
 
-which produces the output:
+它会输出：
 
 \begin{lstlisting}
 1 evaluates to true
 \end{lstlisting}
 
-The \verb|if| statement with a \verb|false| conditional: 
+条件测试为\verb|假|的\verb|if|语句：
 
 \begin{lstlisting}
 if( 1 == 0 ) {
@@ -75,31 +75,31 @@ if( 1 == 0 ) {
 }
 \end{lstlisting}
 
-produces no output! The test is \verb|1 == 0| or, in English, "Does 1 equal 0?" Since it doesn't, the conditional evaluates to \verb|false|, the statements associated with the \verb|if| statement aren't executed, and no message is printed out.
+它没有任何输出！我们进行的测试是\verb|1 == 0|，用口语来说就是，“1是否等于0”。1当然不等于0了，所以条件测试的结果为\verb|假|，因此和\verb|if|语句相关联的语句就不会被执行，不会输出任何信息。
 
-You can also just say:
+你也可写成：
 
 \begin{lstlisting}
 if( 0  ) {
-  print "0 evaluates to true\n\n"\nonumber\\
+  print "0 evaluates to true\n\n";
 }
 \end{lstlisting}
 
-which produces no output, since 0 evaluates to \verb|false|, so the statements associated with the \verb|if| statement are skipped entirely. 
+因为0的测试结果为\verb|假|，所以它不会产生任何输出，因此和\verb|if|语句相关联的语句会完全被跳过。
 
-There's another way to write short \verb|if| statements that mirrors how the English language works. In English, you can say, equivalently, "If you build it, they will come" or "They will come if you build it." Not to be outdone, Perl also allows you to put the \verb|if| after the action: " 
+还有一种编写短小的\verb|if|语句的方法，它模拟的是英语中if的用法。在英语中，你可以说，“If you build it, they will come”，或者，“They will come if you build it”，这两种说法是完全等同的。Perl也不甘示弱，它也允许你把\verb|if|放在对应的动作之后：
 
 \begin{lstlisting}
 print "1 equals 1\n\n" if (1 == 1);
 \end{lstlisting}
 
-which does the same thing as the first example in this section and prints out:
+它和本节中的第一个例子做的事情是完全一样的，输出：
 
 \begin{lstlisting}
 1 equals 1
 \end{lstlisting}
 
-Now, let's look at an \verb|if-else| statement with a \verb|true| conditional:
+现在，让我们看一下条件测试为\verb|真|的\verb|if-else|语句：
 
 \begin{lstlisting}
 if( 1 == 1 ) {
@@ -109,29 +109,29 @@ if( 1 == 1 ) {
 }
 \end{lstlisting}
 
-which produces the output:
+它会输出：
 
 \begin{lstlisting}
 1 equals 1
 \end{lstlisting}
 
-The \verb|if-else| does one thing if the test evaluates to \verb|true| and another if the test evaluates to \verb|false|. Here is \verb|if-else| with a \verb|false| conditional: 
+当测试结果为\verb|真|时，\verb|if-else|会做某件事情，当测试结果为\verb|假|时，它则会另一件事情。这是条件测试为\verb|假|的\verb|if-else|语句：
 
 \begin{lstlisting}
 if( 1 == 0 ) {
-  print "1 equals 0\n\n"\nonumber\\
+  print "1 equals 0\n\n";
 } else {
-  print "1 does not equal 0\n\n"\nonumber\\
+  print "1 does not equal 0\n\n";
 }
 \end{lstlisting}
 
-which produces the output:
+它会输出：
 
 \begin{lstlisting}
 1 does not equal 0
 \end{lstlisting}
 
-The final example is \verb|unless|—the opposite of \verb|if|. It works like the English word "unless": e.g., "Unless you study Russian literature, you are ignorant of Chekov." If the conditional evaluates to \verb|true|, no action is taken; if it evaluates to \verb|false|, the associated statements are executed. If "you study Russian literature" is \verb|false|, "you are ignorant of Chekov." 
+最后的例子是\verb|unless|，它和\verb|if|完全相反。它就像英语中的“unless”那样来使用：比如，“Unless you study Russian literature, you are ignorant of Chekov”\footnote{译者注：除非你研究俄国文学，否则你不会对契诃夫有所了解。}。如果测试结果为\verb|真|，它不会采取任何行动；而当测试结果为\verb|假|时，相应的语句就会被执行。如果“you study Russian literature”是\verb|假|的，那么“you are ignorant of Chekov”。\footnote{译者注：如果“你研究俄国文学”是\verb|假|的，那么“你对契诃夫毫无了解”。}
 
 \begin{lstlisting}
 unless( 1 == 0 ) {
@@ -139,43 +139,43 @@ unless( 1 == 0 ) {
 }
 \end{lstlisting}
 
-produces the output:
+它会输出：
 
 \begin{lstlisting}
 1 does not equal 0
 \end{lstlisting}
 
-\subsubsection{Conditional tests and matching braces}
-Two more comments are in order about these statements and their conditional tests.
+\subsubsection{条件测试和括号成对}
+对这些语句和它们的条件测试，还有两点注释：
 
-First, there are several tests that can be used in the conditional part of these statements. In addition to numeric \textit{equality} \verb|==| as in the previous example, you can also test for inequality \verb|!=|, greater than \verb|>|, less than \verb|<|, and more.
+第一点，在这些语句的条件部分，有许多测试可以使用。除了在前述实例中使用的数字\textit{相等}\verb|==|外，你还可以对不等\verb|!=|、大于\verb|>|和小于\verb|<|等进行测试。
 
-Similarly, you can test for string equality using the \textit{eq} operator: if two strings are the same, it's \verb|true|. There are also file test operators that allow you to test if a file exists, is empty, if permissions are set a certain way, and so on (see \autoref{chap:chapterab}). One common test is just a variable name: if the variable contains zero, it's considered \verb|false|; any other number evaluates to \verb|true|. If the variable contains a nonempty string, it evaluates to \verb|true|; the empty string, designated by "" or '', is \verb|false|.
+与之类似，你也可以使用\textit{eq}操作符对字符串相等进行测试：如果两个字符串是一样的，测试结果就是\verb|真|。也有一些文件测试操作符，允许你对文件进行相应的测试：是否存在，是否为空，是否设置了特定的权限，等等（参看\autoref{chap:chapterab}）。另一个比较常用的是对变量名进行测试：如果变量存储的是0，那它就被认为是\verb|假|的；任何其他的数字都被认为是\verb|真|的。如果变量中有非空的字符串，那它就是\verb|真|的；空的字符串用""或者''来表示，它是\verb|假|的。
 
-Second, notice that the statements that follow the conditional are enclosed within a matching pair of curly braces. These statements within curly braces are called a block and arise frequently in Perl.\footnote{As something of an oddity, the last statement within a block doesn't need a semicolon after it.} Matching pairs of parentheses, brackets, or braces, i.e., \verb|()|, \verb|[]|, \verb|<>|, and \verb|{}|, are common programming features. Having the same number of left and right braces in the right places is essential for a Perl program to run correctly.
+第二点，注意条件测试之后的语句都被包裹在了成对的大括号内。用大括号括起来的语句叫做块，这在Perl中非常常见。\footnote{虽然这看起来有些奇怪，但块中的最后一个语句并不需要用分号来结尾。}括号成对出现是最普遍的编程特性，比如成对的小括号、中括号、尖括号和大括号：\verb|()|、\verb|[]|、\verb|<>|和\verb|{}|左右括号的数目相等，且它们都出现在正确的位置，这对于Perl程序正常运行来说是至关重要的。
 
-Matching braces are easy to lose track of, so don't be surprised if you miss some and get error messages when you try to run the program. This is a common syntax error; you have to go back and find the missing brace. As code gets more complex, it can be a challenge to figure out where the matching braces are wrong and how to fix them. Even if the braces are in the right place, it can be hard to figure out what statements are grouped together when you're reading code. You can avoid this problem by writing code that doesn't try to do too much on any one line and uses indentation to further highlight the blocks of code (see \autoref{sect:section5.2}).\footnote{Some text editors help you find a matching brace (for instance, in the vi editor, hitting the percent key \% over a parenthesis bounces you to the matching parenthesis).} 
+成对使用括号是很难做到的，所以，当你因为少写了括号而导致程序报错时，请不要大惊小怪。这是一个比较常见的语法错误，你需要查阅代码找到缺少括号的地方并把它添加上。随着代码越来越复杂，要找到成对括号出错的地方并对它进行修正会更加具有挑战性。即使括号都在正确的位置，当你阅读代码时，要分清哪些语句是一组也是非常困难的。当然你也可以采取一定的措施来避免这样的问题：每一行代码做的事情不要太多，使用缩进让代码块更加突出明显一些（参看\autoref{sect:section5.2}）。\footnote{有些文本编辑器可以帮你找到配对的括号（举个例子，在vi编辑器中，在一个括号上键入百分号\%就会让光标跳跃到与之配对的括号上去）。} 
 
-Back to the conditional statements. The \textit{if-else} also has an \textit{if-elsif-else} form, as in \autoref{exam:example5.1}. The conditionals, first the \textit{if} and then the \textit{elsifs}, are evaluated in turn, and as soon as one evaluates to \verb|true|, its block is executed, and the rest of the conditionals are ignored. If none of the conditionals evaluates to \verb|true|, the \textit{else} block is executed if there is one—it's optional. 
+回过头来再看看条件语句。就像\autoref{exam:example5.1}中演示的那样，\textit{if-else}还有\textit{if-elsif-else}这样的形式。第一个\textit{if}和\textit{elsifs}中的条件被交替测试，一旦测试结果为\verb|真|，相应的代码块就会被执行，并且剩余的条件测试也会被忽略掉。假设没有一个条件的测试结果为\verb|真|，如果存在\textit{else}代码块，那它就会被执行。\textit{else}代码块是可有可无的。
 
-\textbf{Example 5-1. if-elsif-else }
+\textbf{例5-1：if-elsif-else}
 \lstinputlisting[label=exam:example5.1]{./scripts/example5-1.pl}
 
-Notice the \verb|\"| in the \textit{else} block's \verb|print| statement; it lets you print a double-quote sign (") within a double-quoted string. The backslash character tells Perl to treat the following " as the sign itself and not interpret it as the marker for the end of the string. Also note the use of \textit{eq} to check for equality between strings.
+注意\textit{else}代码块的\verb|print|语句中的\verb|\"|，它可以在双引号包裹起来的字符串中打印出双引号（"）。反斜线告诉Perl，把后面紧跟的"当成引号本身，而不是把它当做字符串结束的标志。此外还请注意使用了\textit{eq}来检测字符串的相等。
 
-\autoref{exam:example5.1} gives the output:
+\autoref{exam:example5.1}的输出：
 
 \begin{lstlisting}
 MNIDDKL--the magic word!
 \end{lstlisting}
 
-\subsection{Loops}
-A \textit{loop} allows you to repeatedly execute a block of statements enclosed within matching curly braces. There are several ways to loop in Perl: \textit{while} loops, \textit{for} loops, \textit{foreach} loops, and more. \autoref{exam:example5.2} (from \autoref{chap:chapter4}) displays the \textit{while} loop and how it's used while reading protein sequence data in from a file. 
+\subsection{循环}
+\textit{循环}允许你重复执行被成对大括号包裹起来的语句块。在Perl中有多种方法实现循环：\textit{while}循环、\textit{for}循环、\textit{foreach}循环等等。\autoref{exam:example5.2}（来源于\autoref{chap:chapter4}）演示了如何使用\textit{while}循环从一个文件读取蛋白质序列数据。
 
-\textbf{Example 5-2. Reading protein sequence data from a file, take 4 }
+\textbf{例5-2：从文件中读取蛋白质序列数据，第四次尝试}
 \lstinputlisting[label=exam:example5.2]{./scripts/example5-2.pl}
 
-Here's the output of \autoref{exam:example5.2}
+下面是\autoref{exam:example5.2}的输出：
 
 \begin{lstlisting}
   ######  Here is the next line of the file:
@@ -186,24 +186,24 @@ SVLQDRSMPHQEILAADEVLQESEMRQQDMISHDELMVHEETVKNDEEQMETHERLPQ
 GLQYALNVPISVKQEITFTDVSEQLMRDKKQIR
 \end{lstlisting}
 
-In the \textit{while} loop, notice how the variable \verb|$protein| is assigned each time through the loop to the next line of the file. In Perl, an assignment returns the value of the assignment. Here, the test is whether the assignment succeeds in reading another line. If there is another line to read in, the assignment occurs, the conditional is \verb|true|, the new line is stored in the variable \verb|$protein|, and the block with the two \verb|print| statements is executed. If there are no more lines, the assignment is undefined, the conditional is \verb|false|, and the program skips the block with the two \verb|print| statements, quits the \textit{while} loop, and continues to the following parts of the program (in this case, the \textit{close} and \textit{exit} functions). 
+在\textit{while}循环中，注意在循环至文件的下一行时\verb|$protein|变量是如何一次次被赋值的。在Perl中，赋值语句会返回赋予的值。此处，条件测试检测的是赋值语句是否成功得读取了另一行。如果有另一行被读入，就会发生赋值行为，条件测试就为\verb|真|，新的一行会被存储在\verb|$protein|变量中，而包含两个\verb|print|语句的代码块也会被执行。如果没有更多行了，赋值就会是未定义，条件测试就为\verb|假|，而程序也会跳过包含两个\verb|print|语句的代码块，退出\textit{while}循环，继续执行程序的后续部分（在这个例子中，就是\textit{close}和\textit{exit}函数）。
 
-\subsubsection{open and unless}
-The \textit{open} call is a system call, because to open a file, Perl must ask for the file from the operating system. The operating system may be a version of Unix or Linux, a Microsoft Windows versions, one of the Apple Macintosh operating systems, and so on. Files are managed by the operating system and can be accessed only by it.
+\subsubsection{open和unless}
+\textit{open}是一个系统调用，因为要打开一个文件，Perl必须向操作系统提出请求。操作系统可以是Unix或Linux、Microsoft Windows或Apple Maintosh等的某个版本。文件被操作系统管理者，因此也只有操作系统能够访问它。
 
-It's a good habit to check for the success or failure of system calls, especially when opening files. If a system call fails, and you're not checking for it, your program will continue, perhaps attempting to read or write to a file you couldn't open in the first place. You should always check for failure and let the user of the program know right away when a file can't be opened. Often you may want to exit the program on failure or try to open a different file.  
+检查系统调用的成功与否是一个好习惯，尤其是当打开文件时更是如此。如果系统调用失败了，而你也没有对它进行检查，那么程序将继续运行，可能会尝试读取或写入一个你并没有打开过的文件。你应该总是检查这种失败，当文件无法打开时，要立即告知程序的使用者。当打开文件失败时，通常情况下你会希望立即退出程序，并尝试打开另一个文件。
 
-In \autoref{exam:example5.2}, the open system call is part of the test of the \textit{unless} conditional.
+在\autoref{exam:example5.2}中，\textit{open}系统调用是\textit{unless}条件测试的一部分。
 
-\textit{unless} is the opposite of \textit{if}. Just as in English you can say "do the statements in the block if the condition is true"; you can also say the opposite, "do the statements in the block unless the condition is true." The \textit{open} system call gives you a true value if it successfully opens the file; so here, in the conditional test of the unless statement, if the \textit{open} call fails, the statements in the block are performed, the program prints an error message, and then exits.
+\textit{unless}和\textit{if}相反。就像在你英语中你可以说“do the statements in the block if the condition is true”（“如果条件为真，就执行代码块中的语句”）一样，你也可以反过来说“do the statements in the block unless the condition is true”（“除非条件为真，否则就执行代码块中的语句”）\footnote{译者注：根据语境，此处应为：“do the statements in the block unless the condition is false”（“除非条件为假，否则就执行代码块中的语句”）。}。如果成功打开了文件，\textit{open}系统调用就会返回真值；在这个例子的\textit{unless}语句条件测试中，如果\textit{open}系统调用失败了，那么代码块中的语句就会被执行，程序会输出错误信息，随后退出。
 
-To sum up, conditionals and loops are simple ideas and not difficult to learn in Perl. They are among the most powerful features of programming languages. Conditionals allow you to tailor a program to several alternatives, and in that way, make decisions based on the type of input it gets. They are responsible for a large part of whatever artificial intelligence there is in a computer program. Loops harness the speed of the computer so that in a few lines of code, you can handle large amounts of input or continually iterate and refine a computation. 
+总结一下，在Perl中，条件和循环都是比较简单的概念，学起来并不困难。它们是编程语言最强大的特性之一。条件可以使你的程序适应不同的状况，使用这种方式，就可以针对不同的输入采取不同的方案了。在人工智能的计算机程序中，它占了相当大的比重。循环充分利用了计算机的速度，利用循环，仅仅使用几行代码，你就可以处理大量的输入，或者对计算进行重复迭代与提炼。
 
-\section{Code Layout}
+\section{代码布局}
 \label{sect:section5.2}
-Once you start using loops and conditional statements, you need to think seriously about formatting. You have many options when formatting Perl code on the page. Compare these variant ways of formatting an \textit{if} statement inside a \verb|while| loop:
+一旦你开始使用循环和条件语句，你就需要认真考虑格式的问题了。当格式化Perl代码时你有多种选择。对于\verb|while|循环中的\textit{if}语句，比较一下下面几种不同的格式化方法：
 
-\textcolor{red}{\textit{Format A}}
+\textcolor{red}{\textit{格式A}}
 \begin{adjustwidth}{1cm}{}
 \begin{lstlisting}
 while ( $alive ) {
@@ -214,7 +214,7 @@ while ( $alive ) {
 \end{lstlisting}
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Format B}}
+\textcolor{red}{\textit{格式B}}
 \begin{adjustwidth}{1cm}{}
 \begin{lstlisting}
 while ( $alive )
@@ -227,7 +227,7 @@ while ( $alive )
 \end{lstlisting}
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Format C}}
+\textcolor{red}{\textit{格式C}}
 \begin{adjustwidth}{1cm}{}
 \begin{lstlisting}
   while ( $alive )
@@ -240,46 +240,46 @@ while ( $alive )
 \end{lstlisting}
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Format D}}
+\textcolor{red}{\textit{格式D}}
 \begin{adjustwidth}{1cm}{}
 \begin{lstlisting}
 while($alive){if($needs_nutrients){print "Cell needs nutrients\n";}}
 \end{lstlisting}
 \end{adjustwidth}
 
-These code fragments are equivalent as far as the Perl interpreter is concerned. That's because Perl doesn't rely on how the statements are laid out on the lines; Perl cares only about the correct order of the syntactical elements. Some elements need some whitespace (such as spaces, tabs, or newlines) between them to make them distinct, but in general, Perl doesn't restrict how you use whitespace to lay out your code.
+对于Perl解释器来说，所有这些代码片段都是一样的，因为Perl并不依赖于每一行中语句的布局方式，它只关心句法元素的正确顺序。有些元素在它们中间需要空白（比如空格、制表符或者换行符），这样就可以把它们区别开了，但通常来说，对于你使用空白来布局代码的方式，Perl不会进行特别的限定。
 
-Formats A and B are common ways to lay out code. They both make the program structure clear to the human reading it. Notice how the statements that have a block associated with them—the \textit{while} and \textit{if} statements—line up the curly braces and indent the statements within the blocks. These layouts make clear the extent of the block associated with the statements. (This can be critical for long, complicated blocks.) The statements inside the blocks are indented, for which you normally use the Tab key or groups of four or eight spaces. (Many text editors allow you to insert spaces when you hit the Tab key, or you can instruct them to set the tab stops at four, eight, or whatever number of spaces.) The overall structure of the program becomes clearer this way; you can easily see which statements are grouped in a block and associated with a given loop or conditional. Personally, I prefer the layout in Format A, although I'm also perfectly happy with Format B.
+格式A和B是布局代码最常见的方式。它们都使程序结构更加清晰，便于人们阅读。对于\textit{while}和\textit{if}这种附带着代码块的语句来说，注意观察是如何排列大括号、以及缩进代码块中的语句的。这种布局使得语句附带的代码块的范围更加清晰一些。（这对于长的、复杂的代码块是非常关键的。）代码块中的语句都进行了缩进，通常你使用制表符键或者四个或八个空格就可以实现这种缩进。（许多文本编辑器可以使你在敲击制表符键时输入空格，或者你可以对它们进行配置，使得用制表符键就可以输入四个、八个或者任意数目的空格。）使用这种方式，程序的总体结构变得更加清晰了，你可以轻而易举得看出那些语句是归类在循环或条件语句附带的代码块中的。就个人而言，尽管我也非常乐意使用格式B，但我更加喜欢格式A的布局。
 
-Format C is an example of badly formatted code. The flow control of the code isn't clear; for instance, it's hard to see if the \textit{print} statement is in the block of the \textit{while} statement.  
+格式C是格式化代码的反面教材。代码的流控制很不清晰，举个例子，很难看出\textit{print}语句是否在\textit{while}语句的代码块中。
 
-Format D demonstrates how hard it is to read code with essentially no formatting, even a simple fragment like this.
+格式D演示了，在对代码不进行任何格式化的情况下，即使对于这样一个简单的代码片段来说，要阅读它是多么的困难。
 
-The Perl style guide, available from the main Perl manual page or from the command line by typing:
+从Perl的手册也中可以找到Perl的风格指南，或者输入下面的命令也可以：
 
 \begin{lstlisting}
 perldoc perlstyle
 \end{lstlisting}
 
-has some recommendations and some suggestions for ways to write readable code. However, they are not rules, and you may use your own judgment as to the formatting practices that work best for you. 
+对于如何编写可读性好的代码，Perl风格指南给出了不少的建议和意见。然而，这些并不是规则，你可以使用在经过众多格式化练习后找到的最适合你自己的代码布局方案。
 
-\section{Finding Motifs}
-One of the most common things we do in bioinformatics is to look for motifs, short segments of DNA or protein that are of particular interest. They may be regulatory elements of DNA or short stretches of protein that are known to be conserved across many species. (The PROSITE web site at \href{http://www.expasy.ch/prosite/}{http://www.expasy.ch/prosite/} has extensive information about protein motifs.)
+\section{查找基序}
+在生物信息学中我们最常做的事情之一就是查找基序，即特定的DNA或蛋白质片段。这些基序可能是DNA的调控元件，也可能是已知在多个物种中保守的蛋白质片段。（PROSITE网站——\href{http://www.expasy.ch/prosite/}{http://www.expasy.ch/prosite/}——有关于蛋白质基序的更多信息。）
 
-The motifs you look for in biological sequences are usually not one specific sequence. They may have several variants—for example, positions in which it doesn't matter which base or residue is present. They may have variant lengths as well. They can often be represented as regular expressions, which you'll see more of in the discussion following \autoref{exam:example5.3}, in \autoref{chap:chapter9}, and elsewhere in the book.  
+在生物学序列中你要查找的基序往往不是特定的一个序列，它们可能有一些变体——比如，某个位置上的碱基或者残基是什么并不重要。它们也有可能有不同的长度。但通常它们都可以用正则表达式来进行表征，在接下来的\autoref{exam:example5.3}、\autoref{chap:chapter9}以及本书中的许多地方，你都可以看到更多关于正则表达式的讨论。
 
-Perl has a handy set of features for finding things in strings. This, as much as anything, has made it a popular language for bioinformatics.  \autoref{exam:example5.3} introduces this string-searching capability; it does something genuinely useful, and similar programs are used all the time in biology research. It does the following:
+Perl有一系列在字符串中进行查找的便利的特性，这同样使得Perl成为生物信息学领域中流行的语言。\autoref{exam:example5.3}对这种字符串搜索的能力进行了演示；它做的事情真的非常实用，许多类似的程序在生物学研究中一直被使用着。它做的事情包括：
 
 \begin{itemize}
-  \item Reads in protein sequence data from a file
-  \item Puts all the sequence data into one string for easy searching
-  \item Looks for motifs the user types in at the keyboard
+  \item 从文件中读入蛋白质序列数据
+  \item 为了便于搜索，把所有的序列数据都放到一个字符串中
+  \item 查找用户通过键盘键入的基序
 \end{itemize}
 
-\textbf{Example 5-3. Searching for motifs}
+\textbf{例5-3：查找基序}
 \lstinputlisting[label=exam:example5.3]{./scripts/example5-3.pl}
 
-Here's some typical output from \autoref{exam:example5.3}:
+这是\autoref{exam:example5.3}典型的一个输出：
 
 \begin{lstlisting}
 Please type the filename of the protein sequence data:
@@ -300,90 +300,85 @@ Enter a motif to search for:
 I couldn't find it. 
 \end{lstlisting}
 
-As you see from the output, this program finds motifs that the user types in at the keyboard. With such a program, you no longer have to search manually through potentially huge amounts of data. The computer does the work and does it much faster and more accurately than a human.
+就像你在结果中看到的那样，这个程序查找用户通过键盘键入的基序。利用这样一个程序，你就不用再在海量的数据中手工进行查找了。让计算机来做这样的工作，它比人工做的更快、更准确。
 
-It'd be nice if this program not only reported it found the motif but at what position. You'll see how this can be accomplished in \autoref{chap:chapter9}. An exercise in that chapter challenges you to modify this program so that it reports the positions of the motifs.
+如果程序不仅报告它找到了基序，还能告诉我们在哪里找到了它，那就更好了。在\autoref{chap:chapter9}中你将看到如何来实现这个目标，那一章的一个练习要求你对这个程序进行修改，使得它能够报告基序的位置。
 
-The following sections examine and discuss the parts of \autoref{exam:example5.3} that are new:
+接下来的小节将对\autoref{exam:example5.3}中这些新的内容进行介绍与讨论：
 
 \begin{itemize}
-  \item Getting user input from the keyboard
-  \item Joining lines of a file into a single scalar variable
-  \item Regular expressions and character classes
-  \item \verb|do-until| loops
-  \item Pattern matching
+  \item 获取用户的键盘输入
+  \item 把文件的所有行合并到一个标量变量中
+  \item 正则表达式和字符组
+  \item \verb|do-until|循环
+  \item 模式匹配
 \end{itemize}
 
-\subsection{Getting User Input from the Keyboard}
-You first saw filehandles in \autoref{exam:example4.5}. In \autoref{exam:example5.3} (as was true in \autoref{exam:example4.3}), a filehandle and the angle bracket input operator are used to read in data from an opened file into an array, like so:
+\subsection{获取用户的键盘输入}
+在\autoref{exam:example4.5}中你第一次遇到文件句柄。在\autoref{exam:example5.3}中（在\autoref{exam:example4.3}中也是这样），使用文件句柄和尖括号输入操作符从打开的文件中读入数据并保存到数组中，就像这样：
 
 \begin{lstlisting}
 @protein = <PROTEINFILE>;
 \end{lstlisting}
 
-Perl uses the same syntax to get input that is typed by the user at the keyboard. In \autoref{exam:example5.3}, a special filehandle called STDIN (short for standard input), is used for this purpose, as in this line that collects a filename from the user:
+Perl使用同样的语法获取用户的键盘输入。在\autoref{exam:example5.3}中，为了获取用户的键盘输入，使用了一个叫做STDIN（standard input（标准输入）的简写）的特殊的文件句柄，就像这行从用户键盘输入获取文件名的代码一样：
 
 \begin{lstlisting}
 $proteinfilename = <STDIN>;
 \end{lstlisting}
 
-So, a filehandle can be associated with a file; it can also be associated with the keyboard where the user types responses to questions the program asks.
+文件句柄可以和一个文件相关联，也可以和用户回答程序问题时的键盘输入相关联。
 
-If the variable you're using to save the input is a scalar variable starts with a dollar sign \verb|$|), as in this fragment, only one line is read, which is almost always what you want in this case.
+就像这个代码片段一样，如果你用来存储输入的变量是一个以美元符号（\verb|$|）起始的标量变量，那么将只有一行被读入，这往往也是在这种情况下你希望的结果。
 
-In \autoref{exam:example5.3}, the user is requested to enter the filename of a file containing protein sequence data. After getting a filename in this fashion, there's one more step before you can open the file. When the user types in a filename and sends a newline by hitting the Enter key (also known as the Return key), the filename also gets a newline character at the end as it is stored in the variable. This newline is not part of the filename and has to be removed before the \textit{open} system call will work. The Perl function \textit{chomp} removes newlines (or its cousins linefeeds and carriage returns) from the end of a string. (The older function \textit{chop} removes the last character, no matter what it is; this caused trouble, so \textit{chomp} was introduced and is almost always preferred.)
+在\autoref{exam:example5.3}中，用户被要求输入一个包含蛋白质序列数据的文件的文件名。在通过这种方式得到文件名后，打开文件之前还需要一步操作。当用户键入文件名并通过Enter键（也叫做Return键）换行时，文件名和其末尾的换行符一起被保存进了变量中。这个换行符并不是文件名的一部分，所以在使用\textit{open}系统调用之前应该把它去除掉。Perl函数\textit{chomp}会去除掉字符串末尾的换行符newlines（或者它的表亲换行符linefeeds和回车符carriage returns）。（更加古老的\textit{chop}函数会删除最后一个字符，不管这个字符是什么；这会导致一些问题，所以\textit{chomp}被引入了进来，而它也总是被优先考虑使用的。）
 
-So this part of Perl requires a little bit extra: removing the newline from the input collected from the user at the keyboard. Try commenting out the \verb|chomp| function, and you'll see that the \verb|open| fails, because no filename has a newline at the end. (Operating systems have rules as to which characters are allowed in filenames.) 
+所以这一个部分还有一点附带的知识：删除获取的用户键盘输入中的换行符。试着把\verb|chomp|函数注释掉，你会看到\verb|open|调用失败，因为并没有末尾包含换行符的文件名。（对于文件名中可以使用的字符，操作系统有自己的规定。）
 
-\subsection{Turning Arrays into Scalars with join}
+\subsection{使用join把数组合并成标量}
 \label{sect:section5.3.2}
-It's common to find protein sequence data broken into short segments of 80 or so characters each. The reason is simple: when data is printed out on paper or displayed on the screen, it needs to be broken up into lines that fit into the space. Having your data broken into segments, however, is inconvenient for your Perl program. What if you're searching for a motif that's split by a newline character? Your program won't find it.  In fact, some of the motifs searched for in \autoref{exam:example5.3} are split by line breaks. In Perl you deal with this sort of segmented data with the Perl function \textit{join}. In \autoref{exam:example5.3} \textit{join} collapses an array \verb|@protein| by combining all the lines of data into a single string stored in a new scalar variable \verb|$protein|:
+常常可以发现，蛋白质序列数据被打断成了短的片段，每个片段有大约80个字符。原因很简单：当要把数据打印到纸张上或展示在屏幕上时，根据纸张或屏幕的空间需要把它打断成数行。你的数据被打断成了片段，但对你的Perl程序来说却多有不便。当你要查找一个基序，而它却被换行符分割开了，这会怎样呢？你的程序将无法找到这个基序。事实上，\autoref{exam:example5.3}中查找的一些基序确实被换行符分割开了。在Perl中，你可以使用\textit{join}函数来处理类似的片段数据。在\autoref{exam:example5.3}中，\textit{join}把存储在\verb|@protein|数组中的数据的所有行合并成一个单独的字符串，并把它保存在了新的标量变量\verb|$protein|中：
 
 \begin{lstlisting}
 $protein = join( '', @protein );
 \end{lstlisting}
 
-You specify a string to be placed between the elements of the array as they're joined. In this case, you specify the empty string to be placed between the lines of the input file. The empty string is represented with the pair of single quotes '' (double quotes "" also serve).  
+当合并数组时，你需要指定一个字符串，这个字符串会放在数组的各个元素之间。在这个例子中，你指定的是空字符串，它会放在输入文件的各行之间。空字符串就夹在成对的单引号''中（当然也可以使用双引号""）。
 
-Recall that in \autoref{exam:example4.2}, I introduced several equivalent ways to concatenate two fragments of DNA. The use of the \textit{join} function is very similar. It takes the scalar values that are the elements of the array and concatenates them into a single scalar value. Recall the following statement from \autoref{exam:example4.2}Example 4-2, which is one of the equivalent ways to concatenate two strings: 
+
+回忆一下\autoref{exam:example4.2}，在那个例子中，我介绍了好几种串联两个DNA片段的方法。\textit{join}函数的作用与之类似，它取出数组元素的变量值并把它们串联成一个单独的标量值。回忆一下\autoref{exam:example4.2}中的下列语句，它是串联两个字符串的方法之一：
 
 \begin{lstlisting}
 $DNA3 = $DNA1 . $DNA2;
 \end{lstlisting}
 
-Another way to accomplish the same concatenation uses the \textit{join} function:
+另一种实现同样串联的方法是使用\textit{join}函数：
 
 \begin{lstlisting}
 $DNA3 = join( "", ($DNA1, $DNA2) );
 \end{lstlisting}
 
-In this version, instead of giving an array name, I specify a list of scalar elements:
+在这个例子中，我没有给出数组名，而是指定了一个标量元素的列表：
 
 \begin{lstlisting}
 ($DNA1, $DNA2)
 \end{lstlisting}
 
-\subsection{do-until Loops}
-There's a new kind of loop in \autoref{exam:example5.3}, the \verb|do-until| loop, which first executes a block and then does a conditional test. Sometimes this is more convenient than the usual order in which you test first, then do the block if the test succeeds. Here, you want to prompt the user, get the user's input, search for the motif, and report the results. Before doing it again, you check the conditional test to see if the user has input an empty line. This means that the user has no more motifs to look for, so you exit the loop. 
+\subsection{do-until循环}
+在\autoref{exam:example5.3}中有一种新的循环，这就是\verb|do-until|循环，它首先执行一个代码块，之后再进行条件检测。有时它会比常见的先测试、如果测试成功就执行代码块的策略更加方便。在这个例子中，你想提示用户，获取用户的输入，查找基序并报告查找结果。在重复这些动作之前，你进行条件测试来看看用户是否输入了一个空行。输入空行意味着用户没有更多的基序来查找了，所以你就退出循环。
 
-\subsection{Regular Expressions}
-\textit{Regular expressions} let you easily manipulate strings of all sorts, such
-as DNA and protein sequence data. What's great about regular expressions
-is that if there's something you want to do with a string, you usually
-can do it with Perl regular expressions.
+\subsection{正则表达式}
+\textit{正则表达式}使你可以轻松处理各种各样的字符串，比如DNA和蛋白质序列数据。正则表达式的强大之处就在于，如果想对字符串进行一些处理，你通常可以使用Perl的正则表达式来完成该任务。
 
-Some regular expressions are very simple. For instance, you can just use
-the exact text of what you're searching for as a regular expression: if
-I was looking for the word "bioinformatics" in the text of this book, I
-could use the regular expression:
+有些正则表达式非常简单。举个例子，你可以把你想搜索的具体文字当成正则表达式来使用：如果我想在本书的文字中超找“bioinformatics”（“生物信息学”），我可以使用这样的正则表达式：
 
 \begin{lstlisting}
 /bioinformatics/
 \end{lstlisting}
 
-Some regular expressions can be more complex, however. In this section, I'll explain their use in \autoref{exam:example5.3}. 
+然而，有些正则表达式会更加复杂。在本节中，我会通过\autoref{exam:example5.3}来演示它们的使用。
 
-\subsubsection{Regular expressions and character classes}
+\subsubsection{正则表达式和字符组}
 Regular expressions are ways of matching one or more strings using special wildcard-like operators. Regular expressions can be as simple as a word, which matches the word itself, or they can be complex and made to match a large set of different words (or even every word!).
 
 After you join the protein sequence data into the scalar variable \verb|$protein| in \autoref{exam:example5.3}, you also need to remove newlines and anything else that's not sequence data. This can include numbers on the lines, comments, informational or "header" lines, and so on. In this case, you want to remove newlines and any spaces or tabs that might be invisibly present. The following line of code in \autoref{exam:example5.3} removes this whitespace:
@@ -420,7 +415,7 @@ which translates as: match a string that, from the beginning (indicated by the \
 
 If this seems somewhat cryptic, just hang in there and you'll soon get familiar with the terminology. Regular expressions are a great way to manipulate sequence and other text-based data, and Perl is particularly good at making regular expressions relatively easy to use, powerful, and flexible. Many of the references in \autoref{chap:chapteraa} contain material on regular expressions, and there's a concise summary in \autoref{chap:chapterab}.
 
-\subsubsection{Pattern matching with =~ and regular expressions}
+\cprotect \subsubsection{使用\verb|=~|和正则表达式进行模式匹配}
 The actual search for the motif happens in this line from \autoref{exam:example5.3}: 
 
 \begin{lstlisting}

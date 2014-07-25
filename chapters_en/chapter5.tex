@@ -20,7 +20,7 @@ These topics, in addition to what you learned in \autoref{chap:chapter4}, will g
 \textit{Flow control} is the order in which the statements of a program are executed. A program executes from the first statement at the top of the program to the last statement at the bottom, in order, unless told to do otherwise. There are two ways to tell a program to do otherwise: conditional statements and loops. A \textit{conditional statement} executes a group of statements only if the conditional test succeeds; otherwise, it just skips the group of statements. A \textit{loop} repeats a group of statements until an associated test fails.
 
 \subsection{Conditional Statements}
-Let's take another look at the \textit{open} statement. Recall that if you try to open a nonexistent file, you get error messages. You can test for the existence of a file explicitly, before trying to open it. In fact, such tests are among the most powerful features of computer languages. The \textit{if} , \textit{if-else}, and \textit{unless} conditional statements are three such testing mechanisms in Perl.
+Let's take another look at the \textit{open} statement. Recall that if you try to open a nonexistent file, you get error messages. You can test for the existence of a file explicitly, before trying to open it. In fact, such tests are among the most powerful features of computer languages. The \textit{if}, \textit{if-else}, and \textit{unless} conditional statements are three such testing mechanisms in Perl.
 
 The main feature of these kinds of constructs is the testing for a conditional. A conditional evaluates to a \verb|true| or \verb|false| value. If the conditional is \verb|true|, the statements following are executed; if the conditional is \verb|false|, they are skipped (or vice versa).
 
@@ -81,13 +81,13 @@ You can also just say:
 
 \begin{lstlisting}
 if( 0  ) {
-  print "0 evaluates to true\n\n"\nonumber\\
+  print "0 evaluates to true\n\n";
 }
 \end{lstlisting}
 
 which produces no output, since 0 evaluates to \verb|false|, so the statements associated with the \verb|if| statement are skipped entirely. 
 
-There's another way to write short \verb|if| statements that mirrors how the English language works. In English, you can say, equivalently, "If you build it, they will come" or "They will come if you build it." Not to be outdone, Perl also allows you to put the \verb|if| after the action: " 
+There's another way to write short \verb|if| statements that mirrors how the English language works. In English, you can say, equivalently, "If you build it, they will come" or "They will come if you build it." Not to be outdone, Perl also allows you to put the \verb|if| after the action:
 
 \begin{lstlisting}
 print "1 equals 1\n\n" if (1 == 1);
@@ -119,9 +119,9 @@ The \verb|if-else| does one thing if the test evaluates to \verb|true| and anoth
 
 \begin{lstlisting}
 if( 1 == 0 ) {
-  print "1 equals 0\n\n"\nonumber\\
+  print "1 equals 0\n\n";
 } else {
-  print "1 does not equal 0\n\n"\nonumber\\
+  print "1 does not equal 0\n\n";
 }
 \end{lstlisting}
 
@@ -158,7 +158,7 @@ Matching braces are easy to lose track of, so don't be surprised if you miss som
 
 Back to the conditional statements. The \textit{if-else} also has an \textit{if-elsif-else} form, as in \autoref{exam:example5.1}. The conditionals, first the \textit{if} and then the \textit{elsifs}, are evaluated in turn, and as soon as one evaluates to \verb|true|, its block is executed, and the rest of the conditionals are ignored. If none of the conditionals evaluates to \verb|true|, the \textit{else} block is executed if there is one—it's optional. 
 
-\textbf{Example 5-1. if-elsif-else }
+\textbf{Example 5-1. if-elsif-else}
 \lstinputlisting[label=exam:example5.1]{./scripts/example5-1.pl}
 
 Notice the \verb|\"| in the \textit{else} block's \verb|print| statement; it lets you print a double-quote sign (") within a double-quoted string. The backslash character tells Perl to treat the following " as the sign itself and not interpret it as the marker for the end of the string. Also note the use of \textit{eq} to check for equality between strings.
@@ -172,10 +172,10 @@ MNIDDKL--the magic word!
 \subsection{Loops}
 A \textit{loop} allows you to repeatedly execute a block of statements enclosed within matching curly braces. There are several ways to loop in Perl: \textit{while} loops, \textit{for} loops, \textit{foreach} loops, and more. \autoref{exam:example5.2} (from \autoref{chap:chapter4}) displays the \textit{while} loop and how it's used while reading protein sequence data in from a file. 
 
-\textbf{Example 5-2. Reading protein sequence data from a file, take 4 }
+\textbf{Example 5-2. Reading protein sequence data from a file, take 4}
 \lstinputlisting[label=exam:example5.2]{./scripts/example5-2.pl}
 
-Here's the output of \autoref{exam:example5.2}
+Here's the output of \autoref{exam:example5.2}:
 
 \begin{lstlisting}
   ######  Here is the next line of the file:
@@ -189,13 +189,13 @@ GLQYALNVPISVKQEITFTDVSEQLMRDKKQIR
 In the \textit{while} loop, notice how the variable \verb|$protein| is assigned each time through the loop to the next line of the file. In Perl, an assignment returns the value of the assignment. Here, the test is whether the assignment succeeds in reading another line. If there is another line to read in, the assignment occurs, the conditional is \verb|true|, the new line is stored in the variable \verb|$protein|, and the block with the two \verb|print| statements is executed. If there are no more lines, the assignment is undefined, the conditional is \verb|false|, and the program skips the block with the two \verb|print| statements, quits the \textit{while} loop, and continues to the following parts of the program (in this case, the \textit{close} and \textit{exit} functions). 
 
 \subsubsection{open and unless}
-The \textit{open} call is a system call, because to open a file, Perl must ask for the file from the operating system. The operating system may be a version of Unix or Linux, a Microsoft Windows versions, one of the Apple Macintosh operating systems, and so on. Files are managed by the operating system and can be accessed only by it.
+The \textit{open} call is a system call, because to open a file, Perl must ask for the file from the operating system. The operating system may be a version of Unix or Linux, a version of Microsoft Windows, one of the Apple Macintosh operating systems, and so on. Files are managed by the operating system and can be accessed only by it.
 
 It's a good habit to check for the success or failure of system calls, especially when opening files. If a system call fails, and you're not checking for it, your program will continue, perhaps attempting to read or write to a file you couldn't open in the first place. You should always check for failure and let the user of the program know right away when a file can't be opened. Often you may want to exit the program on failure or try to open a different file.  
 
-In \autoref{exam:example5.2}, the open system call is part of the test of the \textit{unless} conditional.
+In \autoref{exam:example5.2}, the \textit{open} system call is part of the test of the \textit{unless} conditional.
 
-\textit{unless} is the opposite of \textit{if}. Just as in English you can say "do the statements in the block if the condition is true"; you can also say the opposite, "do the statements in the block unless the condition is true." The \textit{open} system call gives you a true value if it successfully opens the file; so here, in the conditional test of the unless statement, if the \textit{open} call fails, the statements in the block are performed, the program prints an error message, and then exits.
+\textit{unless} is the opposite of \textit{if}. Just as in English you can say "do the statements in the block if the condition is true"; you can also say the opposite, "do the statements in the block unless the condition is true." The \textit{open} system call gives you a true value if it successfully opens the file; so here, in the conditional test of the \textit{unless} statement, if the \textit{open} call fails, the statements in the block are performed, the program prints an error message, and then exits.
 
 To sum up, conditionals and loops are simple ideas and not difficult to learn in Perl. They are among the most powerful features of programming languages. Conditionals allow you to tailor a program to several alternatives, and in that way, make decisions based on the type of input it gets. They are responsible for a large part of whatever artificial intelligence there is in a computer program. Loops harness the speed of the computer so that in a few lines of code, you can handle large amounts of input or continually iterate and refine a computation. 
 
@@ -329,7 +329,7 @@ $proteinfilename = <STDIN>;
 
 So, a filehandle can be associated with a file; it can also be associated with the keyboard where the user types responses to questions the program asks.
 
-If the variable you're using to save the input is a scalar variable starts with a dollar sign \verb|$|), as in this fragment, only one line is read, which is almost always what you want in this case.
+If the variable you're using to save the input is a scalar variable starts with a dollar sign (\verb|$|), as in this fragment, only one line is read, which is almost always what you want in this case.
 
 In \autoref{exam:example5.3}, the user is requested to enter the filename of a file containing protein sequence data. After getting a filename in this fashion, there's one more step before you can open the file. When the user types in a filename and sends a newline by hitting the Enter key (also known as the Return key), the filename also gets a newline character at the end as it is stored in the variable. This newline is not part of the filename and has to be removed before the \textit{open} system call will work. The Perl function \textit{chomp} removes newlines (or its cousins linefeeds and carriage returns) from the end of a string. (The older function \textit{chop} removes the last character, no matter what it is; this caused trouble, so \textit{chomp} was introduced and is almost always preferred.)
 
@@ -337,7 +337,7 @@ So this part of Perl requires a little bit extra: removing the newline from the 
 
 \subsection{Turning Arrays into Scalars with join}
 \label{sect:section5.3.2}
-It's common to find protein sequence data broken into short segments of 80 or so characters each. The reason is simple: when data is printed out on paper or displayed on the screen, it needs to be broken up into lines that fit into the space. Having your data broken into segments, however, is inconvenient for your Perl program. What if you're searching for a motif that's split by a newline character? Your program won't find it.  In fact, some of the motifs searched for in \autoref{exam:example5.3} are split by line breaks. In Perl you deal with this sort of segmented data with the Perl function \textit{join}. In \autoref{exam:example5.3} \textit{join} collapses an array \verb|@protein| by combining all the lines of data into a single string stored in a new scalar variable \verb|$protein|:
+It's common to find protein sequence data broken into short segments of 80 or so characters each. The reason is simple: when data is printed out on paper or displayed on the screen, it needs to be broken up into lines that fit into the space. Having your data broken into segments, however, is inconvenient for your Perl program. What if you're searching for a motif that's split by a newline character? Your program won't find it. In fact, some of the motifs searched for in \autoref{exam:example5.3} are split by line breaks. In Perl you deal with this sort of segmented data with the Perl function \textit{join}. In \autoref{exam:example5.3} \textit{join} collapses an array \verb|@protein| by combining all the lines of data into a single string stored in a new scalar variable \verb|$protein|:
 
 \begin{lstlisting}
 $protein = join( '', @protein );
@@ -345,7 +345,7 @@ $protein = join( '', @protein );
 
 You specify a string to be placed between the elements of the array as they're joined. In this case, you specify the empty string to be placed between the lines of the input file. The empty string is represented with the pair of single quotes '' (double quotes "" also serve).  
 
-Recall that in \autoref{exam:example4.2}, I introduced several equivalent ways to concatenate two fragments of DNA. The use of the \textit{join} function is very similar. It takes the scalar values that are the elements of the array and concatenates them into a single scalar value. Recall the following statement from \autoref{exam:example4.2}Example 4-2, which is one of the equivalent ways to concatenate two strings: 
+Recall that in \autoref{exam:example4.2}, I introduced several equivalent ways to concatenate two fragments of DNA. The use of the \textit{join} function is very similar. It takes the scalar values that are the elements of the array and concatenates them into a single scalar value. Recall the following statement from \autoref{exam:example4.2}, which is one of the equivalent ways to concatenate two strings: 
 
 \begin{lstlisting}
 $DNA3 = $DNA1 . $DNA2;
@@ -367,15 +367,9 @@ In this version, instead of giving an array name, I specify a list of scalar ele
 There's a new kind of loop in \autoref{exam:example5.3}, the \verb|do-until| loop, which first executes a block and then does a conditional test. Sometimes this is more convenient than the usual order in which you test first, then do the block if the test succeeds. Here, you want to prompt the user, get the user's input, search for the motif, and report the results. Before doing it again, you check the conditional test to see if the user has input an empty line. This means that the user has no more motifs to look for, so you exit the loop. 
 
 \subsection{Regular Expressions}
-\textit{Regular expressions} let you easily manipulate strings of all sorts, such
-as DNA and protein sequence data. What's great about regular expressions
-is that if there's something you want to do with a string, you usually
-can do it with Perl regular expressions.
+\textit{Regular expressions} let you easily manipulate strings of all sorts, such as DNA and protein sequence data. What's great about regular expressions is that if there's something you want to do with a string, you usually can do it with Perl regular expressions.
 
-Some regular expressions are very simple. For instance, you can just use
-the exact text of what you're searching for as a regular expression: if
-I was looking for the word "bioinformatics" in the text of this book, I
-could use the regular expression:
+Some regular expressions are very simple. For instance, you can just use the exact text of what you're searching for as a regular expression: if I was looking for the word "bioinformatics" in the text of this book, I could use the regular expression:
 
 \begin{lstlisting}
 /bioinformatics/
@@ -420,7 +414,7 @@ which translates as: match a string that, from the beginning (indicated by the \
 
 If this seems somewhat cryptic, just hang in there and you'll soon get familiar with the terminology. Regular expressions are a great way to manipulate sequence and other text-based data, and Perl is particularly good at making regular expressions relatively easy to use, powerful, and flexible. Many of the references in \autoref{chap:chapteraa} contain material on regular expressions, and there's a concise summary in \autoref{chap:chapterab}.
 
-\subsubsection{Pattern matching with =~ and regular expressions}
+\cprotect \subsubsection{Pattern matching with \verb|=~| and regular expressions}
 The actual search for the motif happens in this line from \autoref{exam:example5.3}: 
 
 \begin{lstlisting}
