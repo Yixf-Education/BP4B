@@ -386,7 +386,7 @@ After you join the protein sequence data into the scalar variable \verb|$protein
 $protein =~ s/\s//g;
 \end{lstlisting}
 
-The sequence data in the scalar variable \verb|$protein| is altered by this statement. You first saw the binding operator =~ and the substitute function \textit{s///} back in \autoref{exam:example4.3}Example 4-3, where they were used to change one character into another. Here, they're used a little differently. You substitute any one of a set of whitespace characters, represented by \verb|\s| with nothing and by the lack of anything between the second and third forward slashes. In other words, you delete any of a set of whitespace characters, which is done globally throughout the string by virtue of the \verb|g| at the end of the statement.
+The sequence data in the scalar variable \verb|$protein| is altered by this statement. You first saw the binding operator =~ and the substitute function \textit{s///} back in \autoref{exam:example4.3}, where they were used to change one character into another. Here, they're used a little differently. You substitute any one of a set of whitespace characters, represented by \verb|\s| with nothing and by the lack of anything between the second and third forward slashes. In other words, you delete any of a set of whitespace characters, which is done globally throughout the string by virtue of the \verb|g| at the end of the statement.
 
 The \verb|\s| is one of several metasymbols. You've already seen the metasymbol \verb|\n|. The \verb|\s| metasymbol matches any space, tab, newline, carriage return, or formfeed. \verb|\s| can also be written as: 
 
@@ -521,7 +521,7 @@ print count_of_A, count_of_C, count_of_G, count_of_T
 
 As promised, this version of the pseudocode is a bit more detailed. It suggests a method to look at each of the bases by exploding the string of DNA into an array of single characters. It also initializes the counts to zero to ensure they start off right. It's easier to see what's happening if you spell out the initialization in the program, and it can prevent certain kinds of errors from creeping into your code. (It's not a rule, however; sometimes, you may prefer to leave the values of variables undefined until they are used.) Perl assumes that an uninitialized variable has the value 0 if you try to use it as a number, for instance by adding another number to it. But you'll most likely get a warning if that is the case.
 
-We now have a design for the program, let's turn it into Perl code.  \autoref{exam:example5.4} is a workable program; you'll see other ways to accomplish the same task more quickly as you proceed in this chapter, but speed is not the main concern at this point. 
+We now have a design for the program, let's turn it into Perl code. \autoref{exam:example5.4} is a workable program; you'll see other ways to accomplish the same task more quickly as you proceed in this chapter, but speed is not the main concern at this point. 
 
 \textbf{Example 5-4. Determining frequency of nucleotides}
 \lstinputlisting[label=exam:example5.4]{./scripts/example5-4.pl}
@@ -537,7 +537,7 @@ AAACG
 
 The file \textit{small.dna} can be typed into your computer using your favorite text editor, or you can download it from this book's web site.
 
-Notice that there is a V in the file, an error.\footnote{Files of DNA sequence data sometimes include such characters as N, meaning "some undetermined base," or other special characters.  You sometimes have to look at the documentation for the source, say an ABI sequencer or a GenBank file or whatever, to discover which characters are used and what they mean.} Here is the output of \autoref{exam:example5.4}:
+Notice that there is a V in the file, an error.\footnote{Files of DNA sequence data sometimes include such characters as N, meaning "some undetermined base," or other special characters. You sometimes have to look at the documentation for the source, say an ABI sequencer or a GenBank file or whatever, to discover which characters are used and what they mean.} Here is the output of \autoref{exam:example5.4}:
 
 \begin{lstlisting}
 Please type the filename of the DNA sequence data: small.dna
@@ -557,13 +557,13 @@ Now let's look at the new stuff in this program. Opening and reading the sequenc
 
 which the comments say will explode the string \verb|$DNA| into an array of single characters \verb|@DNA|.
 
-\textit{split} is the companion to \textit{join}, and it's a good idea to take a little while to look over the documentation for these two commands. Calling \textit{split} with an empty string as the first argument causes the string to explode into individual characters; that's just what we want.\footnote{As you'll see in the documentation for the split function, the first argument can be any regular expression, such as \verb|/\s+/| (one or more adjacent whitespace characters.)}
+\textit{split} is the companion to \textit{join}, and it's a good idea to take a little while to look over the documentation for these two commands. Calling \textit{split} with an empty string as the first argument causes the string to explode into individual characters; that's just what we want.\footnote{As you'll see in the documentation for the \texit{split} function, the first argument can be any regular expression, such as \verb|/\s+/| (one or more adjacent whitespace characters.)}
 
-Next, there are five scalar variables initialized to 0, the variables \verb|$count_of_A| and so forth. I nitializing means assigning an initial value, in this case, the value 0. 
+Next, there are five scalar variables initialized to 0, the variables \verb|$count_of_A| and so forth. \textit{Initializing} means assigning an initial value, in this case, the value 0. 
 
-\autoref{exam:example5.4} illustrates the concepts of type and initialization. The type of a variable determines what kind of data it can hold, for instance, strings or numbers. Up to now we've been using scalar variables such as \verb|$DNA| to store strings of letters such as A, C, G, and T. \autoref{exam:example5.4} shows that you can also use scalar variables to store numbers. For example, the variable \verb|$count_of_A| keeps a running count of the character A.
+\autoref{exam:example5.4} illustrates the concepts of \textit{type} and \texit{initialization}. The type of a variable determines what kind of data it can hold, for instance, strings or numbers. Up to now we've been using scalar variables such as \verb|$DNA| to store strings of letters such as A, C, G, and T. \autoref{exam:example5.4} shows that you can also use scalar variables to store numbers. For example, the variable \verb|$count_of_A| keeps a running count of the character A.
 
-Scalar variables can store integers (0, 1, -1, 2, -2, \ldots), decimal or floating-point numbers such as 6.544, and numbers in scientific notation such as 6.544E6, which translates as 6.544 x 106, or 6,544000.  (See \autoref{chap:chapterab} for more details on types of numbers.)
+Scalar variables can store integers (0, 1, -1, 2, -2, \ldots), decimal or floating-point numbers such as 6.544, and numbers in scientific notation such as 6.544E6, which translates as $6.544 \times 10^6$, or 6,544,000. (See \autoref{chap:chapterab} for more details on types of numbers.)
 
 In \autoref{exam:example5.4}, the variables \verb|$count_of_A| through \verb|$count_of_T| are initialized to 0. \textit{Initializing} a variable means giving it a value after it's declared. If you don't initialize your variables, they assume the value of \verb|'undef'|. In Perl, an undefined variable is 0 if it is asked for in numerical context; it's an empty string if used in a string operation. Although Perl programmers often choose not to initialize variables, it's a critical step in many other languages. In C for instance, uninitialized variables have unpredictable values. This can wreak havoc with your output. You should get in the habit of initializing variables; it makes the program easier to read and maintain, and that's important.
 
@@ -592,9 +592,7 @@ foreach $base (@DNA) {
 
 loops over the elements of the array \verb|@DNA|, and each time through the loop, the scalar variable \verb|$base| (or whatever name you choose) is set to the next element of the array.
 
-The body of the loop checks for each base and increments the count for
-that base if found. There are four ways to add \verb|1| to a number in Perl.
-Here, you put a \verb|++| in front of the variable, like this:
+The body of the loop checks for each base and increments the count for that base if found. There are four ways to add \verb|1| to a number in Perl.  Here, you put a \verb|++| in front of the variable, like this:
 
 \begin{lstlisting}
 ++$count; 
@@ -650,7 +648,7 @@ foreach(@DNA) {.
 
 doesn't have a scalar value. In a \verb|foreach| loop, if you don't specify a scalar variable to hold the scalars that are being read from the array (\verb|$base| served that function in the version of this loop in \autoref{exam:example5.5}), Perl uses the special variable \verb|$_|.
 
-Furthermore, many Perl built-in functions operate on this special variable if no argument is provided to them. Here, the conditional tests are simply patterns; Perl assumes you're doing a pattern match on the \verb|$_| variable, so it behaves as if you had said \verb|$_ =~ /A/|, for instance.  Finally, in the error message, the statement \verb|print;| prints the value of the \verb|$_| variable.
+Furthermore, many Perl built-in functions operate on this special variable if no argument is provided to them. Here, the conditional tests are simply patterns; Perl assumes you're doing a pattern match on the \verb|$_| variable, so it behaves as if you had said \verb|$_ =~ /A/|, for instance. Finally, in the error message, the statement \verb|print;| prints the value of the \verb|$_| variable.
 
 This special variable \verb|$_| that doesn't have to be named appears in many Perl programs, although I don't use it extensively in this book. 
 
