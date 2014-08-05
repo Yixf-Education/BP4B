@@ -737,7 +737,7 @@ As you can see, the \textit{for} loop brings the initialization and increment of
 
 The conditional test checks to see if the position reached in the string is less than the length of the string. It uses the \textit{length} Perl function.  Obviously, you don't want to check characters beyond the length of the string. But a word is in order here about the numbering of positions in strings and arrays.
 
-By default, Perl assumes that a string begins at position \verb|0| and its last character is at a position that's numbered one less than the length of the string. Why do it this way instead of numbering the positions from 1 up to and including the length of the string? There are reasons, but they're somewhat abstruse; see the documentation for enlightenment. If it's any comfort, many other programming languages make the same choice.  (However, many do it the intuitive way, starting at 1. Ah well.)
+By default, Perl assumes that a string begins at position \verb|0| and its last character is at a position that's numbered one less than the length of the string. Why do it this way instead of numbering the positions from 1 up to and including the length of the string? There are reasons, but they're somewhat abstruse; see the documentation for enlightenment. If it's any comfort, many other programming languages make the same choice. (However, many do it the intuitive way, starting at 1. Ah well.)
 
 This way of numbering is important to biologists because they are used to numbering sequences beginning with 1, not with \verb|0| the way Perl does it. You sometimes have to add 1 to a position before printing out results so they'll make sense to nonprogrammers. It's mildly annoying, but you'll get used to it.
 
@@ -751,10 +751,9 @@ Back in the block, you call the \textit{substr} function to look into the string
 $base = substr($DNA, $position, 1);
 \end{lstlisting}
 
-This is a fairly general-purpose function for working with strings; you can also insert and delete things. Here, you look at just one character, so you call substr on the string \verb|$DNA|, ask it to look in position \verb|$position| for one character, and save the result in scalar variable \verb|$base|. Then you proceed to accumulate the count as in the preceding version of the program, \autoref{exam:example5.4}. 
-
+This is a fairly general-purpose function for working with strings; you can also insert and delete things. Here, you look at just one character, so you call \textit{substr} on the string \verb|$DNA|, ask it to look in position \verb|$position| for one character, and save the result in scalar variable \verb|$base|. Then you proceed to accumulate the count as in the preceding version of the program, \autoref{exam:example5.4}.  
 \section{Writing to Files}
-\autoref{exam:example5.7} shows one more way to count nucleotides in a string of DNA.  It uses a Perl trick that was designed with exactly this kind of job in mind. It puts a global regular expression search in the test for a \textit{while} loop, and as you'll see, it's a compact way of counting characters in a string.
+\autoref{exam:example5.7} shows one more way to count nucleotides in a string of DNA. It uses a Perl trick that was designed with exactly this kind of job in mind. It puts a global regular expression search in the test for a \textit{while} loop, and as you'll see, it's a compact way of counting characters in a string.
 
 One of the nice things about Perl is that if you need to do something fairly regularly, the language has probably got a relatively succinct way to do it. (The downside of this is that Perl has a lot of things about it to learn.)
 
@@ -776,7 +775,7 @@ print COUNTBASE "A=$a C=$c G=$g T=$t errors=$e\n";
 close(COUNTBASE);
 \end{lstlisting}
 
-As you see, to write to a file, you do an open call, just as when reading from a file, but with a difference: you prepend a greater-than sign \verb|>| to the filename. The filehandle becomes a first argument to a \verb|print| statement (but without a comma following it). This makes the \verb|print| statement direct its output into the file.\footnote{In this case, if the file already exists, it's emptied out first. It's possible to specify several other behaviors. As mentioned earlier, the Perl documentation has all the details of the open function, which sets the options for reading from, and writing to, files as well as other actions.}
+As you see, to write to a file, you do an \textit{open} call, just as when reading from a file, but with a difference: you prepend a greater-than sign \verb|>| to the filename. The filehandle becomes a first argument to a \verb|print| statement (but without a comma following it). This makes the \verb|print| statement direct its output into the file.\footnote{In this case, if the file already exists, it's emptied out first. It's possible to specify several other behaviors. As mentioned earlier, the Perl documentation has all the details of the \textit{open} function, which sets the options for reading from, and writing to, files as well as other actions.}
 
 \autoref{exam:example5.7} is the third version of the Perl program that examines each base in a string of DNA. 
 
@@ -818,7 +817,7 @@ Now, this string-matching expression, in the context of a \textit{while} loop, c
 
 to increment the counter at each match of the regular expression; in other words, you're counting all the \verb|a|'s. 
 
-One other point should be made about this third version of the program.  You'll notice some of the statements have been changed and shortened this time around. Some variables have shorter names, some statements are lined up on one line, and the \textit{print} statement at the end is more concise. These are just alternative ways of writing. As you program, you'll find yourself experimenting with different approaches: try some on for size.
+One other point should be made about this third version of the program. You'll notice some of the statements have been changed and shortened this time around. Some variables have shorter names, some statements are lined up on one line, and the \textit{print} statement at the end is more concise. These are just alternative ways of writing. As you program, you'll find yourself experimenting with different approaches: try some on for size.
 
 The way to count bases in this third version is flexible; for instance, it allows you to count non-ACGT characters without specifying them individually. In later chapters, you'll use those \verb|while| loops to good effect. However, there's an even faster way to count bases. You can use the \textit{tr} transliteration function from \autoref{chap:chapter4}; it's faster, which is helpful if you have a lot of DNA to count: 
 
@@ -863,7 +862,7 @@ Write a program that prints all the numbers from 1 to 100. Your program should h
 
 \textcolor{red}{\textit{Exercise 5.4}}
 \begin{adjustwidth}{1cm}{}
-Write a program to calculate the reverse complement of a strand of DNA.  Do not use the \textit{s///} or the \textit{tr} functions. Use the \textit{substr} function, and examine each base one at a time in the original while you build up the reverse complement. (Hint: you might find it easier to examine the original right to left, rather than left to right, although either is possible.) 
+Write a program to calculate the reverse complement of a strand of DNA. Do not use the \textit{s///} or the \textit{tr} functions. Use the \textit{substr} function, and examine each base one at a time in the original while you build up the reverse complement. (Hint: you might find it easier to examine the original right to left, rather than left to right, although either is possible.) 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.5}}
@@ -873,9 +872,7 @@ Write a program to report on the percentage of hydrophobic amino acids in a prot
 
 \textcolor{red}{\textit{Exercise 5.6}}
 \begin{adjustwidth}{1cm}{}
-Write a program that checks if two strings given as arguments are
-reverse complements of each other. Use the Perl built-in functions
-\textit{split}, \textit{pop}, \textit{shift}, and \textit{eq} (\textit{eq} actually an operator). 
+Write a program that checks if two strings given as arguments are reverse complements of each other. Use the Perl built-in functions \textit{split}, \textit{pop}, \textit{shift}, and \textit{eq} (\textit{eq} actually an operator). 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.7}}
@@ -895,7 +892,7 @@ Write a program that switches two bases in a DNA string at specified positions. 
 
 \textcolor{red}{\textit{Exercise 5.10}}
 \begin{adjustwidth}{1cm}{}
-Write a program that writes a temporary file and then deletes it.  The \textit{unlink} function removes a file: just say, for example:
+Write a program that writes a temporary file and then deletes it. The \textit{unlink} function removes a file: just say, for example:
 \begin{lstlisting}
 unlink "tmpfile";
 \end{lstlisting}

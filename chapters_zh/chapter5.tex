@@ -736,32 +736,32 @@ while( $position < length $DNA ) {
 
 花点时间，把这两个循环比较一下。你会看到同样的语句，但是出现在了不同的地方。
 
-As you can see, the \textit{for} loop brings the initialization and increment of a counter (\verb|$position|) into the loop statement, whereas in the \textit{while} loop, they are separate statements. In the \textit{for} loop, both the initialization and the increment statement are placed between parentheses, whereas you find only the conditional test in the \textit{while} loop. In the \textit{for} loop, you can put initializations before the first semicolon and increment statements after the second semicolon. The initialization statement is done just once before starting the loop, and the increment statement is done at the end of each iteration through the block before going back to the conditional test. It's really just a shorthand for the equivalent \textit{while} loop as just shown. 
+如你所见，在\textit{for}循环的循环语句中引入了计数器（\verb|$position|）的初始化和增量，而在\textit{while}循环中，它们则是单独的语句。在\textit{for}循环中，初始化和增量语句都包裹在了括号中，而在\textit{while}循环的括号中只有条件测试。在\textit{for}循环中，你把初始化语句放在了第一个分号的前面，把增量语句放在了第二个分号的后面。初始化语句在循环开始之前就执行了，而且只初始化一次，而增量语句则是在每次循环迭代完成后、条件测试之前执行的。如此所述，它实际上就是完全等价于\textit{while}循环的一种简写方法。
 
-The conditional test checks to see if the position reached in the string is less than the length of the string. It uses the \textit{length} Perl function.  Obviously, you don't want to check characters beyond the length of the string. But a word is in order here about the numbering of positions in strings and arrays.
+条件测试检测处理到达字符串的位置是否小于字符串的长度。它使用的是Perl的\textit{length}函数。显然，你不能检测超过字符串长度的字符。但对于字符串和数组位置的索引还要多说几句。
 
-By default, Perl assumes that a string begins at position \verb|0| and its last character is at a position that's numbered one less than the length of the string. Why do it this way instead of numbering the positions from 1 up to and including the length of the string? There are reasons, but they're somewhat abstruse; see the documentation for enlightenment. If it's any comfort, many other programming languages make the same choice.  (However, many do it the intuitive way, starting at 1. Ah well.)
+默认情况下，Perl假定字符串的索引起始于\verb|0|，它的最后一个字符的索引要比字符串的长度小一。问什么不使用起始于1、终止于字符串长度的索引，而是用这样的索引呢？这其中有很多原因，但它们都有些深奥；可以参看一下关于启蒙（enlightenment）的文档。稍感欣慰的是，许多其他编程语言使用的也是Perl的这种索引方式。（当然，也有编程语言选择了直观的索引方式，从1开始进行索引。好吧。）
 
-This way of numbering is important to biologists because they are used to numbering sequences beginning with 1, not with \verb|0| the way Perl does it. You sometimes have to add 1 to a position before printing out results so they'll make sense to nonprogrammers. It's mildly annoying, but you'll get used to it.
+这种索引方式对于生物学家来说非常重要，因为他们已经习惯了从1开始对序列进行索引，而不是像Perl这样从\verb|0|开始。在打印输出结果之前，你有时需要把位置索引加1，这样对于非程序员来说就比较容易理解了。这可能稍微有些烦人，但你会慢慢习惯的。
 
-The same holds true for numbering the elements of an array. The first element of an array is element \verb|0|; the last is element \verb|$length-1|.
+对于数组元素的索引也是一样的，数组的第一个元素的索引是\verb|0|，最后一个元素的索引是\verb|$length-1|。
 
-Anyway, you see that the conditional test evaluates to \verb|true| while the value of \verb|$position| is \verb|length-1| or less and fails when \verb|$position| reaches the same value as the length of the string. For example, say you have a string that contains the text "seeing." This has a length of six characters. The "s" is at position 0, and the "g" is at position 5, which is one less than the string length 6.
+不管怎么说，当\verb|$position|的值小于等于\verb|length-1|时，条件测试的结果为\verb|真|，当\verb|$position|的值和字符串的长度相等时，测试就会失败。举个例子，假设你有一个包含“seeing”文本的字符串，它的长度为6个字符。其中，“s”的位置索引为0，“g”的位置索引为5，比字符串的长度6小一。
 
-Back in the block, you call the \textit{substr} function to look into the string: 
+在回来看看代码块，你使用\textit{substr}函数来查看字符串：
 
 \begin{lstlisting}
 $base = substr($DNA, $position, 1);
 \end{lstlisting}
 
-This is a fairly general-purpose function for working with strings; you can also insert and delete things. Here, you look at just one character, so you call substr on the string \verb|$DNA|, ask it to look in position \verb|$position| for one character, and save the result in scalar variable \verb|$base|. Then you proceed to accumulate the count as in the preceding version of the program, \autoref{exam:example5.4}. 
+对于处理字符串来说，这是相当常用的一个函数，你还可以用它来进行插入或删除。在这个例子中，你只想查看一个字符，所以你对字符串\verb|$DNA|使用了\textit{substr}函数，让它找到位置索引为\verb|$position|的那个字符，并把结果保存到标量变量\verb|$base|中。然后，就像前面的\autoref{exam:example5.4}程序那样，对碱基进行计数。
 
-\section{Writing to Files}
-\autoref{exam:example5.7} shows one more way to count nucleotides in a string of DNA.  It uses a Perl trick that was designed with exactly this kind of job in mind. It puts a global regular expression search in the test for a \textit{while} loop, and as you'll see, it's a compact way of counting characters in a string.
+\section{写入文件}
+  \autoref{exam:example5.7}演示了对DNA字符串中的核苷酸进行计数的另一种方法。它使用了一个Perl的技巧，这种技巧就是专门为类似的工作设计的。在\textit{while}循环的测试中，它进行了一个全局的正则表达式查找，就像你将看到的，这是一种对字符串中字符进行计数的简洁的方法。
 
-One of the nice things about Perl is that if you need to do something fairly regularly, the language has probably got a relatively succinct way to do it. (The downside of this is that Perl has a lot of things about it to learn.)
+Perl比较好的一点就是，对于那些相当常见的事情，它很可能提供了一种相对简洁的处理方法。（而它的弊端就是对于Perl，有大量知识需要你去学习。）
 
-The results of \autoref{exam:example5.7}, besides being printed to the screen, will also be written to a file. The code that accomplishes this writing to a file is as follows: 
+\autoref{exam:example5.7}的结果，不仅会输出打印到屏幕，还会写入到文件中。实现写入文件的代码如下：
 
 \begin{lstlisting}
 # Also write the results to a file called "countbase"
@@ -779,51 +779,51 @@ print COUNTBASE "A=$a C=$c G=$g T=$t errors=$e\n";
 close(COUNTBASE);
 \end{lstlisting}
 
-As you see, to write to a file, you do an open call, just as when reading from a file, but with a difference: you prepend a greater-than sign \verb|>| to the filename. The filehandle becomes a first argument to a \verb|print| statement (but without a comma following it). This makes the \verb|print| statement direct its output into the file.\footnote{In this case, if the file already exists, it's emptied out first. It's possible to specify several other behaviors. As mentioned earlier, the Perl documentation has all the details of the open function, which sets the options for reading from, and writing to, files as well as other actions.}
+正如你所见，要写入到文件，你要像读取文件那样调用\textit{open}，但有一点不同：在文件名前使用的是大于号\verb|>|。文件句柄成了\verb|print|语句的第一个参数（但其后并没有逗号），这使得\verb|print|语句把它的输出定向到了文件。\footnote{在这种情况下，如果文件已经存在了，它将先被清空然后写入。但也是可以指定其他的行为方式的。如前所述，Perl文档中有关于\textit{open}函数的所有细节，可以设定选项来读取、写入文件，以及其他操作。}
 
-\autoref{exam:example5.7} is the third version of the Perl program that examines each base in a string of DNA. 
+\autoref{exam:example5.7}检查DNA字符串中每个碱基的第三个版本的Perl程序。
 
-\textbf{Example 5-7. Determining frequency of nucleotides, take 3}
+\textbf{例5-7：确定核苷酸频率，第三次尝试}
 \lstinputlisting[label=exam:example5.7]{./scripts/example5-7.pl}
 
-\autoref{exam:example5.7} looks like this when you run it:
+当你运行\autoref{exam:example5.7}时，会看到类似的输出：
 
 \begin{lstlisting}
 Please type the filename of the DNA sequence data: small.dna
 A=40 C=27 G=24 T=17 errors=1
 \end{lstlisting}
 
-The output file countbase has the following contents after you run \autoref{exam:example5.7}:
+在你运行\autoref{exam:example5.7}后，计数碱基的输出文件中包含以下内容：
 
 \begin{lstlisting}
 A=40 C=27 G=24 T=17 errors=1
 \end{lstlisting}
 
-The \textit{while} loop:
+\textit{while}循环：
 
 \begin{lstlisting}
 while($dna =~ /a/ig){$a++} 
 \end{lstlisting}
 
-has as its conditional test, within the parentheses, a string-matching expression:
+有它自己的条件测试，包裹在括号中，这是一个字符串匹配的表达式：
 
 \begin{lstlisting}
 $dna =~ /a/ig 
 \end{lstlisting}
 
-This expression is looking for the regular expression \verb|/a/|, that is, the letter \verb|a|. Since it has the \verb|i| modifier, it's a case-insensitive match, which means it matches \verb|a| or \verb|A|. It also has the global modifier, which means match all the \verb|a|'s in the string. (Without the global modifier, it just keeps returning \verb|true| every time through the loop, if there is an "a" in \verb|$dna|.)
+这个表达式查找正则表达式\verb|/a/|，也就是\verb|a|这个字母。既然它使用了\verb|i|修饰符，那这就是不区分大小写的匹配，它将匹配\verb|a|或者\verb|A|。它还使用了全局修饰符，这意味它将匹配字符串中的所有\verb|a|。（没有全局修饰符时，在每次循环迭代时，如果在\verb|$dna|中有“a”，它只会持续返回\verb|真|。）
 
-Now, this string-matching expression, in the context of a \textit{while} loop, causes the \textit{while} loop to execute its block on every match of the regular expression. So, append the one-statement block:
+现在，\verb|while|循环中的这个字符串匹配表达式，使得\textit{while}循环在每一次匹配正则表达式时都执行它的代码块。所以，附加了这只有一个语句的代码块：
 
 \begin{lstlisting}
 {$a++}
 \end{lstlisting}
 
-to increment the counter at each match of the regular expression; in other words, you're counting all the \verb|a|'s. 
+在每次匹配正则表达式时递增计数器。换句话说，你会对所有的\verb|a|进行计数。
 
-One other point should be made about this third version of the program.  You'll notice some of the statements have been changed and shortened this time around. Some variables have shorter names, some statements are lined up on one line, and the \textit{print} statement at the end is more concise. These are just alternative ways of writing. As you program, you'll find yourself experimenting with different approaches: try some on for size.
+对于这第三个版本的程序来说，还有一点需要提及一下。你会注意到其中有些语句发生了变化，被缩短了。有些变量的名字更短了，有些语句放在了一行中，同时末尾的\textit{print}语句也更加简洁了。这些都只是书写的另一种方式而已。在你编程时，你将会发现自己会遇到不同的书写方式：适当的去尝试一下吧。
 
-The way to count bases in this third version is flexible; for instance, it allows you to count non-ACGT characters without specifying them individually. In later chapters, you'll use those \verb|while| loops to good effect. However, there's an even faster way to count bases. You can use the \textit{tr} transliteration function from \autoref{chap:chapter4}; it's faster, which is helpful if you have a lot of DNA to count: 
+在第三个版本的程序中，计数碱基的方式比较灵活。比如，不需要单独指定各个碱基，你就可以对ACGT以外的所有碱基进行计数。在后面的章节中，你将使用这样的\verb|while|循环来取得良好的效果。然后，还有一种更快的计数碱基的方法。你可以使用\autoref{chap:chapter4}中提到的\textit{tr}转换函数，它的速度更快一些，如果你有大量的DNA需要计数，它将会非常有用：
 
 \begin{lstlisting}
 $a = ($dna =~ tr/Aa//);
@@ -832,75 +832,73 @@ $g = ($dna =~ tr/Gg//);
 $t = ($dna =~ tr/Tt//);
 \end{lstlisting}
 
-The \textit{tr} function returns the count of the specified characters it finds in the string, and if the set of replacement characters is empty, it doesn't actually change the string. So it makes a good character counter. Notice that with \textit{tr}, you have to spell out the upper- and lowercase letters. Also, because \textit{tr} doesn't accept character classes, there's no direct way to count nonbases. You could, however, say: 
+\textit{tr}函数返回它在字符串中找到的特定字符的数目，并且，如果替换的字符集为空的话，原始的字符串并不会被改变。这使得它称为一个很好的字符计数器。注意使用\textit{tr}时，你需要同时指定大小写字母。此外，因为\textit{tr}并不接受字符组，所以没法直接对非碱基的字符进行计数。但是，你可以这样做：
 
 \begin{lstlisting}
 $basecount = ($dna = ~ tr/ACGTacgt//);
 $nonbase = (length $dna) - $basecount)
 \end{lstlisting}
 
-The program however, runs faster using \textit{tr} than using the \textit{while} loops of \autoref{exam:example5.7}.
+使用\textit{tr}的这个程序要比\autoref{exam:example5.7}中使用\textit{while}循环的程序运行快。
 
-You may find it a bit much to have three (really, four) versions of this base-counting program, especially since much of the code in each version is identical. The only part of the program that really changed was the part that did the counting of the bases. Wouldn't it have been convenient to have a way to just alter the part that counts the bases? In \autoref{chap:chapter6}, you'll see how subroutines allow you to partition your programs in just such a way. 
+你可能会觉得计数碱基的程序有三个（实际上是四个）版本有点多了，尤其是每个版本中的大部分代码都是一样的。程序中唯一改变的就是计数碱基的部分。有没有什么办法，能够让我们方便的只改变计数碱基的部分呢？在\autoref{chap:chapter6}中，你将看到这样的方法，使用子程序来把程序进行分割。
 
-\section{Exercises}
-\textcolor{red}{\textit{Exercise 5.1}}
+\section{练习题}
+\textcolor{red}{\textit{习题5.1}}
 \begin{adjustwidth}{1cm}{}
-Use a loop to write a nonhalting program. The conditional must always evaluate to \verb|true|, every time through the loop. Note that some systems will catch that you're in an infinite loop and will stop the program automatically. You will stop your program differently, depending on which operating system you use. Ctrl-C works on Unix and Linux, a Windows MS-DOS command window, or a MacOS X shell window. 
+使用循环写一个永不挂起的程序。每次迭代时，条件测试都应该永远为\verb|真|。注意，有的系统会注意到你在一个无穷的循环中，从而自动结束程序。依据你使用的操作系统的不同，结束程序的方法也会有所不同。在Unix和Linux、Windows
+MS-DOS命令窗口或者MacOS X shell窗口中，使用Ctrl-C就可以结束程序。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 5.2}}
+\textcolor{red}{\textit{习题5.2}}
 \begin{adjustwidth}{1cm}{}
-Prompt the user to enter two (short) strings of DNA. Concatenate the two strings of DNA by appending the second to the first using the \verb|.=| assignment operator. Print the two strings as concatenated, and then print the second string lined up over its copy at the end of the concatenated strings. For example, if the input strings are \verb|AAAA| and \verb|TTTT|, print:
+提示用户输入两个（短的）DNA字符串。通过使用\verb|.=|赋值操作符，把第二个附加到第一个DNA字符串的后面，从而把两者串联起来。先打印输出串联后的两个字符串，然后打印输出第二个字符串，但要与串联后字符串末尾对应的字符串对齐。举个例子，如果输入的字符串是\verb|AAAA|和\verb|TTTT|，则要打印输出：
 \begin{verbatim}
 AAAATTTT
     TTTT
 \end{verbatim}
-
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 5.3}}
+\textcolor{red}{\textit{习题5.3}}
 \begin{adjustwidth}{1cm}{}
-Write a program that prints all the numbers from 1 to 100. Your program should have much fewer than 100 lines of code! 
+编写一个程序，输出从1到100的所有数字。当然，你的程序代码应该远远小于100行。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 5.4}}
+\textcolor{red}{\textit{习题5.4}}
 \begin{adjustwidth}{1cm}{}
-Write a program to calculate the reverse complement of a strand of DNA.  Do not use the \textit{s///} or the \textit{tr} functions. Use the \textit{substr} function, and examine each base one at a time in the original while you build up the reverse complement. (Hint: you might find it easier to examine the original right to left, rather than left to right, although either is possible.) 
+编写一个程序，计算DNA链的反向互补链。不要使用\textit{s///}或者\textit{tr}函数。使用\textit{substr}函数，当你计算反向互补链时，要一次检查原始DNA中的一个碱基。（提示：你可能会发现检查原始DNA字符串时，尽管从左到右也是可以的，但从右向左要更加方便一些) 
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 5.5}}
+\textcolor{red}{\textit{习题5.5}}
 \begin{adjustwidth}{1cm}{}
-Write a program to report on the percentage of hydrophobic amino acids in a protein sequence. (To find which amino acids are hydrophobic, consult any introductory text on proteins, molecular biology, or cell biology. You will find information sources in \autoref{chap:chapteraa}.) 
+编写一个程序，报告蛋白质序列中疏水氨基酸的百分比。（想要知道哪些氨基酸是疏水性的，可以参看任何关于蛋白质、分子生物学或细胞生物学导论性的介绍。在\autoref{chap:chapteraa}中你会找到一些有用的资源。）
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 5.6}}
+\textcolor{red}{\textit{习题5.6}}
 \begin{adjustwidth}{1cm}{}
-Write a program that checks if two strings given as arguments are
-reverse complements of each other. Use the Perl built-in functions
-\textit{split}, \textit{pop}, \textit{shift}, and \textit{eq} (\textit{eq} actually an operator). 
+编写一个程序，检查一下作为参数提供的两个DNA字符串是不是反向互补的。使用Perl的内置函数\textit{split}、\textit{pop}、\textit{shift}和\textit{eq}（\textit{eq}实际上是一个操作符）。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 5.7}}
+\textcolor{red}{\textit{习题5.7}}
 \begin{adjustwidth}{1cm}{}
-Write a program to report how GC-rich some sequence is. (In other words, just give the percentage of G and C in the DNA.)
+编写一个程序，报告序列的GC含量。（换言之，就是给出DNA中G和C的百分比）。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 5.8}}
+\textcolor{red}{\textit{习题5.8}}
 \begin{adjustwidth}{1cm}{}
-Modify \autoref{exam:example5.3} to not only find motifs by regular expressions but to print out the motif that was found. For example, if you search, using regular expressions, for the motif EE.*EE, your program should print EETVKNDEE. You can use the special variable \verb|$&|. After a successful pattern match, this special variable is set to hold the pattern that was matched. 
+修改\autoref{exam:example5.3}，使它不仅能通过正则表达式找到基序，还能打印输出它找到的基序。举个例子，如果你使用正则表达式查找基序EE.*EE，你的程序应该输出EETVKNDEE。你可以使用特殊变量\verb|$&|。在一次成功的模式匹配后，这个特殊变量会保存匹配到的模式。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 5.9}}
+\textcolor{red}{\textit{习题5.9}}
 \begin{adjustwidth}{1cm}{}
-Write a program that switches two bases in a DNA string at specified positions. (Hint: you can use the Perl functions \verb|substr| or \verb|slice|. )
+编写一个程序，交换DNA字符串中特定位置的两个碱基。（提示：你可以使用Perl的\verb|substr|函数或\verb|slice|函数。）
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 5.10}}
+\textcolor{red}{\textit{习题5.10}}
 \begin{adjustwidth}{1cm}{}
-Write a program that writes a temporary file and then deletes it.  The \textit{unlink} function removes a file: just say, for example:
+编写一个程序，写入一个临时文件然后把它删除掉。\textit{unlink}函数可以删除一个文件，举个例子，这样来使用：
 \begin{lstlisting}
 unlink "tmpfile";
 \end{lstlisting}
-but also check to see if \verb|unlink| is successful.
+但要检查一下看看\verb|unlink|是否成功了。
 \end{adjustwidth}
