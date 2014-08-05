@@ -557,11 +557,11 @@ Now let's look at the new stuff in this program. Opening and reading the sequenc
 
 which the comments say will explode the string \verb|$DNA| into an array of single characters \verb|@DNA|.
 
-\textit{split} is the companion to \textit{join}, and it's a good idea to take a little while to look over the documentation for these two commands. Calling \textit{split} with an empty string as the first argument causes the string to explode into individual characters; that's just what we want.\footnote{As you'll see in the documentation for the \texit{split} function, the first argument can be any regular expression, such as \verb|/\s+/| (one or more adjacent whitespace characters.)}
+\textit{split} is the companion to \textit{join}, and it's a good idea to take a little while to look over the documentation for these two commands. Calling \textit{split} with an empty string as the first argument causes the string to explode into individual characters; that's just what we want.\footnote{As you'll see in the documentation for the \textit{split} function, the first argument can be any regular expression, such as \verb|/\s+/| (one or more adjacent whitespace characters.)}
 
 Next, there are five scalar variables initialized to 0, the variables \verb|$count_of_A| and so forth. \textit{Initializing} means assigning an initial value, in this case, the value 0. 
 
-\autoref{exam:example5.4} illustrates the concepts of \textit{type} and \texit{initialization}. The type of a variable determines what kind of data it can hold, for instance, strings or numbers. Up to now we've been using scalar variables such as \verb|$DNA| to store strings of letters such as A, C, G, and T. \autoref{exam:example5.4} shows that you can also use scalar variables to store numbers. For example, the variable \verb|$count_of_A| keeps a running count of the character A.
+\autoref{exam:example5.4} illustrates the concepts of \textit{type} and \textit{initialization}. The type of a variable determines what kind of data it can hold, for instance, strings or numbers. Up to now we've been using scalar variables such as \verb|$DNA| to store strings of letters such as A, C, G, and T. \autoref{exam:example5.4} shows that you can also use scalar variables to store numbers. For example, the variable \verb|$count_of_A| keeps a running count of the character A.
 
 Scalar variables can store integers (0, 1, -1, 2, -2, \ldots), decimal or floating-point numbers such as 6.544, and numbers in scientific notation such as 6.544E6, which translates as $6.544 \times 10^6$, or 6,544,000. (See \autoref{chap:chapterab} for more details on types of numbers.)
 
