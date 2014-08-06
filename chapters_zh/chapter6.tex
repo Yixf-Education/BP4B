@@ -1,77 +1,76 @@
-\chapter{Subroutines and Bugs}
+\chapter{子程序和Bugs}
 \label{chap:chapter6}
 \minitoc
 
-In this chapter you'll extend your basic knowledge in two directions:
+在本章中，你将学习到以下两个主题的基础知识：
 
 \begin{itemize}
-  \item Subroutines
-  \item Using the Perl debugger
+  \item 子程序
+  \item 使用Perl调试器
 \end{itemize}
 
-Subroutines are an important way to structure programs. You'll use them
-in \autoref{chap:chapter7}, where you'll learn how to use randomization to simulate the mutation of DNA. The Perl debugger examines a program's behavior in "slow motion" and helps you find those pesky bugs. 
+子程序是结构化组织程序的一个重要方法。\autoref{chap:chapter7}将学习如何通过随机化来模拟DNA的突变，在那里你将使用到子程序。Perl调试器会用“慢镜头”的形式来检查一个程序的行为，帮助你找到那些讨厌的bugs。
 
-\section{Subroutines}
-Subroutines are an important way to organize a program and are used in all major programming languages.
+\section{子程序}
+子程序是结构化组织程序的一个重要方法，所有主流的编程语言中都使用子程序。
 
-A \textit{subroutine} wraps up a bit of code, gives the code a name, and provides a way to pass in some values for its calculations and then report back the results. The rest of the program can then use the subroutine's code just by calling its name, giving the needed values to pass in to the subroutine code and then collecting the results. This use or "invocation" of a subroutine is commonly referred to as calling the subroutine. You can think of a subroutine as a program within a program; just as you run programs to get results, so your programs call subroutines to get results. Once you have a subroutine, you can use it in a program simply by knowing which values to pass in and what kind of values to expect it to pass out. 
+\textit{子程序}把一些代码包裹起来，给它起一个名字，并提供方法把一些值提供给它进行计算，然后返回计算结果。这样程序的其余部分就可以仅仅通过使用它的名字来使用子程序中的代码了，把需要的值传递给子程序代码并收集运算结果。这种子程序的使用或“调用”通常称作\textit{调用}子程序。你可以把子程序看做程序中的一个程序，就像你运行程序得到结果一样，程序调用子程序得到结果。一旦你有了一个子程序，就可以在程序中使用它了，只需要知道传递哪些值、收集哪种类型的值就行了。
 
-\subsection{Advantages of Subroutines}
-Subroutines provide several benefits. They endow programs with abstraction, modularization, and the ability to create large programs by organizing the code into manageable chunks with defined inputs and outputs.
+\subsection{子程序的优势}
+子程序提供了一些好处。它赋予了程序抽象化和模块化的能力，通过把代码组织成有特定输入输出的代码块就可以创建大的程序了。
 
-Say you need to calculate something, for instance the mean of a distribution at several places in a program or in several different programs. By writing this calculation as a subroutine, you can write it once, and then call it whenever you need it, thus making your program: 
+假设你需要计算一些东西，比如在一个或多个不同程序的多个地方计算分布的平均值。通过把这种计算编写成子程序，只需要写一次，你就可以在任何需要它的时候调用它了，这会使你的程序：
 
 \begin{itemize}
-  \item Shorter, since you're reusing the code.
-  \item Easier to test, since you can test the subroutine separately.
-  \item Easier to understand, since it reduces clutter and better organizes programs.
-  \item More reliable, since you have less code when you reuse subroutines, so there are fewer opportunities for something to go wrong.
-  \item Faster to write, since you may, for example, have already written some subroutines that handle basic statistics and can just call the one that calculates the mean without having to write it again. Or better yet, you found a good statistics library someone else wrote, and you never had to write it at all.
+  \item 更短，因为你在重用代码。
+  \item 更容易测试，因为你可以单独对子程序进行测试。
+  \item 更容易理解，因为它使得程序具有良好的组织、更加简洁。
+  \item 更加稳健，因为重用子程序使得代码量减少了，出错的几率也小了。
+  \item 编写起来更加快速，因为你可能已经编写了好多进行基本统计的子程序，这样你就可以直接调用计算平均值的那个子程序而不用重写了。还有更好的一种可能，你找到了一个别人编写的很好的统计学库，这样你就完全不用自己去写了。
 \end{itemize}
 
-There is another subtle, yet powerful idea at work here. Subroutines can themselves call other subroutines, that is, a subroutine can use another subroutine for help in its calculations.\footnote{Subroutines can even call themselves, and this so-called recursion can be an elegant way to compute (see \autoref{chap:chapter11}).} By writing a set of subroutines, each of which does one or a few things well, you can combine them in various ways to make new subroutines. You can then combine the new subroutines, and so on, and the end result can be large and flexible programming systems. Decomposing problems into sets of subroutines that can be conveniently combined allows you to create environments that can grow and adapt to changing conditions with a minimum of effort.
+还一个更加微妙的事情，也这正是它的强大之处。子程序本身就可以调用其他的子程序，也就是说，一个子程序可以根据计算需要使用其他的子程序。\footnote{子程序甚至可以调用它自己本身，这就是所谓的递归，这使得计算过程非常优雅（参看\autoref{chap:chapter11}）。}通过编写一系列的子程序，每一个子程序只做一件或很少的几件事，你可以通过各种形式把它们组合编写成新的子程序，然后你还可以继续组合这些新的子程序，依此类推，最后可能会形成一个巨大且灵活的程序系统。把问题分解成可以方便组合的一系列的子程序，使你可以创造不断增长且适应各种条件的程序，而你只需要很少的付出就可以实现这一点。
 
-The trick of all this is in how you partition the code into subroutines. You want subroutines that encapsulate something that will be generally useful, and not just called once (although that sometimes can be useful too). There are various rules of thumb: a subroutine should do one thing well, and it should be no more than a page or two of code. These are not real rules, and exceptions are frequent, but they can help you divide your code into manageable chunks, suitable for subroutines. 
+所有这一切的技巧就在于你如何把代码分割成一系列的子程序。你希望子程序能够封装一些通用且有用的东西，并且不会只被调用一次（尽管有时这也非常有用）。有一些经验法则：子程序应该只做一件事情并把它做好，并且子程序的代码最好不要超过一页或者两页。这些并不是真正的法则，例外时有发生，但它可以帮你把代码分割成易于管理的代码块，这非常适合子程序。
 
-\subsection{Writing Subroutines}
-Let's look at how subroutines are used and then at how they're defined.
+\subsection{编写子程序}
+让我们看看子程序是如何使用及定义的吧。
 
-To use a subroutine, you pass data into the subroutine as \textit{arguments}, and then you collect the return value(s) of the subroutine. For example, say you want a subroutine that, given some DNA, appends "ACGT" to the end of the DNA and returns the new, longer DNA. Let's call the subroutine \textit{addACGT}. In Perl, you usually call a subroutine by typing its name, followed by a parenthesized list of arguments (if any). For example, here's a call to \verb|addACGT| with the one argument \verb|$dna|: 
+要使用一个子程序，你需要把数据作为\textit{参数}传递给子程序，然后收集子程序的运算结果值。举个例子，你想要一个子程序，可以把“ACGT”附加到给定DNA的末尾，并返回得到的新的、更长的DNA。让我们把这个子程序叫做\textit{addACGT}吧。在Perl中，你要调用一个子程序，通常只需要键入它的名字，并在后面跟上用小括号包裹起来的参数列表就可以了（如果有参数的话）。比如，这是带着\verb|$dna|这个参数调用\verb|addACGT|子程序的方法：
 
 \begin{lstlisting}
 addACGT($dna);
 \end{lstlisting}
 
-When calling a subroutine, older versions of Perl required starting the name of a subroutine with the \& (ampersand) character. It's still okay to do so (e.g., : \textit{\&addACGT}), but these days the ampersand is usually omitted.\footnote{There are times, even in the newer versions of Perl, when an ampersand is required; you'll see one such case in \autoref{chap:chapter11}, in \autoref{sect:section11.2.3}, which describes the \textit{File::Find} module. (See also the \textit{defined} and \textit{undef} functions in the documentation or the \textit{perlref} manpage).}
+当调用子程序时，较旧版本的Perl要求在子程序名称的前面加上\&字符（与字符）。现在这样写也是可以的（比如携程：\textit{\&addACGT}），但如今一般都把与字符省略掉。\footnote{即使在较新版本的Perl中，有时也需要加上与字符。在\autoref{chap:chapter11}的\autoref{sect:section11.2.3}中你会看到这样的例子，那一小节介绍的是\textit{File::Find}模块。（还可以参看文档中的\textit{defined}和\textit{undef}函数，或者\textit{perlref}手册页）。}
 
-\autoref{exam:example6.1} demonstrates a subroutine that shows in detail how this works. 
+\autoref{exam:example6.1}演示了一个子程序，从中可以看到它的工作细节。
 
-\textbf{Example 6-1. A subroutine to append ACGT to DNA}
+\textbf{例6-1：把ACGT附加到DNA上的子程序}
 \lstinputlisting[label=exam:example6.1]{./scripts/example6-1.pl}
 
-\autoref{exam:example6.1} produces the following output:
+\autoref{exam:example6.1}会产生这样的输出：
 
 \begin{lstlisting}
 I added ACGT to CGACGTCTTCTCAGGCGA and got CGACGTCTTCTCAGGCGAACGT
 \end{lstlisting}
 
-We'll now look at this code to see how subroutines are defined and used in a Perl program. 
+现在我们来看看这些代码，看看子程序是如何被定义的、以及在Perl程序中使用的。
 
-The first thing to notice, taking the large view, is that the program now has two sections. The first section starts from the beginning of the program and ends with the \verb|exit| command. Following that (and announced by a blizzard of comments for easy reading) is a section for subroutine definitions, in this case, only the one definition for subroutine \textit{addACGT}. It is common to place all subroutine definitions together at the end of a program, for ease in reading. Usually they're listed alphabetically or in some other convenient way.
+首先注意的一点，从宏观上来看，程序现在有两小部分。第一部分从程序的开头开始，到\verb|exit|命令结束。随后的一部分是子程序的定义（为了便于理解在开头添加了大量的注释），在这个例子中，就是\textit{addACGT}子程序的定义。为了方便阅读，通常把所有的子程序定义都集中放在程序的末尾，而且会以字母顺序或其他方便的形式对子程序进行排列。
 
-Actually, it is legal to put the subroutine definitions almost anywhere in a program. This is because Perl first scans through the code and does things like check the syntax and learn subroutine definitions, before it starts to run the program. In particular, subroutine definitions can come after the point in the code where you use them (not necessarily before, which many people assume is the rule), and they don't have to be grouped together but can be scattered throughout the code. But our method of collecting them together at the end can make reading a program much easier. The possible exception is when a small subroutine is used in one section of code, as sometimes happens with the sort function, for instance. In this case having the definition right there can save the reader paging back and forth between the subroutine definition and its use. Usually, it's more convenient to read the program without the subroutine definitions, to get the overall flow of the program first, and then go back and look into the subroutines, if necessary.
+实际上，把子程序的定义放在程序中的任何地方都是合法的。这是因为Perl首先通读代码，在开始运行程序之前，做一些检查语法、学习子程序定义之类的事情。特别的，子程序代码可以紧跟在程序中使用它们的地方的后面（许多人认为法则是放在其前面，但并不需要这样）。并且，不一定非要把子程序都集中放在一起，可以散落在程序代码的各个地方。但是把它们集中放在程序末尾的这种方法，会使阅读程序更加容易一些。可能的一个例外就是，在代码的某一部分使用一个小的子程序，比如使用\textit{sort}函数时这种情况就时有发生。像这种情况，把子程序的定义放在使用它的地方，可以避免读者在子程序定义和它的使用之处两个地方来回翻页。通常，不看子程序定义而把程序整个阅读一遍会更加方便，先对程序的整个流程有个了解，需要时再回去仔细看看子程序。
 
-As you see, \autoref{exam:example6.1} is very simple. It first stores some DNA into the variable \verb|$dna| and then passes that variable as an argument to the subroutine call, which looks like this: \verb|addACGT($dna)|. The subroutine is called by its name, followed by parentheses containing the arguments to the subroutine. There may be no arguments, or if more than one, they are separated by commas. The value returned by the subroutine can be saved; in this program the value is saved in a variable called \verb|$longer_dna|, which is then printed, and the program exits.  
+如你所见，\autoref{exam:example6.1}非常简单。它首先把某个DNA保存到变量\verb|$dna|中，然后把那个变量作为参数去调用子程序，看起来就像这样：\verb|addACGT($dna)|。子函数的调用是通过它的名字来实现的，并在其后紧跟用小括号包裹起来的子程序参数。也有可能没有参数，或者有不止一个参数，这时要用逗号把它们分割开来。可以把子程序的返回值保存起来。在这个程序中，子程序的返回值保存在了叫做\verb|$longer_dna|的变量中，随后就把这个变量打印了出来，然后程序就退出了。
 
-The part of the program from the beginning to the \textit{exit} statement is called variously the \textit{main program} or the main body of the program. By looking over this section of the code, you can see what happens from the beginning to the end of the program without looking into the details of the subroutines.
+从程序开始到\textit{exit}语句的这一部分叫做\textit{主程序}或程序的\textit{主体}。通过查看这一部分代码，而不需要去看子程序的细节，你就可以看出程序从头到尾发生了什么。
 
-Now that you've looked over the main program of \autoref{exam:example6.1}, it's time to look at the subroutine definition and how it uses the principal of scoping. 
+既然你已经看完了\autoref{exam:example6.1}中的主程序，是时候去看一下子程序的定义、以及它是如何使用作用域这个概念的了。
 
-\section{Scoping and Subroutines}
-A subroutine is defined by the \textit{reserved word}\footnote{A reserved word is a fundamental, defined word in the Perl language, such as \verb|if|, \verb|while|, \verb|foreach|, or \verb|sub|.} for subroutine definitions, \verb|sub|; the subroutine's name, in this case, \textit{addACGT}; and a \textit{block}, enclosed in a pair of matching curly braces. This is the same kind of block seen earlier in loops and conditional statements that groups statements together.
+\section{作用域和子程序}
+一个子程序的定义包括三部分：子程序定义的\textit{保留字}\footnote{保留字是Perl语言中定义的基本字，如\verb|if|、\verb|while|、\verb|foreach|和\verb|sub|。}——\verb|sub|，子程序的名字——在这里是\textit{addACGT}和一个包裹在成对大括号中的\textit{代码块}。这里的代码块和前面看到的循环和条件语句中把语句集中在一起的代码块是一样的。
 
-In \autoref{exam:example6.1}, the name of the subroutine is \verb|addACGT|, and the block is everything after the name. Here is the subroutine definition again:
+在\autoref{exam:example6.1}中，子程序的名字是\verb|addACGT|，而代码块就是名字后面的所有代码。下面把子程序的定义重复了一遍：
 
 \begin{lstlisting}
 sub addACGT {
@@ -82,128 +81,129 @@ sub addACGT {
 }
 \end{lstlisting}
 
-Now let's look into the block of the subroutine.
+现在，让我们来看看子程序的代码块吧。
 
-A subroutine is like a separate helper program for the main program, and it needs to have its own variables. You will use two types of variables in your subroutines in this book:\footnote{In the subroutines in this book, we won't use global variables, which can be seen by both the main program and the subroutines; nor will we use variables declared with \verb|local|, which provides a different kind of scoping restriction than \verb|my|.}
+一个子程序就像是单独的一个主程序的辅助程序一样，它需要有自己的变量。在本书的子程序中你将使用两种类型的变量：\footnote{在本书的子程序中，我们不会使用全局变量，全局变量能同时被主程序和子程序看到；我们也不会使用通过\verb|local|声明的变量，它和\verb|my|的作用域限制有所不同。}
 
 \begin{itemize}
-  \item Arguments passed in to the subroutine
-  \item Other variables declared with \verb|my| and restricted to the scope of the subroutine
+  \item 传递给子程序的参数
+  \item 其他通过\verb|my|声明的变量，它们的作用域会被限制在子程序中
 \end{itemize}
 
-Arguments are the values given to a subroutine when it is used, or called. The values of the arguments are passed into the subroutine by means of the special variable \verb|@_|, as you'll see in the next section.
+参数就是使用或调用子程序时传递给它的值。参数值通过\verb|@_|这个特殊变量传递给子程序，在下一小节你将会看到。
 
-Other variables a subroutine might use must be protected from interacting with variables in other parts of the program, so they have effect only within the subroutine's own scope. This is accomplished by declaring them as \verb|my| variables, as will be explained shortly.
+其他子程序可能使用到的变量，需要与程序其他部分使用到的变量区分开来，这样它们就只能在子程序自己的范围内发挥作用了。这可以通过使用\verb|my|声明变量来实现，稍后再对此进行详细解释。
 
-Finally, most subroutines return their results via the \textit{return} function.  This can return a single scalar as in \verb|return $dna|; in our subroutine \textit{addACGT}, in a list of scalars as in \verb|return ($dna1, $dna2);|, in an array as in \verb|return @lines;|, and more. 
+最后，大部分子程序都通过\textit{return}函数返回它们的结果。就像我们的子程序\textit{addACGT}中\verb|return $dna;|一样，它可以返回单独的一个标量，也可以像\verb|return ($dna1, $dna2);|这样返回一个标量列表，或者像\verb|return @lines;|这样返回一个数组，等等。
 
-\subsection{Arguments}
-To \textit{call} a subroutine means to type its name and give it appropriate arguments and, usually, collect its results. \textit{Arguments}, sometimes called \textit{parameters}, usually contain the data that the subroutine computes on. In \autoref{exam:example6.1}, this is the call of the subroutine \textit{addACGT} with the argument \verb|$dna|:
+\subsection{参数}
+\textit{调用}子函数意味着要键入它的名字，给它适当的参数，通常还要收集它的结果。\textit{参数（argument，parameter）}\footnote{译者注：parameter是指函数定义中的参数，而argument指的是函数调用时的实际参数。简略描述为：parameter=形参(formal parameter)，argument=实参(actual parameter)。在不很严格的情况下，现在二者可以混用，一般用argument，而parameter则比较少用。While defining method, variables passed in the method are called parameters.当定义方法时，传递到方法中的变量称为参数。While using those methods, values passed to those variables are called arguments.当调用方法时，传给变量的值称为引数。（有时argument被翻译为“引数“）}通常包含子程序要计算的数据。在\autoref{exam:example6.1}中，使用参数\verb|$dna|调用子程序\textit{addACGT}：
 
 \begin{lstlisting}
 $longer_dna = addACGT($dna);
 \end{lstlisting}
 
-The essential point is that whenever you, the programmer, want to use a subroutine, you can call it with whatever argument(s) it is designed to accept and with which you need to compute (in this case, whatever DNA that needs ACGT appended to it) and the value of each argument appears in the subroutine in the \verb|@_| array.
+最基本的一点，当程序员想要使用子程序时，可以使用子程序可以接受的任何参数、你需要计算的数据（在这个例子中就是需要把\verb|ACGT|附加上去的任何DNA）、出现在子程序\verb|@_|数组中的每一个参数的值来调用它。
 
-When you call a subroutine with certain arguments, the names of the arguments you provide in the call are not important inside the subroutine. Only the values of those arguments that are actually passed inside the subroutine are important. The subroutine typically collects the values from the \verb|@_| array and assigns them to new variables that may or may not have the same names as the variables with which you called the subroutine. The only thing preserved is the order of the values, not the names of the variables containing the values.
+当使用特定参数调用子程序时，你在调用中使用的参数的名字在子程序内部就无关紧要了，只有被实际传递到子程序内部的参数的值才是最重要的。子程序通常从\verb|@_|数组中收集这些值，并把它们赋给新的变量，这些变量的名字和你调用子程序时使用的变量名可能一样、也可能不一样。唯一保持不变的是值的顺序，而非包含值的变量的名字。
 
-Here's how it works. The first line in the subroutine's block is:
+下面是它的工作原理。子程序代码块的第一行是：
 
 \begin{lstlisting}
 my($dna) = @_; 
 \end{lstlisting}
 
-The values of the arguments from the call of the subroutine are passed into the subroutine in the special array variable \verb|@_|. You know it's an array because it starts with the \verb|@| character. It has the brief name "\_", and it's a special array variable that comes predefined in Perl programs. (It's not a name you should pick for your own arrays.) The array \verb|@_| contains all the scalar values passed into the subroutine.  These scalar values are the values of the arguments to the subroutine.  In this case, there is one scalar value: the string of DNA that's the value of the variable \verb|$dna| passed in as an argument.
+调用子程序时的参数的值被传递到了子程序中的特殊数组变量\verb|@_|中。因为它以\verb|@|字符开头，所以你知道这是一个数组。它有一个简短的名字“\_”，这是一个特殊的数组变量，是Perl程序预先定义好的。（你不能再为自己的数组起这样的名字了。）\verb|@_|数组包含着传递到子程序中所有的标量值，这些标量值就是调用子程序时参数的值。在这个例子中，只有一个标量值：DNA字符串，是作为参数传递给子程序的\verb|$dna|变量的值。
 
-If the subroutine has more arguments—for instance one argument for DNA, one for the associated protein, and one for the name of the gene—they are all passed in and assigned to \verb|my| variables inside the subroutine:
+如果子程序有更多的参数——比如一个DNA的参数，一个相关蛋白的参数，还有一个基因名的参数——它们都被传递了进去，并在子程序内部被赋给了用\verb|my|声明的变量：
 
 \begin{lstlisting}
 my($dna,$protein,$name_of_gene) = @_;
 \end{lstlisting}
 
-If there are no arguments, just omit that statement in the subroutine.
+如果没有参数，在子程序中就可以省略这样的语句了。
 
-After the statement:
+在子程序中，这个语句：
 
 \begin{lstlisting}
 my($dna) = @_;
 \end{lstlisting}
 
-executes in the subroutine, the passed-in value is assigned to the subroutine's variable \verb|$dna|. The next section explains why this is a new variable specific to the subroutine. The subroutine's variable can be called anything; it certainly doesn't have to be the same name as the argument, as it happens to be in this example. What's cool about scoping is that it doesn't matter if it is or not. 
+执行后，传递进去的值就赋给了子程序的额变量\verb|$dna|。接下来的小节将解释为什么这个变量对于子程序来说是一个新的变量。子程序中的变量也可以起任何名字，并不一定非要和参数的名字一样，虽然这个例子中它们是一样的。关于作用域非常酷的一点就是，名字一样不一样是无所谓的。
 
 \begin{adjustwidth}{2cm}{2cm}
   \parpic[l]{
   \includegraphics[width=1cm]{warning.png}
   }
-  Beware the common mistake of forgetting the \verb|@_| array when naming your arguments in a subroutine, that is, using the statement:
+  当心这个常见的错误，在子程序中为参数命名时忘记使用\verb|@_|数组，换言之，使用语句：
   \begin{lstlisting}
 my($dna);
   \end{lstlisting}
-  instead of:
+  代替了
   \begin{lstlisting}
 my($dna) = @_;
   \end{lstlisting}
-  If you make this mistake, the values of the arguments won't appear in your subroutine, even though their names are declared. 
+  如果你犯了这种错误，即使已经声明了变量名，参数的值也不会出现在你的子程序中。
 \end{adjustwidth}
 
-\subsection{Scoping}
-By keeping all variables a subroutine uses active only within the subroutine, you can make it safe to call the subroutines from anywhere.  You make the variables specific only to the subroutine by declaring them as \verb|my| variables. \verb|my| is a keyword defined in Perl that limits variables to the block in which they are used (in this case, the block is the subroutine). \footnote{There are different models of scoping; \verb|my| implements a type called \textit{lexical scoping}, also known as \textit{static scoping}. Another method is available in Perl via the \textit{local} construct, but you almost always want to use \verb|my|.} 
-Hiding variables and making them local to only a restricted part of a program, is called \textit{scoping}. In Perl, using \verb|my| variables is known as \textit{lexical scoping}, and it's an essential part of modularizing your programs.
+\subsection{作用域}
+通过保证子程序使用到的所有变量只在子程序中有效，你就可以安全得在任何地方调用子程序了。通过使用\verb|my|来声明这些变量，就可以使它们只在子程序中有效了。\verb|my|是Perl定义的关键字，它可以把变量限制在使用它们的代码块中（在这个例子中，这个代码块就是子程序）。\footnote{作用域有不同的类别。\verb|my|实现的类别叫做\textit{词法作用域}，也叫做\textit{静态作用域}。在Perl中还有一种方法，就是使用\textit{local}来声明变量，但你几乎总会希望使用\verb|my|。} 
 
-You declare that a variable is a \verb|my| variable like this:
+把变量隐藏起来，使它们仅局限在程序的特定部分，这就是\textit{作用域}的概念。在Perl中，使用\verb|my|声明变量就是所谓的\textit{词法作用域}，这是使你的程序模块化的一个至关重要的部分。
+
+像这样用\verb|my|来声明一个变量：
 
 \begin{lstlisting}
 my($x); 
 \end{lstlisting}
 
-or:
+或者：
 
 \begin{lstlisting}
 my $x ; 
 \end{lstlisting}
 
-or, combining the declaration with an initialization to a value:
+或者，变量的声明和变量值的初始化一块进行：
 
 \begin{lstlisting}
 my($x) = '49'; 
 \end{lstlisting}
 
-or, if you're collecting an argument within a subroutine:
+再或者，如果你在子程序中收集一个参数：
 
 \begin{lstlisting}
 my($x) = @_; 
 \end{lstlisting}
 
-Once a variable is declared in this fashion, it exists only until the end of the block it was declared in. So in a subroutine, if you declare all your variables like this (both the arguments and any other variables), they are active only in the subroutine. If any variable has the same name as another variable elsewhere in the program, you don't have to worry, because the \verb|my| declaration actually creates a new variable, active only in the enclosing block, and any other variable of the same name used elsewhere outside the block is kept separate.
+一旦通过这种方式声明了一个变量，它就只存在于声明所在的代码块中，直到代码块的末尾。所以，在一个子程序中，如果你像这样声明了所有的变量（包括参数和其他所有的变量），它们就只在子程序中有效。如果某个变量和程序别处的另一个变量同名，你也无须担心什么，因为\verb|my|声明实际上创建了一个新的变量，它只在包裹起来的代码块中有效，代码块外面使用的任何重名的变量都和它完全无关。
 
-The example that showed collecting an argument in a subroutine uses parentheses around the variable. Because \verb|@_| is an array, the parentheses around the new variables put them in array context and ensure that they are initialized correctly (see \autoref{chap:chapter4}).
+例子中演示的在子程序中收集参数，都用小括号把变量包裹了起来。因为\verb|@_|是一个数组，用小括号把新变量包裹起来就把它们放在了数组上下文\footnote{译者注：即列表上下文。}中，这可以保证它们能被正确地初始化（参看\autoref{chap:chapter4}）。
 
 \begin{adjustwidth}{2cm}{2cm}
   \parpic[l]{
   \includegraphics[width=1cm]{warning.png}
   }
-  Always declare all your variables in your subroutines—even those variables that don't come in as arguments—such as the \verb|my| construct. 
+  在子程序中，永远使用\verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。
 \end{adjustwidth}
 
-Why use scoping? \autoref{exam:example6.2} shows the trouble that can happen when you don't. Recall that one of the advantages of subroutines is writing a useful bit of code once and then using it whenever you need it.  \autoref{exam:example6.2} is a program that has a variable in the main program with the same name as a variable in a subroutine it calls. This can easily happen if you write the subroutine at a time other than the main program (say six months later) or if you call a subroutine someone else wrote. 
+为什么使用作用域呢？\autoref{exam:example6.2}演示了不使用作用域带来的麻烦。回忆一下，子程序的优势之一就是，对于那些有用的代码只需写一次，就可以在需要的时候重复使用了。\autoref{exam:example6.2}这个程序，在主程序中的一个变量和它调用的子程序中的一个变量重名了。在你编写完主程序一段时候后（比如说半年后）再编写子程序时，或者调用别人写的子程序时，这种情况非常容易发生。
 
-\textbf{Example 6-2. The pitfalls of not using my variables}
+\textbf{例6-2：不使用my变量导致的陷阱}
 \lstinputlisting[label=exam:example6.2]{./scripts/example6-2.pl}
 
-\autoref{exam:example6.2} gives the following output:
+\autoref{exam:example6.2}给出这样的输出：
 
 \begin{lstlisting}
 I changed all the A's in TTTTT to T's and got TTTTT 
 \end{lstlisting}
 
-What was expected was this output:
+我们期望的应该是这样的输出：
 
 \begin{lstlisting}
 I changed all the A's in AAAAA to T's and got TTTTT 
 \end{lstlisting}
 
-You can get by this expected output by changing the definition of subroutine \textit{A\_to\_T} to the following, in which the variable \verb|$dna| in the subroutine is declared as a \verb|my| variable: 
+要想获得这个期望的输出，可以把子程序\textit{A\_to\_T}的定义改成下面这样，使用\verb|my|声明变量把子程序中的\verb|$dna|变成\verb|my|变量：
 
 \begin{lstlisting}
 sub A_to_T {
@@ -214,36 +214,36 @@ sub A_to_T {
 }
 \end{lstlisting}
 
-Where exactly did \autoref{exam:example6.2} go wrong? When the program entered the subroutine, and used the variable \verb|$dna| to calculate the string with A's changed to T's, the Perl language saw that there was already a variable \verb|$dna| being used in the main part of the program and just kept using it.  When the program returned from the subroutine and got to the print statement, it was still using the same (the one and only) variable \verb|$dna|.  So, when it printed the results, the variable \verb|$dna|, instead of having the original DNA in it, had the altered DNA that had been computed in the subroutine.
+\autoref{exam:example6.2}错在哪儿了呢？当程序进入子程序后，使用变量\verb|$dna|进行字符串处理来把A变成T时，Perl语言看到在主程序中已经有一个叫做\verb|$dna|的变量了，因此就继续使用它了。当程序从子程序中返回后，运行\verb|print|语句时，它仍然使用这同一个（仅此一个）变量\verb|$dna|。所以，当它打印输出结果时，变量\verb|$dna|中就不是原来的DNA了，而是在子程序中经过处理已经改变了的DNA。
 
-Now this sort of thing can happen a lot. Programmers tend to use certain names for variables a great deal: the usual suspects are names such as \verb|$tmp|, \verb|$temp|, \verb|$x|, \verb|$a|, \verb|$number|, \verb|$variable|, \verb|$var|, \verb|$array|, \verb|$input|, \verb|$output|, \verb|$result|, \verb|$data|, \verb|$file|, \verb|$filename|, and so on. Bioinformaticians are quite fond of \verb|$dna|, \verb|$protein|, \verb|$motif|, \verb|$sequence|, and the like. As you start using libraries of subroutines from other people and as your programs get larger, it's much easier—and a whole lot safer—to let the Perl language worry about avoiding the problem of name collisions.
+现在类似的事情经常会发生。程序员倾向于大量使用特定的变量名：常见的变量名如\verb|$tmp|、\verb|$temp|、\verb|$x|、\verb|$a|、\verb|$number|、\verb|$variable|、\verb|$var|、\verb|$array|、\verb|$input|、\verb|$output|、\verb|$result|、\verb|$data|、\verb|$file|、\verb|$filename|等等。生物信息学家则偏爱\verb|$dna|、\verb|$protein|、\verb|$motif|、\verb|$sequence|这样的变量名。当你开始使用别人写的子程序库、你的程序越来越庞大时，让Perl语言来考虑避免重名的问题会更加容易、也更加安全一些。
 
-In fact, from now on we're going to stop using undeclared variables.  From this point forward, all our variables, even those in the main program, will be declared with \verb|my|. You can enforce this discipline by adding the following directive to your programs:
+事实上，从现在开始，我们将不在使用未经声明的变量。从这里开始，我们的所有变量，即使是主程序中的变量，我们都会用\verb|my|来声明。通过在你的程序中添加下面这条指令，可以使这条纪律得到强制执行：
 
 \begin{lstlisting}
 use strict;
 \end{lstlisting}
 
-which has the effect of insisting that your programs have all their variables declared as my variables.
+它会有这样的效果，要求把程序中的所有变量都声明为\verb|my|变量。
 
-Lest you rail at this seemingly unnecessary complication to your coding, compared to the simpler and happier days of \autoref{chap:chapter4} and \autoref{chap:chapter4}, you should know that many languages require declarations for all their variables. The fact that in Perl you don't have to enforce strict scoping is handy when you're writing short programs, for example, or when you're trying to teach programming without hitting the students with a thousand details at the beginning.
+和学习\autoref{chap:chapter4}与\autoref{chap:chapter5}的简单而快乐的日子相比，这些代码中看似无关紧要、稍显杂乱的东西可能会让你倍感束缚，但你应该知道许多语言都要求对它们的所有变量进行声明。事实上，当你编写简短的Perl程序时，不强制使用严格的作用域还是非常方便的，比如，在你尝试教授编程时，不会想一开始就让成千上万的细节把学生压的喘不过气来。
 
-Another benefit you get from strict scoping happens if you accidently misspell a variable name while writing a program. If the variables aren't being declared, Perl creates a new variable with the (misspelled) name. The program may not work correctly, and it may be hard to find where the problem is. By strictly scoping the program, any misspelled variables are also undeclared, and Perl complains about it, saving you hours or days of hair-pulling and bad language.
+你编写程序时不小心把变量名拼写错了，使用严格的作用域的另一个好处就会凸显出来。如果变量没有被声明过，Perl就会使用拼错的名字创建一个新的变量。程序可能不能正常工作，而且要找出问题所在可能会比较困难。通过使用严格的作用域，对于所有没有声明的、拼错的变量，Perl都会进行抱怨给出提示信息，这会节省你数小时甚至数天抓耳挠腮的工作，向惨不忍睹的代码说再见。
 
-Finally, let's recap how scoping, arguments, and subroutines work by taking another look at \autoref{exam:example6.1}. The subroutine is called by writing its name \textit{addACGT}, passing it the argument \verb|$dna|, and collecting results (if any) by assignment to \verb|$longer_dna|:
+最后，让我们再通过\autoref{exam:example6.1}来回顾一下作用域、参数和子程序的工作原理吧。要调用子程序，需要键入它的名字\textit{addACGT}，把参数\verb|$dna|传递给它，并且通过给\verb|$longer_dna|赋值把结果（如果有的话）收集起来：
 
 \begin{lstlisting}
 $longer_dna = addACGT($dna); 
 \end{lstlisting}
 
-The first line in the subroutine gets the value of the argument from the special variable \verb|@_|, and stores it in its own variable called \verb|$dna|, which can't be seen outside the subroutine because it uses \verb|my|. Even though the original variable outside the subroutine is also called \verb|$dna|, the variable called \verb|$dna| within the subroutine is an entirely new variable (with the same name) that belongs only to the subroutine due to the use of \verb|my|. This new variable is in effect only during the time the program is in the subroutine. Notice in the output from the \verb|print| statement at the end of \autoref{exam:example6.2} that even though a variable called \verb|$dna| is lengthened inside the subroutine, the original variable, \verb|$dna|, outside the subroutine isn't changed. 
+子程序的第一行，从特殊变量\verb|@_|中获取参数的值，并把它保存到自己的变量\verb|$dna|中，因为使用了\verb|my|，所以这个变量在子程序外是看不到的。尽管子程序外的原始变量也叫做\verb|$dna|，子程序中叫做\verb|$dna|的变量实际上是一个全新的变量（只不过名字相同而已），因为\verb|my|的使用使得它只属于子程序。这个新变量只在程序进入子程序运行时是有效地。注意\autoref{exam:example6.2}末尾\verb|print|语句的输出，尽管子程序中叫做\verb|$dna|的变量被延长了，但子程序外的原始变量\verb|$dna|并没有被改变。
 
-\section{Command-Line Arguments and Arrays}
-\autoref{exam:example6.3} is another program that uses subroutines. You use the command line to give the program information it needs (such as filenames, or strings of DNA) without having to interactively answer the program's prompts. This is useful if you're scheduling a program to run at a time when you won't be there, for instance.
+\section{命令行参数和数组}
+\autoref{exam:example6.3}是使用子程序的另一个程序。不需要交互式回答程序的提示，你使用命令行就可以把程序需要的信息（比如文件名，或DNA字符串）告诉它。比如，当你计划在特定时间运行程序、而你又不在的时候，这会非常有用。
 
-\autoref{exam:example6.3} also shows a little more about using arrays. You'll see how to use subscripts to access a specific element of an array.
+\autoref{exam:example6.3}还演示了使用数组的一些更多的知识。你将看到，如何通过使用下标来访问数组中特定的元素。
 
-For command-line programs, you type the name of the program, followed by the arguments to the program, if any, and then hit the Enter (or Return) key to start the program running. In \autoref{exam:example6.3}, when the user types the program name, she follows that with the argument, which, in this case, is just the string of DNA in which she'll count the G's. So the program is called and returns an answer like so:
+对于命令行程序来说，你键入程序名，如果有参数的话，之后紧跟程序的参数，然后按Enter（或Return）键就可以使程序运行了。在\autoref{exam:example6.3}中，当用户键入程序名，它会要求在程序名后给出参数，在这个例子中，就是DNA字符串，它会计算DNA中G的数目。所以程序运行后会返回类似这样的结果：
 
 \begin{lstlisting}
 AAGGGGTTTCCC
@@ -251,28 +251,29 @@ AAGGGGTTTCCC
 The DNA AAGGGGTTTCCC has 4 G's in it!
 \end{lstlisting}
 
-Of course, many programs come with a graphical user interface (GUI).  This gives the program some or all of the computer screen and usually includes such things as menus, buttons, and places to type in values to set parameters from the keyboard.
+当然，好多程序都有图形用户界面（GUI）。它会让程序占据计算机屏幕的一部分或者全部，界面通常包括菜单、按钮、从键盘键入值来设定参数的输入框之类的东西。
 
-However, many programs are run from a command line. Even the newer MacOS X, which is built on top of Unix, now provides a command line. (Although most Windows users don't use the MS-DOS command window much, it's still useful, e.g., for running Perl programs.) As already mentioned, running a program noninteractively, passing parameters in as command-line arguments, allows you to run the program automatically, say in the middle of the night when no one is actually sitting at the computer.  
+然而，许多程序还是从命令行运行。即使最新的基于Unix构建的MacOS
+X，现在也提供了一个命令行。（尽管大多数Windows用户并不怎么使用MS-DOS命令窗口，它仍然非常有用，比如说，运行Perl程序。）如前所述，以非交互的形式运行程序，通过命令行传递参数，这可以使程序运行实现自动化，比如在半夜三更没有人真正坐在电脑前的时候运行程序。
 
-\autoref{exam:example6.3} counts the number of G's in a string of DNA. 
+\autoref{exam:example6.3}计算DNA字符串中G的数目。
 
-\textbf{Example 6-3. Counting the G's in some DNA on the command line}
+\textbf{例6-3：通过命令行计算DNA中G的数目}
 \lstinputlisting[label=exam:example6.3]{./scripts/example6-3.pl}
 
-Now let's look at how this program works, while examining and explaining the new features. For starters, notice the new line:
+现在让我们看看程序是如何工作的，同时检查并解释一下其中的新特性。作为开始，注意这新的一行代码：
 
 \begin{lstlisting}
 use strict;
 \end{lstlisting}
 
-which I will use from now on to ensure all variables are declared with \verb|my|, thus enforcing lexical scoping.
+从现在开始，我将使用它来确保所有的变量都用\verb|my|进行了声明，这样就可以强制执行词法作用域了。
 
-Perl has some special variables it sets so you can easily use the arguments from the command line. Every Perl program has an array variable \verb|@ARGV| that contains any command-line arguments. Also, there's a special variable called \verb|$0| (a zero) that has the name of the program as it was called from the command line.
+Perl预先设置了一些特殊变量，这样你就可以轻而易举得从命令行中使用参数了。每一个Perl程序都有一个数组变量\verb|@ARGV|，它包含了所有的命令行参数。此外，还有一个叫做\verb|$0|（是零不是字母o）的特殊变量，它包含的是在命令行中调用程序时的程序名。
 
-Notice in \autoref{exam:example6.3} that an informative message is defined in the variable \verb|$USAGE| and that it begins with the value of the variable \verb|$0|, followed an indication of the arguments the program needs. This is a common practice; if the user doesn't give the program what it needs, which is determined by some kind of test, the program prints information about how to properly use it and exits.
+注意，在\autoref{exam:example6.3}中，在\verb|$USAGE|变量中定义了一个提示信息，开头就是变量\verb|$0|的值，后面紧跟着程序需要的参数的指示。这是非常且使用的做法。如果用户没有给程序提供所需的信息，通过某种形式的测试进行检测后，程序会打印输出如何正确使用它的信息提示，然后退出。
 
-In fact, this program does check to see if any arguments were typed on the command line. It checks if \verb|@ARGV| has anything in it, in which case it evaluates to \verb|true|; or if it is completely empty, in which case it evaluates to \verb|false|. If you want the program to require an argument be given, you can use the \verb|unless| conditional, and if \verb|@ARGV| is empty, to print out the \verb|$USAGE| statement and exit the program: 
+事实上，这个程序确实进行了检测，看看在命令行上是否键入了参数。它检测\verb|@ARGV|中是否包含内容，这种情况下它会被测试为\verb|真|；或者如果它完全是空的，这种情况下它就会被测试为\verb|假|。如果程序需要用户提供一个参数，你可以使用\verb|unless|条件测试，如果\verb|@ARGV|是空的，就打印输出\verb|$USAGE|语句并退出程序：
 
 \begin{lstlisting}
 unless(@ARGV) {
@@ -281,17 +282,17 @@ unless(@ARGV) {
 }
 \end{lstlisting}
 
-The next bit of code shows something new about arrays, namely, how to extract one element from an array, as referenced by a subscript. In other words, it shows how to get at the first, fourth, or whichever element. The code in \autoref{exam:example6.3} shows how to extract the first element, which as you've seen, is numbered 0:
+接下来的代码演示了关于数组的一些新的东西，即，如何通过使用下标从数组中提取出一个元素。换句话说，它演示了如何获取第一个、第四个或任何一个元素。\autoref{exam:example6.3}中的代码演示了如何提取出第一个元素，如你所见，它的索引值是0：
 
 \begin{lstlisting}
 my($dna) = $ARGV[0];
 \end{lstlisting}
 
-Now you already know there is a first element, since you've just tested to make sure the array isn't empty. You get the first element of array \verb|@ARGV| by changing the \verb|@| to a \verb|$| and appending square brackets containing the desired subscript; 0 for the first element, 1 for the second element, and so on. This syntax indicates that since you're now looking at just one element of the array, and it's a scalar variable, you use the dollar sign, as you would any other scalar variables.
+你已经检测确保数组不是空的，那就已经知道肯定有第一个元素了。为了获取数组\verb|@ARGV|中的第一个元素，把\verb|@|换成\verb|$|，并在其后跟上用中括号包裹起来的所需的下标：第一个元素的下标是0，第二个元素的下标是1,依此类推。这个语法表明，既然你现在想看数组中的一个元素，并且它是一个标量变量，那你就使用美元符号，就像在其他标量变量上那样使用。
 
-In \autoref{exam:example6.3}, you copy this first (and only) element of the command-line array \verb|@ARGV| into the variable \verb|$dna|.
+在\autoref{exam:example6.3}中，你把命令行数组\verb|@ARGV|的第一个（也是唯一的一个）元素复制到了变量\verb|$dna|中。
 
-Finally comes the call to the subroutine, which contains nothing new but fulfills a dream from the final paragraph of \autoref{chap:chapter5}:
+最后是子程序的调用，其中并没有什么新的东西，但却实现了\autoref{chap:chapter5}最后一段的梦想：
 
 \begin{lstlisting}
 my($num_of_Gs) = countG ( $dna );

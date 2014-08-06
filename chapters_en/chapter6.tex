@@ -9,13 +9,12 @@ In this chapter you'll extend your basic knowledge in two directions:
   \item Using the Perl debugger
 \end{itemize}
 
-Subroutines are an important way to structure programs. You'll use them
-in \autoref{chap:chapter7}, where you'll learn how to use randomization to simulate the mutation of DNA. The Perl debugger examines a program's behavior in "slow motion" and helps you find those pesky bugs. 
+Subroutines are an important way to structure programs. You'll use them in \autoref{chap:chapter7}, where you'll learn how to use randomization to simulate the mutation of DNA. The Perl debugger examines a program's behavior in "slow motion" and helps you find those pesky bugs. 
 
 \section{Subroutines}
 Subroutines are an important way to organize a program and are used in all major programming languages.
 
-A \textit{subroutine} wraps up a bit of code, gives the code a name, and provides a way to pass in some values for its calculations and then report back the results. The rest of the program can then use the subroutine's code just by calling its name, giving the needed values to pass in to the subroutine code and then collecting the results. This use or "invocation" of a subroutine is commonly referred to as calling the subroutine. You can think of a subroutine as a program within a program; just as you run programs to get results, so your programs call subroutines to get results. Once you have a subroutine, you can use it in a program simply by knowing which values to pass in and what kind of values to expect it to pass out. 
+A \textit{subroutine} wraps up a bit of code, gives the code a name, and provides a way to pass in some values for its calculations and then report back the results. The rest of the program can then use the subroutine's code just by calling its name, giving the needed values to pass in to the subroutine code and then collecting the results. This use or "invocation" of a subroutine is commonly referred to as \textit{calling} the subroutine. You can think of a subroutine as a program within a program; just as you run programs to get results, so your programs call subroutines to get results. Once you have a subroutine, you can use it in a program simply by knowing which values to pass in and what kind of values to expect it to pass out. 
 
 \subsection{Advantages of Subroutines}
 Subroutines provide several benefits. They endow programs with abstraction, modularization, and the ability to create large programs by organizing the code into manageable chunks with defined inputs and outputs.
@@ -60,11 +59,11 @@ We'll now look at this code to see how subroutines are defined and used in a Per
 
 The first thing to notice, taking the large view, is that the program now has two sections. The first section starts from the beginning of the program and ends with the \verb|exit| command. Following that (and announced by a blizzard of comments for easy reading) is a section for subroutine definitions, in this case, only the one definition for subroutine \textit{addACGT}. It is common to place all subroutine definitions together at the end of a program, for ease in reading. Usually they're listed alphabetically or in some other convenient way.
 
-Actually, it is legal to put the subroutine definitions almost anywhere in a program. This is because Perl first scans through the code and does things like check the syntax and learn subroutine definitions, before it starts to run the program. In particular, subroutine definitions can come after the point in the code where you use them (not necessarily before, which many people assume is the rule), and they don't have to be grouped together but can be scattered throughout the code. But our method of collecting them together at the end can make reading a program much easier. The possible exception is when a small subroutine is used in one section of code, as sometimes happens with the sort function, for instance. In this case having the definition right there can save the reader paging back and forth between the subroutine definition and its use. Usually, it's more convenient to read the program without the subroutine definitions, to get the overall flow of the program first, and then go back and look into the subroutines, if necessary.
+Actually, it is legal to put the subroutine definitions almost anywhere in a program. This is because Perl first scans through the code and does things like check the syntax and learn subroutine definitions, before it starts to run the program. In particular, subroutine definitions can come after the point in the code where you use them (not necessarily before, which many people assume is the rule), and they don't have to be grouped together but can be scattered throughout the code. But our method of collecting them together at the end can make reading a program much easier. The possible exception is when a small subroutine is used in one section of code, as sometimes happens with the \textit{sort} function, for instance. In this case having the definition right there can save the reader paging back and forth between the subroutine definition and its use. Usually, it's more convenient to read the program without the subroutine definitions, to get the overall flow of the program first, and then go back and look into the subroutines, if necessary.
 
 As you see, \autoref{exam:example6.1} is very simple. It first stores some DNA into the variable \verb|$dna| and then passes that variable as an argument to the subroutine call, which looks like this: \verb|addACGT($dna)|. The subroutine is called by its name, followed by parentheses containing the arguments to the subroutine. There may be no arguments, or if more than one, they are separated by commas. The value returned by the subroutine can be saved; in this program the value is saved in a variable called \verb|$longer_dna|, which is then printed, and the program exits.  
 
-The part of the program from the beginning to the \textit{exit} statement is called variously the \textit{main program} or the main body of the program. By looking over this section of the code, you can see what happens from the beginning to the end of the program without looking into the details of the subroutines.
+The part of the program from the beginning to the \textit{exit} statement is called variously the \textit{main program} or the \textit{main body} of the program. By looking over this section of the code, you can see what happens from the beginning to the end of the program without looking into the details of the subroutines.
 
 Now that you've looked over the main program of \autoref{exam:example6.1}, it's time to look at the subroutine definition and how it uses the principal of scoping. 
 
@@ -95,7 +94,7 @@ Arguments are the values given to a subroutine when it is used, or called. The v
 
 Other variables a subroutine might use must be protected from interacting with variables in other parts of the program, so they have effect only within the subroutine's own scope. This is accomplished by declaring them as \verb|my| variables, as will be explained shortly.
 
-Finally, most subroutines return their results via the \textit{return} function.  This can return a single scalar as in \verb|return $dna|; in our subroutine \textit{addACGT}, in a list of scalars as in \verb|return ($dna1, $dna2);|, in an array as in \verb|return @lines;|, and more. 
+Finally, most subroutines return their results via the \textit{return} function. This can return a single scalar as in \verb|return $dna;| in our subroutine \textit{addACGT}, in a list of scalars as in \verb|return ($dna1, $dna2);|, in an array as in \verb|return @lines;|, and more. 
 
 \subsection{Arguments}
 To \textit{call} a subroutine means to type its name and give it appropriate arguments and, usually, collect its results. \textit{Arguments}, sometimes called \textit{parameters}, usually contain the data that the subroutine computes on. In \autoref{exam:example6.1}, this is the call of the subroutine \textit{addACGT} with the argument \verb|$dna|:
@@ -104,7 +103,7 @@ To \textit{call} a subroutine means to type its name and give it appropriate arg
 $longer_dna = addACGT($dna);
 \end{lstlisting}
 
-The essential point is that whenever you, the programmer, want to use a subroutine, you can call it with whatever argument(s) it is designed to accept and with which you need to compute (in this case, whatever DNA that needs ACGT appended to it) and the value of each argument appears in the subroutine in the \verb|@_| array.
+The essential point is that whenever you, the programmer, want to use a subroutine, you can call it with whatever argument(s) it is designed to accept and with which you need to compute (in this case, whatever DNA that needs \verb|ACGT| appended to it) and the value of each argument appears in the subroutine in the \verb|@_| array.
 
 When you call a subroutine with certain arguments, the names of the arguments you provide in the call are not important inside the subroutine. Only the values of those arguments that are actually passed inside the subroutine are important. The subroutine typically collects the values from the \verb|@_| array and assigns them to new variables that may or may not have the same names as the variables with which you called the subroutine. The only thing preserved is the order of the values, not the names of the variables containing the values.
 
@@ -114,7 +113,7 @@ Here's how it works. The first line in the subroutine's block is:
 my($dna) = @_; 
 \end{lstlisting}
 
-The values of the arguments from the call of the subroutine are passed into the subroutine in the special array variable \verb|@_|. You know it's an array because it starts with the \verb|@| character. It has the brief name "\_", and it's a special array variable that comes predefined in Perl programs. (It's not a name you should pick for your own arrays.) The array \verb|@_| contains all the scalar values passed into the subroutine.  These scalar values are the values of the arguments to the subroutine.  In this case, there is one scalar value: the string of DNA that's the value of the variable \verb|$dna| passed in as an argument.
+The values of the arguments from the call of the subroutine are passed into the subroutine in the special array variable \verb|@_|. You know it's an array because it starts with the \verb|@| character. It has the brief name "\_", and it's a special array variable that comes predefined in Perl programs. (It's not a name you should pick for your own arrays.) The array \verb|@_| contains all the scalar values passed into the subroutine. These scalar values are the values of the arguments to the subroutine. In this case, there is one scalar value: the string of DNA that's the value of the variable \verb|$dna| passed in as an argument.
 
 If the subroutine has more arguments—for instance one argument for DNA, one for the associated protein, and one for the name of the gene—they are all passed in and assigned to \verb|my| variables inside the subroutine:
 
@@ -148,7 +147,8 @@ my($dna) = @_;
 \end{adjustwidth}
 
 \subsection{Scoping}
-By keeping all variables a subroutine uses active only within the subroutine, you can make it safe to call the subroutines from anywhere.  You make the variables specific only to the subroutine by declaring them as \verb|my| variables. \verb|my| is a keyword defined in Perl that limits variables to the block in which they are used (in this case, the block is the subroutine). \footnote{There are different models of scoping; \verb|my| implements a type called \textit{lexical scoping}, also known as \textit{static scoping}. Another method is available in Perl via the \textit{local} construct, but you almost always want to use \verb|my|.} 
+By keeping all variables a subroutine uses active only within the subroutine, you can make it safe to call the subroutines from anywhere. You make the variables specific only to the subroutine by declaring them as \verb|my| variables. \verb|my| is a keyword defined in Perl that limits variables to the block in which they are used (in this case, the block is the subroutine). \footnote{There are different models of scoping; \verb|my| implements a type called \textit{lexical scoping}, also known as \textit{static scoping}. Another method is available in Perl via the \textit{local} construct, but you almost always want to use \verb|my|.} 
+
 Hiding variables and making them local to only a restricted part of a program, is called \textit{scoping}. In Perl, using \verb|my| variables is known as \textit{lexical scoping}, and it's an essential part of modularizing your programs.
 
 You declare that a variable is a \verb|my| variable like this:
@@ -186,7 +186,7 @@ The example that showed collecting an argument in a subroutine uses parentheses 
   Always declare all your variables in your subroutines—even those variables that don't come in as arguments—such as the \verb|my| construct. 
 \end{adjustwidth}
 
-Why use scoping? \autoref{exam:example6.2} shows the trouble that can happen when you don't. Recall that one of the advantages of subroutines is writing a useful bit of code once and then using it whenever you need it.  \autoref{exam:example6.2} is a program that has a variable in the main program with the same name as a variable in a subroutine it calls. This can easily happen if you write the subroutine at a time other than the main program (say six months later) or if you call a subroutine someone else wrote. 
+Why use scoping? \autoref{exam:example6.2} shows the trouble that can happen when you don't. Recall that one of the advantages of subroutines is writing a useful bit of code once and then using it whenever you need it. \autoref{exam:example6.2} is a program that has a variable in the main program with the same name as a variable in a subroutine it calls. This can easily happen if you write the subroutine at a time other than the main program (say six months later) or if you call a subroutine someone else wrote. 
 
 \textbf{Example 6-2. The pitfalls of not using my variables}
 \lstinputlisting[label=exam:example6.2]{./scripts/example6-2.pl}
@@ -214,19 +214,19 @@ sub A_to_T {
 }
 \end{lstlisting}
 
-Where exactly did \autoref{exam:example6.2} go wrong? When the program entered the subroutine, and used the variable \verb|$dna| to calculate the string with A's changed to T's, the Perl language saw that there was already a variable \verb|$dna| being used in the main part of the program and just kept using it.  When the program returned from the subroutine and got to the print statement, it was still using the same (the one and only) variable \verb|$dna|.  So, when it printed the results, the variable \verb|$dna|, instead of having the original DNA in it, had the altered DNA that had been computed in the subroutine.
+Where exactly did \autoref{exam:example6.2} go wrong? When the program entered the subroutine, and used the variable \verb|$dna| to calculate the string with A's changed to T's, the Perl language saw that there was already a variable \verb|$dna| being used in the main part of the program and just kept using it. When the program returned from the subroutine and got to the \verb|print| statement, it was still using the same (the one and only) variable \verb|$dna|. So, when it printed the results, the variable \verb|$dna|, instead of having the original DNA in it, had the altered DNA that had been computed in the subroutine.
 
 Now this sort of thing can happen a lot. Programmers tend to use certain names for variables a great deal: the usual suspects are names such as \verb|$tmp|, \verb|$temp|, \verb|$x|, \verb|$a|, \verb|$number|, \verb|$variable|, \verb|$var|, \verb|$array|, \verb|$input|, \verb|$output|, \verb|$result|, \verb|$data|, \verb|$file|, \verb|$filename|, and so on. Bioinformaticians are quite fond of \verb|$dna|, \verb|$protein|, \verb|$motif|, \verb|$sequence|, and the like. As you start using libraries of subroutines from other people and as your programs get larger, it's much easier—and a whole lot safer—to let the Perl language worry about avoiding the problem of name collisions.
 
-In fact, from now on we're going to stop using undeclared variables.  From this point forward, all our variables, even those in the main program, will be declared with \verb|my|. You can enforce this discipline by adding the following directive to your programs:
+In fact, from now on we're going to stop using undeclared variables. From this point forward, all our variables, even those in the main program, will be declared with \verb|my|. You can enforce this discipline by adding the following directive to your programs:
 
 \begin{lstlisting}
 use strict;
 \end{lstlisting}
 
-which has the effect of insisting that your programs have all their variables declared as my variables.
+which has the effect of insisting that your programs have all their variables declared as \verb|my| variables.
 
-Lest you rail at this seemingly unnecessary complication to your coding, compared to the simpler and happier days of \autoref{chap:chapter4} and \autoref{chap:chapter4}, you should know that many languages require declarations for all their variables. The fact that in Perl you don't have to enforce strict scoping is handy when you're writing short programs, for example, or when you're trying to teach programming without hitting the students with a thousand details at the beginning.
+Lest you rail at this seemingly unnecessary complication to your coding, compared to the simpler and happier days of \autoref{chap:chapter4} and \autoref{chap:chapter5}, you should know that many languages require declarations for all their variables. The fact that in Perl you don't have to enforce strict scoping is handy when you're writing short programs, for example, or when you're trying to teach programming without hitting the students with a thousand details at the beginning.
 
 Another benefit you get from strict scoping happens if you accidently misspell a variable name while writing a program. If the variables aren't being declared, Perl creates a new variable with the (misspelled) name. The program may not work correctly, and it may be hard to find where the problem is. By strictly scoping the program, any misspelled variables are also undeclared, and Perl complains about it, saving you hours or days of hair-pulling and bad language.
 
@@ -251,7 +251,7 @@ AAGGGGTTTCCC
 The DNA AAGGGGTTTCCC has 4 G's in it!
 \end{lstlisting}
 
-Of course, many programs come with a graphical user interface (GUI).  This gives the program some or all of the computer screen and usually includes such things as menus, buttons, and places to type in values to set parameters from the keyboard.
+Of course, many programs come with a graphical user interface (GUI). This gives the program some or all of the computer screen and usually includes such things as menus, buttons, and places to type in values to set parameters from the keyboard.
 
 However, many programs are run from a command line. Even the newer MacOS X, which is built on top of Unix, now provides a command line. (Although most Windows users don't use the MS-DOS command window much, it's still useful, e.g., for running Perl programs.) As already mentioned, running a program noninteractively, passing parameters in as command-line arguments, allows you to run the program automatically, say in the middle of the night when no one is actually sitting at the computer.  
 
