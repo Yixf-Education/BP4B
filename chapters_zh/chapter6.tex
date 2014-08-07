@@ -135,6 +135,7 @@ my($dna) = @_;
   \parpic[l]{
   \includegraphics[width=1cm]{warning.png}
   }
+  \noindent
   当心这个常见的错误，在子程序中为参数命名时忘记使用\verb|@_|数组，换言之，使用语句：
   \begin{lstlisting}
 my($dna);
@@ -183,6 +184,7 @@ my($x) = @_;
   \parpic[l]{
   \includegraphics[width=1cm]{warning.png}
   }
+  \noindent
   在子程序中，永远使用\verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。
 \end{adjustwidth}
 
@@ -298,11 +300,11 @@ my($dna) = $ARGV[0];
 my($num_of_Gs) = countG ( $dna );
 \end{lstlisting}
 
-\section{Passing Data to Subroutines}
-When you start parsing GenBank, PDB, and BLAST files in later chapters, you'll need more complicated arguments to your subroutines to hold the several fields of data you'll parse out of the records. These next sections explain the way it's done in Perl. You can skim this section and return for a closer read when you get to \autoref{chap:chapter10}. 
+\section{传递数据给子程序}
+在后续章节中，当开始解析GenBank、PDB和BLAST文件时，你将需要向子程序传递更加复杂的参数，来从记录数据中解析出多个字段。接下来的几个小节将演示在Perl是如何实现这一点的。你可以跳过这一小节，等学习到\autoref{chap:chapter10}的时候再回来仔细阅读。
 
-\subsection{Subroutines: Pass by Value}
-So far, all our subroutines have had fairly simple arguments. The values of these arguments are copied and passed to the subroutines, and whatever happens to those values in the subroutine doesn't affect the values of the arguments in the main program. This is called \textit{pass by value} or \textit{call by value}. For example: 
+\subsection{子程序：通过值传递}
+到目前为止，我们所有的子程序的参数都非常简单。这些参数的值被复制并传递给子程序，而且子程序中这些值的变化不会影响到主程序中相应参数的值。这叫做\textit{通过值传递}或者\textit{通过值调用}。举个例子：
 
 \begin{lstlisting}
 #!/usr/bin/perl -w
@@ -331,7 +333,7 @@ sub simple_sub {
 }
 \end{lstlisting}
 
-This gives the following output:
+这会得到下面的输出：
 
 \begin{lstlisting}
 In subroutine simple_sub, $i equals 102
@@ -339,8 +341,8 @@ In subroutine simple_sub, $i equals 102
 In main program, after the subroutine call, $i equals 2
 \end{lstlisting}
 
-\subsection{Subroutines: Pass by Reference}
-If you have more complicated arguments, say a mixture of scalars, arrays, and hashes, Perl often cannot distinguish between them. Perl passes all arguments into the subroutine as a single array, the special \verb|@_| array. If there are arrays or hashes as arguments, their elements get "flattened" out into this single \verb|@_| array in the subroutine. Here's an example: 
+\subsection{子程序：通过引用传递}
+如果你的参数更加复杂，比如说混合了标量、数组和散列，对于Perl来说通常不能把它们区分开来。Perl把所有的参数当成一个单独的数组，就是\verb|@_|这个特殊数组，传递给子程序，如果参数中数组或者散列，在子程序中，它们的元素就会“扁平化”后保存进\verb|@_|这一个数组中。下面是一个例子：
 
 \begin{lstlisting}
 #!/usr/bin/perl -w
@@ -378,7 +380,7 @@ sub reference_sub {
 }
 \end{lstlisting}
 
-The following output illustrates the problem of this approach:
+下面的输出说明这种方法存在问题：
 
 \begin{lstlisting}
 In main program before calling subroutine: i = 1 2 3
@@ -389,46 +391,47 @@ In main program after calling subroutine: i = 1 2 3
 In main program after calling subroutine: j = a b c
 \end{lstlisting}
 
-As you see, in the subroutine all the elements of \verb|@i| and \verb|@j| were grouped into one \verb|@_| array. All distinction between the two arrays you started with was lost in the subroutine. When you try to get the two arrays back in the statement:
+如你所见，在子程序中，\verb|@i|和\verb|@j|中的所有元素都被组合进了\verb|@_|这个数组中。你开始使用的这两个数组之间的区别，在子程序中荡然无存。当你通过下面这一语句试图把这两个数组找回来时：
 
 \begin{lstlisting}
 my(@i, @j) = @_;
 \end{lstlisting}
 
-Perl assigns everything to the first array, \verb|@i|. This behavior makes passing multiple arrays into subroutines somewhat dicey. 
+Perl把所有的元素都赋给了第一个数组\verb|@i|。这种行为使得向子程序中传递多个数组变得有些不确定。
 
-Also, as usual, the original arrays in the main program were not affected by the subroutine, since you used lexical scoping (\verb|my| variables).
+此外，一切照旧，因为你使用了词法作用域（\verb|my|变量），主程序中原始的数组并不会被子程序所影响。
 
-To get around this problem, you can pass arguments into subroutines in a style called \textit{pass by reference} or \textit{call by reference}. Using pass by reference, you can pass a subroutine any collection of scalars, arrays, hashes, and more, and the subroutine can distinguish between them. There is a price to pay: the resulting code looks a little more complex. But the payoff is often well worth it.
+为了避免这种问题，你可以以一种叫做\textit{通过引用传递}或\textit{通过引用调用}的方式向子程序中传递参数。通过使用引用，你可以向子程序中传递标量、数组、散列等各种组合形式的参数，子程序可以将它们区分开来。这也是有代价的：代码看起来会有一些复杂。但它的回报通常值得我们这么去做。
 
-There is one big difference in the behavior of arguments that are passed by reference. When argument variables are passed in this fashion, anything you do to the values of the argument variables in the subroutine also affects the values of the arguments in the main program.
+通过引用传递的参数的行为有一个很大的不同。当以这种形式传递参数变量时，在子程序中你对参数变量值做的任何事情都会影响到主程序中参数的值。
 
-To call a subroutine that has its arguments passed by reference, you call it the same way as before, with one difference: you must preface the argument names with a backslash. In the example of pass by reference in this section, the subroutine call is accomplished like so:
+要调用一个以引用形式传递参数的子程序时，方法和以前一样，但有一点不同：你必须在变量名前加一个反斜线。在本节通过引用传递参数的例子中，可以像这样实现子程序的调用：
 
 \begin{lstlisting}
 reference_sub(\@i, \@j);
 \end{lstlisting}
 
-As you see here, the arguments are two arrays, and, to preserve the distinction between them as they are passed into the \textit{reference\_sub} subroutine, they are passed by reference by prepending their names with a backslash.
+就像你在这里看到的一样，参数是两个数组，为了保持传递给\textit{reference\_sub}子程序后两者的区别，通过引用的形式进行了传递，方法就是在它们的名字前加上反斜线。
 
-Within the subroutine, there are a few changes. First, the arguments are collected from the \verb|@_| array, and saved as scalar variables. This is because a reference is a special kind of data that is stored in a scalar variable, no matter whether it's a reference to a scalar, an array, a hash, or other. The example collects its arguments as follows:
+在子程序中，也有一些变化。首先，参数从\verb|@_|数组中收集起来，并保存为标量变量，这是因为不管引用的是标量、数组、散列或者其他什么，引用都是存储在标量变量中的一种特殊类型的数据。如下所示，进行参数的收集：
 
 \begin{lstlisting}
 my($i, $j) = @_;
 \end{lstlisting}
 
-reading them from the \verb|@_| array as scalars.
 
-The subroutine has to do one more thing with these referenced arguments.  When it uses them, it has to dereference them. To dereference a referenced argument, you have to prepend the reference with the symbol that shows what kind of variable it is: a \verb|$| for a scalar, \verb|@| for an array, \verb|%| for a hash. So these variables have two symbols before their name—reading left to right, their usual symbol and then a \verb|$| that indicates the variable is a reference. The lines:
+从\verb|@_|数组中读取参数后，保存为标量。
+
+对于这些引用的参数，子程序还要进行进一步的处理。当使用它们时，需要对它们进行解引用。要解引用一个被引用的参数，你需要在引用前添加上表明变量类型的符号：对于标量来说是\verb|$|，对于数组来说是\verb|@|，对于散列来说是\verb|%|。所以在这些变量的名字前有两个符号：从左到右分别是它们本来的符号和表明这个变量是引用的\verb|$|符号。这些行：
 
 \begin{lstlisting}
 push(@$i, '4');
 shift(@$j);
 \end{lstlisting}
 
-in the following subroutine are the ones that manipulate the arguments.  The push adds an element '4' to the end of the \verb|@i| array, and the shift removes the first element from the \verb|@j| array. Because these arrays have been passed by reference, their names in the subroutine are \verb|@$i| and \verb|@$j|.  (If you want to look at the third element of the @j array, which normally is \verb|$j[2]|, you'd say \verb|$j[2]|.)
+就是子程序中操作变量的代码。\textit{push}向\verb|@i|数组的末尾添加了'4'这个元素，而\textit{shift}则移除了\verb|@j|数组的第一个元素。因为这些数组是以引用的形式传递进来的，所以在子程序中它们的名字就是\verb|@$i|和\verb|@$j|。（如果你想看一下\verb|@j|数组的第三个元素，通常情况下它就是\verb|$j[2]|，所以你应该使用\verb|$j[2]|。）
 
-Whatever changes you make to the arguments in the subroutine also take effect in the main program. This is because the references are references to the actual arguments; they are not copies of their values as in pass by value. So, as you see in the example, after calling the subroutine, the arrays in the main program have been altered accordingly:
+在子程序中你对参数做的任何改变都会在主程序中产生影响。因为引用就是对实际参数的引用，它们并不是通过值进行传递时它们的值的拷贝。所以，就像你在例子中看到的那样，在调用子程序后，主程序中的数组也被相应的改变了：
 
 \begin{lstlisting}
 #!/usr/bin/perl
@@ -476,94 +479,95 @@ In main program after calling subroutine: i = 1 2 3 4
 In main program after calling subroutine: j = b c
 \end{lstlisting}
 
-The subroutine can now distinguish between the two arrays passed on as arguments.The changes that were made inside the subroutine to the variables remain in effect after the subroutine has ended, and you've returned to the main program. This is the essential characteristic of pass by reference. 
+现在，子程序可以区分开作为参数传递进去的两个数组了。在子程序中对变量进行的修改，在子程序结束后回到主程序中时仍然有效。这是通过引用传递的基本属性。
 
-\section{Modules and Libraries of Subroutines}
-As you start to build a collection of subroutines, you'll find that you're copying them a lot from existing programs and pasting them into new programs. The subroutines then appear in multiple program. This makes the listings of your program code a bit verbose and repetitive. It also makes modifying a subroutine more complicated because you have to modify all the copies.
+\section{模块和子程序库}
+当开始收集子程序时，你会发现自己在不断地把它们从现有的程序中复制粘贴到新的程序中。这样，子程序就出现了许多程序中。这会使你的程序代码列表显得有些繁琐和重复。这也会使子程序的修改变得更加复杂，因为你不得不修改所有的子程序拷贝。
 
-In short, subroutines are great, but if you have to keep copying them into each new program you write, it gets tiresome. So it's time to start collecting subroutines into the handy files called \textit{modules} or \textit{libraries}.
+总之，子程序非常棒，但如果你不得不把它们复制粘贴到你写的每一个新程序中，那就太麻烦了。所以是时候开始把子程序收集到一个便于使用的文件中了，这就是\textit{模块}或者\textit{库}.
 
-Here's how it works. You put all your reusable subroutines into a separate file. (Or, as you keep writing more and more code, and things get complicated, you may want to organize them into several files.) Then you just name the file in your program and \textit{presto}: the subroutine's definitions all get read in, just as if they were in your program. To do this, you use the Perl built-in function \textit{use}, which reads in the subroutine library file.
+这是它的工作原理。你把所有可以重复使用的子程序放进一个单独的文件里。（或者，随着你编写越来越多的代码，事情会变得复杂起来，你可能会想把它们组织到不同的文件中。）之后在你的程序只需要把文件的名字写上，然后说声\textit{变}：子程序的定义就被读进来了，就像它们本身就在你的程序中一样。要实现这一点，使用Perl的内置函数\textit{use}即可，它会把子程序的库文件读进来。
 
-Let's call this module \textit{BeginPerlBioinfo.pm}. You can put all your subroutine definitions into it, just as they appear in the program code.  Then you can create the module by typing in the subroutine definitions as you read the book; or, more easily, it can be downloaded from the book's web site. But there is one thing to remember when creating or adding to a module: \textit{the last line in a module must be 1; or it won't work}. This \verb|1;| should be the last line of the \textit{.pm} file, not part of the last subroutine. If you forget this, you'll get an error message something like: 
+让我们把这个模块叫做\textit{BeginPerlBioinfo.pm}吧。你可以把所有的子程序定义都放在里面，就像它们出现在程序代码中一样。然后就像在本书的学习过程中键入子程序的定义，你就可以创建模块了；或者，更加简便的方法，从属鸡的网页上直接把它下载下来。但需要牢记一点，当创建模块或者向模块中添加东西时，\textit{模块的最后一行必须是\texttt{1;}，否则它不会工作}。这个\verb|1;|应该是\textit{.pm}文件的最后一行，而不是最后一个子程序的一部分。如果你忘记了这一行，你会看到类似这样的错误信息：
 
 \begin{lstlisting}
 BeginPerlBioinfo.pm did not return a true value at jkl line 14.
 BEGIN failed--compilation aborted at jkl line 14.
 \end{lstlisting}
 
-Now, to use any of the subroutines in \textit{BeginPerlBioinfo.pm}, you just have to put the following statement in your code, near the top (near the \verb|use strict| statement): 
+现在，要使用\textit{BeginPerlBioinfo.pm}中的任何子程序，你只需要在靠近代码顶部（靠近\verb|use strict|语句）的地方中加上这样一条语句：
 
 \begin{lstlisting}
 use BeginPerlBioinfo;
 \end{lstlisting}
 
-Note that \textit{.pm} is left off the name on purpose: that's how Perl handles the names of modules.
+注意名字中故意去掉了\textit{.pm}：它是Perl处理模块名的方式。
 
-There's one last thing to know about using modules to load in subroutines: the Perl program needs to know where to find the module. If you're doing all your work in one folder, everything should work okay.  If Perl complains about not being able to find BeginPerlBioinfo.pm, give full pathname information to the module. If the full pathname is \textit{/home/tisdall/book/BeginPerlBioinfo.pm}, then use this in your program:
+最后还有一点需要知道，使用模块载入子程序时，Perl程序需要知道到哪里去找到这个模块。如果你在同一个文件夹中进行所有的工作，一切都没有问题。如果Perl抱怨没法找到\textit{BeginPerlBioinfo.pm}，那就给出模块的全路径名吧。如果全路径名是\textit{/home/tisdall/book/BeginPerlBioinfo.pm}，在程序中就可以这样写：
 
 \begin{lstlisting}
 use lib '/home/tisdall/book';
 use BeginPerlBioinfo;
 \end{lstlisting}
 
-There are other ways to tell Perl where to look for modules; consult the Perl documentation for \verb|use|.
+还有其他告诉Perl去哪里寻找模块的方法，去查阅一下\verb|use|的Perl文档吧。
 
-Beginning in \autoref{chap:chapter8}, I'll define subroutines and show the code, but you'll be putting them into your module and typing:
+在\autoref{chap:chapter8}的开头，我会定义子程序并给出代码，但你应该把它们放到模块中，然后键入：
 
 \begin{lstlisting}
 use BeginPerlBioinfo;
 \end{lstlisting}
 
-This module is also available for download at this book's web site. 
+在书籍的网站上也可以下载到这个模块。
 
-\section{Fixing Bugs in Your Code}
-Now let's talk about what to do when your program is having trouble.
+\section{修复代码中的Bugs}
+现在让我们谈谈，当你的程序出现问题时，该如何去处理。
 
-A program can go wrong in any number of ways. Maybe it won't run at all.  A look at the error messages, especially the first line or two of the error messages, usually leads you to the problem, which will be somewhere in the syntax, and its solution, which will be to use the correct syntax (e.g., matching braces or ending each statement with a semicolon).
+一个程序会因为各种各样的原因出现问题。也许它完全无法运行。看一下错误信息，尤其是错误信息的第一行或前两行，通常它会带你找到问题的所在，将是语法的某个地方，同时它还会给出相应的解决办法，就是使用正确的语法（举例来说，括号要配对，或者，每一个语句都要以一个分号结尾）。
 
-Your program may run but not behave as you planned. Then you have some problem with the logic of the program. Perhaps at some point, you've zigged when you should have zagged, like adding instead of subtracting or using the assignment operator = when you meant to test for equality between two numbers with ==. Or, the problem could be that you just have a poor design to accomplish your task, and it's only when you actually try it out that the flaw becomes evident.
+你的程序可能会运行，但不是你期望的那样。然后你发现程序的逻辑存在一定的问题。可能在某种情况下，你应该买的时候却卖了，比如应该相减却相加了，或者当你想用==测试两个数字是否相等时却使用了赋值操作符=。再或者，问题可能在于你完成任务的方案设计存在缺陷，只有当你实际尝试它的时候缺陷才会暴露出来。
 
-However, sometimes the problem is not obvious, and you have to resort to the heavy artillery.
+然而，有的时候问题可能不是明显，这时你就不得不开挂了。
 
-Fortunately, Perl has several ways to help you find and fix bugs in your programs. The use of the statements \verb|use strict;| and \verb|use warnings;| should become a habit, as you can catch many errors with them. The Perl debugger gives you complete freedom to examine a program in detail as it runs.
+幸运的是，Perl有好多方法可以帮助你寻找并修复程序中的bugs。语句\verb|use strict;|和\verb|use warnings;|的使用应该成为一种习惯，因为使用它们你可以捕获许多错误。Perl调试器则给了你完全的自由，可以在程序运行时对程序进行详细的检查。
 
-\subsection{use warnings; and use strict;}
-In general, it's not too hard to tell when the syntax of a program is wrong because the Perl interpreter will produce error messages that usually lead you right to the problem. It's much harder to tell when the program is doing something you didn't really want. Many such problems can be caught if you turn on the warnings and enforce the strict use of declarations.
+\subsection{use warnings;和use strict;}
+一般来说，当程序的语法出现错误时，可以很容易的进行识别，因为Perl解释器给出的错误信息通常就可以指引你找到问题的所在。但是当程序不以你期望的形式工作时，要找到问题所在通常会更加困难一些。如果你开启了警告功能、并且强制使用严格的声明，许多这样的问题都可以被捕获。
 
-You have probably noticed that all the programs in this book up until now start with the command interpreter line:
+你可能注意到了，到现在为止，本书中出现的所有程序都以这样的命令解释器行起始：
 
 \begin{lstlisting}
 #!/usr/bin/perl -w
 \end{lstlisting}
 
-That \verb|-w| turns on Perl's warnings and attempts to find potential problems in your code and then to warn you about them. It finds common problems such as variables that are declared more than once, and so on, things that are not syntax errors but that can lead to bugs.
+\verb|-w|开启了Perl的警告功能，这会尝试寻找代码中潜在的问题，并对此给出警告。它会找出常见的问题，比如声明了不止一次的变量之类的问题，以及不是语法错误但会导致bugs的东西。
 
-Another way to turn on warnings is to add the following statement near the top of the program:
+开启警告的另外一种方法就是在靠近程序顶部的地方加上下面这个语句：
 
 \begin{lstlisting}
 use warnings;
 \end{lstlisting}
 
-The statement \verb|use warnings;| may not be available on your version of Perl, if it's an old one. So if your Perl complains about it, take it out and use the \textit{-w} command instead, either on the command interpreter line, or from the command line:
+如果你使用的Perl的版本比较老，\verb|use warnings;|语句可能在其中并不存在。所以如果你的Perl对此进行抱怨，那就把这个语句删掉，用\textit{-w}命令来替代吧。你既可以在命令解释器行上使用它，也可以在命令行中使用它：
 
 \begin{lstlisting}[language=bash]
 $ perl -w my_program
 \end{lstlisting}
 
-However, \verb|use warnings;| is a bit more portable between different operating systems. So, from now on, that's the way I'll turn on warnings in my code. Another important helper you should use is the following statement placed near the top of your program (next to \verb|use warnings;|):
+然而，在不同的操作系统之间，使用\verb|use warnings;|会更加灵活一些。所以，从现在开始，这就是我在代码中开启警告功能的方式。另外一个你应该使用的重要的帮手是下面这个语句，也把它放在靠近程序顶部（紧邻\verb|use warnings;|）的地方：
 
 \begin{lstlisting}
 use strict;
 \end{lstlisting}
 
-As mentioned previously, this forces you to declare your variables. (It has some options, that are beyond the scope of this book.) It finds misspelled variables, undeclared variables that may be interfering with other parts of the program, and so on. 
+前面已经提到，这会强制你去声明变量。（它还有一些选项，但那已经超出本书的范围了。）它会找到拼错的变量、会干扰程序其他部分的未声明的变量，等等。
 
 \begin{adjustwidth}{2cm}{2cm}
   \parpic[l]{
   \includegraphics[width=1cm]{note.png}
   }
-  It's best to always use both \verb|use strict;| and \verb|use warnings;| when writing your Perl code. 
+  \noindent
+当编写Perl代码时，最后永远同时使用\verb|use strict;|和\verb|use warnings;|。
 \end{adjustwidth}
 
 \subsection{Fixing Bugs with Comments and Print Statements}

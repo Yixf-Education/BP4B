@@ -418,14 +418,14 @@ my($i, $j) = @_;
 
 reading them from the \verb|@_| array as scalars.
 
-The subroutine has to do one more thing with these referenced arguments.  When it uses them, it has to dereference them. To dereference a referenced argument, you have to prepend the reference with the symbol that shows what kind of variable it is: a \verb|$| for a scalar, \verb|@| for an array, \verb|%| for a hash. So these variables have two symbols before their name—reading left to right, their usual symbol and then a \verb|$| that indicates the variable is a reference. The lines:
+The subroutine has to do one more thing with these referenced arguments. When it uses them, it has to dereference them. To dereference a referenced argument, you have to prepend the reference with the symbol that shows what kind of variable it is: a \verb|$| for a scalar, \verb|@| for an array, \verb|%| for a hash. So these variables have two symbols before their name—reading left to right, their usual symbol and then a \verb|$| that indicates the variable is a reference. The lines:
 
 \begin{lstlisting}
 push(@$i, '4');
 shift(@$j);
 \end{lstlisting}
 
-in the following subroutine are the ones that manipulate the arguments.  The push adds an element '4' to the end of the \verb|@i| array, and the shift removes the first element from the \verb|@j| array. Because these arrays have been passed by reference, their names in the subroutine are \verb|@$i| and \verb|@$j|.  (If you want to look at the third element of the @j array, which normally is \verb|$j[2]|, you'd say \verb|$j[2]|.)
+in the following subroutine are the ones that manipulate the arguments.  The \textit{push} adds an element '4' to the end of the \verb|@i| array, and the \textit{shift} removes the first element from the \verb|@j| array. Because these arrays have been passed by reference, their names in the subroutine are \verb|@$i| and \verb|@$j|. (If you want to look at the third element of the \verb|@j| array, which normally is \verb|$j[2]|, you'd say \verb|$j[2]|.)
 
 Whatever changes you make to the arguments in the subroutine also take effect in the main program. This is because the references are references to the actual arguments; they are not copies of their values as in pass by value. So, as you see in the example, after calling the subroutine, the arrays in the main program have been altered accordingly:
 
@@ -484,7 +484,7 @@ In short, subroutines are great, but if you have to keep copying them into each 
 
 Here's how it works. You put all your reusable subroutines into a separate file. (Or, as you keep writing more and more code, and things get complicated, you may want to organize them into several files.) Then you just name the file in your program and \textit{presto}: the subroutine's definitions all get read in, just as if they were in your program. To do this, you use the Perl built-in function \textit{use}, which reads in the subroutine library file.
 
-Let's call this module \textit{BeginPerlBioinfo.pm}. You can put all your subroutine definitions into it, just as they appear in the program code.  Then you can create the module by typing in the subroutine definitions as you read the book; or, more easily, it can be downloaded from the book's web site. But there is one thing to remember when creating or adding to a module: \textit{the last line in a module must be 1; or it won't work}. This \verb|1;| should be the last line of the \textit{.pm} file, not part of the last subroutine. If you forget this, you'll get an error message something like: 
+Let's call this module \textit{BeginPerlBioinfo.pm}. You can put all your subroutine definitions into it, just as they appear in the program code. Then you can create the module by typing in the subroutine definitions as you read the book; or, more easily, it can be downloaded from the book's web site. But there is one thing to remember when creating or adding to a module: \textit{the last line in a module must be \texttt{1;} or it won't work}. This \verb|1;| should be the last line of the \textit{.pm} file, not part of the last subroutine. If you forget this, you'll get an error message something like: 
 
 \begin{lstlisting}
 BeginPerlBioinfo.pm did not return a true value at jkl line 14.
@@ -499,7 +499,7 @@ use BeginPerlBioinfo;
 
 Note that \textit{.pm} is left off the name on purpose: that's how Perl handles the names of modules.
 
-There's one last thing to know about using modules to load in subroutines: the Perl program needs to know where to find the module. If you're doing all your work in one folder, everything should work okay.  If Perl complains about not being able to find BeginPerlBioinfo.pm, give full pathname information to the module. If the full pathname is \textit{/home/tisdall/book/BeginPerlBioinfo.pm}, then use this in your program:
+There's one last thing to know about using modules to load in subroutines: the Perl program needs to know where to find the module. If you're doing all your work in one folder, everything should work okay.  If Perl complains about not being able to find \textit{BeginPerlBioinfo.pm}, give full pathname information to the module. If the full pathname is \textit{/home/tisdall/book/BeginPerlBioinfo.pm}, then use this in your program:
 
 \begin{lstlisting}
 use lib '/home/tisdall/book';
@@ -519,7 +519,7 @@ This module is also available for download at this book's web site.
 \section{Fixing Bugs in Your Code}
 Now let's talk about what to do when your program is having trouble.
 
-A program can go wrong in any number of ways. Maybe it won't run at all.  A look at the error messages, especially the first line or two of the error messages, usually leads you to the problem, which will be somewhere in the syntax, and its solution, which will be to use the correct syntax (e.g., matching braces or ending each statement with a semicolon).
+A program can go wrong in any number of ways. Maybe it won't run at all. A look at the error messages, especially the first line or two of the error messages, usually leads you to the problem, which will be somewhere in the syntax, and its solution, which will be to use the correct syntax (e.g., matching braces or ending each statement with a semicolon).
 
 Your program may run but not behave as you planned. Then you have some problem with the logic of the program. Perhaps at some point, you've zigged when you should have zagged, like adding instead of subtracting or using the assignment operator = when you meant to test for equality between two numbers with ==. Or, the problem could be that you just have a poor design to accomplish your task, and it's only when you actually try it out that the flaw becomes evident.
 
