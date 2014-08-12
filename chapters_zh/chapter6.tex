@@ -570,36 +570,35 @@ use strict;
 当编写Perl代码时，最后永远同时使用\verb|use strict;|和\verb|use warnings;|。
 \end{adjustwidth}
 
-\subsection{Fixing Bugs with Comments and Print Statements}
-Sometimes you can identify misbehaving code by selectively commenting out sections of the program until you find the part that seems to cause the problem. You can also add \verb|print| statements at suspicious parts of a misbehaving program to check what certain variables are doing. Both of these are time-honored programming techniques, and they work well in almost any programming language.
+\subsection{使用注释和Print语句修复Bugs}
+有时，通过选择性的把程序的一部分注释掉，你就可以识别出表现异常的代码，最终找到出问题的那一部分。你也可以在有问题的程序的可以部分添加\verb|print|语句，来检查某个变量的行为。这些都是历史悠久的编程技术，在几乎所有的编程语言中都能很好的工作。
 
-Commenting out sections of code can be particularly helpful when the error messages that you get from Perl don't point you directly at the offending line. This happens occasionally. When it does happen you may, by trial and error, discover that commenting out a small section of code causes the error messages to go away; then you know where the error is occurring.
+把代码的一部分注释掉，这会非常有用，尤其是当你从Perl中得到的错误信息没有直接指出出问题的那行代码时，而这时有发生。当出现这种情况时，你可以通过不断的试验，发现当注释掉代码的一小部分时，错误信息消失了，这样你就知道是哪一部分出错了。
 
-Adding \verb|print| statements can also be a quick way to pinpoint a problem, especially if you already have some idea of where the problem is. As a novice programmer, however, you may find that using the Perl debugger is easier than adding \verb|print| statements. In the debugger, you can easily set \verb|print| statements at any line. For instance, the following debugger command says to print the values of \verb|$i| and \verb|$k| before line 48:
+通过添加\verb|print|语句，也可以很快查明问题所在，尤其是当你差不多已经知道是哪儿出问题时。然而，作为程序员菜鸟，你可能会发现使用Perl调试器要比添加\verb|print|语句更容易一些。在调试器中，你可以在任意行轻松得设置\verb|print|语句。比如，下面的调试器命令是要在48行之前打印出\verb|$i|和\verb|$k|的值：
 
 \begin{lstlisting}
 a 48 print "$i $k\n"
 \end{lstlisting}
 
-Once you learn how to do it, this method is generally faster and easier than editing the Perl program and adding \verb|print| statements by hand. Using this method is partly a matter of taste, since some extremely good Perl programmers prefer to do it the old-fashioned way, by adding \verb|print| statements. 
+一旦你学会了如何使用它，这种方法通常就会比手工编辑Perl程序来添加\verb|print|语句更加快捷和容易一些。使用这种方法部分是出于个人喜好的关系，因为有些极端的好的Perl程序员更加喜欢使用添加\verb|print|语句这种古典的方法。
 
-\subsection{The Perl Debugger}
-My favorite way to deal with nonobvious bugs in my programs is to use the Perl debugger. The problem with bugs in code is that once a program starts running, all you can see is the output; you can't see the steps a program is taking. The Perl debugger lets you examine your program in detail, step by step, and almost always can lead you quickly to the problem. You'll also find that it's easy to use with a little practice.
+\subsection{Perl调试器}
+处理程序中那些不是很明显的bugs使，我最喜欢的方法还是使用Perl调试器。对于代码中存在bugs的程序来说，问题在于一旦程序开始运行，你看到的所有内容就是它的输出了，你无法看到程序运行的具体步骤。Perl调试器可以让你一步一步仔细的检查程序，而这往往可以让你快速找到问题所在。你也会发现，仅需少许的练习，就可以轻松得使用它。
 
-There are situations the Perl debugger can't handle well: interacting processes that depend on timing considerations, for instance. The debugger can examine only one program at a time, and while examining, it stops the program, so timing considerations with other processes go right out the window.
+有些状况，Perl调试器也不能很好的应对，比如，依赖于时间的交互式的进程。调试器每次只能检查一个程序，在检查的过程中，它会把程序中断，这就使得它没法考虑依赖于时间的其他的进程了。
 
-For most purposes, the Perl debugger is a great, essential, programming tool. This section introduces its most important features. 
+对于大多数情况来说，Perl调试器都是强大、基本的编程工具。本小节将介绍它的最主要的特性。
 
-\subsubsection{A program with bugs}
-\autoref{exam:example6.4} has some bugs we can examine. It's supposed to take a sequence and two bases, and output everything from those two bases to the end of the sequence (if it can find them in the sequence). The two bases can be given as an argument, or if no argument is given, the program uses the bases TA by default.
+\subsubsection{有bugs的程序}
+\autoref{exam:example6.4}程序中有一些bugs，我们来对其进行检查。程序会处理一条序列和两个碱基，（如果它能够在序列中找到这两个碱基的话）就把从这两个碱基到序列末尾的所有内容都输出出来。这两个碱基可以以参数的形式传递给程序，如果不给参数的话，程序将默认使用TA这两个碱基。
 
-There is one new thing in \autoref{exam:example6.4}. The next statement affects the control flow in a loop. It immediately returns the control flow to the next iteration of the loop, skipping whatever else would have followed.  Also, you may want to recall \verb|$_|, which we discussed back in \autoref{exam:example5.5}
-in the context of a \verb|foreach| loop. 
+在\autoref{exam:example6.4}中有一个新的东西。\textit{next}语句会影响循环中的控制流，它会立即使程序流进入循环的下一个迭代，直接跳过后面所有的内容。此外，你还需要回忆一下\verb|$_|，在\autoref{exam:example5.5}的\verb|foreach|循环的相关内容中我们对它进行了讨论。
 
-\textbf{Example 6-4. A program with a bug or two}
+\textbf{例6-4：有一个或两个bug的程序}
 \lstinputlisting[label=exam:example6.4]{./scripts/example6-4.pl}
 
-Here's the output of two runs of \autoref{exam:example6.1}:
+下面是两次运行\autoref{exam:example6.1}的输出：
 
 \begin{lstlisting}[language=bash]
 $ perl example 6-4 AA
@@ -608,27 +607,27 @@ $ perl example 6-4
 TA
 \end{lstlisting}
 
-Huh? It should have printed out \verb|AAGGCGA| when called with the argument \verb|AA|, and \verb|TAAGGCGA| when called with no arguments. There must be a bug in this program. But, if you look it over, there isn't anything obviously wrong. It's time to fire up the debugger. What follows is an actual debugging session on \autoref{exam:example6.4}, interspersed with comments to explain what's happening and why. 
+嗯？当使用参数\verb|AA|调用程序时，应该输出\verb|AAGGCGA|，而没有参数运行程序时，应该输出\verb|TAAGGCGA|。在这个程序中肯定有一个bug。但是，如果你仔细检查这个程序，其中并没有什么明显的错误。是时候使用调试器了。接下来就针对\autoref{exam:example6.4}的真实的调试会话，其中穿插着解释发生了什么及其原因的注释。
 
-\subsubsection{How to start and stop the debugger}
-The debugger runs interactively, and you control it from the keyboard.\footnote{You also can run it automatically to produce a trace of the program in a file.} The most common way to start it is by giving the \textit{-d} switch to Perl at the command line. Since you're using buggy \autoref{exam:example6.4} to demonstrate the debugger, here's how to start that program:
+\subsubsection{如何启动和停止调试器}
+调试器以交互的形式运行，你可以通过键盘控制它。\footnote{你也可以让它自动运行，把调试结果保存到文件中去。}启动调试器的最常用的方法，就是在命令行中给Perl添加\textit{-d}开关。既然使用有bug的\autoref{exam:example6.4}来演示调试器的使用，下面就是启动程序的方式：
 
 \begin{lstlisting}[language=bash]
 perl -d example6-4
 \end{lstlisting}
 
-Alternatively, you could have added a \textit{-d} flag to the command interpreter:
+另外，你也可以给命令解释器添加\textit{-d}标志：
 
 \begin{lstlisting}[language=bash]
 #!/usr/bin/perl -d
 \end{lstlisting}
 
-On systems such as Unix and Linux where command interpretation works, this starts the debugger automatically.
+在类似Unix和Linux这种命令解释器起作用的系统上，这种写法会自动启动调试器。
 
-To stop the debugger, simply type \verb|q|.
+要停止调试器，输入\verb|q|即可。
 
-\subsubsection{Debugger command summary}
-First, let's try to find the bug in \autoref{exam:example6.4} when it's called with no arguments:
+\subsubsection{调试器命令总结}
+首先，让我们试着找找当不使用参数调用\autoref{exam:example6.4}时其中的bug吧：
 
 \begin{lstlisting}
 $ perl -d example6-4
@@ -643,7 +642,7 @@ main::(example6-4:11):    my $dna = 'CGACGTCTTCTAAGGCGA';
   DB<1> 
 \end{lstlisting}
 
-Let's stop right here at the beginning and look at a few things. After some messages, which may not mean a whole lot right now, you get the excellent information that the commands \verb|h| and \verb|h h| give more help. Let's try \verb|h h|:
+这是刚刚开始，让我们先停在这里，看看其中的一些东西。开始是一些信息，现在看来它们可能毫无意义，之后，就是一个非常棒的信息——使用命令\verb|h|和\verb|h h|可以获得更多的帮助。让我们试试\verb|h h|：
 
 \begin{lstlisting}
   DB<1> h h
@@ -673,18 +672,18 @@ For more help, type h cmd_letter, or run man perldebug for all docs.
   DB<2> 
 \end{lstlisting}
 
-It's a bit hard to read, but you have a concise summary of the debugger commands. You can also use the \verb|h| command, which gives several screens worth of information. The \verb=| h= command displays those several pages one at a time; the pipe at the beginning of a debugger command pipes the output through a pager, which typically advances a page when you hit the spacebar on your keyboard. You should try those out. Right now, however, let's focus on a few of the most useful commands. But remember that typing \verb|h command| can give you help about the command. 
+这有点不容易阅读，但是你看到了调试器命令的简要总结。你也可以使用\verb|h|命令，它会给出数屏的大量信息。\verb=| h=命令会逐页显示这些信息，一次只显示一页。调试器命令开头的管道会把输出传送给分页器，当你敲击键盘上的空格键时分页器通常会显示下一页。你最好尝试一下。但是现在，我们要把精力集中在少数几个最有用的命令上。但是别忘了，键入\verb|h|\textit{命令}会给你关于命令的帮助信息。
 
-\subsubsection{Stepping through statements with the debugger}
-Back to the immediate problem. When you started up the debugger, you saw that it stopped on the first line of real Perl code:
+\subsubsection{使用调试器逐步运行语句}
+言归正传。当你启动调试器后，你会看到它停止在真实的Perl代码的第一行上：
 
 \begin{lstlisting}
   main::(example6-4:11):    my $dna = 'CGACGTCTTCTAAGGCGA';
 \end{lstlisting}
 
-There's an important point about the debugger you should understand right away. It shows the line it's about to execute, not the line it just executed.
+现在，对于调试器，有重要的一点你需要理解：它显示的是将要执行的那一行，而不是已经执行的行。
 
-So really, \autoref{exam:example6.4} hasn't done anything yet. You can see from the command summary that \verb|p| tells the debugger to print out values. If you ask it to print the value of \verb|$dna|, you'll find:
+所以，实际上，\autoref{exam:example6.4}现在还什么事情也没有做。你从命令总结中可以看到，\verb|p|会让调试器打印出值。如果你想让它打印\verb|$dna|的值，你可以这么做：
 
 \begin{lstlisting}
   DB<2> p $dna
@@ -692,9 +691,9 @@ So really, \autoref{exam:example6.4} hasn't done anything yet. You can see from 
   DB<3> 
 \end{lstlisting}
 
-It didn't show anything because there's nothing to show; it hasn't even seen the variable \verb|$dna| yet. So you should execute the statement. There are two commands to use: \verb|n| or \verb|s| both execute the statement being displayed. (The difference is that \verb|n| or "next" skips the plunge into a subroutine call, treating it like a single statement; \verb|s| or "single step" enters a subroutine and single step you through that code as well.) Once you've given one of these commands, you can just hit Enter to repeat the same command.
+因为其中没有任何东西，所以它不会有什么显示，现在它还没有看到\verb|$dna|变量呢。所以你应该执行这个语句。有两个命令可以使用：\verb|n|和\verb|s|都可以执行显示的语句。（两者的区别在于：\verb|n|或“next”在子程序调用不会进入子程序，而把它看做一个单独的语句；而\verb|s|或“single step”会进入子程序，并且一步步运行它。）一旦你使用了其中的一个命令，你就可以敲击Enter键来重复同样的命令了。
 
-Since there aren't any subroutines, you needn't worry about choosing between \verb|n| and \verb|s|, so let's use n: 
+因为没有子程序，所以在选择\verb|n|和\verb|s|时不用左右为难，我们使用\verb|n|：
 
 \begin{lstlisting}
  DB<3> n
@@ -702,7 +701,7 @@ Since there aren't any subroutines, you needn't worry about choosing between \ve
    DB<3> 
 \end{lstlisting}
 
-This shows the next line (you can see the line numbers of the Perl program at the end of the prompt). If you wish to see more lines, the \verb|w| or "window" command will serve: 
+这会显示下一行（在提示符的末尾你可以看到程序的行号）。如果你想看更多的行，可以使用\verb|w|或者“window”命令：
 
 \begin{lstlisting}
   DB<3> w
@@ -719,9 +718,9 @@ This shows the next line (you can see the line numbers of the Perl program at th
   DB<3>
 \end{lstlisting}
 
-The current line—the line that will be executed next—is highlighted with an arrow (\verb|==>|).
+当前行——接下来将被执行的行——会以箭头（\verb|==>|）突出显示。
 
-The \verb|w| seems like a useful thing. Let's get more information about it with the help command \verb|h w|: 
+\verb|w|看起来是一个非常有用的命令。通过帮助命令\verb|h w|，让我们来看看它的更多信息吧。
 
 \begin{lstlisting}
   DB<3> h w
@@ -729,9 +728,9 @@ w [line]        List window around line.
   DB<4> 
 \end{lstlisting}
 
-Actually, there's more—hitting \verb|w| repeatedly keeps showing more of the program; a minus sign backs up a screen. But enough of that.
+实际上，不止这些——通过重复键入\verb|w|可以持续显示程序的更多代码，减号会上翻一屏。这些足够了。
 
-Now that \verb|$dna| has been declared and initialized, the program seems wrong on the first statement: 
+既然\verb|$dna|已经声明和初始化了，程序的第一个语句看起来出了一点错误：
 
 \begin{lstlisting}
   DB<4> p $dna
@@ -739,7 +738,7 @@ CGACGTCTTCTAAGGCGA
   DB<5> 
 \end{lstlisting}
 
-That's exactly what was expected. There's no bug, so let's continue examining the lines, printing out values here and there: 
+这正是我们所期望的。这里没有bug，所以让我们继续检查剩余的行，并把各种值打印出来：
 
 \begin{lstlisting}
   DB<5> n
@@ -780,7 +779,7 @@ A
   DB<9>
 \end{lstlisting}
 
-So far, everything is as expected; the default subsequence \verb|TA| is being used, and the \verb|$base1| and \verb|$base2| variables are set to \verb|T| and \verb|A|, the first and second bases of the subsequence. Let's continue:
+到现在为止，一切都和预期一样：使用的是默认子序列\verb|TA|，\verb|$base1|和\verb|$base2|变量也被设成了子程序的第一个碱基\verb|T|和第二个碱基\verb|A|。让我们继续：
 
 \begin{lstlisting}
   DB<9> n
@@ -792,9 +791,9 @@ C G A C G T C T T C T A A G G C G A
   DB<11> 
 \end{lstlisting}
 
-This shows a trick with Perl and printing arrays: normally they are printed without any spacing between the elements, but enclosing an array in double quotes in a \verb|print| statement causes it to be displayed with spaces between the elements.
+这里展示了一个Perl和打印数组的技巧：通常打印出来时元素之间没有空格，但是在\verb|print|语句中通过把数组包裹进双引号中会使元素以空格分隔的形式展示出来。
 
-Again, everything seems okay, and we're about to enter a loop. Let's look at the whole loop first: 
+一如既往，一切看起来都还正常，并且我们要进入循环了。先让我们看一下这整个的循环：
 
 \begin{lstlisting}
   DB<11> w
@@ -822,12 +821,12 @@ Again, everything seems okay, and we're about to enter a loop. Let's look at the
   DB<11>
 \end{lstlisting}
 
-Despite the few repeated lines resulting from the \verb|w| command, you can see the whole loop. Now you know something in here is going wrong: when you tested the program without giving it an argument, as it's running now, it took the default argument \verb|TA|, and so far it seemed okay. However, all it actually did in your test was to print out the \verb|TA| when it was supposed to print out everything in the string starting with the first occurrence of \verb|TA|. What's going wrong? 
+尽管\verb|w|命令的输出结果中有一些重复的行，你还是看到了整个的循环。现在你知道这里的某个地方出现了问题：就像现在运行的这样，当你不给参数测试程序时，它会使用默认参数\verb|TA|，到现在为止它看起来还是正常的。然而，在你的测试中，它本应该打印出从\verb|TA|第一次出现到最后的所有字符串，但实际上它却只打印出了\verb|TA|。哪里错了呢？
 
-\subsubsection{Setting breakpoints}
-To figure out what's wrong, you can set a breakpoint in your code. A \textit{breakpoint} is a spot in your program where you tell the debugger to stop execution so you can poke around in the code. The Perl debugger lets you set breakpoints in various ways. They let you run the program, stopping only to examine it when a statement with a breakpoint is reached. That way, you don't have to step through every line of code. (If you have 5,000 lines of code, and the error happens when you hit a line of code that's first used when you're reading the 12,000th line of input, you'll be happy about this feature.)
+\subsubsection{设置断点}
+要找出出错的地方，你可以在代码中设置断点。所谓\textit{断点}指的就是程序中的一个点，你告诉调试器在这个地方停止执行，这样你就可以在其附近检查代码了。Perl调试器允许你以多种方式设置断点。它们让你运行程序，只在语句到达断点的时候停止检查。通过这种方式，你就不用一步一步执行代码中的每一行了。（如果你有5000行的代码，而错误则发生在你读入输入的第12000行、敲击一行首次使用到的代码时，你会为有这样的特性而感到高兴。）
 
-Notice that the part of this loop that prints out the rest of the string, once the starting two bases have been found, is the \verb|if| block starting at line 40: 
+注意一旦发现起始的两个碱基、循环中打印输出剩余字符串的部分，就是开始于第40行的\verb|if|代码块：
 
 \begin{lstlisting}
 if ($receivingcommittment) {
@@ -836,9 +835,9 @@ if ($receivingcommittment) {
 }
 \end{lstlisting}
 
-Let's look at that \verb|$receivingcommittment| variable.
+让我们看看\verb|$receivingcommittment|变量。
 
-Here's one way to do this. Let's set a breakpoint at line 40. Type \verb|b 40| and then \verb|c| to continue, and the program proceeds until it hits line 40: 
+这里是实现的一种方法。我们在第40行设置断点。键入\verb|b 40|，然后键入\verb|c|继续，程序会持续运行直到它到达第40行：
 
 \begin{lstlisting}
   DB<11> b 40
@@ -849,16 +848,16 @@ C
   DB<12> 
 \end{lstlisting}
 
-The last command, \verb|p|, prints out the element from the \verb|@dna| array you reached in the \verb|foreach| loop. Since you didn't specify a variable for the loop, it used the default \verb|$_| variable. Many Perl commands such as \verb|print| or pattern matching operate on the default \verb|$_| variable if no other variable is given. (It's the cousin of the \verb|@_| default array subroutines used to hold their parameters.) So the \verb|p| debugger command shows that you're operating on C from the \verb|@dna| array, which is the first character.
+最后的命令\verb|p|，会打印输出\verb|foreach|循环到达的\verb|@dna|数组的那个元素。既然你并没有为循环指定特定的变量，那么它就使用默认的\verb|$_|变量。许多Perl命令，比如\verb|print|和模式匹配，在没有其他变量可用的情况下，会操作默认的\verb|$_|变量。（它是子程序用来存储参数的默认数组\verb|@_|的表亲。）所以\verb|p|这个调试器命令显示，你正在操作\verb|@dna|数组中的第一个字符C。
 
-All well and good. But it would be good to have the program break when the variable \verb|$receivingcommittment| has a change in its value, and then single step from there, to see why the program isn't printing out the rest of the string. Recall that this variable is the flag whose change tells the program to print the rest of the string. First let's delete all other breakpoints: 
+一切正常。但最好在变量\verb|$receivingcommittment|的值发生改变时，程序能够暂停，然后一步一步运行，看看为什么程序没有打印出剩余的字符串。回忆一下，这个变量是一个标志，它的改变会让程序打印出剩余的字符串。首先让我们删除所有其他的断点：
 
 \begin{lstlisting}
   DB<12> D
 Deleting all breakpoints...
 \end{lstlisting}
 
-You can "watch" the variable with \verb|W| like so: 
+你可以像这样使用\verb|W|来“watch”一下变量：
 
 \begin{lstlisting}
   DB<12> W $receivingcommittment
@@ -870,7 +869,7 @@ Debugged program terminated.  Use q to quit or R to restart,
   DB<13> 
 \end{lstlisting}
 
-Wait a minute! The \verb|W| command should indicate when \verb|$receivingcommittment| changes value. But when the program continued running with the \verb|c| command, it ran to the end, meaning that \verb|$receivingcommittment| never changed value. So let's start up the program again and break on the line that changes its value: 
+等一会！当\verb|$receivingcommittment|改变值时，\verb|W|命令应该有所显示。但是当使用\verb|c|命令继续运行程序时，它直接运行到了结尾，这意味着\verb|$receivingcommittment|的值从没有发生改变。所以让我们重新运行程序，并在改变值的那一行暂停一下：
 
 \begin{lstlisting}
   DB<13> R
@@ -904,26 +903,26 @@ main::(example6-4:49):          $previousbase = $_;
   DB<16> 
 \end{lstlisting}
 
-Huh? The code says it's assigning the variable a value of 1, but after you execute the code, with the \verb|n| and try to print out the value, it doesn't print anything.
+嗯?代码说它把1这个值赋给了变量，但是在你使用\verb|n|执行代码后，尝试打印出它的值时，并没有输出任何东西。
 
-If you stare harder at the program, you see that at line 66 you misspelled \verb|$receivingcommittment| as \verb|$recievingcommitment|. That explains everything; fix it and run it again:
+如果你仔细检查程序，会看到在第66行，你把\verb|$receivingcommittment|错误的拼写成了\verb|$recievingcommitment|。这就就是了所有的一切；修正它并重新运行一次：
 
 \begin{lstlisting}[language=bash]
 $ perl example6-4
 TAAGGCGA 
 \end{lstlisting}
 
-Success! 
+成功了！
 
-\subsubsection{Fixing another bug}
-Now, did that fix the other bug when you ran \autoref{exam:example6.4} with an argument?
+\subsubsection{修复另一个bug}
+现在，这修复了当你使用参数运行\autoref{exam:example6.4}时的其他bug吗？
 
 \begin{lstlisting}[language=bash]
 $ perl example6-4 AA
 GACGTCTTCTAAGGCGA
 \end{lstlisting}
 
-Again, huh? You expected \verb|AAGGCGA|. Can there be another bug in the program? Let's try the debugger again:
+又一次，嗯？你期望的是\verb|AAGGCGA|。在程序中是不是有另外一个bug？让我们再一次尝试一下调试器：
 
 \begin{lstlisting}
 $ perl -d example6-4 AA
@@ -962,11 +961,11 @@ main::(example6-4:28):	@dna = split ( '', $dna );
   DB<4> 
 \end{lstlisting}
 
-Okay, for some reason the \verb|$subsequence|, and therefore the \verb|$base1| and \verb|$base2| variables, are not getting set right. How come?
+好了，因为某种原因，\verb|$subsequence|、\verb|$base1|和\verb|$base2|变量都没有设置正确。为什么会这样呢？
 
-Check out line 19 where you declared a new \verb|my| variable in the block of the \verb|if| statement with the same name, \verb|$subsequence|. That's the variable you're setting, but it's disappearing as soon as the \verb|if| statement is over, because it's scoped in the block since it's a \verb|my| variable.
+检查一下第19行，在\verb|if|语句的代码块中，你使用同样的名字\verb|$subsequence|声明了一个新的\verb|my|变量。这就是你设置的变量，但在\verb|if|语句结束后它就消失了，因为它是一个\verb|my|变量，所以它的作用域只在代码块中。
 
-So again, you fix that problem by removing the \verb|my| declaration on line 19 and instead inserting an assignment \verb|$subsequence = $ARGV[0];| and run the program again:
+所以，又一次，通过删除第19行中的\verb|my|声明，把它改成\verb|$subsequence = $ARGV[0];|这个赋值，你修复了问题。重新运行程序：
 
 \begin{lstlisting}
 $ perl example6-4
@@ -975,12 +974,12 @@ $ perl example6-4 AA
 AAGGCGA 
 \end{lstlisting}
 
-Here, finally, is success.
+最后终于成功了。
 
-\subsubsection{use warnings; and use strict; redux}
-\autoref{exam:example6.4} was somewhat artificial. It turns out that these problems would have been reported easily if warnings had been used. So let's see an actual example of the benefits of \verb|use strict;| and \verb|use warnings;|, as discussed earlier in this chapter.
+\subsubsection{再说use warnings;和use strict;}
+\autoref{exam:example6.4}某种程度上是人为的。它证明，如果开启了警告模式，这些问题都可以轻松的被报告出来。所以，让我们来看一个实际的例子，它展示了\verb|use strict;|和\verb|use warnings;|的优势，就在本章前面讨论的那样。
 
-If you go back to the original \autoref{exam:example6.4} and add the \verb|use warnings;| directive near the top of the program, you get the following output: 
+如果你在最原始的\autoref{exam:example6.4}靠近程序顶部的地方添加上\verb|use warnings;|指令，你会得到下面的输出：
 
 \begin{lstlisting}
 $ perl example6-4 
@@ -988,7 +987,7 @@ Name "main::recievingcommitment" used only once: possible typo at example6-4 lin
 TA 
 \end{lstlisting}
 
-As you see, the warnings found the first bug immediately. They noticed there was a variable that was used only once, usually a sign of a misspelled variable. (I can never spell "receiving" or "commitment" properly.) So fix the misspelling at line 66, and run it again: 
+如你所见，警告模式立即发现了第一个bug。它注意到有一个变量只用了一次，这通常是变量拼写错误的标志。（我一直不能正确拼写“receiving”和“commitment”。）所以修正第66行的拼写错误，然后重新运行程序：
 
 \begin{lstlisting}
 $ perl example6-4 
@@ -1000,17 +999,17 @@ Use of uninitialized value in print at example6-4 line 46.
 GACGTCTTCTAAGGCGA   
 \end{lstlisting}
 
-So, the first bug is fixed. The second bug remains with a few warnings that are, perhaps, hard to understand. But focus on the first error message, and see that it complains about line 26:
+所以，第一个bug被修复了。第二个bug仍然存在，还有一些可能难以理解的警告信息。但是只关注第一个错误信息，看到它抱怨的是第26行：
 
 \begin{lstlisting}
 my $base2 = substr($subsequence, 1, 1);
 \end{lstlisting}
 
-So, there's something wrong with \verb|$subsequence|. Often, error messages will be off by one line, so it may well be that the error starts on the line before, the first time \verb|$subsequence| is operated on by the \textit{substr}. But that's not the case here.
+所以，\verb|$subsequence|有一些问题。通常，错误信息有一行的错位，所以很可能错误开始于之前的那一行，就是\verb|$subsequence|被\textit{substr}初次操作的那行。但此处并不是这种情况。
 
-Nonetheless, the warnings have pointed directly to the problem. In this case, you still have to take a little initiative; look back at the \verb|$subsequence| variable and notice the extra \verb|my| declaration within the \verb|if| block on line 20 that is preventing the variable from being initialized properly. Now this is not necessarily always a bug—declaring a variable scoped within a block and that overrides another variable of the same name that is outside the block. In fact, it's perfectly legal, so the programmers who wrote the warnings did not flag it as an obvious error. However, it seems to have caused a real problem here!
+不过，警告已经直接指出了问题的所在。在这个例子中，你还要主动一些，回去看看\verb|$subsequence|变量，注意到第20行\verb|if|代码块中多了一次\verb|my|声明，这导致变量不能够被正确的初始化。现在这并不一定总是一个bug——在代码块中声明一个有作用域的变量，覆盖掉代码块外面重名的另一个变量。事实上，这是完全合法的，所以编写警告的程序员并没有把它标识成一个明显的错误。然而，在这里它看起来却导致了一个真正的问题！
 
-One final point: if you go back to the original, buggy program, notice there's no \verb|use strict;| in the program. If you add that and run the program without arguments, you get the following: 
+最后一点：如果你回去看最原始的、有bug的程序，注意到在程序中没有\verb|use strict;|。如果你把它添加上，然后在无参数的情况下运行程序，你看得到如下信息：
 
 \begin{lstlisting}
 $ perl example6-4   
@@ -1018,62 +1017,62 @@ Global symbol "$recievingcommitment" requires explicit package name at example6-
 Execution of example6-4 aborted due to compilation errors.
 \end{lstlisting}
 
-Fixing the misspelled variable, and running the program with the argument, you get:
+修正拼错的变量，然后在有参数的情况下运行程序，你将得到：
 
 \begin{lstlisting}
 $ perl example6-4 AA
 GACGTCTTCTAAGGCGA
 \end{lstlisting}
 
-You can see that \verb|use strict;| didn't help for the other bug. Remember, it's best to employ both \verb|use strict;| and \verb|use warnings;|.
+你会看到\verb|use strict;|对修复另一个bug毫无帮助。记住，最好同时使用\verb|use strict;|和\verb|use warnings;|。
 
-\section{Exercises}
-\textcolor{red}{\textit{Exercise 6.1}}
+\section{练习题}
+\textcolor{red}{\textit{习题6.1}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine to concatenate two strings of DNA.
+编写一个子程序，把两个DNA字符串串联起来。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 6.2}}
+\textcolor{red}{\textit{习题6.2}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine to report the percentage of each nucleotide in DNA.  You've seen the plus operator \verb|+|. You will also want to use the divide operator \verb|/| and the multiply operator \verb|*|. Count the number of each nucleotide, divide by the total length of the DNA, then multiply by 100 to get the percentage. Your arguments should be the DNA and the nucleotide you want to report on. The \verb|int| function can be used to discard digits after the decimal point, if needed.
+编写一个子程序，报告DNA中每种核苷酸的百分比。你已经看到了加法操作符\verb|+|。你也会用到除法操作符\verb|/|和乘法操作符\verb|*|。计算每种核苷酸的数目，除以DNA的总长，然后乘以100就可以得到百分比了。你的参数应该是DNA和你想计算的核苷酸。如果需要的话，可以用\verb|int|函数来删除小数点后的数字。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 6.3}}
+\textcolor{red}{\textit{习题6.3}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine to prompt a user with any message, and collect the user's answer. The subroutine's argument should be the message, and the return value should be the (one-line) answer. 
+编写一个子程序，给用户一些提示信息，并收集用户的答案。子程序的参数应该是提示信息，而返回值应该是用户的（一行的）答案。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 6.4}}
+\textcolor{red}{\textit{习题6.4}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine to look for command-line arguments such as \verb|-help|, \verb|-h|, and \verb|--help|. Recall that command-line arguments appear in the \verb|@ARGV| array. Call your subroutine from a main program. If you give the program any of the named command-line arguments, when you pass them into the subroutine it should return a true value. If this is the case, have the program print out a help message in a \verb|$USAGE| variable and exit. 
+编写一个子程序，来查找\verb|-help|、\verb|-h|和\verb|--help|这样的命令行参数。回忆一下，命令行参数都在\verb|@ARGV|数组中。从主程序中调用你的子程序。如果你给出了任意可用的命令行参数，当你把它们传送到子程序中时，它应该返回一个真值。在这个例子中，可以让程序打印输出\verb|$USAGE|变量中的帮助信息，然后退出。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 6.5}}
+\textcolor{red}{\textit{习题6.5}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine to check if a file exists, is a regular file, and is nonzero in size. Use the \verb|file test| operators (See \autoref{chap:chapterab}). 
+编写一个子程序，来检查一下一个文件是否存在、是不是一个普通文件，是不是大小不为零。使用\verb|文件测试|操作符（参看\autoref{chap:chapterab}）。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 6.6}}
+\textcolor{red}{\textit{习题6.6}}
 \begin{adjustwidth}{1cm}{}
-Use Exercise 6.3 in a subroutine that keeps prompting until a valid file is entered by the user or until five attempts have failed. 
+在一个子程序中使用习题6.3，一直进行提示，直到用户输入一个有效的文件，或者已经进行了五次失败的尝试。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 6.7}}
+\textcolor{red}{\textit{习题6.7}}
 \begin{adjustwidth}{1cm}{}
-Write a module that contains subroutines that report various statistics on DNA sequences, for instance length, GC content, presence or absence of poly-T sequences (long stretches of mostly T's at the 5' (left) end of many \verb|$DNA| sequences), or other measures of interest. 
+编写一个包含子程序的模块，报告关于DNA序列的多种统计信息，比如它的长度、GC含量、有没有poly-T序列（许多\verb|$DNA|序列5'（左）端大多数是T的长的延伸），或者其他感兴趣的信息。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 6.8}}
+\textcolor{red}{\textit{习题6.8}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine to do something a biologist normally does. (Here's an opportunity to look around the lab and write a useful program!) 
+编写一个子程序，做一些生物学家通常做的事情。（这是在实验室中逛逛、写一个有用的程序的好机会！）
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 6.9}}
+\textcolor{red}{\textit{习题6.9}}
 \begin{adjustwidth}{1cm}{}
-Read the documentation about the debugger and become familiar with its use by applying it during your programming. 
+阅读调试器的文档，通过在你的程序中运行它来熟悉调试器的使用。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 6.10}}
+\textcolor{red}{\textit{习题6.10}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that alters an array of lines in a file. Use pass by reference for the array. Pass the subroutine a reference to the array, a regular expression, and a string to replace the regular expression. All the lines of the array should be altered by substituting the matches found for the regular expression by the replacement string.
+编写一个子程序，改变一个文件中存储在数组中的一些行。对于数组来说，通过引用的方式进行传递。给子程序传递数组的引用、一个正则表达式和一个替换正则表达式的字符串。数组中的所有行都应该通过正则表达式的查找，用替换字符串替换掉找到的匹配。
 \end{adjustwidth}

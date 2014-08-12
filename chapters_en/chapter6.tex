@@ -588,8 +588,7 @@ For most purposes, the Perl debugger is a great, essential, programming tool. Th
 \subsubsection{A program with bugs}
 \autoref{exam:example6.4} has some bugs we can examine. It's supposed to take a sequence and two bases, and output everything from those two bases to the end of the sequence (if it can find them in the sequence). The two bases can be given as an argument, or if no argument is given, the program uses the bases TA by default.
 
-There is one new thing in \autoref{exam:example6.4}. The next statement affects the control flow in a loop. It immediately returns the control flow to the next iteration of the loop, skipping whatever else would have followed.  Also, you may want to recall \verb|$_|, which we discussed back in \autoref{exam:example5.5}
-in the context of a \verb|foreach| loop. 
+There is one new thing in \autoref{exam:example6.4}. The \textit{next} statement affects the control flow in a loop. It immediately returns the control flow to the next iteration of the loop, skipping whatever else would have followed. Also, you may want to recall \verb|$_|, which we discussed back in \autoref{exam:example5.5} in the context of a \verb|foreach| loop. 
 
 \textbf{Example 6-4. A program with a bug or two}
 \lstinputlisting[label=exam:example6.4]{./scripts/example6-4.pl}
@@ -668,7 +667,7 @@ For more help, type h cmd_letter, or run man perldebug for all docs.
   DB<2> 
 \end{lstlisting}
 
-It's a bit hard to read, but you have a concise summary of the debugger commands. You can also use the \verb|h| command, which gives several screens worth of information. The \verb=| h= command displays those several pages one at a time; the pipe at the beginning of a debugger command pipes the output through a pager, which typically advances a page when you hit the spacebar on your keyboard. You should try those out. Right now, however, let's focus on a few of the most useful commands. But remember that typing \verb|h command| can give you help about the command. 
+It's a bit hard to read, but you have a concise summary of the debugger commands. You can also use the \verb|h| command, which gives several screens worth of information. The \verb=| h= command displays those several pages one at a time; the pipe at the beginning of a debugger command pipes the output through a pager, which typically advances a page when you hit the spacebar on your keyboard. You should try those out. Right now, however, let's focus on a few of the most useful commands. But remember that typing \verb|h| \textit{command} can give you help about the command. 
 
 \subsubsection{Stepping through statements with the debugger}
 Back to the immediate problem. When you started up the debugger, you saw that it stopped on the first line of real Perl code:
@@ -689,7 +688,7 @@ So really, \autoref{exam:example6.4} hasn't done anything yet. You can see from 
 
 It didn't show anything because there's nothing to show; it hasn't even seen the variable \verb|$dna| yet. So you should execute the statement. There are two commands to use: \verb|n| or \verb|s| both execute the statement being displayed. (The difference is that \verb|n| or "next" skips the plunge into a subroutine call, treating it like a single statement; \verb|s| or "single step" enters a subroutine and single step you through that code as well.) Once you've given one of these commands, you can just hit Enter to repeat the same command.
 
-Since there aren't any subroutines, you needn't worry about choosing between \verb|n| and \verb|s|, so let's use n: 
+Since there aren't any subroutines, you needn't worry about choosing between \verb|n| and \verb|s|, so let's use \verb|n|: 
 
 \begin{lstlisting}
  DB<3> n
@@ -1030,7 +1029,7 @@ Write a subroutine to concatenate two strings of DNA.
 
 \textcolor{red}{\textit{Exercise 6.2}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine to report the percentage of each nucleotide in DNA.  You've seen the plus operator \verb|+|. You will also want to use the divide operator \verb|/| and the multiply operator \verb|*|. Count the number of each nucleotide, divide by the total length of the DNA, then multiply by 100 to get the percentage. Your arguments should be the DNA and the nucleotide you want to report on. The \verb|int| function can be used to discard digits after the decimal point, if needed.
+Write a subroutine to report the percentage of each nucleotide in DNA. You've seen the plus operator \verb|+|. You will also want to use the divide operator \verb|/| and the multiply operator \verb|*|. Count the number of each nucleotide, divide by the total length of the DNA, then multiply by 100 to get the percentage. Your arguments should be the DNA and the nucleotide you want to report on. The \verb|int| function can be used to discard digits after the decimal point, if needed.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 6.3}}
