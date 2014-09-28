@@ -1,46 +1,46 @@
-\chapter{Mutations and Randomization}
+\chapter{突变和随机化}
 \label{chap:chapter7}
 \minitoc
 
-As every biologist knows, mutation is a fundamental topic in biology.  Mutations in DNA occur all the time in cells. Most of them don't affect the actions of proteins and are benign. Some of them do affect the proteins and may result in diseases such as cancer. Mutations can also lead to nonviable offspring that dies during development; occasionally they can lead to evolutionary change. Many cells have very complex mechanisms to repair mutations.
+正如每一个生物学家所知道的那样，突变是生物学中的一个基本主题。在细胞中，DNA上的突变时时刻刻都在发生着。绝大多数突变都不影响蛋白质行使功能，是良性的。也有一部分突变确实会影响到蛋白质，导致肿瘤等疾病的发生。突变也会造成后代无法存活，它们在发育过程中就会死亡；有时，突变也能导致进化的改变。许多细胞都有很复杂的机制，来对突变进行修复。
 
-Mutations in DNA can arise from radiation, chemical agents, replication errors, and other causes. We're going to model mutations as random events, using Perl's random number generator.
+DNA的突变可能来源于辐射、化学制剂、复制错误等原因。我们将使用Perl的随机数生成器，把突变看成随机化事件来对其进行建模。
 
-Randomization is a computer technique that crops up regularly in everyday programs, most commonly in cryptography, such as when you want to generate a hard-to-guess password. But it's also an important branch of algorithms: many of the fastest algorithms employ randomization.
+随机化是一种计算机技术，它经常会在日常使用的密码等程序中突然出现，比如你想生成一个不容易被猜到的密码。但随机化也是算法中的一个重要分支：许多最快的算法都用到了随机化。
 
-Using randomization, it's possible to simulate and investigate the mechanisms of mutations in DNA and their effect upon the biological activity of their associated proteins. Simulation is a powerful tool for studying systems and predicting what they will do; randomization allows you to better simulate the "ordered chaos" of a biological system. The ability to simulate mutations with computer programs can aid in the study of evolution, disease, and basic cellular processes such as division and DNA repair mechanisms. Computer models of cell development and function, now in their early stages, will become much more accurate and useful in coming years, and mutation is a basic biological mechanism these models will incorporate.
+使用随机化，可以来模拟和研究DNA突变的机制，以及突变对相关蛋白质生物活性的影响。模拟是研究系统和预测结果的一个强有力的工具，随机化让你可以更好地模拟生物系统中的“有序混沌”。使用计算机程序来模拟突变，这将有助于进化、疾病以及分裂和DNA修复机制等基本细胞过程的研究。细胞发育和功能的计算机模型，现在还在它们的早起阶段，在未来的几年中它将会更加精确且有用，而突变就是这些模型将要囊括在内的一个基本的生物学机制。
 
-From the standpoint of programming technique, as well as from the standpoint of modeling evolution, mutation, and disease, randomization is a powerful—and, luckily for us, easy-to-use—programming skill.
+从编程技术以及对进化、突变和疾病建模的立场来看，随机化是一个强大的编程技巧，而幸运的是，它非常容易使用。
 
-Here's a breakdown of what we will accomplish in this chapter:
+在本章中，我们将要完成以下内容：
 
 \begin{itemize}
-  \item Randomly select an index into an array and a position in a string: these are the basic tools for picking random locations in DNA (or other data)
-  \item Model mutation with random numbers by learning how to randomly select a nucleotide in DNA and then mutate it to some other (random) nucleotide
-  \item Use random numbers to generate DNA sequence data sets, which can be used to study the extent of randomness in actual genomes
-  \item Repeatedly mutate DNA to study the effect of mutations accumulating over time during evolution
+  \item 在数组中随机选取一个索引，在字符串中随机选取一个位置：这些是在DNA（或其他数据）中选取随机位置的基本工具
+  \item 使用随机数对突变进行建模，学习如何随机选取DNA中的一个核苷酸并把它突变成其他（随机）的核苷酸
+  \item 使用随机数来生成DNA序列数据集，这可以用来研究实际基因组的随机化程度
+  \item 重复突变DNA来研究在进化过程中突变随时间累积的影响
 \end{itemize}
 
-\section{Random Number Generators}
-A \textit{random number generator} is a subroutine you can call. For most practical purposes, you needn't worry about what's inside it. The values you get for random numbers on the computer differ somewhat from the values of real-world random events as measured, for example, by detecting nuclear decay events. Some computers actually have devices such as geiger counters attached so as to have a source of truly random events. But I'd be willing to bet your computer doesn't. What you have in place of a geiger counter, is an algorithm called a random number generator.
+\section{随机数生成器}
+\textit{随机数生成器}是你可以调用的一个子程序。对于大多数实践操作来说，你不需要知道它里面是什么。你从计算机中得到的随机数数值，和真实世界中测量到的随机事件有一定的差别，比如，检测的核衰变事件。有些计算机确实连接着盖革计数器等设备，这样就可以有一个真实随机事件的来源了。但我敢打赌，你的计算机上并没有这样的设备。你有的只是一个代替盖革计数器的算法，它就是随机数生成器。
 
-The numbers that are output by random number generators are not really random; they are thus called \textit{pseudo-random numbers}. A random number generator, being an algorithm, is predictable. A random number generator needs a seed, an input you can change to get a different series of (pseudo-)random numbers.
+随机数生成器输出的数字并不是真正随机的，因此它们被叫做\textit{伪随机数}。一个随机数生成器，作为一种算法，是可以被预测的。随机数生成器需要一个种子作为输入，通过改变种子，你可以得到一系列不同的（伪）随机数。
 
-The numbers from a random number generator give an even distribution of values. This is one of the most important characteristics of randomness and largely justifies the use of these algorithms where some amount of random behavior is desired.
+随机数生成器生成的结果给出的是数值的均匀分布，这是随机化最重要的特性之一，并且很大程度上也决定了要根据期望的随机范围的大小来调整算法的使用。
 
-The other "take-home message" about random number generators is that the seed you start them up with should itself be selected randomly. If you seed with the same number every time, you'll get the same sequence of "random numbers" every time as well. (Not very random!) Try to pick a seed that has some randomness in it, such as a number calculated from some computer event that changes haphazardly over time.\footnote{Even here, for critical applications, you're not out of the woods. Unless you pick your seeds carefully, hackers will figure out how you're picking them and crack your random numbers and therefore your passwords. The method used to generate seeds in this chapter, \verb=time|$$=, is crackable by dedicated hackers. A better choice is \verb=time() ^ ($$+<<15))=. If program security is important, you should consult the Perl documentation, and the \textit{Math::Random} and \textit{Math::TrulyRandom} modules from CPAN}
+对于随机数生成器来说，另一个要牢记在心的就是你初始化使用的种子本身也应该是随机选择的。如果你每次都使用同样的数字作为种子，那么每次你都将得到同样的“随机数字”序列。（这就并不随机了！）试着选一个具有随机性的种子，比如某些随时间任意改变的计算机事件计算出来的数字。\footnote{即使这样，对于紧要的用途来说，你还是没有跳出如来佛的五指山。除非你小心地选择种子，否则黑客还是可以猜出你是如何选择种子，从而破解你的随机数和密码。本章中使用的生成种子的方法，\verb=time|$$=，是可以被黑客中的“有志青年”所破解的。一个更好的选择是\verb=time() ^ ($$+<<15))=。如果程序安全非常重要的，你就应该好好查阅Perl的文档，以及CPAN中的\textit{Math::Random}和\textit{Math::TrulyRandom}模块。}
 
-In the examples that follow, I use a simple method for seed picking that's okay for most purposes. If you use random numbers for data encryption with critical privacy issues (such as patient records), you should read further into the Perl documentation about the several advanced options Perl provides for random number generation. In this book, I use a Perl method that is good enough for most purposes.
+在接下来的例子中，我使用一个简单的方法来挑选种子，这对于大多数用途来说都是没有问题的。如果你使用随机数对存在紧要的隐私问题的数据（比如病人的记录）进行加密，你应该进一步参阅Perl中关于Perl提供给随机数生成器的几个高级选项的文档。在本书中，我使用的方法对于大多数情况的用途来说都已经足够了。
 
-\section{A Program Using Randomization}
-\autoref{exam:example7.1} introduces randomization in the context of a simple program.  It randomly combines parts of sentences to construct a story. This isn't a bioinformatics program, but I've found that it's an effective way to learn the basics of randomization. You will learn how to randomly select elements from arrays, which you'll apply in the future examples that mutate DNA.
+\section{使用随机化的一个程序}
+\autoref{exam:example7.1}通过一个简单的程序介绍了随机化，它通过随机组合句子的片段来构造一个故事。这并不是一个生物信息学的程序，但是我发现这是学习随机化基础知识的一个有效的方法。你将学习如何从数组中随机选取一个元素，这会在后续突变DNA的程序实例中得到运用。
 
-The example declares a few arrays filled with parts of sentences, then randomizes their assembly into complete sentences. It's a trivial children's game; yet it teaches several programming points. 
+例子声明了几个包含句子片段的数组，然后把它们随机组合成完整的句子。这是一个微不足道的孩子的游戏，但它演示了一些编程要点。
 
-\textbf{Example 7-1. Children's game with random numbers}
+\textbf{例7-1：使用随机数的儿童游戏}
 \lstinputlisting[label=exam:example7.1]{./scripts/example7-1.pl}
 
-Here is some typical output from \autoref{exam:example7.1}:
+下面是\autoref{exam:example7.1}一些典型的输出：
 
 \begin{lstlisting}
 Joe and Moe jumped with Rebecca in New York City. Rebecca exploded Groucho in a dream. Mom ran to Harpo over the rainbow. TV giggled with Joe and Moe over the rainbow. Harpo exploded Joe and Moe at the beach. Robin Hood giggled with Harpo at the beach. 
@@ -52,106 +52,105 @@ Harpo put hot sauce into the orange juice of TV before dinner. Dad ran to Grouch
 Type "quit" to quit, or press Enter to continue: quit
 \end{lstlisting}
 
-The structure of the example is quite simple. After enforcing the
-declarations of variables, and turning on warnings, with:
+例子的结构非常简单。使用以下语句强制对变量进行声明并开启警告模式：
 
 \begin{lstlisting}
 use strict;
 use warnings;
 \end{lstlisting}
 
-the variables are declared, and the arrays are initialized with values. 
+之后，对变量进行声明，并使用值对数组进行初始化。
 
-\subsection{Seeding the Random Number Generator} 
-Next, the random number generator is seeded by a call to the built-in function \verb|srand|. It takes one argument, the seed for the random number generator discussed earlier. As mentioned, you have to give a different seed at this step to get a different series of random numbers. Try changing this statement to something like:
+\subsection{为随机数生成器设置种子} 
+接下来，通过调用内置函数\verb|srand|，为随机数生成器设置种子。它需要一个参数，就是前面讨论的随机数生成器的种子。如前所述，为了得到一系列不同的随机数，你必须使用不同的种子。尝试把它改成像这样的语句：
 
 \begin{lstlisting}
 srand(100);
 \end{lstlisting}
 
-and then run the program more than once. You'll get the same results each time.\footnote{The latest random number generators automatically change the series, so if this experiment doesn't work, you're probably using a very new random number generator. However, sometimes you want to repeat a series. Note that newer versions of Perl automatically give you a good seed if you call \verb|srand| like so: \verb|srand;|.} The seed you're using: 
-    
+然后，多次运行该程序。每次，你都会得到完全相同的结果。\footnote{最新的随机数生成器会自动更改随机数序列，所以如果该实验不成功，很有可能你在使用一个非常新的随机数生成器。然而，有时你想重复一个随机数序列。注意，如果你像\verb|srand;|这样调用\verb|srand|，更新版本的Perl会自动给你一个好的种子。}你使用的种子：
+
 \begin{lstlisting}
 time|$$ 
 \end{lstlisting}
-    
-is a calculation that returns a different seed each time.
-    
-\textit{time} returns a number representing the time, \textit{\$\$} returns a number representing the ID of the Perl program that's running (this typically changes each time you run the program), and | means bitwise OR and combines the bits of the two numbers (for details see the Perl documentation). There are other ways to pick a seed, but let's stick with this popular one.
 
-\subsection{Control Flow}
-The main loop of the program is a \verb|do-until| loop. These loops are handy when you want to do something (like print a little story) before taking any actions (like asking the user if he wants to continue) each time through the loop. The \verb|do-until| loop first executes the statements in the block and then performs a test to determine if it should repeat the statements in the block. Note that this is the reverse of the other types of loops you've seen that do the test first and then the block.
+每次都会计算返回不同的种子。
 
-Since the \verb|$story| variable is always being appended to, it needs to be emptied at the top of each loop. It's common to forget that variables that are increased in some way need to be reset at the correct spot, so watch for that in your programming. The clue is increasingly long strings or big numbers.
+\textit{time}返回代表时间的一个数，\textit{\$\$}返回代表运行的Perl程序的ID（每次你运行程序它都会改变）的一个数，而|表示位元的或运算，它把两个数的位组合起来（更多细节请参看Perl文档）。还有选取种子的其他方法，但就让我们使用最流行的这种方法吧。
 
-The \verb|for| loop contains the main work of the program. As you've seen before, this loop initializes a counter, performs a test, and then increments the counter at the end of the block.
+\subsection{控制流}
+程序中的主循环是\verb|do-until|循环。当你想在每次循环中采取任何行动（比如询问用户是否要继续）之前就做一些事情（比如打印出一个小故事）时，这种循环就非常方便了。\verb|do-until|循环首先执行代码块中的语句，然后进行测试，决定它是否应该重复执行代码块中的语句。注意，这和你以前见过的其他类型的循环正好相反，它们是先进行测试后执行代码块。
 
-\subsection{Making a Sentence}
-In \autoref{exam:example7.1}, note that the statement that makes a sentence stretches out over a few lines of code. It's a bit complicated, and it's the real work of the whole program, so there are comments attached to help read it. Notice that the statement has been carefully formatted so that it's neatly laid out over its eight lines. The variable names have been well chosen, so it's clear that you're making a sentence out of a noun, a verb, a noun, and a prepositional phrase.
+既然总是向\verb|$story|变量上附加内容，那就需要在每次循环的开始先把它清空。忘记需要在特定的地方把以某种形式递增的变量进行重置，这非常常见，所以在你编程时一定要留意这一点。线索就是不断增长的长字符串或大数字。
 
-However, even with all that, there are rather deeply nested expressions within the square brackets that specify the array positions, and it requires a bit of scrutiny to read this code. You will see that you're building a string out of sentence parts separated by spaces and ending with a period and a space. The string is built by several applications of the dot string concatenation operator. These have been placed at the beginning of each line to clarify the overall structure of the statement. 
+\verb|for|循环包含着程序的主要工作。就像你前面看到的那样，这个循环初始化了一个计数器，执行测试，并在代码块的最后对计数器进行递增。
 
-\subsection{Randomly Selecting an Element of an Array}
-Let's look closely at one of the sentence part selectors:
+\subsection{造句}
+在\autoref{exam:example7.1}中，注意造句用的语句蔓延了数行代码。这有一点点复杂，而这正是整个程序的真正内容，所以附加了一些注释帮助理解它。注意语句进行了精心的格式化，这样它就整洁德排列在了八行中。变量名也是进行选择的，这样这个过程就清晰了许多——你使用一个名词、一个动词、一个名词和一个介词短语进行造句。
+
+然而，即使是这样，在中括号中也有多层嵌套的表达式，它用来指定数组的位置，要理解这些代码你需要进行一点仔细的分析。你会看到，你用以空格分隔的句子片段构造了一个字符串，并用一个句点和空格将其结束。字符串是通过多次使用点字符串连接操作符构建出来的，这些点字符串连接操作符被放在了每一行的开头，这样就使得整个语句的结构清晰了许多。
+
+\subsection{随机选取数组的一个元素}
+让我们仔细看看其中一个语句成分选择器吧：
 
 \begin{lstlisting}
 $verbs[int(rand(scalar @verbs))] 
 \end{lstlisting}
 
-These kinds of nested braces need to be read and evaluated from the inside out. So the expression that's most deeply surrounded by braces is:
+对于这种多层嵌套的括号，要由内向外进行阅读和计算。所以包裹在括号最内层的表达式是：
 
 \begin{lstlisting}
 scalar @verbs
 \end{lstlisting}
 
-You see from the comments before the statement that the built-in function scalar returns the number of elements in an array. The array in question, \verb|@verbs|, has seven elements, so this expression returns 7.
+从语句前面的注释中你可以看到，内置函数\textit{scalar}返回数组元素的个数。例子中的数组\verb|@verbs|有七个元素，所以这个表达式返回7。
 
-So now you have:
+所以现在你得到的是：
 
 \begin{lstlisting}
 $verbs[int(rand(7))]
 \end{lstlisting}
 
-and the most deeply nested expression is now:
+而嵌套在最内层的表达式就成了：
 
 \begin{lstlisting}
 rand(7)
 \end{lstlisting}
 
-The helpful comments in the code before the statement remind you that this statement returns a (pseudo)random number greater than 0 and less than 7. This number is a floating-point number (decimal number with a fraction). Recall that an array with seven elements will number them from 0 to 6.
+代码中语句前帮助性的注释提醒你，这个语句返回一个大于0、小于7的（伪）随机数。这个数是一个\textit{浮点数}（有一个分数的十进制数）。回想一下，一个有七个元素的数组的元素索引是从0到6。
 
-So now you have something like this:
+所以现在你得到的类似于：
 
 \begin{lstlisting}
 $verbs[int(3.47429)] 
 \end{lstlisting}
 
-and you want to evaluate the expression:
+而你想要对这个表达式进行计算：
 
 \begin{lstlisting}
 int(3.47429) 
 \end{lstlisting}
 
-The int function discards the fractional part of a floating-point number and returns just the integer part, in this case 3.
+\textit{int}函数会丢掉浮点数的小数部分，仅返回它的整数部分，在这个例子中就是3。
 
-So you've come to the final step:
+所以你来到了最后的一步：
 
 \begin{lstlisting}
 $verbs[3]
 \end{lstlisting}
 
-which gives you the fourth element of the \verb|@verbs| array, as the comments have been kind enough to remind you. 
+这会给你\verb|@verbs|数组的第四个元素，注释中已经给你了足够的提示。
 
-\subsection{Formatting}
-To randomly select a verb, you call a few functions: 
+\subsection{格式化}
+为了随机选取一个动词，你调用了几个函数：
 
 \begin{description}
-  \item[\textcolor{red}{\textit{scalar}}] Determines the size of the array 
-  \item[\textcolor{red}{\textit{rand}}] Picks a random number in the range determined by the size of the array 
-  \item[\textcolor{red}{\textit{int}}] Transforms the floating-point number rand returns into the integer value you need for an array element 
+  \item[\textcolor{red}{\textit{scalar}}] 确定数组的大小
+  \item[\textcolor{red}{\textit{rand}}] 从数组大小决定的范围内选取一个随机数字
+  \item[\textcolor{red}{\textit{int}}] 变换浮点数，\textit{rand}返回用于数组元素的整数值
 \end{description}
 
-Several of these function calls are combined in one line using nested braces. Sometimes this produces hard-to-read code, and the gentle reader may be nodding his or her head vigorously at this unflattering characterization of the author's painstaking handiwork. You could try rewriting these lines, using additional temporary variables. For instance, you can say:
+使用嵌套的括号，这些函数调用被组合到了一行中。有时，这会生成难于阅读的代码，对于作者这种辛苦工作得来的成果，某些吹毛求疵的读者可能会直喊头疼，因为它们并不讨人喜欢。你可以使用一些额外的临时变量，试着重写这些行的代码。比如，你可以这样写：
 
 \begin{lstlisting}
 $verb_array_size = scalar @verbs;
@@ -160,52 +159,52 @@ $random_integer = int $random_floating_point;
 $verb = $verbs[$random_integer];
 \end{lstlisting}
 
-and repeat for the other parts of speech, finally building your sentence with a statement such as:
+并且，对其他造句部分也进行类似的改写，最后通过这样的语句你就可以构造出句子了：
 
 \begin{lstlisting}
 $sentence = "$subject $verb $object $prepositional_phrase. ";
 \end{lstlisting}
 
-It's a matter of style. You will make these kinds of choices all the time as you program. The choice of layout in \autoref{exam:example7.1} was based on a tradeoff between a desire to express the overall task clearly (which won) balanced against the difficulty of reading highly nested function calls (which lost). Another reason for this layout choice is that, in the programs that follow, you'll select random elements in arrays with some regularity, so you'll get used to seeing this particular nesting of calls. In fact, perhaps you should make a little subroutine out of this kind of call if you will do the same thing many times?
+这是风格的问题。当你编程时，你总是会进行类似的抉择。\autoref{exam:example7.1}中的排版风格是基于这样的得失权衡：既要把整个任务表达清晰（得），又要避免难于阅读的高度嵌套的函数调用（失）。使用这种排版的另一个原因就是，在后面的程序中，你经常需要从数组中随机选取一个元素，所以你将对这种特殊的函数调用的嵌套习以为常。事实上，如果你将要多次重复同样的事情，你可能会对这样的调用编写一个小的子程序。
 
-Readability is the most important thing here, as it is in most code. You have to be able to read and understand code, your own as well as the code of others, and that is usually more important than trying to achieve other laudable goals such as fastest speed, smallest amount of memory used, or shortest program. It's not always important, but usually it's best to write for readability first, then go back and try to goose up the speed (or whatever) if necessary. You can even leave the more readable code in there as comments, so whoever has to read the code can still get a clear idea of the program and how you went about improving the speed (or whatever). 
+就像在大多数代码中一样，易读性是这里最重要的因素。你必须要能够阅读和理解代码，不管是你自己的还是别人的代码，这通常都要比实现其他的动人的目标重要，比如最快的速度、使用最少的内存以及最简练的程序。它并不总是很重要，但通常来说最好先把它写的易读一些，之后如果需要的话再返回去尝试提高其速度（或者其他）。你甚至可以把更加易读的代码作为注释写在那儿，这样阅读代码的人就能够对程序以及你是如何提高程序速度（或者其他）的有一个清晰的理解。
 
-\subsection{Another Way to Calculate the Random Position}
-Perl often has several ways to accomplish a task. the following is an alternate way to write this random number selection; it uses the same function calls but without the parentheses:
+\subsection{计算随机位置的另一种方法}
+Perl通常有不同的方法来完成同一个任务。下面就是编写这个随机数选择的另一种方法；它使用的同样的函数调用，但是没有使用小括号：
 
 \begin{lstlisting}
 $verbs[int rand scalar @verbs]
 \end{lstlisting}
 
-This chaining of functions, each of which takes one argument, is common in Perl. To evaluate the expression, Perl first takes \verb|@verbs| as an argument to \textit{scalar}, which returns the size of the array. Then it takes that value as an argument to \verb|rand|, which returns a floating-point number from \verb|0| to less than the size of the array. It then uses that floating-point number as an argument to int, which returns the greatest integer less than the floating-point number. In other words, it calculates the same number to be used as the subscript for the array \verb|@verbs|.
+这种函数链在Perl中很常见，其中的每一个函数都需要一个参数。要计算表达式，Perl首先把\verb|@verbs|作为\textit{scalar}的参数，这会返回数组的大小。然后它把得到的值作为\verb|rand|的参数，这会返回一个大于\verb|0|、小于数组大小的浮点数。然后，它把浮点数作为\textit{int}的参数，这会返回小于浮点数的最大整数。换句话说，它计算的数字和用于数组\verb|@verbs|的下标是完全一样的。
 
-Why does Perl allow this? Because such calculations are very frequent, and, in the spirit of "Let the computer do the work," Perl designer Larry Wall decided to save you (and himself) the bother of typing and matching all those parentheses.
+为什么Perl允许这样呢？因为这样的计算非常频繁，并且，根据”让计算机干活“的精神，Perl的设计者拉里$\textbullet$沃尔决定让你（以及他自己）免于键入这些括号并使其配对的烦恼。
 
-Having gone that far, Larry decided it'd be easy to add even more. You can eliminate the \textit{scalar} and the \textit{int} function calls and use:
+已经走了这么远了，拉里决定为了简单还要再进一步。你可以省略\textit{scalar}和\textit{int}函数的调用，直接使用：
 
 \begin{lstlisting}
 $verbs[rand @verbs]
 \end{lstlisting}
 
-What's going on here? Since \textit{rand} already expects a scalar value, it evaluates \verb|@verbs| in a scalar context, which simply returns the size of the array. Larry cleverly designed array subscripts (which, of course, are always integer values) to automatically take just the integer part of a floating-point value if it was given as a subscript; so, out with the \textit{int}. 
+这里发生了什么？既然\textit{rand}已经期望一个标量值，它就会把\verb|@verbs|放在一个标量上下文中，也就是简单的返回数组的大小。拉里聪明的设计了数组的下标（当然，它总是整数值），这样当需要下标时，会自动提取浮点数值的整数部分，所以就不需要\textit{int}了。
 
-\section{A Program to Simulate DNA Mutation}
-  \autoref{exam:example7.1} gave you the tools you'll need to mutate DNA. In the following examples, you'll represent DNA, as usual, by a string made out of the alphabet A, C, G, and T. You'll randomly select positions in the string and then use the substr function to alter the DNA.
+\section{模拟DNA突变的程序}
+\autoref{exam:example7.1}给你了突变DNA时需要的工具。在接下来的例子中，你将照常使用由字母A、C、G和T构成的字符串来表示DNA。你将在字符串中随机选取位置，然后使用\textit{substr}函数来改变DNA。
 
-This time, let's go about things a little differently and first compose some of the useful subroutines you'll need before showing the whole program. 
+这次，让我们换一种思路，在给出整个程序之前，首先来编写一些将要使用到的子程序。
 
-\subsection{Pseudocode Design}
-Starting with simple pseudocode, here's a design for a subroutine that mutates a random position in DNA to a random nucleotide:
+\subsection{伪代码设计}
+从简单的伪代码开始，这是把DNA中一个随机位置突变成一个随机核苷酸的子程序的设计：
 
 \begin{enumerate}
-  \item Select a random position in the string of DNA.
-  \item Choose a random nucleotide.
-  \item Substitute the random nucleotide into the random position in the DNA.
+  \item 选取DNA字符串中一个随机的位置。
+  \item 选择一个随机的核苷酸。
+  \item 把DNA随机位置替换成随机的核苷酸。
 \end{enumerate}
 
-This seems short and to the point. So you decide to make each of the first two sentences into a subroutine. 
-\subsubsection{Select a random position in a string}
-How can you randomly select a position in a string? Recall that the built-in function \textit{length} returns the length of a string. Also recall that positions in strings are numbered from \verb|0| to \verb|length-1|, just like positions in arrays. So you can use the same general idea as in \autoref{exam:example7.1}, and make a subroutine: 
+这看上去简洁且直指要害，所以你决定把前两句分别写成子程序。
+\subsubsection{在字符串中选取一个随机位置}
+怎样才能在一个字符串中随机选取一个位置呢？回忆一下，内置函数\textit{length}返回的就是字符串的长度，此外，字符串中的位置是从\verb|0|到\verb|length-1|进行编号的，就像数组中的位置一样。所以你可以使用和\autoref{exam:example7.1}一样的通用策略，编写成子程序：
 
 \begin{lstlisting}
 # randomposition
@@ -226,9 +225,9 @@ sub randomposition {
 }
 \end{lstlisting}
 
-\textit{randomposition} is really a short function, if you don't count the comments. It's just like the idea in \autoref{exam:example7.1} to select a random array element.
+如果不计算注释的话，\textit{randomposition}实际上是一个简短的函数。这和\autoref{exam:example7.1}中选取一个随机的数组元素的想法是一样的。
 
-Of course, if you were really writing this code, you'd make a little test to see if your subroutine worked:
+当然，如果你亲自编写这段代码，需要进行一点测试，来看看这个子程序能不能工作：
 
 \begin{lstlisting}
 #!/usr/bin/perl -w
@@ -252,23 +251,22 @@ sub randomposition {
 }
 \end{lstlisting}
 
-Here's some representative output of the test (your results should
-vary):
+下面是测试的一些典型输出（你的结果可能会有所不同）：
 
 \begin{lstlisting}
 28 26 20 1 29 7 1 27 2 24 8 1 23 7 13 14 2 12 13 27 
 \end{lstlisting}
 
-Notice the new look of the \verb|for| loop:
+注意\verb|for|循环的新的写法：
 
 \begin{lstlisting}
 for (my $i=0 ; $i < 20 ; ++$i ) {
 \end{lstlisting}
 
-This shows how you can localize the counter variables (in this case, \verb|$i|) to the loop by declaring them with \verb|my| inside the \verb|for| loop.
+这里演示了你可以在\verb|for|循环中使用\verb|my|对计数器变量（在这个例子中就是\verb|$i|）进行声明，从而使其进入循环。
 
-\subsubsection{Choose a random nucleotide}
-Next, let's write a subroutine that randomly chooses one of the four nucleotides: 
+\subsubsection{选择一个随机的核苷酸}
+接下来，让我们写一个子程序，从四个核苷酸中随机选取一个：
 
 \begin{lstlisting}
 # randomnucleotide
@@ -288,9 +286,9 @@ sub randomnucleotide {
 }
 \end{lstlisting}
 
-Again, this subroutine is short and sweet. (Most useful subroutines are; although writing a short subroutine is no guarantee it will be useful.  In fact, you'll see in a bit how you can improve this one.)
+又一次，这个子程序简洁、悦目。（大多数有用的子程序都是这样的，尽管编写一个简短的子程序并不保证它是有用的。事实上，你将会看到还可以对这个子程序进行一点改进。）
 
-Let's test this one too:
+让我们也对它进行以下测试：
 
 \begin{lstlisting}
 #!/usr/bin/perl -w
@@ -315,14 +313,14 @@ sub randomnucleotide {
 }
 \end{lstlisting}
 
-Here's some typical output (it's random, of course, so there's a high probability your output will differ):
+下面是一些典型的输出（它是随机的，所以理所当然，有很大的可能性你的输出会与此不同）：
 
 \begin{lstlisting}
 C A A A A T T T T T A C A C T A A G G G 
 \end{lstlisting}
 
-\subsubsection{Place a random nucleotide into a random position}
-Now for the third and final subroutine, that actually does the mutation. Here's the code: 
+\subsubsection{把随机的核苷酸放到随机的位置}
+现在轮到第三个、也是最后一个子程序了，它要进行实际的突变。下面是代码：
 
 \begin{lstlisting}
 # mutate
@@ -351,14 +349,14 @@ sub mutate {
 }
 \end{lstlisting}
 
-Here, again, is a short program. As you look it over, notice that it's relatively easy to read and understand. You mutate by picking a random position then selecting a nucleotide at random and substituting that nucleotide at that position in the string. (If you've forgotten how \textit{substr} works, refer to \autoref{chap:chapterab} or other Perl documentation. If you're like me, you probably have to do that a lot, especially to get the order of the arguments right.)
+这里还是一个简短的程序。当你查看它时，会发现它阅读、理解起来都相对比较容易。通过选取一个随机的位置、随机的核苷酸，并把字符串中那个位置的核苷酸替换成那个随机的核苷酸，你实现了突变。（如果你忘记了\textit{substr}是如何使用的，可以参看\autoref{chap:chapterab}或者其他的Perl文档。如果你像我一样，你可能不得不多次查阅文档，尤其是要确保以正确的顺序使用参数。）
 
-There's a slightly different style used here for declaring variables.  Whereas you've been declaring them at the beginning of a program, here you're declaring each variable the first time it's used. There are pros and cons for each programming style. Having all the variables at the top of the program gives good organization and can help in reading; declaring them on-the-fly can seem like a more natural way to write. The choice is yours.
+这里使用的声明变量的风格有点不同。以前是在程序的开头声明变量，而这里则是在第一次使用变量的时候才对它们分别进行声明。每种编程风格都各有利弊。把所有变量放在程序的顶部是一种很好的组织形式，而且对阅读代码也有所帮助；而随用随声明在编写程序时看起来则是一种更加自然的方式。选择权在你手中。
 
-Also, notice how this subroutine is mostly built from other subroutines, with a little bit added. That has a lot to do with its readability. At this point, you may be thinking that you've actually decomposed the problem pretty well, and the pieces are fairly easy to build and, in the end, they fit together well. But do they? 
+此外，注意这个子程序的大部分是如何基于其他的子程序构建起来的，仅仅需要添加一点代码。这使得代码的易读性大大提高。此时，你可能会觉得你已经把任务进行了很好的分解，并且每一个小部分都比较容易完成，而最后它们也能很好的在一起协作。但真是这样的吗？
 
-\subsection{Improving the Design}
-You're about to pat yourself on the back for writing the program so quickly, but you notice something. You keep having to declare that pesky \verb|@nucleotides| array and then pass it in to the \textit{randomnucleotide} subroutine. But the only place you use the array is inside the \textit{randomnucleotide} subroutine. So why not change your design a little? Here's a new try: 
+\subsection{改进设计}
+你可能会对自己这么快就编写完程序而颇感自豪，但你注意到了一些事情。你总是要声明讨厌的\verb|@nucleotides|数组变量，然后把它传递给\textit{randomnucleotide}子程序。但你使用这个数组的唯一地方只在\textit{randomnucleotide}子程序的内部。所以为什么不把设计改变一下呢？下面是一个新的尝试：
 
 \begin{lstlisting}
 # randomnucleotide
@@ -377,13 +375,13 @@ sub randomnucleotide {
 }
 \end{lstlisting}
 
-Notice that this function now has no arguments. It's called like so:
+注意这个函数现在没有参数了，要像这样调用它：
 
 \begin{lstlisting}
 $randomnucleotide = randomnucleotide( );
 \end{lstlisting}
 
-It's asking for a random element from a very specific set. Of course, you're always thinking, and you say, "It'd be handy to have a subroutine that randomly selects an element from any array. I might not need it right now, but I bet I'll need it soon!" So you define two subroutines instead of one: 
+它从一个特定的数据集中选取一个随机的元素。当然，你总是在思考，并且会说“要是有一个从任意数组中随机选取一个元素的子程序该会多方便呀。我可能现在并不需要它，但我敢打赌很快我就会需要这样的子程序！”所以，你定义了两个子程序，而不是一个：
 
 \begin{lstlisting}
 # randomnucleotide
@@ -416,15 +414,15 @@ sub randomelement {
 }
 \end{lstlisting}
 
-Look back and notice that you didn't have to change your subroutine mutate; just the internal workings of \textit{randomnucleotide} changed, not its behavior. 
+回头看一下，你会注意到并不需要更改\textit{mutate}子程序，改变的只是\textit{randomnucleotide}的内部构造，而不是它的行为。
 
-\subsection{Combining the Subroutines to Simulate Mutation}
-Now you've got all your ducks in place, so you write your main program as in \autoref{exam:example7.2} and see if your new subroutine works.
+\subsection{组合子程序来模拟突变}
+现在，所有的材料都到位了，所以你要编写如\autoref{exam:example7.2}一样的主程序，来看看新的子程序是否工作。
 
-\textbf{Example 7-2. Mutate DNA}
+\textbf{例7-2：突变DNA}
 \lstinputlisting[label=exam:example7.2]{./scripts/example7-2.pl}
 
-Here's some typical output from \autoref{exam:example7.2}:
+下面是\autoref{exam:example7.2}的一些典型的输出：
 
 \begin{lstlisting}
 Mutate DNA

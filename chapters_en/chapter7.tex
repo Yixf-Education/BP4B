@@ -33,9 +33,9 @@ The other "take-home message" about random number generators is that the seed yo
 In the examples that follow, I use a simple method for seed picking that's okay for most purposes. If you use random numbers for data encryption with critical privacy issues (such as patient records), you should read further into the Perl documentation about the several advanced options Perl provides for random number generation. In this book, I use a Perl method that is good enough for most purposes.
 
 \section{A Program Using Randomization}
-\autoref{exam:example7.1} introduces randomization in the context of a simple program.  It randomly combines parts of sentences to construct a story. This isn't a bioinformatics program, but I've found that it's an effective way to learn the basics of randomization. You will learn how to randomly select elements from arrays, which you'll apply in the future examples that mutate DNA.
+\autoref{exam:example7.1} introduces randomization in the context of a simple program. It randomly combines parts of sentences to construct a story. This isn't a bioinformatics program, but I've found that it's an effective way to learn the basics of randomization. You will learn how to randomly select elements from arrays, which you'll apply in the future examples that mutate DNA.
 
-The example declares a few arrays filled with parts of sentences, then randomizes their assembly into complete sentences. It's a trivial children's game; yet it teaches several programming points. 
+The example declares a few arrays filled with parts of sentences, then randomizes their assembly into complete sentences. It's a trivial children's game; yet it teaches several programming points.
 
 \textbf{Example 7-1. Children's game with random numbers}
 \lstinputlisting[label=exam:example7.1]{./scripts/example7-1.pl}
@@ -52,8 +52,7 @@ Harpo put hot sauce into the orange juice of TV before dinner. Dad ran to Grouch
 Type "quit" to quit, or press Enter to continue: quit
 \end{lstlisting}
 
-The structure of the example is quite simple. After enforcing the
-declarations of variables, and turning on warnings, with:
+The structure of the example is quite simple. After enforcing the declarations of variables, and turning on warnings, with:
 
 \begin{lstlisting}
 use strict;
@@ -70,13 +69,13 @@ srand(100);
 \end{lstlisting}
 
 and then run the program more than once. You'll get the same results each time.\footnote{The latest random number generators automatically change the series, so if this experiment doesn't work, you're probably using a very new random number generator. However, sometimes you want to repeat a series. Note that newer versions of Perl automatically give you a good seed if you call \verb|srand| like so: \verb|srand;|.} The seed you're using: 
-    
+
 \begin{lstlisting}
 time|$$ 
 \end{lstlisting}
-    
+
 is a calculation that returns a different seed each time.
-    
+
 \textit{time} returns a number representing the time, \textit{\$\$} returns a number representing the ID of the Perl program that's running (this typically changes each time you run the program), and | means bitwise OR and combines the bits of the two numbers (for details see the Perl documentation). There are other ways to pick a seed, but let's stick with this popular one.
 
 \subsection{Control Flow}
@@ -104,7 +103,7 @@ These kinds of nested braces need to be read and evaluated from the inside out. 
 scalar @verbs
 \end{lstlisting}
 
-You see from the comments before the statement that the built-in function scalar returns the number of elements in an array. The array in question, \verb|@verbs|, has seven elements, so this expression returns 7.
+You see from the comments before the statement that the built-in function \textit{scalar} returns the number of elements in an array. The array in question, \verb|@verbs|, has seven elements, so this expression returns 7.
 
 So now you have:
 
@@ -118,7 +117,7 @@ and the most deeply nested expression is now:
 rand(7)
 \end{lstlisting}
 
-The helpful comments in the code before the statement remind you that this statement returns a (pseudo)random number greater than 0 and less than 7. This number is a floating-point number (decimal number with a fraction). Recall that an array with seven elements will number them from 0 to 6.
+The helpful comments in the code before the statement remind you that this statement returns a (pseudo)random number greater than 0 and less than 7. This number is a \textit{floating-point number} (decimal number with a fraction). Recall that an array with seven elements will number them from 0 to 6.
 
 So now you have something like this:
 
@@ -132,7 +131,7 @@ and you want to evaluate the expression:
 int(3.47429) 
 \end{lstlisting}
 
-The int function discards the fractional part of a floating-point number and returns just the integer part, in this case 3.
+The \textit{int} function discards the fractional part of a floating-point number and returns just the integer part, in this case 3.
 
 So you've come to the final step:
 
@@ -148,7 +147,7 @@ To randomly select a verb, you call a few functions:
 \begin{description}
   \item[\textcolor{red}{\textit{scalar}}] Determines the size of the array 
   \item[\textcolor{red}{\textit{rand}}] Picks a random number in the range determined by the size of the array 
-  \item[\textcolor{red}{\textit{int}}] Transforms the floating-point number rand returns into the integer value you need for an array element 
+  \item[\textcolor{red}{\textit{int}}] Transforms the floating-point number \textit{rand} returns into the integer value you need for an array element 
 \end{description}
 
 Several of these function calls are combined in one line using nested braces. Sometimes this produces hard-to-read code, and the gentle reader may be nodding his or her head vigorously at this unflattering characterization of the author's painstaking handiwork. You could try rewriting these lines, using additional temporary variables. For instance, you can say:
@@ -171,13 +170,13 @@ It's a matter of style. You will make these kinds of choices all the time as you
 Readability is the most important thing here, as it is in most code. You have to be able to read and understand code, your own as well as the code of others, and that is usually more important than trying to achieve other laudable goals such as fastest speed, smallest amount of memory used, or shortest program. It's not always important, but usually it's best to write for readability first, then go back and try to goose up the speed (or whatever) if necessary. You can even leave the more readable code in there as comments, so whoever has to read the code can still get a clear idea of the program and how you went about improving the speed (or whatever). 
 
 \subsection{Another Way to Calculate the Random Position}
-Perl often has several ways to accomplish a task. the following is an alternate way to write this random number selection; it uses the same function calls but without the parentheses:
+Perl often has several ways to accomplish a task. The following is an alternate way to write this random number selection; it uses the same function calls but without the parentheses:
 
 \begin{lstlisting}
 $verbs[int rand scalar @verbs]
 \end{lstlisting}
 
-This chaining of functions, each of which takes one argument, is common in Perl. To evaluate the expression, Perl first takes \verb|@verbs| as an argument to \textit{scalar}, which returns the size of the array. Then it takes that value as an argument to \verb|rand|, which returns a floating-point number from \verb|0| to less than the size of the array. It then uses that floating-point number as an argument to int, which returns the greatest integer less than the floating-point number. In other words, it calculates the same number to be used as the subscript for the array \verb|@verbs|.
+This chaining of functions, each of which takes one argument, is common in Perl. To evaluate the expression, Perl first takes \verb|@verbs| as an argument to \textit{scalar}, which returns the size of the array. Then it takes that value as an argument to \verb|rand|, which returns a floating-point number from \verb|0| to less than the size of the array. It then uses that floating-point number as an argument to \textit{int}, which returns the greatest integer less than the floating-point number. In other words, it calculates the same number to be used as the subscript for the array \verb|@verbs|.
 
 Why does Perl allow this? Because such calculations are very frequent, and, in the spirit of "Let the computer do the work," Perl designer Larry Wall decided to save you (and himself) the bother of typing and matching all those parentheses.
 
@@ -190,7 +189,7 @@ $verbs[rand @verbs]
 What's going on here? Since \textit{rand} already expects a scalar value, it evaluates \verb|@verbs| in a scalar context, which simply returns the size of the array. Larry cleverly designed array subscripts (which, of course, are always integer values) to automatically take just the integer part of a floating-point value if it was given as a subscript; so, out with the \textit{int}. 
 
 \section{A Program to Simulate DNA Mutation}
-  \autoref{exam:example7.1} gave you the tools you'll need to mutate DNA. In the following examples, you'll represent DNA, as usual, by a string made out of the alphabet A, C, G, and T. You'll randomly select positions in the string and then use the substr function to alter the DNA.
+\autoref{exam:example7.1} gave you the tools you'll need to mutate DNA. In the following examples, you'll represent DNA, as usual, by a string made out of the alphabet A, C, G, and T. You'll randomly select positions in the string and then use the \textit{substr} function to alter the DNA.
 
 This time, let's go about things a little differently and first compose some of the useful subroutines you'll need before showing the whole program. 
 
@@ -252,8 +251,7 @@ sub randomposition {
 }
 \end{lstlisting}
 
-Here's some representative output of the test (your results should
-vary):
+Here's some representative output of the test (your results should vary):
 
 \begin{lstlisting}
 28 26 20 1 29 7 1 27 2 24 8 1 23 7 13 14 2 12 13 27 
@@ -353,7 +351,7 @@ sub mutate {
 
 Here, again, is a short program. As you look it over, notice that it's relatively easy to read and understand. You mutate by picking a random position then selecting a nucleotide at random and substituting that nucleotide at that position in the string. (If you've forgotten how \textit{substr} works, refer to \autoref{chap:chapterab} or other Perl documentation. If you're like me, you probably have to do that a lot, especially to get the order of the arguments right.)
 
-There's a slightly different style used here for declaring variables.  Whereas you've been declaring them at the beginning of a program, here you're declaring each variable the first time it's used. There are pros and cons for each programming style. Having all the variables at the top of the program gives good organization and can help in reading; declaring them on-the-fly can seem like a more natural way to write. The choice is yours.
+There's a slightly different style used here for declaring variables. Whereas you've been declaring them at the beginning of a program, here you're declaring each variable the first time it's used. There are pros and cons for each programming style. Having all the variables at the top of the program gives good organization and can help in reading; declaring them on-the-fly can seem like a more natural way to write. The choice is yours.
 
 Also, notice how this subroutine is mostly built from other subroutines, with a little bit added. That has a lot to do with its readability. At this point, you may be thinking that you've actually decomposed the problem pretty well, and the pieces are fairly easy to build and, in the end, they fit together well. But do they? 
 
@@ -416,7 +414,7 @@ sub randomelement {
 }
 \end{lstlisting}
 
-Look back and notice that you didn't have to change your subroutine mutate; just the internal workings of \textit{randomnucleotide} changed, not its behavior. 
+Look back and notice that you didn't have to change your subroutine \textit{mutate}; just the internal workings of \textit{randomnucleotide} changed, not its behavior. 
 
 \subsection{Combining the Subroutines to Simulate Mutation}
 Now you've got all your ducks in place, so you write your main program as in \autoref{exam:example7.2} and see if your new subroutine works.
