@@ -1,29 +1,29 @@
-\chapter{The Genetic Code}
+\chapter{遗传密码}
 \label{chap:chapter8}
 \minitoc
 
-Up to this point we've used Perl to search for motifs, simulate DNA mutations, generate random sequences, and transcribe DNA to RNA. These are all important activities, and they serve as a good introduction to the computational techniques you can use to study biological systems.
+到现在为止，我们已经使用Perl进行了基序的查找、模拟DNA突变、生成随机序列，以及把DNA转录成RNA。这些都是非常重要的主题，它们可以作为你在研究生物学系统过程中使用到的计算技术的好的入门指引。
 
-In this chapter, we'll write Perl programs to simulate how the genetic code directs the translation of DNA into protein. I will start by introducing the hash datatype. Then, after a brief discussion of how different data structures (hashes, arrays, and databases) can store and access experimental information, we will write a program to translate DNA to protein. We'll also continue exploring regular expressions and write code to handle FASTA files.
+在本章中，我们将编写Perl程序，来模拟遗传密码是如何指导DNA翻译成蛋白质的。开始我先介绍散列这种数据类型。之后，在对不同的数据结构（散列、数组和数据库）如何对实验信息存取进行简要的讨论后，我们将编写一个程序，来吧DNA翻译成蛋白质。我们也将继续探讨正则表达式，并编写处理FASTA文件的代码。
 
-\section{Hashes}
-There are three main datatypes in Perl. You've already seen two: scalar variables and arrays. Now we'll start to use the third: \textit{hashes} (also called associative arrays).
+\section{散列}
+在Perl中有三种主要的数据类型。你已经学习了其中的两种：标量变量和数组。现在，我们将开始学习第三种：\textit{散列}（也叫做关联数组）。
 
-A hash provides very fast lookup of the value associated with a key. As an example, say you have a hash called \verb|%english_dictionary|. (Yes, hashes start with the percent sign.) If you want to look up the definition of the word "recreant," you say:
+散列提供了与键相关联的值的快速查找。举个例子，比如说你有一个叫做\verb|%english_dictionary|的散列。（是的，散列以百分号起始。）如果你想查找单词“recreant”的定义，可以这样：
 
 \begin{lstlisting}
 $definition = $english_dictionary{'recreant'};
 \end{lstlisting}
 
-The scalar \verb|'recreant'| is the key, and the scalar definition that's returned is the value. As you see from this example, hashes (like arrays) change their leading character to a dollar sign when you access a single element, because the value returned from a hash lookup is a scalar value. You can tell a hash lookup from an array element by the type of braces they use: arrays use square brackets [ ]; hashes use curly braces { }.
+标量\verb|'recreant'|是键，返回的标量定义是值。就像你在这个例子中看到的这样，当你访问单个元素时，散列（就像数组那样）把起始的字符换成了美元符号，因为散列查找返回的值是一个标量值。通过它们使用的括号类型，你可以把散列查找和数组元素区分开来：数组使用中括号[ ]，而散列使用大括号{ }。
 
-If you want to assign a value to a key, it's similarly an easy, single statement:
+如果你想给键赋值，只需要一个类似的简单语句：
 
 \begin{lstlisting}
 $english_dictionary{'recreant'} = "One who calls out in surrender.";
 \end{lstlisting}
 
-Also, if you want to initialize a hash with some key-value pairs, it's done much like initializing arrays, but every pair becomes a key-value: 
+此外，如果你想用一些键值对初始化一个散列，方法类似于初始化数组，不同的是每一对都成了键-值对：
 
 \begin{lstlisting}
 %classification = (
@@ -33,7 +33,7 @@ Also, if you want to initialize a hash with some key-value pairs, it's done much
 );
 \end{lstlisting}
 
-which initializes the key \verb|'dog'| with the value \verb|'mammal'|, and so on. There's another way of writing this, which shows what's happening a little more clearly. The following does exactly the same thing as the preceding code, while showing the key-value relationship more clearly: 
+它用值\verb|'mammal'|对键\verb|'dog'|进行了初始化，依此类推。还有另一种书写方法，可以使其含义更加清晰一些。下面这些代码所做的事情和前面的代码完全一样，但把键-值的关系表现的更加明确一些：
 
 \begin{lstlisting}
 %classification = (
@@ -43,57 +43,57 @@ which initializes the key \verb|'dog'| with the value \verb|'mammal'|, and so on
 );
 \end{lstlisting}
 
-You can get an array of all the keys of a hash:
+你可以得到散列的所有键构成的数组：
 
 \begin{lstlisting}
 @keys  = keys %my_hash;
 \end{lstlisting}
 
-You can get an array of all the values of a hash:
+你可以得到散列的所有值构成的数组：
 
 \begin{lstlisting}
 @values  = values %my_hash;
 \end{lstlisting}
 
-You use hashes in lots of different situations, especially when your data is in the form of key-value or you need to look up the value of a key fast. For instance, later in this chapter, we'll develop programs that use hashes to retrieve information about a gene. The gene name is the key; the information about the gene is the value of that key. Mathematically, a Perl hash always represents a finite function.
+在许多不同的情形下你都会用到散列，尤其是当你的数据以键-值形式存在时，或者你需要快速查找到某个键的值时。举个例子，在本章的后面部分，我们将编写程序，使用散列来提取一个基因的信息。基因的名字就是键，关于基因的信息就是键的值。从数学上来讲，一个Perl散列表示的永远是一个有穷函数。
 
-The name "hash" comes from something called a hash function, which practically any book on algorithms will define, if you've a mind to look it up. Let's skip the details of how they work under the hood and just talk about their behavior. 
+“散列”这个名字来源于散列函数，如果你留心去寻找，几乎关于算法的任何一本书中都会对它进行定义。让我们跳过它们深层次的工作细节，只讨论它们的表现。
 
-\section{Data Structures and Algorithms for Biology}
-Biologists explore biological data and try to figure out how to do things with it based on its existing structure in living systems.  Bioinformatics is often used to model that existing structure as closely as possible. (Bear with me; I'm speaking in generalities!)
+\section{生物学的数据结构和算法}
+生物学家研究生物学数据，并且试图阐明在生命系统中基于它的存在结构是如何发挥功能的。生物信息学常被用来尽可能的对这样的存在结构进行建模。（不要太咬文嚼字了，我只是概括而言的！）
 
-Bioinformatics also can take a slightly different approach. It thinks about what it wants to do with the data and then tries to figure out how to organize it to accomplish that goal. In other words, it tries to produce an algorithm by representing the data in a convenient data structure.
+生物信息学也会采取略有不同的方案。它会考虑对于这些数据可以做什么，然后尝试去阐明如何对它们进行组织才能实现目标。换句话说，通过以一种方便的数据结构来表征数据，它会尝试去产生一种算法。
 
-Now that you've got the three datatypes of Perl in hand—namely scalars, arrays, and hashes—it's time to take a look at these interrelated topics of algorithms and data structures. We've already talked about algorithms in \autoref{chap:chapter3}. The present discussion highlights the importance of the organization of the data for algorithms, in other words, the data structures for the algorithm.
+既然你已经学习了Perl中的三种数据类型，就是标量、数组和散列，现在是时候来看一下与算法和数据结构相关的主题了。在\autoref{chap:chapter3}中，我们已经讨论了算法。现在讨论的重点就是算法中数据组织形式的重要性，换言之，就是算法中的数据结构。
 
-The most important point here is that different algorithms often require different data structures. 
+此处最为关键的一点是，不同的算法通常需要不同的数据结构。
 
-\subsection{A Gene Expression Database}
-Let's consider a typical problem. Say you're studying an organism that has a total of about 30,000 genes. (Yep, you're right, it's human.) Say you're looking at a type of cell that's never been well characterized under certain interesting environmental conditions, and you are determining, for each gene, whether it's being expressed.\footnote{For the nonbiologists: a gene is expressed when it is transcribed into RNA, so that a protein can be made from it.} You have a nice microarray facility that has given you the expression information for that cell. Now, for each gene, you need to look up whether it's expressed in the cell. You have to put this look-up capability on your web site, so visitors who read your results in your upcoming paper can find the expression data for the genes.
+\subsection{基因表达数据库}
+让我们考虑一个典型问题。假设你在研究一种生物，它总共大约有30,000个基因。（是的，没错，这就是人类。）假设你正在研究一种类型的细胞，在某个特定的环境条件下它还没有被深入研究过，你想知道，对于每一个基因来说，它是否表达了。\footnote{对于非生物学家：当一个基因转录成RNA后，就可以进一步翻译出蛋白质了，就说这个基因表达了。}你有一个很好的芯片设备，它把那个细胞的表达信息都告诉你了。现在，对于每一个基因，你要去查找一下看看在细胞中它是否表达了。你必须在你的网站上实现这种查找功能，这样在你即将发表的文章中看到你结果的访问者就可以找到基因的表达数据了。
 
-There are several ways to proceed. Let's look at a few alternatives as a short and gentle introduction to the art and science of algorithms and data structures. 
+有许多不同的方法可以实现。让我们看一下几个不同的实现方法，作为对算法和数据结构的艺术和科学的简洁的入门介绍。
 
-What is your data? For simplicity, let's say you have the names for all the genes in the organism and a number for the expressed genes indicating the level of the expression in your experiment; the unexpressed genes have the number 0.
+你的数据是什么？为简单起见，假设你有这个生物所有基因的名字，以及在你的实验中表示表达水平的基因的表达数值。所有未表达的基因的表达数值都是0。
 
-\subsection{Gene Expression Data Using Unsorted Arrays}
-Now let's suppose you want to know if the genes were expressed, but not the expression levels, and you want to solve this programming problem using arrays. After all, you are somewhat familiar with arrays by this point. How do you proceed?
+\subsection{使用未排序数组的基因表达数据}
+现在，假设你想指导基因是否表达了，而不是具体的表达水平，并且你想使用数组来解决这个编程问题。毕竟，现在你已经对数组非常熟悉了。你该怎么做呢？
 
-You might store in the array only the names of the genes that are being expressed and discard the other gene names. Say there were 8,000 expressed genes. Then, for any query, the answer requires looking through the array and comparing the query with each gene in the array until either you find it or get to the end of the array without finding it.
+你可能只在数组中存储那些表达基因的基因名，而丢弃其他的基因名。假如有8,000个表达基因。之后，要进行任何查询，只需要遍历数组，把查询的基因名和数组中的每一个基因名进行比较，直到你找到它或者没有找到它但已经到达了数组的末尾。
 
-That works, but there are problems. Mainly, it's kind of slow. This isn't bad if you just do it now and then, but if you've got a lot of people hitting your web site asking questions about this new expression data, it can be a problem. On average, a lookup for an expressed gene requires looking through 4,000 gene names. A lookup for an unexpressed gene takes 8,000 comparisons.
+这样是可行的，但也存在问题。最主要的，它非常慢。如果你只是偶尔查询一下，这并不是问题，但如果有许多人访问你的网站对这套新的表达数据进行查询，问题就大了。平均来说，查找一个表达基因需要遍历4,000个基因名字，而查找一个未表达的基因则需要进行8,000此比较。
 
-Also, if someone asked about a gene missing from your study, you couldn't respond, since you discarded the unexpressed gene names. The query gives a negative response, not an error message saying the gene being searched for isn't part of your experiment. This might even be a false negative if the query gene that wasn't part of your study actually is expressed in the cell type (but you just missed it). You'd prefer it if your program would report to the user that no gene by that name was studied.
+此外，如果某个人查找的是你的研究中没有的一个基因，因为你丢弃了所有未表达基因的基因名，所以你就没法对其进行回应。查询给出的结果是没有找到这个基因，而不是说要查询的基因并不在你的实验结果中的错误信息。如果要查询的基因虽然并不在你的研究结果中，但却在这类细胞中表达（你刚好错过了它），那这个查询就是一个假阴性了。你可能更希望遇到这种情况时，你的程序可以报告给用户，说那个名字的基因并没有在实验中被研究。
 
-So you decide to keep all 30,000 genes in the array. (Of course, now a search will be slower.) But how to distinguish the expressed from the unexpressed genes? You can load each gene's name into the array and then append the expression measurement after the name of each gene. Then you will definitely know if a gene is missing from your experiment.
+所以你打算把30,000个基因都存储到数组中。（当然，现在进行查找会更慢一些。）但是，如何把表达基因和未表达基因区分开来呢？你可以把每个基因的名字都存储到数组中，并且把表达测量值附加到每个基因名的后面，然后你就可以准确无误的知道某个基因是不是在你的实验中并不存在了。
 
-However, the program is still a bit slow. You still have to search through the entire array until you find the gene or determine that it wasn't studied. You may find it right away if it's the first element in the array, or you may have to wait until the last element. On average, you have to search through half of the array. Plus, you have to compare the name of the searched-for gene with the names of the genes in the array one by one. It will average 15,000 comparisons per query: slow.  (Actually, on a modern computer, not too horribly slow, really, but I'm making a point. These sorts of things do add up with a program that runs too slowly.)
+然而，这个程序仍然有点慢。你仍然不得不去遍历整个数组，直到你找到那个基因或者确定它并没有被研究为止。如果它是数组中的第一个元素，你立马就可找到它，否则你可能不得不等到它遍历到数组的最后一个元素。平均来说，你将不得不遍历一半的数组。另外，你还不得不把需要查找的基因名和数组中的基因名一个一个进行比较。对于每次查询来说，平均都要进行15,000次的比较，这非常慢。（实际上，在现代的计算机上，这其实也并不是慢的可怕。但是我想指出这一点，这样的东西确实意味着一个运行很慢的程序。）
 
-Another problem is that you're now keeping two values in one scalar: the gene name and the expression measurement. To do anything with this data, you have to also separate the gene name from the measurement of the expression of the gene.
+另外一个问题就是，在一个标量中你存储了两个值：基因名和表达测量值。处理这样的数据，你必须还要把基因名和基因的表达测量值分割开来。
 
-Despite these drawbacks, this method will work. Now, let's think about alternatives. 
+虽然有这些缺点，但这种方法确实是可行的。现在，我们来讨论一下另外一种方法。
 
-\subsection{Gene Expression Data Using Sorted Arrays and Binary Search}
-You might try storing all the gene names in alphabetical order in the array and then use the following search technique. First, look at the middle element. (You can tell the size of the array, as we've seen, with the expression \verb|scalar @array|). If your gene name is before that middle element alphabetically, you ignore the second half of the array and pick the middle element of the remaining half of the array. You continue, at each step narrowing the search to half the previous number of elements, until you find a match or discover there is none. Here it is in pseudocode: 
+\subsection{使用排序数组和折半查找的基因表达数据}
+你可能尝试把所有的基因名按照字母顺序排序后存储在数组中，然后使用下面这种查找技术。首先，看一下中间的元素。（就像我们已经看到的，使用\verb|scalar @array|表达式你可以得到数组的大小）。按照字母顺序，如果你的基因名排在中间元素的前面，你就可以忽略数组的后半部分了，并找到数组剩余的前半部分的中间元素。如此循环往复，每一步都可以把查找范围缩小到前一步元素数目的一半，直到最终找到对应的匹配，或者发现根本不存在。下面是用伪代码进行实现：
 
 \begin{lstlisting}
 Given a sorted array, and an element:
@@ -110,114 +110,116 @@ Until you find the element or discover it's not there,
 }
 \end{lstlisting}
 
-To compare two strings alphabetically in Perl, you use the \textit{cmp} operator, which returns 0 if the two strings are the same, -1 if they are in alphabetical order, and 1 if they are in reverse alphabetical order. For example, the following returns 0:
+在Perl中要按照字母顺序比较两个字符串，你可以使用\textit{cmp}操作符，如果两个字符串一样它会返回0，如果它们按照字母顺序排列就会返回-1，如果它们按照字母顺序的逆序排列就会返回1。比如，下面这个会返回0：
 
 \begin{lstlisting}
 'ZZZ' cmp 'ZZZ';
 \end{lstlisting}
 
-This returns -1:
+这个返回-1：
 
 \begin{lstlisting}
 'AAA' cmp 'ZZZ';
 \end{lstlisting}
 
-Finally, this returns 1:
+最后，这个返回1：
 
 \begin{lstlisting}
 'ZZZ' cmp 'AAA';
 \end{lstlisting}
 
-This algorithm is called a \textit{binary search}, and it considerably speeds up the process of searching in an array, for example, to search 30,000 genes takes only about 15 times through the loop, maximum. (As compared to 15,000 comparisons, average, for the unsorted array.) Of course, you also have to sort the list, which might take awhile. If you need to keep adding elements, you have to either insert them in the right place or add them to the end and sort the array again. All that inserting or sorting might slow things down considerably. But if you're just sorting it once and then doing lots of lookups, a binary search might be worth doing.
+这种算法叫做\textit{折半查找}，它会明显提高在数组中进行查找的速度。比如，要查找30,000个基因，最多只需要大约15次的循环即可。（和未排序数组平均进行15,000次的比较相比。）当然，你还必须要对列表进行排序，这也需要一定的时间。如果你需要不停地增加元素，你就不得不把它们插入倒合适的位置，或者把它们添加到末尾然后对整个数组进行重新排序。所有这样的插入或者排序都可能会相当的慢。但是，如果你仅需要进行一次排序，然后进行大量的查找，折半查找还是值得考虑的。
 
-While we're at it, let's look at how to sort an array. Here's how to sort an array of strings alphabetically:
+既然我们已经谈到了它，就来看看如何对数据进行排序。这是按照字母顺序对由字符串构成的数组进行排序的方法：
 
 \begin{lstlisting}
 @array = sort @array;
 \end{lstlisting}
 
-Here's how to sort an array of numbers in ascending order:
+这是以升序对由数字构成的数组进行排序的方法：
 
 \begin{lstlisting}
 @array = sort { $a <=> $b  } @array;
 \end{lstlisting}
 
-Many other kinds of sorting can be done, but these are the most common. For more details, see the Perl documentation for the \textit{sort} function. 
+还可以进行多种其他形式的排序，但这些是最常见的。更多的细节，可以参看Perl文档中关于\textit{sort}函数的说明。
 
-\subsection{Gene Expression Data Using Hashes}
-You can also use hashes to find a gene in your data. To do so, you can load the hash so that the keys are the gene names and the values are the expression measurement. Then a single call on the hash, with the name of the desired gene as a key, returns the results of the experiment for that gene, and you've got your answer. This process is also cleaner than storing the gene name and the expression result in one scalar string; here the key is a scalar, and the value is a separate scalar.
+\subsection{使用散列的基因表达数据}
+你还可以使用散列来查找你数据中的某个基因。要实现这一点，你需要以基因名作为键、以表达测量值作为值载入散列。然后对散列一个简单的调用，使用待查找基因的基因名作为键，就可以返回这个基因的实验结果，这就是你要的答案。与把基因名和表达值存储到一个标量字符串中相比，这个过程要清晰多了。在这里，键是一个标量，而值则是另外一个标量。
 
-Furthermore, due to how hashes are made, you get an answer back very quickly, because decent hashes don't have to search hard to find the value of a key. Using hashes is typically faster than binary searches.  Plus, you'd know if the gene being searched for was in the data, because you can explicitly ask if a hash value is defined by saying something like:
+此外，取决于散列的构建方式，你可以很快得到你要的答案，因为现在的散列都不需要进行繁琐的查找就可以找到某个键的值。使用散列通常要比折半查找快很多。此外，你还可以知道查找的基因在数据中是否存在，因为你可以明确询问某个散列值是否被定义了，就像这样：
 
 \begin{lstlisting}
 if( defined $myhash{'mykey'}  ) { ... }
 \end{lstlisting}
 
-Also, you'll get an error message if you have warnings turned on, and you refer to an undefined value.
+另外，如果你开启了警告模式，你会得到一个错误信息，因为你提到的是一个未定义的值。
 
-Another advantage of hashes over binary searching is that you can add or subtract elements to hashes without resorting the entire array.
+相比于折半查找，散列的另一个优势在于，你可以向散列中添加或删减元素，而不需要对整个数组进行重排序。
 
-Finally, because hashes are built into Perl as a basic datatype, they are easy to use, and you won't have to do much programming to accomplish your goal. It is usually the case that it's more important to save time writing a program then it is to save time running it. I mention this in \autoref{chap:chapter3}, but it's worth emphasizing. To a programmer, the lazy way is often the most efficient way: let the machine do the work!
+最后，因为散列是作为一个基本的数据类型内置在Perl中的，所以它们非常容易使用，而且你不需要进行太多的编程就可以实现你的目的。通常情况下，节省编程的时间要比节省程序运行的时间更加重要一些。我在\autoref{chap:chapter3}中提到过这一点，但此处还是有必要强调一下。对于一个程序员来说，懒惰的方法通常都是最有效的方法：让机器来干活吧！
 
-Don't get the idea that hashes are always the right way to go, however.  For instance, they don't store their elements in a sorted order, so if you need to look at the data that way, you have to explicitly sort it, like so:
+但是，不要想当然的认为散列永远都是最好的方法。比如，散列并不以排序的顺序存储其中的元素，所以如果你需要以排序的方式查看数据，就不得不对它进行明确的排序，就像这样：
 
 \begin{lstlisting}
 @sorted_keys = sort keys %my_hash;
 \end{lstlisting}
 
-This is do-able, but it can be a bit slow on a large array. (You could also sort the values, of course.)
+这样就可以了，但对于大的数组来说，它可能会有点慢。（当然，你也可以对值进行排序。）
 
-To conclude the discussion of data structures for our expression data example, here's an informal survey of the properties of some different data structures in Perl for searching, adding and deleting, and maintaining sorted order in a set of gene names: 
+对于这个表达数据的例子，我们总结以下关于数据结构的讨论，下面是对Perl中不同数据结构属性的信息描述，包括对基因名数据集进行的查找、添加和删减、以及保持排序顺序：
 
 \begin{itemize}
-  \item Use a hash if you just need to see if something is in a set and don't need to list the set in order.
-  \item A sorted array combined with a binary search algorithm will do if you need an ordered set and pretty fast lookup and don't need to add or subtract elements very often.
-  \item An array, in conjunction with the Perl functions \textit{push} and \textit{pop}, works well if you don't need to sort the elements but do need to quickly get at the most recently added element.
-  \item A Perl array with the functions \textit{push} and \textit{shift} will serve if you don't need the elements sorted but need to add elements. It's especially useful to always remove the "oldest" element (the element that has been in the array the longest).
+  \item 如果你只需要看看某个东西是不是在数据集中，并不需要按照顺序把它们罗列出来，那就使用散列。
+  \item 如果你需要一个排序的数据集以及相对快速的查找，而不需要频繁添加或删减元素，使用排序数组结合折半查找就可以了。
+  \item
+    如果你不需要对元素进行排序，但是需要快速找到最新添加的元素，使用数组并结合Perl函数\textit{push}和\textit{pop}就可以了。
+  \item
+    如果你不需要对元素进行排序，但是需要添加元素，使用Perl的数组结合函数\textit{push}和\textit{shift}就可以了。当总是需要移除”最老“的元素（待在数组中时间最长的元素）时，这种方案尤其有用。
 \end{itemize}
 
-For more information, see \autoref{chap:chapteraa} and especially \textit{Mastering Algorithms with Perl} (published by O'Reilly). 
+更多信息，可以参看\autoref{chap:chapteraa}和\textit{Mastering Algorithms with Perl}（O'Reilly出版），尤其是后者。
 
-\subsection{Relational Databases}
-Databases are programs that store and retrieve large amounts of data.  They provide the most common forms of datatypes to use in algorithms.  There are several popular databases. Some good ones that are free of charge (the best ones are very expensive), and Perl provides access to all the most popular ones. The Perl/DBI modules, for instance, provide convenient access to relational databases from Perl programs.
+\subsection{关系数据库}
+数据库是存储和访问海量数据的程序。它们提供了最常用的数据类型形式在算法中使用。有一些流行的数据库，其中一些非常好的还是免费的（最好的那些都非常昂贵），而Perl提供了对所有最流行数据库的访问方法。比如，Perl/DBI模块，提供了方便的方法，可以在Perl程序中对关系数据库进行访问。
 
-Most databases are called relational, which describes how they store data. Another common name for these types of databases is \textit{relational database management systems}, or RDMS. 
+大多数数据库都叫做关系型，这描述了它们存储数据的方式。这种类型数据库的另外一个比较常见的名字是\textit{关系数据库管理系统}，简称RDMS。
 
-Relational databases store data organized in tables. The data is usually entered and extracted with a query language called \textit{Structured Query Language}, or SQL, which is a fairly simple language for accessing the data in the tables and following links between the tables.
+关系数据库把数组组织成表格进行存储。数据通常通过一种查询语言进行输入和提取，它叫做\textit{结构化查询语言}，简称SQL。这是一种非常简单的语言，可以在表格中访问数据，同时跟随表格之间的链接。
 
-Relational databases are the most popular way to store and retrieve large amounts of data, but they do require a fair bit of learning.  Programming with relational databases is beyond the scope of this book, but if you end up doing a lot of programming with Perl, you'll find that knowing the basics of using a database is a valuable skill. See the discussion in \autoref{chap:chapter13}.
+关系数据库是存储和提取海量数据最流行的方法，但它们确实需要一定的学习。对关系数据库进行编程已经超出了本书讨论的范畴，但如果你最终需要使用Perl进行大量的编程，你会发现知道使用数据库的基础知识是一个宝贵的技能。参看\autoref{chap:chapter13}中的相关讨论。
 
-In particular, it's perfectly reasonable to store your gene expression data in a relational database and use that in your program to respond to queries made on your web site. 
+尤其是，把你的基因表达数据存储到一个关系数据库中，然后在程序中使用来对网站上的查询做出回应，这完全合情合理。
 
 \subsection{DBM}
-Perl has a simple, built-in way to store hash data, called \textit{database management} (DBM). It's simple to use: after starting up, it "ties" a hash to a file on your computer disk, so you can save a hash to reuse at a later date. This is, in effect, a simple (and very useful) database.  Apart from the initialization, you use it as you would any other hash.  You can store your genes and expression data in a DBM file and then use it as a hash. There's more on DBM in \autoref{chap:chapter10}.
+Perl有一个简单的、内置的方法来存储散列数据，叫做\textit{数据库管理器}（DBM）。它使用起来非常简单：在启动之后，它把一个散列“绑定”到计算机硬盘上的一个文件，这样你就可以散列保存下来以便日后对其进行重用了。这实际上是一个简单（且非常有用）的数据库。除了初始化以外，你就像使用散列一样使用它。你可以把你的基因和表达数据存储到一个DBM文件中，然后像散列一样使用它。在\autoref{chap:chapter10}中有关于DBM的更多讨论。
 
-\section{The Genetic Code}
-The genetic code is how a cell translates the information contained in its DNA into amino acids and then proteins, which do the real work in the cell.
+\section{遗传密码}
+遗传密码就是细胞把包含在DNA中的信息翻译成氨基酸的方式，氨基酸进而形成在细胞中真正发挥功能的蛋白质。
 
-\subsection{Background}
-Herein is a short introduction for the nonbiologists.
+\subsection{背景}
+此处是这对非生物学家的简短介绍。
 
-As stated earlier, DNA encodes the primary structure (i.e., the amino acid sequence) of proteins. DNA has four nucleotides, and proteins have 20 amino acids. The encoding works by taking each group of three nucleotides from the DNA and "translating" them to an amino acid or a stop signal. Each group of three nucleotides is called a \textit{codon}. We'll see in detail how this coding and translation works.
+如前所述，DNA编码蛋白质的一级结构（也就是氨基酸序列）。DNA有四种核苷酸，而蛋白质有20种氨基酸。编码的过程就是从DNA中找到三个核苷酸，把它们作为一组“翻译”成一个氨基酸或者终止信号。这样每一组的三个核苷酸叫做\textit{密码子}。稍后我们将会看到编码和翻译过程的细节。
 
-Actually, \textit{transcription} first uses DNA to make RNA, and then \textit{translation} uses RNA to make proteins. This is called the \textit{central dogma} of molecular biology. But in this course, I'll abbreviate the process and somewhat inaccurately call the entire process from DNA to protein "translation."
+事实上，\textit{转录}首先利用DNA制造RNA，然后\textit{翻译}再利用RNA制造蛋白质。这就是分子生物学的\textit{中心法则}。但是，在本课程中，我将把从DNA到蛋白质的整个过程不准确地简称为“翻译”。
 
-The reason for this cavalier distinction is that the whole business is much easier to simulate on computer using strings to represent the DNA, RNA, and proteins. In fact, as shown in \autoref{chap:chapter4}, transcribing DNA to RNA is very easy indeed. In your computer simulations, you can simply skip that step, since it's just a matter of changing one letter to another. (The actual process in the cell, of course, is much more complex.)
+之所以要进行这样的区分，是因为通过使用字符串来表征DNA、RNA和蛋白质，在计算机中可以非常简单的对整个过程进行模拟。事实上，就像在\autoref{chap:chapter4}中演示的那样，把DNA转录成RNA确实非常简单。在你的计算机模拟中，可以简单的跳过这一步，因为它只不过是把一个字母换成了另一个字母而已。（当然，细胞中的真实过程要复杂得多。）
 
-Note that with four kinds of bases, each group of three bases of DNA can represent as many as 4 x 4 x 4 = 64 possible amino acids. Since there are only 20 amino acids plus a stop signal, the genetic code has evolved some redundancy, so that some amino acids are represented by more than one codon. Every possible three bases of DNA—each codon—represents some amino acid (apart from the three codons that represent a stop signal). 
+注意，使用四种碱基，DNA的每三个碱基构成一组，这样可以表征4 x 4 x 4 = 64可能的氨基酸。因为只有20种氨基酸外加一个终止信号，遗传密码进化出了冗余性，所以某些氨基酸由不止一个密码子所表征。每一种可能的DNA三碱基——每一个密码子——都表征某个氨基酸（除了三个密码子表征终止信号外）。
 
-The chart in \autoref{fig:figure8.1} shows how the various bases combine to form amino acids. There are many interesting things to note about the genetic code. For our purposes, the most important is redundancy—the way more than one codon translates to the same amino acid. We'll program this using character classes and regular expressions, as you'll soon see.\footnote{Also note that the genetic code in Figure 8-1 is properly based on RNA, where uracil appears instead of thymine. In our programs, we're going to go directly from DNA to amino acids, so our codons will use thymine instead of uracil.}
+\autoref{fig:figure8.1}中的表格演示了不同的碱基是如何组合形成一个氨基酸的。对于遗传密码，有一些有趣的现象需要注意一下。对于我们的目的来说，最重要的就是冗余性——不止一个密码子翻译成同一个氨基酸。很快腻就会看到，我们将使用字符类和正则表达式对其进行编程。\footnote{此外，还要注意\autoref{fig:figure8.1}中的遗传密码是基于RNA的，尿嘧啶替代胸腺嘧啶出现在了其中。在我们的程序中，我们将直接把DNA翻译成氨基酸，所以我们的代码中将使用胸腺嘧啶而不是尿嘧啶。}
 
 \begin{figure}
   \centering
   \includegraphics[width=13cm]{figure8.1.png}
-  \caption{The genetic code}
+  \caption{遗传密码}
   \label{fig:figure8.1}
 \end{figure}
 
-The machinery of the cell actually starts at some point along the RNA and "reads" the sequences codon after codon, attaching the encoded amino acid to the end of the growing protein sequence. \autoref{exam:example8.1} simulates this, reading the string of DNA three bases at a time and concatenating the symbol for the encoded amino acid to the end of the growing protein string. In the cell, the process stops when a codon is encountered. 
+细胞中的翻译机器实际上会从RNA的某处起始，并“读取”一个接一个的密码子，把编码的氨基酸附加到不断增长的蛋白质序列的尾部。\autoref{exam:example8.1}模拟了这个过程，一次读取DNA字符串的三个碱基，然后把编码的氨基酸符号串联到不断增长的蛋白质字符串的尾部。在细胞中，当遇到三个终止密码子中的任意一个时，这个过程就会停止。
 
-\subsection{Translating Codons to Amino Acids}
+\subsection{把密码子翻译成氨基酸}
 The first task is to enable the following programs to do the translation from the three-nucleotide codons to the amino acids. This is the most important step in implementing the genetic code, which is the encoding of amino acids by three-nucleotide codons.
 
 Here's a subroutine that returns an amino acid (represented by a one-letter abbreviation) given a three-letter DNA codon: 

@@ -60,7 +60,7 @@ You use hashes in lots of different situations, especially when your data is in 
 The name "hash" comes from something called a hash function, which practically any book on algorithms will define, if you've a mind to look it up. Let's skip the details of how they work under the hood and just talk about their behavior. 
 
 \section{Data Structures and Algorithms for Biology}
-Biologists explore biological data and try to figure out how to do things with it based on its existing structure in living systems.  Bioinformatics is often used to model that existing structure as closely as possible. (Bear with me; I'm speaking in generalities!)
+Biologists explore biological data and try to figure out how to do things with it based on its existing structure in living systems. Bioinformatics is often used to model that existing structure as closely as possible. (Bear with me; I'm speaking in generalities!)
 
 Bioinformatics also can take a slightly different approach. It thinks about what it wants to do with the data and then tries to figure out how to organize it to accomplish that goal. In other words, it tries to produce an algorithm by representing the data in a convenient data structure.
 
@@ -147,7 +147,7 @@ Many other kinds of sorting can be done, but these are the most common. For more
 \subsection{Gene Expression Data Using Hashes}
 You can also use hashes to find a gene in your data. To do so, you can load the hash so that the keys are the gene names and the values are the expression measurement. Then a single call on the hash, with the name of the desired gene as a key, returns the results of the experiment for that gene, and you've got your answer. This process is also cleaner than storing the gene name and the expression result in one scalar string; here the key is a scalar, and the value is a separate scalar.
 
-Furthermore, due to how hashes are made, you get an answer back very quickly, because decent hashes don't have to search hard to find the value of a key. Using hashes is typically faster than binary searches.  Plus, you'd know if the gene being searched for was in the data, because you can explicitly ask if a hash value is defined by saying something like:
+Furthermore, due to how hashes are made, you get an answer back very quickly, because decent hashes don't have to search hard to find the value of a key. Using hashes is typically faster than binary searches. Plus, you'd know if the gene being searched for was in the data, because you can explicitly ask if a hash value is defined by saying something like:
 
 \begin{lstlisting}
 if( defined $myhash{'mykey'}  ) { ... }
@@ -159,7 +159,7 @@ Another advantage of hashes over binary searching is that you can add or subtrac
 
 Finally, because hashes are built into Perl as a basic datatype, they are easy to use, and you won't have to do much programming to accomplish your goal. It is usually the case that it's more important to save time writing a program then it is to save time running it. I mention this in \autoref{chap:chapter3}, but it's worth emphasizing. To a programmer, the lazy way is often the most efficient way: let the machine do the work!
 
-Don't get the idea that hashes are always the right way to go, however.  For instance, they don't store their elements in a sorted order, so if you need to look at the data that way, you have to explicitly sort it, like so:
+Don't get the idea that hashes are always the right way to go, however. For instance, they don't store their elements in a sorted order, so if you need to look at the data that way, you have to explicitly sort it, like so:
 
 \begin{lstlisting}
 @sorted_keys = sort keys %my_hash;
@@ -179,18 +179,18 @@ To conclude the discussion of data structures for our expression data example, h
 For more information, see \autoref{chap:chapteraa} and especially \textit{Mastering Algorithms with Perl} (published by O'Reilly). 
 
 \subsection{Relational Databases}
-Databases are programs that store and retrieve large amounts of data.  They provide the most common forms of datatypes to use in algorithms.  There are several popular databases. Some good ones that are free of charge (the best ones are very expensive), and Perl provides access to all the most popular ones. The Perl/DBI modules, for instance, provide convenient access to relational databases from Perl programs.
+Databases are programs that store and retrieve large amounts of data. They provide the most common forms of datatypes to use in algorithms. There are several popular databases. Some good ones that are free of charge (the best ones are very expensive), and Perl provides access to all the most popular ones. The Perl/DBI modules, for instance, provide convenient access to relational databases from Perl programs.
 
 Most databases are called relational, which describes how they store data. Another common name for these types of databases is \textit{relational database management systems}, or RDMS. 
 
 Relational databases store data organized in tables. The data is usually entered and extracted with a query language called \textit{Structured Query Language}, or SQL, which is a fairly simple language for accessing the data in the tables and following links between the tables.
 
-Relational databases are the most popular way to store and retrieve large amounts of data, but they do require a fair bit of learning.  Programming with relational databases is beyond the scope of this book, but if you end up doing a lot of programming with Perl, you'll find that knowing the basics of using a database is a valuable skill. See the discussion in \autoref{chap:chapter13}.
+Relational databases are the most popular way to store and retrieve large amounts of data, but they do require a fair bit of learning. Programming with relational databases is beyond the scope of this book, but if you end up doing a lot of programming with Perl, you'll find that knowing the basics of using a database is a valuable skill. See the discussion in \autoref{chap:chapter13}.
 
 In particular, it's perfectly reasonable to store your gene expression data in a relational database and use that in your program to respond to queries made on your web site. 
 
 \subsection{DBM}
-Perl has a simple, built-in way to store hash data, called \textit{database management} (DBM). It's simple to use: after starting up, it "ties" a hash to a file on your computer disk, so you can save a hash to reuse at a later date. This is, in effect, a simple (and very useful) database.  Apart from the initialization, you use it as you would any other hash.  You can store your genes and expression data in a DBM file and then use it as a hash. There's more on DBM in \autoref{chap:chapter10}.
+Perl has a simple, built-in way to store hash data, called \textit{database management} (DBM). It's simple to use: after starting up, it "ties" a hash to a file on your computer disk, so you can save a hash to reuse at a later date. This is, in effect, a simple (and very useful) database. Apart from the initialization, you use it as you would any other hash. You can store your genes and expression data in a DBM file and then use it as a hash. There's more on DBM in \autoref{chap:chapter10}.
 
 \section{The Genetic Code}
 The genetic code is how a cell translates the information contained in its DNA into amino acids and then proteins, which do the real work in the cell.
@@ -206,7 +206,7 @@ The reason for this cavalier distinction is that the whole business is much easi
 
 Note that with four kinds of bases, each group of three bases of DNA can represent as many as 4 x 4 x 4 = 64 possible amino acids. Since there are only 20 amino acids plus a stop signal, the genetic code has evolved some redundancy, so that some amino acids are represented by more than one codon. Every possible three bases of DNA—each codon—represents some amino acid (apart from the three codons that represent a stop signal). 
 
-The chart in \autoref{fig:figure8.1} shows how the various bases combine to form amino acids. There are many interesting things to note about the genetic code. For our purposes, the most important is redundancy—the way more than one codon translates to the same amino acid. We'll program this using character classes and regular expressions, as you'll soon see.\footnote{Also note that the genetic code in Figure 8-1 is properly based on RNA, where uracil appears instead of thymine. In our programs, we're going to go directly from DNA to amino acids, so our codons will use thymine instead of uracil.}
+The chart in \autoref{fig:figure8.1} shows how the various bases combine to form amino acids. There are many interesting things to note about the genetic code. For our purposes, the most important is redundancy—the way more than one codon translates to the same amino acid. We'll program this using character classes and regular expressions, as you'll soon see.\footnote{Also note that the genetic code in \autoref{fig:figure8.1} is properly based on RNA, where uracil appears instead of thymine. In our programs, we're going to go directly from DNA to amino acids, so our codons will use thymine instead of uracil.}
 
 \begin{figure}
   \centering
@@ -215,7 +215,7 @@ The chart in \autoref{fig:figure8.1} shows how the various bases combine to form
   \label{fig:figure8.1}
 \end{figure}
 
-The machinery of the cell actually starts at some point along the RNA and "reads" the sequences codon after codon, attaching the encoded amino acid to the end of the growing protein sequence. \autoref{exam:example8.1} simulates this, reading the string of DNA three bases at a time and concatenating the symbol for the encoded amino acid to the end of the growing protein string. In the cell, the process stops when a codon is encountered. 
+The machinery of the cell actually starts at some point along the RNA and "reads" the sequences codon after codon, attaching the encoded amino acid to the end of the growing protein sequence.  \autoref{exam:example8.1} simulates this, reading the string of DNA three bases at a time and concatenating the symbol for the encoded amino acid to the end of the growing protein string. In the cell, the process stops when one of the three stop codons is encountered. 
 
 \subsection{Translating Codons to Amino Acids}
 The first task is to enable the following programs to do the translation from the three-nucleotide codons to the amino acids. This is the most important step in implementing the genetic code, which is the encoding of amino acids by three-nucleotide codons.
