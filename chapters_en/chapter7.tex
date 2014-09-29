@@ -456,7 +456,7 @@ Before you scoff, you should know how important good graphical displays are for 
 \subsection{A Bug in Your Program?}
 To return to the business at hand, you may have noticed something when you looked over the output from \autoref{exam:example7.2}. Look at the first two lines of the "10 more successive mutations." They are exactly the same! Could it be that after patting yourself on the back and telling yourself what a good bit of work you'd done, you've discovered a bug?
 
-How can you track it down? You may want to step through the running of the program with the Perl debugger, which you saw in \autoref{chap:chapter6}. However, this time, you stop and think about your design instead. You're replacing the bases at random positions with randomly chosen bases. Aha!  Sometimes the base at the position you randomly choose is exactly the same as the base you randomly choose to plug into its place! You're replacing a base with itself on occasion!\footnote{How often? In DNA that's all one base, it's happening 1/4 of the time. In DNA that's equally populated with the four bases, it's happening...1/4 of the time!} 
+How can you track it down? You may want to step through the running of the program with the Perl debugger, which you saw in \autoref{chap:chapter6}. However, this time, you stop and think about your design instead. You're replacing the bases at random positions with randomly chosen bases. Aha! Sometimes the base at the position you randomly choose is exactly the same as the base you randomly choose to plug into its place! You're replacing a base with itself on occasion!\footnote{How often? In DNA that's all one base, it's happening 1/4 of the time. In DNA that's equally populated with the four bases, it's happening...1/4 of the time!} 
 
 Let's say you decide that behavior is not useful. At each successive mutation, you need to see one base change. How can you alter your code to ensure that? Let's start with some pseudocode for the \textit{mutate} subroutine: 
 
@@ -625,7 +625,7 @@ GGCCCATGACCAGCATCCAGACAGCA
 \end{lstlisting}
 
 \section{Analyzing DNA}
-In this final example dealing with randomization, you'll collect some statistics on DNA in order to answer the question: on average, what percentage of bases are the same between two random DNA sequences?  Although some simple mathematics can answer the question for you, the point of the program is to show that you now have the necessary programming ability to ask and answer questions about your DNA sequences. (If you were using real DNA, say a collection of some particular gene as it appears in several organisms in slightly different forms, the answer would be somewhat more interesting. You may want to try that later.)
+In this final example dealing with randomization, you'll collect some statistics on DNA in order to answer the question: on average, what percentage of bases are the same between two random DNA sequences? Although some simple mathematics can answer the question for you, the point of the program is to show that you now have the necessary programming ability to ask and answer questions about your DNA sequences. (If you were using real DNA, say a collection of some particular gene as it appears in several organisms in slightly different forms, the answer would be somewhat more interesting. You may want to try that later.)
 
 So let's generate a set of random DNA, all the same length, then ask the following question about the set. What's the average percentage of positions that are the same between pairs of DNA sequences in this set?
 
@@ -659,7 +659,7 @@ for each position from 1 to length(DNA)
 return count/length
 \end{lstlisting}
 
-The whole problem now seems eminently do-able. You also have to write the code that picks each pair of sequences, collects the results, and finally takes the mean of the results and report it as a percentage.  That can all go into the main program. \autoref{exam:example7.4} gives it a try, all in one shot. 
+The whole problem now seems eminently do-able. You also have to write the code that picks each pair of sequences, collects the results, and finally takes the mean of the results and report it as a percentage. That can all go into the main program. \autoref{exam:example7.4} gives it a try, all in one shot. 
 
 \textbf{Example 7-4. Calculate average \% identity between pairs of random DNA sequences}
 \lstinputlisting[label=exam:example7.4]{./scripts/example7-4.pl}

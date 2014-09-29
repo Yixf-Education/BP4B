@@ -449,16 +449,16 @@ AAAAAATAAGAAAACAACAAGACAAAAAAA
 AAAAAATTAGAAAACAACAAGACAAAAAAA
 \end{lstlisting}
 
-\autoref{exam:example7.2} was something of a programming challenge, but you end up with the satisfaction of seeing your (simulated) DNA mutate. How about writing a graphical display for this, so that every time a base gets mutated, it makes a little explosion and the color gets highlighted, so you can watch it happening in real-time?
+\autoref{exam:example7.2}在编程上有一定的挑战，但你最终看到（模拟的）DNA突变时还是会颇感欣慰。编写一个图形化的展示如何呢，这样每次碱基突变的时候，它都会有一个小的爆炸特效，而且颜色也高亮显示，这样你就可以实时观看突变的发生了。
 
-Before you scoff, you should know how important good graphical displays are for the success of most programs. This may be a trivial-sounding graphic, but if you can demonstrate the most common mutations in, for instance, the BRCA breast cancer genes in this way, it might be useful. 
+在你对此进行嘲笑之前，你应该知道好的图形化展示对于大多数程序的成功是多么重要。这听起来可能有点像是一个雕虫小技的图形，但是如果你能够演示大多数常见的突变，比如用这种方式演示BRCA乳腺癌基因，它就会非常有用。
 
-\subsection{A Bug in Your Program?}
-To return to the business at hand, you may have noticed something when you looked over the output from \autoref{exam:example7.2}. Look at the first two lines of the "10 more successive mutations." They are exactly the same! Could it be that after patting yourself on the back and telling yourself what a good bit of work you'd done, you've discovered a bug?
+\subsection{程序中的一个Bug？}
+言归正传，在查看\autoref{exam:example7.2}的输出时你可能已经注意到了某些事情。看一下"10 more successive mutations"部分的前两行吧，它们是完全一样的！在欣喜若狂、对自己能够完成如此漂亮的工作而颇感自豪之际，竟然发现了一个bug？
 
-How can you track it down? You may want to step through the running of the program with the Perl debugger, which you saw in \autoref{chap:chapter6}. However, this time, you stop and think about your design instead. You're replacing the bases at random positions with randomly chosen bases. Aha!  Sometimes the base at the position you randomly choose is exactly the same as the base you randomly choose to plug into its place! You're replacing a base with itself on occasion!\footnote{How often? In DNA that's all one base, it's happening 1/4 of the time. In DNA that's equally populated with the four bases, it's happening...1/4 of the time!} 
+你该如何追踪它呢？就像在\autoref{chap:chapter6}学习的那样，你可能想用Perl调试器来一步步地运行程序。但是这一次，不要这么做，停下来先思考一下你的设计吧。你使用随机选取的碱基来替换随机位置上的碱基。啊！有的时候，你随机选取的某个位置上的碱基和你随机选取用来进行替换该位置碱基的碱基是完全一样的！偶尔，你用一个碱基替换了它本身！\footnote{这有多频繁呢？对于DNA中的每一个碱基，其出现的概率都为1/4。对于一个由四种碱基等概率出现构成的DNA来说。这种情况发生的频率就高达1/4！} 
 
-Let's say you decide that behavior is not useful. At each successive mutation, you need to see one base change. How can you alter your code to ensure that? Let's start with some pseudocode for the \textit{mutate} subroutine: 
+我们假设，你觉得这种方式不是很有用，对于每一成功的突变，你都应该看到一个碱基的改变。你该如何修改代码来实现这一点呢？让我们先从\textit{mutate}子程序的伪代码开始吧：
 
 \begin{lstlisting}
 Select a random position in the string of DNA
@@ -472,7 +472,7 @@ Until: random nucleotide differs from the nucleotide in the random position
 Substitute the random nucleotide into the random position in the DNA
 \end{lstlisting}
 
-This seems like something that should work, so you alter the \textit{mutate} subroutine, calling it the \textit{mutate\_better} subroutine: 
+这看起来应该管用，所以你修改了\textit{mutate}子程序，把它改名为\textit{mutate\_better}子程序：
 
 \begin{lstlisting}
 # mutate_better
@@ -510,7 +510,7 @@ sub mutate_better {
 }
 \end{lstlisting}
 
-When you plug this subroutine in place of \textit{mutate} and run the code, you get the following output:
+当你用这个子程序替换掉\textit{mutate}后，运行代码，你会得到下面的输出：
 
 \begin{lstlisting}
 Mutate DNA
@@ -537,34 +537,34 @@ AATTATTAAAAAGTGAAAAAAACAACACAA
 AATTATTAAAAAGTGATAAAAACAACACAA
 \end{lstlisting}
 
-which seems to indeed make a real change on every iteration.
+看起来，在每次迭代的时候，确实都有一个碱基发生了改变。
 
-Notice one more thing about declaring variables. In this code for \textit{mutate\_better}, if you'd declared \verb|$newbase| within the loop, since the loop is enclosed in a block, the variable \verb|$newbase| would not then be visible outside of that loop. In particular, it wouldn't be available in the \verb|substr| call that does the actual base change for the mutation. So, in \textit{mutate\_better}, you had to declare the variable outside of the loop.  
+对于声明变量还需要注意一点。在\textit{mutate\_better}的代码中，如果你在循环中声明了\verb|$newbase|变量，因为循环被包裹在了代码块中，所以变量\verb|$newbase|在循环外就是不可见的。具体来说，在突变过程中实际进行碱基替换的\verb|substr|调用中，它没法使用。所以，在\textit{mutate\_better}中，你必须要在循环外声明这个变量。
 
-This is a frequent source of confusion for programmers who like to declare variables on the fly and a powerful argument for getting into the habit of collecting variable definitions together at the top of the program.
+对于那些喜欢随用随声明变量的程序员来说，这常常是一些混乱的源头，这也是一个强有力的证据，让你养成在程序顶部收集所有变量定义的习惯。
 
-Even so, there are often times when you want to hide a variable within a block, because that's the only place where you will use it. Then you may want to do the declaration in the block . (Perhaps at the top of the block, if it's a long one?) 
+即使这样，有的时候你还是想把变量隐藏在代码块中，因为那里是你唯一会用到这个变量的地方。这时你就会想在代码块中对其进行声明。（如果代码块很长，可能就会在代码块的顶部进行声明？）
 
-\section{Generating Random DNA} 
-It's often useful to generate random data for test purposes. Random DNA can also be used to study the organization of actual DNA from an organism. In this section, we'll write some programs to generate random DNA sequences.
+\section{生成随机DNA} 
+有时处于测试的目的，生成随机的数据会非常有用。同样可以使用随机DNA来研究生物体中真实DNA的组织方式。在本小节中，我们就来编写一些生成随机DNA序列的程序。
 
-Such random DNA sequences have proved useful in several ways. For instance, the popular BLAST program (see \autoref{chap:chapter12}) depends on the properties of random DNA for the analytic and empirical results that underpin the sequence similarity scores, statistics that are used to rank the "hits" that BLAST returns to the user.
+这样的随机DNA序列在很多方面都非常有用。比如，流行的BLAST程序（参看\autoref{chap:chapter12}），就要依赖于随机DNA的属性来获得对序列相似性打分进行评估的分析和经验性结果，以及用于对“击中”进行排序的统计结果，这会被BLAST反馈给用户。
 
-Let's assume what's needed is a set of random DNA fragments of varying length. Your program will have to specify a maximum and a minimum length, as well as how many fragments to generate. 
+假设我们需要的是一系列长短不一的随机DNA片段。你的程序必须要设定一个最大和最小的长度，以及生成DNA片段的数目。
 
-\subsection{Bottom-up Versus Top-down}
-In \autoref{exam:example7.2}, you wrote the basic subroutines, then a subroutine that called the basic subroutines, and finally the main program. If you ignore the pseudocode, this is an example of \textit{bottom-up design}; start with the building blocks, then assemble them into a larger structure.
+\subsection{自下而上 vs. 自上而下}
+在\autoref{exam:example7.2}中，你编写了一些最基本的子程序，然后一个子程序调用这些基本的子程序，最后实现的是主程序。如果你忽略伪代码，这就是\textit{自下而上设计}的一个例子：从最基本的砖瓦开始，然后把它们组装成高楼大厦。
 
-Now let's see what it's like to start with the main program, with its subroutine calls, and write the subroutines after you find a need for them. This is called \textit{top-down design}.
+现在我们来看看另一种设计，它从主程序开始，然后是其中的子程序调用，当你发现需要子程序时你才编写它们。这就叫做\textit{自上而下设计}。
 
-\subsection{Subroutines for Generating a Set of Random DNA}
-Given our goal of generating random DNA, perhaps what you want is a data-generating subroutine:
+\subsection{生成一系列随机DNA的子程序}
+考虑到我们生成随机DNA的目标，你需要的可能是一个直接生成数据的子程序：
 
 \begin{lstlisting}
 @random_DNA = make_random_DNA_set( $minimum_length, $maximum_length, $size_of_set );
 \end{lstlisting}
 
-This looks okay, but of course, it begs the question of how to actually accomplish the overall task. (That's top-down design for you!) So you need to move down and write pseudocode for the \textit{make\_random\_DNA\_set} subroutine: 
+这看起来没有问题，但还是要看如何来真正完成整个任务。（对你来说这就是自上而下的设计！）所以你需要一步步深入，编写\textit{make\_random\_DNA\_set}子程序的伪代码：
 
 \begin{lstlisting}
 repeat $size_of_set times:
@@ -579,7 +579,7 @@ repeat $size_of_set times:
 return @set
 \end{lstlisting}
 
-Now, continuing the top-down design, you need some pseudocode for the \textit{make\_random\_DNA} subroutine:
+现在，继续自上而下的设计，你需要\textit{make\_random\_DNA}子程序的伪代码：
 
 \begin{lstlisting}
 from 1 to $size
@@ -592,19 +592,19 @@ from 1 to $size
 return $dna
 \end{lstlisting}
 
-Don't go any further: you've already got a \textit{randomnucleotide} subroutine from \autoref{exam:example7.2}.
+不需要更加深入了，因为在\autoref{exam:example7.2}中你已经编写了\textit{randomnucleotide}子程序。
 
-(Are you bothered by the absence of balanced curly braces in the pseudocode? Here, you're relying on indentation and lining up the right braces to indicate the blocks. Since it's pseudocode, anything is allowed as long as it works.) 
+（你是否对伪代码中不配对的大括号感到厌烦？此处，你依赖于缩进，并用右大括号来表明代码块。既然是伪代码，只要它能工作，一切都是允许的。）
 
-\subsection{Turning the Design into Code}
-Now that we've got a top-down design, how to proceed with the coding? Let's follow the top-down design, just to see how it works.
+\subsection{把设计变成代码}
+现在我们已经有了自上而下的设计，该如何编写代码呢？我们还是继续自上问下的设计，来看看它是如何工作的。
 
-\autoref{exam:example7.3} starts with the main program and proceeds, following the order of the top-down design you did in pseudocode, then followed by the subroutines. 
+\autoref{exam:example7.3}按照伪代码中自上而下的设计顺序一步步前进，从主程序开始，之后才是子程序。
 
-\textbf{Example 7-3. Generate random DNA}
+\textbf{例7-3：生成随机DNA}
 \lstinputlisting[label=exam:example7.3]{./scripts/example7-3.pl}
 
-Here's the output from \autoref{exam:example7.3}:
+下面是\autoref{exam:example7.3}的输出：
 
 \begin{lstlisting}
 Here is an array of 12 randomly generated DNA sequences
@@ -624,12 +624,12 @@ ATGGAGTTGCGAGGAAGTAGCTGAGT
 GGCCCATGACCAGCATCCAGACAGCA
 \end{lstlisting}
 
-\section{Analyzing DNA}
-In this final example dealing with randomization, you'll collect some statistics on DNA in order to answer the question: on average, what percentage of bases are the same between two random DNA sequences?  Although some simple mathematics can answer the question for you, the point of the program is to show that you now have the necessary programming ability to ask and answer questions about your DNA sequences. (If you were using real DNA, say a collection of some particular gene as it appears in several organisms in slightly different forms, the answer would be somewhat more interesting. You may want to try that later.)
+\section{分析DNA}
+在处理随机化的最后这个例子中，你将收集DNA的一些统计信息，来回答这个问题：平均来说，对于两个随机的DNA序列，它们的碱基相同的百分比是多少？尽管一些简单的数学计算就可以帮你回答这个问题，但这个程序的要点在于表明你现在已经有必需的编程能力来提问并回答关于DNA序列的问题了。（如果你在使用真实的DNA，比如收集到的在不同生物中略有不同的某个特定基因，这个问题就更加有趣了。稍后你可能会想尝试一下。）
 
-So let's generate a set of random DNA, all the same length, then ask the following question about the set. What's the average percentage of positions that are the same between pairs of DNA sequences in this set?
+让我们生成一个随机DNA的集合，所有的DNA长度都相等，然后对这个集合思考下面的问题：对于集合中成对的DNA序列来说，相同碱基位置的百分比平均是多少？
 
-As usual, let's try to sketch an idea of the program in pseudocode: 
+像平常一样，我们先尝试用伪代码勾画出程序的思路：
 
 \begin{lstlisting}
 Generate a set of random DNA sequences, all the same length
@@ -643,7 +643,7 @@ For each pair of DNA sequences
 Report the mean of the preceding calculations as a percentage
 \end{lstlisting}
 
-Clearly, to write this code, you can reuse at least some of the work you've already done. You certainly know how to generate a set of random DNA sequences. Also, although you don't have a subroutine that compares, position by position, the bases in two sequences, you know how to look at the positions in DNA strings. So that subroutine shouldn't be hard to write. In fact, let's write some pseudocode that compares each nucleotide in one sequence with the nucleotide in the same position in another sequence: 
+显而易见，要编写这个代码，你至少可以重用已经完成的一部分工作。你已经知道如何生成一系列随机的DNA序列。此外，虽然你还没有按照位置逐个比较两条序列碱基的子程序，但你知道如何查找DNA字符串中的位置。所以，这样的子程序并不难写。事实上，我们写一些伪代码，来把一个序列上的每一个核苷酸和另一个序列上相同位置的核苷酸进行比较：
 
 \begin{lstlisting}
 assuming DNA1 is the same length as DNA2,
@@ -659,34 +659,34 @@ for each position from 1 to length(DNA)
 return count/length
 \end{lstlisting}
 
-The whole problem now seems eminently do-able. You also have to write the code that picks each pair of sequences, collects the results, and finally takes the mean of the results and report it as a percentage.  That can all go into the main program. \autoref{exam:example7.4} gives it a try, all in one shot. 
+这个问题已经迎刃而解了。当然，你还需要编写一些代码，来挑选成对的序列，收集计算结果，最终获得结果的平均值并以百分比的形式将它报告出来。所有这些都在主程序中。\autoref{exam:example7.4}就是这样的尝试，所有的内容都在其中。
 
-\textbf{Example 7-4. Calculate average \% identity between pairs of random DNA sequences}
+\textbf{例7-4：计算成对随机DNA序列的平均一致性百分比}
 \lstinputlisting[label=exam:example7.4]{./scripts/example7-4.pl}
 
-If the code in \autoref{exam:example7.4} seems somewhat repetitive of code from previous examples, it is. In the interest of presentation, I included the subroutine code in the program. (You'll start using modules in \autoref{chap:chapter8} as a way to avoid this repetition.) 
+\autoref{exam:example7.4}中的代码看起来和前面例子中的代码有些重复，确实是这样的。为了便于描述，我把子程序代码都放在了程序中。（在\autoref{chap:chapter8}中，你将开始使用模块，就会避免这种重复。）
 
-Here's the output of \autoref{exam:example7.4}:
+下面是\autoref{exam:example7.4}的输出：
 
 \begin{lstlisting}
 In this run of the experiment, the average number of 
 matching positions is 0.24%
 \end{lstlisting}
 
-Well, that seems reasonable. You might say, it's obvious: a quarter of the positions match, and there are four bases. But the point isn't to verify elementary probability, it's to show you have enough programming under your belt to write some programs that ask and answer questions about DNA sequences. 
+好吧，这看起来还算合理。你可能会说，这是显而易见的：四分之一的位置相匹配，因为一共有四种碱基。但是，这点并不足以验证基本概率，它只是让你明白，你已经有足够的编程技能傍身，来编写一些针对DNA序列提问和回答问题的程序了。
 
-\subsection{Some Notes About the Code}
-Notice in the main program that when it calls:
+\subsection{关于代码的一些注释}
+注意，在主程序中，当调用：
 
 \begin{lstlisting}
 @random_DNA = make_random_DNA_set( 10, 10, 10 );
 \end{lstlisting}
 
-you don't need to declare and initialize variables such as \verb|$minimum_length|. You can just fill in the actual numbers when you call the subroutine. (However it's often a good idea to put such things in variables declared at the top of the program, where it's easy to find and change them.) Here, you set the maximum and minimum lengths to 10 and ask for 10 sequences.
+时，你并不需要声明并初始化像\verb|$minimum_length|这样的变量。你只需要在调用子程序时填入真实的数值即可。（然而，把这样的东西存储在程序顶部声明的变量中，通常都是一个比较好的做法，因为这样比较容易寻找并修改它们。）这个例子中，你把最大和最小的长度都设置成了10，同时要求生成10条序列。
 
-Let's restate the problem we just solved. You have to compare all pairs of DNA, and for each pair, calculate the percentage of positions that have the same nucleotides. Then, you have to take the mean of these percentages.
+让我们重申一下刚刚解决的问题。你需要比较所有的DNA对，对每一对DNA，都要计算有相同核苷酸的位置的百分比。然后，你要得到这些百分比的平均值。
 
-Here's the code that accomplishes this in the main program of \autoref{exam:example7.4}:
+在\autoref{exam:example7.4}主程序中实现这一点的代码如下所示：:
 
 \begin{lstlisting}
 # Iterate through all pairs of sequences
@@ -700,61 +700,61 @@ for (my $k = 0 ; $k < scalar @random_DNA - 1 ; ++$k) {
 }
 \end{lstlisting}
 
-To look at each pair, you use a nested loop. A \textit{nested loop} is simply a loop within another loop. These are fairly common in programming but must be handled with care. They may seem a little complex; take some time to see how the nested loop works, because it's common to have to select all combinations of two (or more) elements from a set.
+为了比较每一对DNA，你使用了嵌套的循环。所谓\textit{嵌套循环}就是指在一个循环中还有另一个循环。这在编程中非常常见，但一定要小心处理它们。这看起来可能有一点复杂，花些时间来看看嵌套循环是如何工作的，因为当从一个集合中选取两个（或多个）元素的组合时这很常用。
 
-The nested loop involves looking at $(n * (n-1)) / 2$ pairs of sequences, which is a square function of the size of the data set. This can get very big! Try gradually increasing the size of the data set and rerunning the program, and you'll see your compute time increase, and more than gradually.
+这里的嵌套循环要查看$(n * (n-1)) / 2$对序列，这是数据集大小的平方函数。它会变得非常大！试着逐渐增加数据集的大小，然后重新运行程序，你会发现运算时间增加了，而且远比线性增加要大。
 
-See how the looping works? First sequence 0 (indexed by \verb|$K|) is paired with sequences 1,2,3,...,9, in turn (indexed by \verb|$i|). Then sequence 1 is paired with 2,3,...,9, etc. Finally, 8 is paired with 9. (Recall that array elements are numbered starting at 0, so the last element of an array with 10 elements is numbered 9. Also recall that scalar \verb|@random_DNA| returns the number of elements in the array.)
+看看循环是如何工作的？首先，序列0（以\verb|$K|进行索引）依次跟序列1、2、3、……9（以\verb|$i|进行索引）进行配对。之后，序列1依次和2、3、……9进行配对，如此往复，最后，序列8和序列9进行配对。（回忆一下，数组元素的计数是从0开始的，所以有10个元素的数组的最后一个元素的索引是9。此外，回忆以下，标量\verb|@random_DNA|返回的是数组中元素的数目。）
 
-You might find it a worthwhile exercise to let the number of sequences be some small value, say 3 or 4, and think through (paper and pencil in hand) how the nested loops and the variables \verb|$k| and \verb|$i| evolve during the running of the program. Or you can use the Perl debugger to watch how it happens. 
+你可能发现这样做是比较值得的，就是把序列数目设置成一个小的数值，比如3或者4，然后思考（手中拿着纸笔）在程序运行过程中嵌套循环是如何工作的，变量\verb|$k|和\verb|$i|是如何一步步改变的。或者，你也是使用Perl调试器来看看到底发生了什么。
 
-\section{Exercises}
-\textcolor{red}{\textit{Exercise 7.1}}
+\section{练习题}
+\textcolor{red}{\textit{习题7.1}}
 \begin{adjustwidth}{1cm}{}
-Write a program that asks you to pick an amino acid and then keeps (randomly) guessing which amino acid you picked. 
+编写一个程序，询问你选取一个氨基酸，然后（随机）猜测你选的是哪个氨基酸。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 7.2}}
+\textcolor{red}{\textit{习题7.2}}
 \begin{adjustwidth}{1cm}{}
-Write a program that picks one of the four nucleotides and then keeps prompting until you correctly guess the nucleotide it picked.
+编写一个程序，选取四个核苷酸中的一个，然后一直进行提示，直到你正确猜出选取的是哪个核苷酸。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 7.3}}
+\textcolor{red}{\textit{习题7.3}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine to randomly shuffle the elements of an array. The subroutine should take an array as an argument and return an array with the same elements but shuffled in a random order. Each element of the original array should appear exactly once in the output array, just like shuffling a deck of cards. 
+编写一个子程序，随机打乱数组的元素。子程序以一个数组作为参数，返回具有相同元素、但打乱成随机顺序的数组。原始数组中的每一个元素在输出的数组中都出现且仅出现一次，就像洗牌一样。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 7.4}}
+\textcolor{red}{\textit{习题7.4}}
 \begin{adjustwidth}{1cm}{}
-Write a program to mutate protein sequence, similar to the code in \autoref{exam:example7.2} that mutates DNA. 
+编写一个程序来突变蛋白质序列，就像\autoref{exam:example7.2}中突变DNA的代码一样。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 7.5}}
+\textcolor{red}{\textit{习题7.5}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that, given a codon (a fragment of DNA of length 3), returns a random mutation in the codon. 
+编写一个子程序，给定一个密码子（一个长3bp的DNA片段），返回密码子中的一个随机突变。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 7.6}}
+\textcolor{red}{\textit{习题7.6}}
 \begin{adjustwidth}{1cm}{}
-Some versions of Perl automatically seed the random number generator, making it superfluous to call \verb|srand| for that purpose before using \verb|rand| to generate random numbers. Experiment to see if your implementation of \verb|rand| calls \verb|srand| automatically, or if you have to explicitly call \verb|srand| yourself, as you have seen done in the code in this chapter. 
+有些版本的Perl为随机数生成器自动设置种子，这样在使用\verb|rand|生成随机数之前就不用多余使用\verb|srand|来设置种子了。实验一下，看看\verb|rand|是否会自动调用\verb|srand|，还是需要你自己明确地去调用\verb|srand|，就像你在本章的代码中看到的那样。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 7.7}}
+\textcolor{red}{\textit{习题7.7}}
 \begin{adjustwidth}{1cm}{}
-Sometimes not all choices are will be picked in a random selection. Write a subroutine that randomly returns a nucleotide, in which the probability of each nucleotide can be specified. Pass the subroutine four numbers as arguments, representing the probabilities of each nucleotide; if each probability is 0.25, the subroutine is equally likely to pick each nucleotide. As error checking, have the subroutine ensure that the sum of the four probabilities is 1.
+有时，在随机选取的时候并不是所有的选项都会被选择到。编写一个子程序，随机返回一个核苷酸，而且是按照指定的每个核苷酸的几率。给这个子程序传递四个数字作为参数，代表每中核苷酸的几率。如果每种核苷酸的几率都是0.25，这个子程序在选取每种核苷酸时就是完全均等的。为了检查错误，子程序还要确保四个几率之和为1。
 
-\textit{Hint:} one way to accomplish this is to divide the range between 0 and 1 into four intervals with lengths corresponding to the probability of the respective nucleotides. Then, simply pick a random number between 0 and 1, see in which interval it falls, and return the corresponding nucleotide.
+\textit{提示：}实现这一点的一种方法就是，把从0到1的范围分成四个区间，每个区间的长度和相应核苷酸的几率相对应。然后，简单的从0到1之间随机选取一个数字，看看它落在了哪个区间中，就返回相对应的核苷酸即可。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 7.8}}
+\textcolor{red}{\textit{习题7.8}}
 \begin{adjustwidth}{1cm}{}
-\textit{This is a more difficult exercise.} The \textit{study} function in Perl may speed up searches for motifs in DNA or protein. Read the Perl documentation on this function. Its use is simple: given some sequence data in a variable \verb|$sequence|, type:
+\textit{这是一个有一定难度的练习题。}Perl中的\textit{study}函数可能能提高DNA或蛋白质中基序的查找速度。查看关于这个函数的Perl文档。它的用法非常简单：给定存储在\verb|$sequence|变量中的一些序列数据，在进行搜索之前键入：
 
 \begin{lstlisting}
 study $sequence;
 \end{lstlisting}
 
-before doing the searches. Do you think \textit{study} will speed up searches in DNA or protein, based on what you've read about it in the documentation?
+基于你已经阅读的文档中的相关内容，你认为\textit{study}会提高DNA或蛋白质的搜索速度吗？
 \end{adjustwidth}
 
-\textit{For lots of extra credit!} Now read the Perl documentation on the standard module Benchmark. (Type \verb|perldoc Benchmark|, or visit the Perl home page at \href{http://www.perl.com}{http://www.perl.com}.) See if your guess is right by writing a program that benchmarks motif searches of DNA and of protein, with and without \textit{study}. 
+\textit{可以得到大量更多的得分！}现在阅读标准模块Benchmark的Perl文档。（键入\verb|perldoc Benchmark|，或者访问\href{http://www.perl.com}{http://www.perl.com}上的Perl主页。）编写一个程序，在使用和不使用\textit{study}的情况下，分别检测DNA和蛋白质基序的搜索速度，看看你的猜测是不是正确。
