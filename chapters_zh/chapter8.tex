@@ -220,9 +220,9 @@ Perl有一个简单的、内置的方法来存储散列数据，叫做\textit{�
 细胞中的翻译机器实际上会从RNA的某处起始，并“读取”一个接一个的密码子，把编码的氨基酸附加到不断增长的蛋白质序列的尾部。\autoref{exam:example8.1}模拟了这个过程，一次读取DNA字符串的三个碱基，然后把编码的氨基酸符号串联到不断增长的蛋白质字符串的尾部。在细胞中，当遇到三个终止密码子中的任意一个时，这个过程就会停止。
 
 \subsection{把密码子翻译成氨基酸}
-The first task is to enable the following programs to do the translation from the three-nucleotide codons to the amino acids. This is the most important step in implementing the genetic code, which is the encoding of amino acids by three-nucleotide codons.
+第一个任务，就是让后面的程序实现翻译的过程，就是把三个核苷酸的密码子翻译成氨基酸。对于研究三个核苷酸密码子编码一个氨基酸的遗传密码来说，这是最重要的一步。
 
-Here's a subroutine that returns an amino acid (represented by a one-letter abbreviation) given a three-letter DNA codon: 
+下面是一个子程序，在给定三字母的DNA密码子后，它会返回一个（以三字母缩写表示的）氨基酸：
 
 \begin{lstlisting}
 # codon2aa
@@ -231,84 +231,84 @@ Here's a subroutine that returns an amino acid (represented by a one-letter abbr
 
 sub codon2aa {
   my($codon) = @_;
-    
-     if ( $codon =~ /TCA/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /TCC/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /TCG/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /TCT/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /TTC/i )    { return 'F' }    # Phenylalanine
-  elsif ( $codon =~ /TTT/i )    { return 'F' }    # Phenylalanine
-  elsif ( $codon =~ /TTA/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /TTG/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /TAC/i )    { return 'Y' }    # Tyrosine
-  elsif ( $codon =~ /TAT/i )    { return 'Y' }    # Tyrosine
-  elsif ( $codon =~ /TAA/i )    { return '_' }    # Stop
-  elsif ( $codon =~ /TAG/i )    { return '_' }    # Stop
-  elsif ( $codon =~ /TGC/i )    { return 'C' }    # Cysteine
-  elsif ( $codon =~ /TGT/i )    { return 'C' }    # Cysteine
-  elsif ( $codon =~ /TGA/i )    { return '_' }    # Stop
-  elsif ( $codon =~ /TGG/i )    { return 'W' }    # Tryptophan
-  elsif ( $codon =~ /CTA/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /CTC/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /CTG/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /CTT/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /CCA/i )    { return 'P' }    # Proline
-  elsif ( $codon =~ /CCC/i )    { return 'P' }    # Proline
-  elsif ( $codon =~ /CCG/i )    { return 'P' }    # Proline
-  elsif ( $codon =~ /CCT/i )    { return 'P' }    # Proline
-  elsif ( $codon =~ /CAC/i )    { return 'H' }    # Histidine
-  elsif ( $codon =~ /CAT/i )    { return 'H' }    # Histidine
-  elsif ( $codon =~ /CAA/i )    { return 'Q' }    # Glutamine
-  elsif ( $codon =~ /CAG/i )    { return 'Q' }    # Glutamine
-  elsif ( $codon =~ /CGA/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /CGC/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /CGG/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /CGT/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /ATA/i )    { return 'I' }    # Isoleucine
-  elsif ( $codon =~ /ATC/i )    { return 'I' }    # Isoleucine
-  elsif ( $codon =~ /ATT/i )    { return 'I' }    # Isoleucine
-  elsif ( $codon =~ /ATG/i )    { return 'M' }    # Methionine
-  elsif ( $codon =~ /ACA/i )    { return 'T' }    # Threonine
-  elsif ( $codon =~ /ACC/i )    { return 'T' }    # Threonine
-  elsif ( $codon =~ /ACG/i )    { return 'T' }    # Threonine
-  elsif ( $codon =~ /ACT/i )    { return 'T' }    # Threonine
-  elsif ( $codon =~ /AAC/i )    { return 'N' }    # Asparagine
-  elsif ( $codon =~ /AAT/i )    { return 'N' }    # Asparagine
-  elsif ( $codon =~ /AAA/i )    { return 'K' }    # Lysine
-  elsif ( $codon =~ /AAG/i )    { return 'K' }    # Lysine
-  elsif ( $codon =~ /AGC/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /AGT/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /AGA/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /AGG/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /GTA/i )    { return 'V' }    # Valine
-  elsif ( $codon =~ /GTC/i )    { return 'V' }    # Valine
-  elsif ( $codon =~ /GTG/i )    { return 'V' }    # Valine
-  elsif ( $codon =~ /GTT/i )    { return 'V' }    # Valine
-  elsif ( $codon =~ /GCA/i )    { return 'A' }    # Alanine
-  elsif ( $codon =~ /GCC/i )    { return 'A' }    # Alanine
-  elsif ( $codon =~ /GCG/i )    { return 'A' }    # Alanine
-  elsif ( $codon =~ /GCT/i )    { return 'A' }    # Alanine
-  elsif ( $codon =~ /GAC/i )    { return 'D' }    # Aspartic Acid
-  elsif ( $codon =~ /GAT/i )    { return 'D' }    # Aspartic Acid
-  elsif ( $codon =~ /GAA/i )    { return 'E' }    # Glutamic Acid
-  elsif ( $codon =~ /GAG/i )    { return 'E' }    # Glutamic Acid
-  elsif ( $codon =~ /GGA/i )    { return 'G' }    # Glycine
-  elsif ( $codon =~ /GGC/i )    { return 'G' }    # Glycine
-  elsif ( $codon =~ /GGG/i )    { return 'G' }    # Glycine
-  elsif ( $codon =~ /GGT/i )    { return 'G' }    # Glycine
+   
+     if ( $codon =~ /TCA/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /TCC/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /TCG/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /TCT/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /TTC/i )   { return 'F' }   # Phenylalanine
+  elsif ( $codon =~ /TTT/i )   { return 'F' }   # Phenylalanine
+  elsif ( $codon =~ /TTA/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /TTG/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /TAC/i )   { return 'Y' }   # Tyrosine
+  elsif ( $codon =~ /TAT/i )   { return 'Y' }   # Tyrosine
+  elsif ( $codon =~ /TAA/i )   { return '_' }   # Stop
+  elsif ( $codon =~ /TAG/i )   { return '_' }   # Stop
+  elsif ( $codon =~ /TGC/i )   { return 'C' }   # Cysteine
+  elsif ( $codon =~ /TGT/i )   { return 'C' }   # Cysteine
+  elsif ( $codon =~ /TGA/i )   { return '_' }   # Stop
+  elsif ( $codon =~ /TGG/i )   { return 'W' }   # Tryptophan
+  elsif ( $codon =~ /CTA/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /CTC/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /CTG/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /CTT/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /CCA/i )   { return 'P' }   # Proline
+  elsif ( $codon =~ /CCC/i )   { return 'P' }   # Proline
+  elsif ( $codon =~ /CCG/i )   { return 'P' }   # Proline
+  elsif ( $codon =~ /CCT/i )   { return 'P' }   # Proline
+  elsif ( $codon =~ /CAC/i )   { return 'H' }   # Histidine
+  elsif ( $codon =~ /CAT/i )   { return 'H' }   # Histidine
+  elsif ( $codon =~ /CAA/i )   { return 'Q' }   # Glutamine
+  elsif ( $codon =~ /CAG/i )   { return 'Q' }   # Glutamine
+  elsif ( $codon =~ /CGA/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /CGC/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /CGG/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /CGT/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /ATA/i )   { return 'I' }   # Isoleucine
+  elsif ( $codon =~ /ATC/i )   { return 'I' }   # Isoleucine
+  elsif ( $codon =~ /ATT/i )   { return 'I' }   # Isoleucine
+  elsif ( $codon =~ /ATG/i )   { return 'M' }   # Methionine
+  elsif ( $codon =~ /ACA/i )   { return 'T' }   # Threonine
+  elsif ( $codon =~ /ACC/i )   { return 'T' }   # Threonine
+  elsif ( $codon =~ /ACG/i )   { return 'T' }   # Threonine
+  elsif ( $codon =~ /ACT/i )   { return 'T' }   # Threonine
+  elsif ( $codon =~ /AAC/i )   { return 'N' }   # Asparagine
+  elsif ( $codon =~ /AAT/i )   { return 'N' }   # Asparagine
+  elsif ( $codon =~ /AAA/i )   { return 'K' }   # Lysine
+  elsif ( $codon =~ /AAG/i )   { return 'K' }   # Lysine
+  elsif ( $codon =~ /AGC/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /AGT/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /AGA/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /AGG/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /GTA/i )   { return 'V' }   # Valine
+  elsif ( $codon =~ /GTC/i )   { return 'V' }   # Valine
+  elsif ( $codon =~ /GTG/i )   { return 'V' }   # Valine
+  elsif ( $codon =~ /GTT/i )   { return 'V' }   # Valine
+  elsif ( $codon =~ /GCA/i )   { return 'A' }   # Alanine
+  elsif ( $codon =~ /GCC/i )   { return 'A' }   # Alanine
+  elsif ( $codon =~ /GCG/i )   { return 'A' }   # Alanine
+  elsif ( $codon =~ /GCT/i )   { return 'A' }   # Alanine
+  elsif ( $codon =~ /GAC/i )   { return 'D' }   # Aspartic Acid
+  elsif ( $codon =~ /GAT/i )   { return 'D' }   # Aspartic Acid
+  elsif ( $codon =~ /GAA/i )   { return 'E' }   # Glutamic Acid
+  elsif ( $codon =~ /GAG/i )   { return 'E' }   # Glutamic Acid
+  elsif ( $codon =~ /GGA/i )   { return 'G' }   # Glycine
+  elsif ( $codon =~ /GGC/i )   { return 'G' }   # Glycine
+  elsif ( $codon =~ /GGG/i )   { return 'G' }   # Glycine
+  elsif ( $codon =~ /GGT/i )   { return 'G' }   # Glycine
   else {
-    print STDERR "Bad codon \"$codon\"!!\n";
-    exit;
+   print STDERR "Bad codon \"$codon\"!!\n";
+   exit;
   }
 }
 \end{lstlisting}
 
-This code is clear and simple, and the layout makes it obvious what's happening. However, it can take a while to run. For instance, given the codon GGT for glycine, it has to check each test until it finally succeeds on the last one, and that's a lot of string comparisons. Still, the code achieves its purpose.
+这个代码非常清晰、简单，其排版布局也使得整个过程一目了然。然后，它运行起来却要耗费一定的时间。比如，对于代表甘氨酸的密码子GGT，它需要一个一个的进行测试，直到到达最后一行才会测试成功，这是一个大量的字符串比较。但不管怎么说，这些代码实现了最终的目的。
 
-There's something new happening in the code's error message. Recall filehandles from \autoref{chap:chapter4} and how they access data in files. From \autoref{chap:chapter5}, remember the special filehandle STDIN that reads user input from the keyboard. STDOUT and STDERR are also special filehandles that are always available to Perl programs. STDOUT directs output to the screen (usually) or another standard place. When a filehandle is missing from a \verb|print| statement, STDOUT is assumed. The \textit{print} statement accepts a filehandle as an optional argument, but so far, we've been printing to the default STDOUT. Here, error messages are directed to STDERR, which usually prints to the screen, but on many computer systems they can be directed to a special error file or other location. Alternatively, you sometimes want to direct STDOUT to a file or elsewhere but want STDERR error messages to appear on your screen. I mention these options because you are likely to come across them in Perl code; we don't use them much in this book (see \autoref{chap:chapterab} for more information).  
+在代码中关于错误信息的部分出现了一些新的东西。回忆一下\autoref{chap:chapter4}中的文件句柄，以及它们是如何访问文件中的数据的。在\autoref{chap:chapter5}中，我么提到STDIN这个特殊的文件句柄会从键盘上读取用户的输入。STDOUT和STDERR也是特殊的文件句柄，在Perl程序中你总是可以使用它们。STDOUT把输出定向到屏幕（通常情况下）或者其他标准的输出位置。在\verb|print|语句中没有指定文件句柄的时候，默认就会使用STDOUT。\textit{print}语句可以使用一个文件句柄作为可选的参数，但到目前为止，我们都把结果直接打印到了默认的STDOUT。在这个例子中，错误信息被定向到了STDERR，通常情况下就是被打印到屏幕，但在许多计算机系统中，它们可以被定向到一个特定的错误文件或者其他地方。另外，有时你会想把STDOUT定向到一个文件或者其他地方，而让STDERR错误信息显示在你的屏幕上。我之所以提到这些选项，是因为你很可能会在Perl代码中碰到它们，但在本书中我们不会过多的使用它们（更多内容请参看\autoref{chap:chapterab}）。
 
-\subsection{The Redundancy of the Genetic Code}
-I've remarked on the redundancy of the genetic code, and the last subroutine clearly displays this redundancy. It might be interesting to express that in your subroutine. Notice that groups of redundant codons almost always have the same first and second bases and vary in the third. You've used character classes in regular expressions to match any of a set of characters. Now, let's try to redo the subroutine to make one test for each redundant group of codons: 
+\subsection{遗传密码的冗余性}
+我已经提到过遗传密码的冗余性，而刚才的子程序也清晰的展示了这种冗余性。能够在你的子程序中将这种冗余性表现的淋漓尽致，这可能比较有趣。注意这些具有冗余性的密码子的前两个碱基通常都是一样的，只有第三个碱基发生了变化。在正则表达式中你已经使用过字符集，可以来匹配任意的一个字符集合。现在，让我们尝试把子程序重写一下，对每一个冗余的密码子组都只进行一次测试：
 
 \begin{lstlisting}
 # codon2aa
@@ -319,27 +319,27 @@ I've remarked on the redundancy of the genetic code, and the last subroutine cle
 sub codon2aa {
   my($codon) = @_;
  
-     if ( $codon =~ /GC./i)        { return 'A' }    # Alanine
-  elsif ( $codon =~ /TG[TC]/i)     { return 'C' }    # Cysteine
-  elsif ( $codon =~ /GA[TC]/i)     { return 'D' }    # Aspartic Acid
-  elsif ( $codon =~ /GA[AG]/i)     { return 'E' }    # Glutamic Acid
-  elsif ( $codon =~ /TT[TC]/i)     { return 'F' }    # Phenylalanine
-  elsif ( $codon =~ /GG./i)        { return 'G' }    # Glycine
-  elsif ( $codon =~ /CA[TC]/i)     { return 'H' }    # Histidine
-  elsif ( $codon =~ /AT[TCA]/i)    { return 'I' }    # Isoleucine
-  elsif ( $codon =~ /AA[AG]/i)     { return 'K' }    # Lysine
-  elsif ( $codon =~ /TT[AG]|CT./i) { return 'L' }    # Leucine
-  elsif ( $codon =~ /ATG/i)        { return 'M' }    # Methionine
-  elsif ( $codon =~ /AA[TC]/i)     { return 'N' }    # Asparagine
-  elsif ( $codon =~ /CC./i)        { return 'P' }    # Proline
-  elsif ( $codon =~ /CA[AG]/i)     { return 'Q' }    # Glutamine
-  elsif ( $codon =~ /CG.|AG[AG]/i) { return 'R' }    # Arginine
-  elsif ( $codon =~ /TC.|AG[TC]/i) { return 'S' }    # Serine
-  elsif ( $codon =~ /AC./i)        { return 'T' }    # Threonine
-  elsif ( $codon =~ /GT./i)        { return 'V' }    # Valine
-  elsif ( $codon =~ /TGG/i)        { return 'W' }    # Tryptophan
-  elsif ( $codon =~ /TA[TC]/i)     { return 'Y' }    # Tyrosine
-  elsif ( $codon =~ /TA[AG]|TGA/i) { return '_' }    # Stop
+     if ( $codon =~ /GC./i)        { return 'A' }   # Alanine
+  elsif ( $codon =~ /TG[TC]/i)     { return 'C' }   # Cysteine
+  elsif ( $codon =~ /GA[TC]/i)     { return 'D' }   # Aspartic Acid
+  elsif ( $codon =~ /GA[AG]/i)     { return 'E' }   # Glutamic Acid
+  elsif ( $codon =~ /TT[TC]/i)     { return 'F' }   # Phenylalanine
+  elsif ( $codon =~ /GG./i)        { return 'G' }   # Glycine
+  elsif ( $codon =~ /CA[TC]/i)     { return 'H' }   # Histidine
+  elsif ( $codon =~ /AT[TCA]/i)    { return 'I' }   # Isoleucine
+  elsif ( $codon =~ /AA[AG]/i)     { return 'K' }   # Lysine
+  elsif ( $codon =~ /TT[AG]|CT./i) { return 'L' }   # Leucine
+  elsif ( $codon =~ /ATG/i)        { return 'M' }   # Methionine
+  elsif ( $codon =~ /AA[TC]/i)     { return 'N' }   # Asparagine
+  elsif ( $codon =~ /CC./i)        { return 'P' }   # Proline
+  elsif ( $codon =~ /CA[AG]/i)     { return 'Q' }   # Glutamine
+  elsif ( $codon =~ /CG.|AG[AG]/i) { return 'R' }   # Arginine
+  elsif ( $codon =~ /TC.|AG[TC]/i) { return 'S' }   # Serine
+  elsif ( $codon =~ /AC./i)        { return 'T' }   # Threonine
+  elsif ( $codon =~ /GT./i)        { return 'V' }   # Valine
+  elsif ( $codon =~ /TGG/i)        { return 'W' }   # Tryptophan
+  elsif ( $codon =~ /TA[TC]/i)     { return 'Y' }   # Tyrosine
+  elsif ( $codon =~ /TA[AG]|TGA/i) { return '_' }   # Stop
   else {
     print STDERR "Bad codon \"$codon\"!!\n";
     exit;
@@ -347,16 +347,16 @@ sub codon2aa {
 }
 \end{lstlisting}
 
-Using character classes and regular expressions, this code clearly shows the redundancy of the genetic code. Also notice that the one-character codes for the amino acids are now in alphabetical order. 
+使用字符集和正则表达式，现在的代码清晰的展示了遗传密码的冗余性。此外，还要注意，现在表示氨基酸的单字母代码已经是按照字母顺序排列的了。
 
-A character class such as \verb|[TC]| matches a single character, either T or C. The \verb|.| is the regular expression that matches any character except a newline. The \verb|/GT./i| expression for valine matches GTA, GTC, GTG, and GTT, all of which are codons for valine. (Of course, the period matches any other character, but the \verb|$codon| is assumed to have only A,C,G, or T characters.) The i after the regular expression means match uppercase or lowercase, for instance \verb|/T/i| matches T or t.
+像\verb|[TC]|的字符集匹配一个单字符，匹配T或者匹配C。\verb|.|是一个正则表达式，它匹配除换行符以外的任意字符。代表缬氨酸的\verb|/GT./i|表达式匹配GTA、GTC、GTG和GTT，所有这些密码子编码的都是缬氨酸。（当然，点号匹配任意其他字符，但是我们假设的是\verb|$codon|只包含A、C、G和T四个字符。）正则表达式后面的i表示既匹配大写字母，也匹配小写字母，比如\verb|/T/i|就匹配T或者t。
 
-The new feature in these regular expressions is the use of the vertical bar or pipe (|) to separate two choices. Thus for serine, \verb=/TC.|AG[TC]/= matches \verb|/TC./| or \verb|/AG[TC]/|. In this program, you need only two choices per regular expression, but you can use as many vertical bars as you like.
+这些正则表达式中一个新的特性就是使用了竖线或者管道（|）来分隔两种匹配选择。因此，对于丝氨酸来说，\verb=/TC.|AG[TC]/=匹配的是\verb|/TC./|或者\verb|/AG[TC]/|。在这个程序中，对于每一个正则表达式来说你仅仅需要两种选择，但你可以自己的喜好和需要使用尽可能多的竖线。
 
-You can also group parts of a regular expression in parentheses, and use vertical bars in them. For example, \verb=/give me a (break|meal)/= matches "give me a break" or "give me a meal." 
+你也可以用小括号把正则表达式的一部分进行分组，并在其中使用竖线。举个例子，\verb=/give me a (break|meal)/=能匹配“give me a break”或者“give me a meal”。
 
-\subsection{Using Hashes for the Genetic Code}
-If you think about using a hash for this translation, you'll see it's a natural way to proceed. For each codon key the amino acid value is returned. Here's the code: 
+\subsection{使用散列表示遗传密码}
+如果你考虑使用散列来完成这个翻译过程，你会看到这才是比较自然的方法。对于每一个密码子键，都有一个氨基酸值相对应。下面是代码：
 
 \begin{lstlisting}
 #
@@ -448,31 +448,31 @@ sub codon2aa {
 }
 \end{lstlisting}
 
-This subroutine is simple: it initializes a hash and then performs a single lookup of its single argument in the hash. The hash has 64 keys, one for each codon.
+子程序非常简单：它先初始化了一个散列，然后对散列中单个的参数进行依次查找。散列有64个键，每一个键都代表一个密码子。
 
-Notice there's a function exists that returns \verb|true| if the key \verb|$codon| exists in the hash. It's equivalent to the \textit{else} statement in the two previous versions of the codon2aa subroutine.\footnote{A key might exist in a hash, but its value can be undefined.  The defined function checks for defined values. Also, of course, the value might be 0 or the empty string, in which case, it fails a test such as \verb|if ($hash{$key}|) because, even though the key exists and the value is defined, the value evaluates to \verb|false| in a conditional test.}
+注意，有\textit{exists}这样一个函数，如果散列中存在\verb|$codon|这个键，他就会返回\verb|true|。它的作用和\textit{codon2aa}子程序前两个版本中的\textit{else}语句完全一样。\footnote{在散列中，一个键可能存在，但它的值可能是未定义的。\textit{defined}函数能检查值是不是已经被定义了。另外，当然，值也可能是0或者空字符串，在这种情况下，像\verb|if ($hash{$key})|这样的测试会失败，因为，即使键存在而且值也被定义了，但在条件测试中，这样的值会被测试为\verb|false|。}
 
-Also notice that to make this subroutine work on lowercase DNA as well as uppercase, you translate the incoming argument into uppercase to match the data in the \verb|%genetic_code| hash. You can't give a regular expression to a hash as a key; it must be a simple scalar value, such as a string or a number, so the case translation must be done first.  (Alternatively, you can make the hash twice as big.) Similarly, character classes don't work in the keys for hashes, so you have to specify each one of the 64 codons individually.
+另外，还要注意，为了让子程序既可以处理大写字母也可以处理小写字母，你把输入的参数都转换成了大写字母，这样就可以和\verb|%genetic_code|散列中的数据进行比较了。你不能把正则表达式作为散列的键，它必须是简单的标量值，比如一个字符串或者一个数字，所以必须首先进行大小写的转换。（还有一种选择，你可以让散列的大小翻倍。）类似的，也不能把字符集作为散列的键，所以对于64个密码子你都必须单个进行指定。
 
-You may wonder why bother wrapping this last bit of code in a subroutine at all. Why not just declare and initialize the hash and do the lookups directly in the hash instead of going through the subroutine? Well, the subroutine does do a little bit of error checking for nonexistent keys, so having a subroutine saves doing that error checking yourself each time you use the hash.
+你可能会想为什么要费事的把代码中最后的那一部分放在子程序中呢，为什么不仅仅声明并初始化散列、然后不需要进入子程序而是直接对散列进行查询呢？好吧，实际上子程序还对不存在的键进行了一点错误检查，这样在你使用散列的时候，就不用每次都自己进行错误检查了，因为子程序已经帮你做了。
 
-Additionally, wrapping the code in a subroutine gives a little insurance for the future. If all the code you write does codon translation by means of our subroutine, it would be simplicity itself to switch over to a new way of doing the translation. Perhaps a new kind of datatype will be added to Perl in the future, or perhaps you want to do lookups from a database or a DBM file. Then all you have to do is change the internals of this one subroutine. As long as the interface to the subroutine remains the same—that is to say, as long as it still takes one codon as an argument and returns a one-character amino acid—you don't need to worry about how it accomplishes the translation from the standpoint of the rest of the programs. Our subroutine has become a \textit{black box}. This is one significant benefit of modularization and organization of programs with subroutines. 
+另外，把这部分代码放在子程序中，也是为未来考虑的一点保险措施。使用我们的子程序，你编写的代码只需要负责密码子的翻译即可，这样就可以很方便的转换为另一种进行翻译的方式。也许在将来Perl会添加进一种新的数据类型，也有可能你想从数据库后者DBM文件中进行查询。这样，你需要做的仅仅是修改子程序的内部代码而已。只要对子程序的接口界面保持不变——也就是说，只要它还是把一个密码子作为参数并返回一个单字母表示的氨基酸——在程序的其他部分你就不需要担心它是如何实现翻译的的了。我们的子程序成了一个\textit{黑盒子}。这是使用子程序对程序进行模块化和组织的一个非常显著的优势。
 
-There's another good, and biological, reason why you should use a subroutine for the genetic code. There is actually more than one genetic code, because there are differences as to how DNA encodes amino acids among mammals, plants, insects, and yeast—especially in the mitochondria. So if you have modularized the genetic code, you can easily modify your program to work with a range of organisms.
+之所以使用子程序表示遗传密码，还有一个好的生物学上的原因。事实上，因为对于哺乳动物、植物、昆虫和酵母来说，DNA编码氨基酸的方式都有所不同，对于线粒体来说更是如此，所以有不止一种遗传密码。所以如果你对遗传密码进行了模块化，你只需要对程序进行简单的修改就可以适用于一系列的物种了。
 
-One of the benefits of hashes is that they are fast. Unfortunately, our subroutine declares the whole hash each time the subroutine is called, even for one lookup. This isn't so efficient; in fact, it's kind of slow. There are other, much faster ways that involve declaring the genetic code hash only once as a global variable, but they would take us a little far afield at this point. Our current version has the advantage of being easy to read. So, let's be officially happy with the hash version of codon2aa and put it into our module in the file \textit{BeginPerlBioinfo.pm} (see \autoref{chap:chapter6}).
+散列的另一优势是它非常快。不幸的是，我们的子程序在每次被调用时都要声明整个散列，即使是仅进行一次查询也是如此。这并不高效，事实上，它还有些慢。还有其他更加快速的方法，可以把遗传密码散列作为全局变量只声明一次，但这对于现在的我们来说还有点遥不可及。我们现在这个版本的优势在于它非常易读。所以，让我们对这个散列版本的\textit{codon2aa}感到心满意足，并把它放到\textit{BeginPerlBioinfo.pm}文件（参看\autoref{chap:chapter6}）的模块中吧。
 
-Now that we've got a satisfactory way to translate codons to amino acids, we'll start to use it in the next section and in the examples. 
+现在我们已经找到一个比较满意的方法，把密码子翻译成了氨基酸，在接下来的小节和例子中我们将会使用它。
 
-\section{Translating DNA into Proteins}
-\autoref{exam:example8.1} shows how the new \textit{codon2aa} subroutine translates a whole DNA sequence into protein. 
+\section{把DNA翻译成蛋白质}
+\autoref{exam:example8.1}展示了新的\textit{codon2aa}子程序如何把一整个DNA序列翻译成蛋白质。
 
-\textbf{Example 8-1. Translate DNA into protein }
+\textbf{例8-1：把DNA翻译成蛋白质}
 \lstinputlisting[label=exam:example8.1]{./scripts/example8-1.pl}
 
-To make this work, you'll need the \textit{BeginPerlBioinfo.pm} module for your subroutines in a separate file the program can find, as discussed in \autoref{chap:chapter6}. You also have to add the \textit{codon2aa} subroutine to it.  Alternatively, you can add the code for the subroutine \textit{condon2aa} directly to the program in \autoref{exam:example8.1} and remove the reference to the \textit{BeginPerlBioinfo.pm} module.
+就像在\autoref{chap:chapter6}中讨论的那样，要使它能正常工作，你需要把提供子程序的\textit{BeginPerlBioinfo.pm}模块放到一个程序可以找到的单独的文件中。你还需要把\textit{codon2aa}子程序添加到这个文件中。还有一种办法，你可以直接把子程序\textit{condon2aa}的代码添加到\autoref{exam:example8.1}中的程序中，然后移除对\textit{BeginPerlBioinfo.pm}模块的引用。
 
-Here's the output from \autoref{exam:example8.1}:
+下面是\autoref{exam:example8.1}的输出：
 
 \begin{lstlisting}
 I translated the DNA
@@ -484,47 +484,47 @@ CGACGTCTTCGTACGGGACTAGCTCGTGTCGGTCGC
 RRLRTGLARVGR
 \end{lstlisting}
 
-You've seen all the elements in i\autoref{exam:example8.1} before, except for the way it loops through the DNA with this statement:
+\autoref{exam:example8.1}中的所有元素你都已经在前面见到过了，除了循环遍历DNA的方法，就是下面这个语句：
 
 \begin{lstlisting}
 for(my $i=0; $i < (length($dna) - 2) ; $i += 3) {
 \end{lstlisting}
 
-Recall that a \verb|for| loop has three parts, delimited by the two semicolons.  The first part initializes a counter: \verb|my $i=0| statically scopes the \verb|$i| variable so it's visible only inside this block, and any other \verb|$i| elsewhere in the code (well, in this case, there aren't any, but it can happen) is now invisible inside the block. The third part of the \verb|for| loop increments the counter after all the statements in the block are executed and before returning to the beginning of the loop:
+回忆一下，\verb|for|由用两个分号隔开的三部分组成。第一部分初始化一个计数器：\verb|my $i=0|静态限定了\verb|$i|变量的范围，这样它就只能在代码块中被使用了，而代码中其他部分出现的其他\verb|$i|（好吧，在这个例子中，并没有其他这样的变量，但确实可能会出现这种情况）现在在代码块中则是不可用的。\verb|for|循环的第三部分会在代码块中的所有语句执行完后、重新回到循环顶部前增加计数器。
 
 \begin{lstlisting}
 $i += 3
 \end{lstlisting}
 
-Since you're trying to march through the DNA three bases at a shot, you increment by three.
+因为在遍历DNA时每次要处理三个碱基，所以你把计数器增加三。
 
-The second, middle part of the \verb|for| loop tests whether the loop should continue:
+\verb|for|循环中间的第二部分测试判断是否要继续循环：
 
 \begin{lstlisting}
 $i < (length($dna) - 2)
 \end{lstlisting}
 
-The point is that if there are none, one, or two bases left, you should quit, because there's not enough to make a codon. Now, the positions in a string of DNA of a certain length are numbered from \verb|0| to \verb|length-1|. So if the position counter \verb|$i| has reached \verb|length-2|, there's only two more bases (at positions \verb|length-2| and \verb|length-1|), and you should quit. Only if the position counter \verb|$i| is less than \verb|length-2| will you still have at least three bases left, enough for a codon. So the test succeeds only if:
+关键点在于，如果有两个、一个或者没有碱基剩余时，你应该退出程序，因为它们不足以构成一个密码子了。现在，对于一个特定长度的DNA字符串来说，碱基位置的计数就是从\verb|0|到\verb|length-1|。所以如果位置计数器\verb|$i|增加到了\verb|length-2|，就只剩余两个碱基（\verb|length-2|和\verb|length-1|位置处的碱基）了，这时你应该退出程序。当位置计数器\verb|$i|小于\verb|length-2|时，剩余的碱基至少还有三个，这足以构成一个密码子了。所以要想测试成功，只能：
 
 \begin{lstlisting}
 $i < (length($dna) -2)
 \end{lstlisting}
 
-(Notice also how the whole expression to the right of the less-than sign is enclosed in parentheses; we'll discuss this in \autoref{chap:chapter9} in \autoref{sect:section9.3.1})
+（注意一下，小于号后面的表达式是如何被包裹在小括号中的；我们将在\autoref{chap:chapter9}的\autoref{sect:section9.3.1}中对其进行讨论。）
 
-The line of code:
+这行代码：
 
 \begin{lstlisting}
 $codon = substr ($dna, $i 3);
 \end{lstlisting}
 
-actually extracts the 3-base codon from the DNA. The call to the \verb|substr| function specifies a substring of \verb|$dna| at position \verb|$i| of length \verb|3|, and saves it in the variable \verb|$codon|. 
+实际上从DNA中提取了三碱基的密码子。通过调用\verb|substr|函数，提取出\verb|$dna|字符串上位置\verb|$i|处长度为\verb|3|的子字符串，并把它保存到了变量\verb|$codon|中。
 
-If you know you'll need to do this DNA-to-protein translation a lot, you can turn \autoref{exam:example8.1} into a subroutine. Whenever you write a subroutine, you have to think about which arguments you may want to give the subroutine. So you realize, there may come a time when you'll have some large DNA sequence but only want to translate a given part of it. Should you add two arguments to the subroutine as beginning and end points? You could, but decide not to. It's a judgment call—part of the art of decomposing a collection of code into useful fragments. But it might be better to have a subroutine that just translates; then you can make it part of a larger subroutine that picks endpoints in the sequence, if needed. The thinking is that you'll usually just translate the whole thing and always typing in \verb|0| for the start and \verb|length($dna)-1| at the end, would be an annoyance. Of course, this depends on what you're doing, so this particular choice just illustrates your thinking when you write the code.
+如果你知道，你需要进行很多从DNA到蛋白质的翻译，你可以把\autoref{exam:example8.1}转换成一个子程序。当你编写一个子程序时，你需要考虑你想把那些参数传递给子程序。所以你意识到，早晚有一天会遇到这样的情况，你有一些很长的DNA序列，但却只想翻译整个序列中指定的一部分。你是否应该给子程序添加两个参数来指定起始和终止位点呢？你可以这么做，但你决定先不这么做。这是一种主观判断——把代码集合分解成有用片段的艺术的一部分。但是最好有一个只负责翻译过程的子程序，然后，如果有需要，你可以把它作为从序列中选择终点的更大的子程序的一部分。此处的考虑是，你通常仅仅需要把整条序列都进行翻译，所以每次都键入\verb|0|作为起始点、\verb|length($dna)-1|作为终止点可能会让人厌烦。当然，这取决于你手头的工作，所以此处的选择仅供你在编写代码时思考只用。
 
-You should also remove the informative \verb|print| statement at the end, because it's more suited to a main program than a subroutine.
+你应该移除末尾输出信息的\verb|print|语句，因为与子程序相比，它更加适合于主程序。
 
-Anyway, you've now thought through the design and just want a subroutine that takes one argument containing DNA and returns a peptide translation: 
+不管怎样，你已经思考了整个设计思路，现在只需要一个子程序，它需要一个包含DNA的参数，并返回翻译后的肽链：
 
 \begin{lstlisting}
 # dna2peptide 
@@ -551,17 +551,17 @@ sub dna2peptide {
   }
 \end{lstlisting}
 
-Now add subroutine \textit{dna2peptide} to the \textit{BeginPerlBioinfo.pm} module.
+现在把子程序\textit{dna2peptide}添加到\textit{BeginPerlBioinfo.pm}模块中吧。
 
-Notice that you've eliminated one of the variables in making the subroutine out of \autoref{exam:example8.1}: the variable \verb|$codon|. Why?
+注意，在你把\autoref{exam:example8.1}转换成子程序时，删除了一个变量：变量\verb|$codon|。为什么呢？
 
-Well, one reason is because you can. In \autoref{exam:example8.1}, you were using substr to extract the codon from \verb|$dna|, saving it in variable \verb|$codon| and then passing it into the subroutine codon2aa. This new way eliminates the middleman. Put the call to \textit{substr} that extracts the codon as the argument to the subroutine codon2aa so that the value is passed in just as before, but without having to copy it to the variable \verb|$codon| first. 
+好吧，一个原因就是你可以把它删除。在\autoref{exam:example8.1}中，你使用\textit{substr}从\verb|$dna|中提取密码子，把它保存到变量\verb|$codon|中，然后传递到子程序\textit{codon2aa}中。新的方法删除这个中间人。直接把提取密码子的对\textit{substr}的调用作为参数传递给子程序\textit{codon2aa}，这样值像以前一样传递了进去，但却没有必要先把它复制到变量\verb|$codon|中去了。
 
-This has somewhat improved efficiency and speed. Since copying strings is one of the slower things computer programs do, eliminating a bunch of string copies is an easy and effective way to speed up a program.
+这在某种程度上提高了效率和速度。因为复制字符串是计算机程序做的非常慢的一件事情，删除一大批字符串的复制，是提高程序运行速度一种简单、有效的方法。
 
-But has it made the program less readable? You be the judge. I think it has, a little, but the comment right before the loop seems to make everything clear enough, for me, anyway. It's important to have readable code, so if you really need to boost the speed of a subroutine, but find it makes the code harder to read, be sure to include enough comments for the reader to be able to understand what's going on.
+但是这有没有削弱程序的易读性呢？这由你来判断。我觉得有那么一点，但是对于我来说，无论如何，循环前面的注释看起来已经让一切都清晰明了了。编写易读的代码非常重要，所以如果你确实需要大幅提升子程序的速度，但却发现使代码更加难读了，一定要确保包含足够的注释，让读者可以理解所发生的一切。
 
-For the first time \textit{use} function calls are being included in a subroutine instead of the main program:
+\textit{use}函数的调用第一次被包含在了子程序中而不是主程序中：
 
 \begin{lstlisting}
 use strict;
@@ -569,55 +569,56 @@ use warnings;
 use BeginPerlBioinfo;
 \end{lstlisting}
 
-This may be redundant with the calls in the main program, but it doesn't do any harm (Perl checks and loads a module only once). If this subroutine should be called from a module that doesn't already load the modules, it's done some good after all.
+这可能和主程序中的调用存在冗余，但这并没有任何坏处（Perl会进行检查，并且只载入模块一次）。如果在一个没有载入这些模块的模块中调用这个子程序，它还是可以正常工作。
 
-Now let's improve how we deal with DNA in files. 
+现在，让我们来看看如何处理文件中的DNA。
 
-\section{Reading DNA from Files in FASTA Format}
-Over the fairly short history of bioinformatics, several different biologists and programmers invented several ways to format sequence data in computer files, and so bioinformaticians must deal with these different formats. We need to extract the sequence data and the annotations from these files, which requires writing code to deal with each different format.
+\section{从文件中读取FASTA格式的DNA}
+在生物信息学短暂的历史中，许多不同的生物学家和程序员发明了各种在计算机文件中格式化序列数据的方法，导致生物信息学家不得不去处理这些不同的格式。我们需要从这些文件中提取出序列数据和注释信息，对于每种不同的格式，这都需要编写代码进行处理。
 
-There are many such formats, perhaps as many as 20 in regular use for DNA alone. The very multiplicity of these formats can be an annoyance when you're analyzing a sequence in the lab: it becomes necessary to translate from one format to another for the various programs you use to examine the sequence. Here are some of the most popular: 
+有许多这样的格式，仅仅针对DNA的常用格式可能就有20种之多。当你在实验室中分析序列时，格式的这种多样化会让人头疼不已：因为对于你用来分析序列的各种程序，都需要把一种格式转换成另一种格式。下面是几个最流行的格式：
 
 \textcolor{red}{\textit{FASTA}}
 \begin{adjustwidth}{1cm}{}
-The FASTA and Basic Local Alignment Search Technique (BLAST) programs are popular; they both use the FASTA format. Because of its simplicity, the FASTA format is perhaps the most widely used of all formats, aside from GenBank. 
+FASTA和基本局部相似性比对搜索技术（BLAST\footnote{译者注：BLAST是Basic Local Alignment Search Tool的缩写。}，Basic Local Alignment Search Technique）程序非常流行，它们都使用FASTA格式。因为它的简洁性，FASTA格式可能是所有格式中除GenBank格式以外使用最为广泛的一种格式。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Genetic Sequence Data Bank (GenBank)}}
+\textcolor{red}{\textit{Genetic Sequence Data Bank (GenBank\footnote{译者注：GenBank指的是Genetic Sequence Database。})}}
 \begin{adjustwidth}{1cm}{}
-GenBank is a collection of all publicly released genetic data. It includes lots of information in addition to the DNA sequence. It's very important, and we'll be looking closely at GenBank files in \autoref{chap:chapter10}. 
+GenBank收集了所有公开发表的遗传数据。除了DNA序列，它还包括了许多相关的信息。它非常重要，所以我们将在\autoref{chap:chapter10}中对GenBank文件进行深入探讨。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{European Molecular Biology Laboratory (EMBL)}}
+\textcolor{red}{\textit{欧洲分子生物学实验室（EMBL，European Molecular Biology Laboratory）}}
 \begin{adjustwidth}{1cm}{}
-The EMBL database has substantially the same data as the GenBank and the DDBJ (DNA Data Bank of Japan), but the format is somewhat different. 
+EMBL数据库大体上和GenBank、DDBJ（日本DNA数据库，DNA Data Bank of Japan）存储有相同的数据，但格式稍有不同。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Simple data, or Applied Biosystems (ABI) sequencer output}}
+\textcolor{red}{\textit{简单数据，或美国应用生物系统公司（ABI，Applied Biosystems）测序仪的输出}}
 \begin{adjustwidth}{1cm}{}
-This is DNA sequence data that has no formatting whatsoever, just the characters that represent the bases; it is output into files by the sequencing machines from ABI and from other machines and programs. 
+这是没有进行任何格式化的DNA序列数据，仅仅是代表碱基的字符而已。ABI的测序机器和其他机器以及程序把它直接输出到文件中。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Protein Identification Resource (PIR)}}
+\textcolor{red}{\textit{蛋白质识别资源（PIR，Protein Identification Resource）}}
 \begin{adjustwidth}{1cm}{}
-PIR is a well-curated collection of protein sequence data.
+PIR是一个良好组织的蛋白质序列数据集合。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Genetics Computer Group (GCG)}}
+\textcolor{red}{\textit{遗传学电脑集团（GCG，Genetics Computer Group）}}
 \begin{adjustwidth}{1cm}{}
-The GCG program (a.k.a. the GCG Wisconsin package) from Accelrys is used at many large research institutions. Data must be in GCG format to be usable by their programs. 
+Accelrys的GCG程序（亦称GCG Wisconsin
+package）在许多大型研究机构中使用。要想被它们的程序使用，数据必须以GCG格式进行存储。
 \end{adjustwidth}
 
-Of these six sequence formats, GenBank and FASTA are by far the most common. The next few sections take you through the process of reading and manipulating data in FASTA. 
+在这六种序列格式中，GenBank和FASTA是迄今为止最常用的格式。接下来的几个小节将向你介绍FASTA格式数据的读取和处理过程。
 
-\subsection{FASTA Format}
-Let's write a subroutine that can handle FASTA-style data. This is useful in its own right and as a warm-up for the upcoming chapters on GenBank, PDB, and BLAST.
+\subsection{FASTA格式}
+让我们编写一个子程序，来处理FASTA格式的数据。它本身就非常有用，而且可以作为后续章节处理GenBank、PDB和BLAST的热身。
 
-FASTA format is basically just lines of sequence data with newlines at the end so it can be printed on a page or displayed on a computer screen. The length of the lines isn't specified, but for compatibility, it's best to limit them to 80 characters in length. There is also \textit{header information}, a line or lines at the beginning of the file that start with the greater-than > character, that can contain any text whatsoever (or no text). Typically, a header line contains the name of the DNA or the gene it comes from, often separated by a vertical bar from additional information about the sequence, the experiment that produced it, or other, nonsequence information of that nature.
+FASTA格式基本上就是序列数据行，在其末尾有换行符，这样就可以把它打印到纸上或者显示在计算机屏幕上。行的长度没有特别指定，但是为了兼容，最好把长度限制在80个字符以内。此外，还有一个\textit{头信息}，就是文件开头以大于号>起始的一行或数行，它可以包含任意文字（或者没有文字）。通常，标题行包括DNA或者它的来源基因的名字，一般用竖线将其和序列的其他信息、生成它的实验或者其他类似的非序列的信息分隔开来。
 
-Much FASTA-aware software insists that there must be only one header line; others permit several lines. Our subroutine will accept either one or several header lines plus comments beginning with \#.
+许多使用FASTA格式的软件都坚持认为只能有一行头信息，其他则允许多行头信息的存在。我们的子程序对一行或多行头信息以及以\#起始的注释都能够进行处理。
 
-The following is a FASTA file. We'll call it sample.dna and use it in several programs. You should copy it, download it from this book's web site, or make up your own file with your own data. 
+下面是一个FASTA文件。我们把它叫做\textit{sample.dna}，并且在许多程序中都将使用到它。你应该从书籍网站上复制、下载它，或者用你自己的数据制作出自己的文件。
 
 \begin{lstlisting}
 > sample dna | (This is a typical fasta header.)
@@ -645,18 +646,18 @@ agggggcagtggcgtcatcaacagtcaaggagcctcctgaggctacagcc
 acacctgagccactctcagatgaggaccta
 \end{lstlisting}
 
-\subsection{A Design to Read FASTA Files}
-In \autoref{chap:chapter4}, you learned how to read in sequence data; here, you just have to extend that method to deal with the header lines.  You'll also learn how to discard empty lines and lines that begin with the pound sign \#, i.e., comments in Perl and other languages and file formats. (These don't appear in the FASTA file \textit{sample.dna} just shown.)
+\subsection{读取FASTA文件的设计}
+在\autoref{chap:chapter4}中，你学习了如何读入序列数据。此处，你只需要将其进行扩展以便能够处理标题行。你还将学习到如何丢弃空行以及以井号（磅字符）\#起始的行，也就是Perl和其他语言以及文件格式中的注释。（这样的行在刚刚展示的FASTA文件\textit{sample.dna}中并没有出现。）
 
-There are two choices when reading in the data. You can read from the open file one line at a time, making decisions as you go. Or, you can slurp the whole file into an array and then operate on the array. For very big files, it's sometimes best to read them one line at a time, especially if you're looking for some small bit of information. (This is because reading a large file into an array uses a large amount of memory. If your system isn't robust enough, it may crash.)
+当读入数据时有两种选择。你可以从打开的文件中一次读入一行，随读入随进行处理。或者，你也可以一次性把整个文件都读入到数组中，然后对数组进行操作。对于非常大的文件来说，尤其是你寻找一些小的信息片段时，最好一次只读入文件的一行。（这是因为把一个大的文件读入数组会占用大量的内存空间。如果你的计算机不够强大，可能会导致系统奔溃。）
 
-For smaller, normal-sized files, the advantage to reading all the data into an array is that you can then easily look through at the data and do operations on it. That's what we'll do with our subroutine, but remember, this approach can cause memory space problems with larger files, and there are other ways of proceeding.
+对于小的、正常大小的文件来说，把所有数据读入数组的好处在于，之后你可以轻松地遍历数据对它进行操作。这就是我们的子程序所做的事情，但是一定要记住，对于大文件来说这种方法可能会导致内存空间问题，还有其他的方法可以采用。
 
-Let's write a subroutine that, given as an argument a filename containing FASTA-formatted data, returns the sequence data.
+让我们编写一个子程序，给定一个包含FASTA格式数据的文件名参数，它会返回序列数据。
 
-Before doing so you should think about whether you should have just one subroutine, or perhaps one subroutine that opens and reads a file, called by another subroutine that extracts the sequence data. Let's use two subroutines, keeping in mind that you can reuse the subroutine that deals with arbitrary files every time you need to write such a program for other formats.
+在动手之前，你应该考虑你是否只需要一个子程序，还是一个子程序打开并读取文件、另一个子程序调用它并提取序列数据。我们使用两个子程序，一定要牢记在心，每次当你需要编写类似的程序处理其他格式时，你都可以重用这里处理任意文件的子程序。
 
-Let's start with some pseudocode:
+我们由伪代码开始：
 
 \begin{lstlisting}
 subroutine get data from a file
@@ -686,16 +687,16 @@ Subroutine extract sequence data from fasta file
 }
 \end{lstlisting}
 
-In the first subroutine that gets data from a file, there's a question as to what's the best thing to do when the file can't be read. Here, we're taking the drastic approach: yelling "Fire!" and exiting. But you wouldn't necessarily want your program to just stop whenever it can't open a file. Maybe you're asking for filenames from the user at the keyboard or on a web page, and you'd like to give them three chances to type in the filename correctly. Or maybe, if the file can't be opened, you want a default file instead.
+在第一个从文件中获取数据的子程序中，存在这样一个问题，当文件不能被读取时，最好的处理办法是什么。此处，我们采用了最极端的方案：尖叫“着火了！”然后跳出。但是你可能不一定想让你的程序在无法打开文件时立即停止。也许，你想通过键盘或者网页向用户询问文件名，并给他们三次机会来键入正确的文件名。又或者，如果文件无法打开，你就使用默认的文件进行替代。
 
-Maybe you can return a \verb|false| value, such as an empty array, if you can't open the file. Then a program that calls this subroutine can exit, try again, or whatever it wants. But what if you successfully open the file, but it was absolutely empty? Then you'd have succeeded and returned an empty array, and the program calling this subroutine would think incorrectly, that the file couldn't be opened. So, that wouldn't work.
+当你无法打开文件时，也许你可以返回\verb|false|值，比如一个空数组。然后，调用这个子程序的程序就可以退出，重试，或者其他它想进行的操作。但是，如果你成功打开了文件，但却完全是空的呢？这时，你成功打开了文件，并返回一个空数组，而调用这个子程序的程序可能会错误的认为文件无法打开。所以，这种方案并不可取。
 
-There are other options, such as returning the special "undefined" value. Let's keep what we've got, but it's important to remember that handling errors can be an important, and sometimes tricky, part of writing \textit{robust code}, code that responds well in unusual circumstances.
+还有其他的选择，比如返回特殊的“未定义”值。我们还是言归正传，但牢记这么一点是非常重要的，处理错误很重要，有时非常晦涩，这也是编写\textit{强健代码}的一部分，这种代码可以很好的处理异常情况。
 
-The second subroutine takes the array of FASTA-formatted sequence and returns just the unformatted sequence in a string. 
+第二个子程序，处理存储FASTA格式序列的数组，并返回未格式化的序列字符串。
 
-\subsection{A Subroutine to Read FASTA Files}
-Now that you've thought about the problem, written some pseudocode, considered alternate ways of designing the subroutines and the costs and benefits of the choices, you're ready to code:
+\subsection{读取FASTA文件的子程序}
+既然你已经思考了问题、编写了伪代码、想到了设计子程序的不同方案以及不同选择的利弊，现在就可以真正开始编写代码了：
 
 \begin{lstlisting}
 # get_file_data
@@ -765,46 +766,46 @@ sub extract_sequence_from_fasta_data {
 }
 \end{lstlisting}
 
-Notice that nowhere in the code for \textit{extract\_sequence\_from\_fasta\_data} do you check to see what's in the file: is it really DNA or protein sequence data in FASTA format?  Of course, you can write a subroutine—call it \textit{is\_fasta}—that checks the data to see if it's what we expect. But I'll leave that for the exercises. 
+注意，在\textit{extract\_sequence\_from\_fasta\_data}的代码中你并没有检查文件中存储的内容：它是不是真的是以FASTA格式存储的DNA或者蛋白质序列？当然，你可以编写一个子程序——把它叫做\textit{is\_fasta}——来检查数据看看它是不是我们所期望的那样。但这里我把它留作课后练习。
 
-A few comments about the \textit{extract\_sequence\_from\_fasta\_data} subroutine should be made. The following line includes a variable declaration as it is used in a loop: 
+对于\textit{extract\_sequence\_from\_fasta\_data}子程序要进行一些注释。下面这行代码包括一个在循环中使用的变量的声明。
 
 \begin{lstlisting}
 foreach my $line (@fasta_file_data) {
 \end{lstlisting}
 
-You've seen this in \verb|for| loops as well. It's convenient to declare these \verb|my| variables as \verb|$line| on the spot, as they tend to have common names and aren't used outside the loop.
+在\verb|for|循环中你已经见过这样的情况。在使用\verb|$line|的地方使用\verb|my|对变量进行声明，这非常方便，因为它们往往都有比较常见的名字，而且在循环外不会被使用到。
 
-Some of the regular expressions deserve brief comment. In this line: 
+一些正则表达式需要进行简要的注释。这一行代码：
 
 \begin{lstlisting}
 if ($line =~ /^\s*$/) {
 \end{lstlisting}
 
-the \verb|\s| matches whitespace, that is, space, tab, formfeed, carriage return, or newline. \verb|\s*| matches any amount of whitespace (even none).  The \verb|^| matches the beginning of the line, and the \verb|$| matches the end of the line. So altogether, this regular expression matches blank lines with nothing or only whitespace in them.
+其中，\verb|\s|匹配空白，也就是空格、制表符、换页符、回车符或者换行符。\verb|\s*|匹配任意数量的空白（即使没有）。\verb|^|匹配行首，而\verb|$|则匹配行尾。所以综合起来，这个正则表达式匹配的是没有或者只有空白的空行。
 
-This regular expression also has nothing or only whitespace at the beginning of the line, up to a pound sign:
+这个正则表达式表示的是行首没有或者只有空白、之后紧跟井号：
 
 \begin{lstlisting}
 } elsif($line =~ /^\s*#/) {
 \end{lstlisting}
 
-This expression matches a greater-than sign at the beginning of the line:
+这个正则表达式匹配的是行首的大于号：
 
 \begin{lstlisting}
 } elsif($line =~ /^>/) {
 \end{lstlisting}
 
-Finally, the following statement removes whitespace, including newlines:
+最后，下面这个语句删除空白，包括换行符：
 
 \begin{lstlisting}
 $sequence =~ s/\s//g;
 \end{lstlisting}
 
-We've placed these two new subroutines into our \textit{BeginPerlBioinfo.pm} module. Now let's write a main program for these subroutines and look at the output. First, there's one more subroutine to write that handles the printing of long sequences. 
+我们已经把这两个新的子程序放到了我们的\textit{BeginPerlBioinfo.pm}模块中。现在，我们来为这些子程序编写一个主程序，看看它的输出。首先，还需要编写一个子程序，来处理长序列的输出。
 
-\subsection{Writing Formatted Sequence Data}
-When you try to print the "raw" sequence data, it can be a problem if the data is much longer than the width of the page. For most practical purposes, 80 characters is about the maximum length you should try to fit across a page. Let's write a \textit{print\_sequence} subroutine that takes as its arguments some sequence and a line length and prints out the sequence, breaking it up into lines of that length. It will have a strong similarity to the \textit{dna2peptide} subroutine. Here it is: 
+\subsection{输出格式化的序列数据}
+当你试图打印输出“原始的”序列数据时，如果数据远远长过纸张的宽度，会出现问题。实际上，如果你尝试让它适合纸张，80个字符大约是你应该使用的最大的长度。我们编写一个\textit{print\_sequence}子程序，它以一些序列和行的长度作为参数，把序列打断成要求长度的多行并打印输出出来。它和\textit{dna2peptide}子程序有很高的相似度。这是代码：
 
 \begin{lstlisting}
 # print_sequence
@@ -825,12 +826,12 @@ sub print_sequence {
 }
 \end{lstlisting}
 
-The code depends on the behavior of substr, which gives the partial substring at the end of the string, even if it's less than the requested length. You can see there's a new \textit{print\_sequence} subroutine in the \textit{BeginPerlBioinfo.pm} module (see \autoref{chap:chapter6}). We remembered to keep the statement \verb|1|; as the last line of the module. \autoref{exam:example8.2} shows the main program. 
+代码依赖于\textit{substr}的行为，它会在字符串后面输出部分子字符串，即使其长度小于要求的长度。你可以看到在\textit{BeginPerlBioinfo.pm}模块（参看\autoref{chap:chapter6}）中出现了新的\textit{print\_sequence}子程序。记住，一定要把语句\verb|1;|作为模块的最后一行。\autoref{exam:example8.2}演示的是主程序。
 
-\textbf{Example 8-2. Read a FASTA file and extract the sequence data}
+\textbf{例8-2：读取FASTA文件并提取序列数据}
 \lstinputlisting[label=exam:example8.2]{./scripts/example8-2.pl}
 
-Here's the output of \autoref{exam:example8.2}:
+下面是\autoref{exam:example8.2}的输出：
 
 \begin{lstlisting}
 agatggcggcgctgaggggtcttgg
@@ -879,13 +880,13 @@ acacctgagccactctcagatgagg
 accta
 \end{lstlisting}
 
-\subsection{A Main Program for Reading DNA and Writing Protein}
-Now, one final program for this section. Let's add to the preceding program a translation from DNA to protein and print out the protein instead. Notice how short \autoref{exam:example8.3} is! As you accumulate useful subroutines in our modules, programs get easier and easier to write. 
+\subsection{读入DNA输出蛋白质的主程序}
+现在，这是本小节的最后一个程序。我们向上面的程序中添加从DNA到蛋白质的翻译过程，最后输出蛋白质而不是DNA。注意\autoref{exam:example8.3}是多么的精炼！随着你不断向我们的模块中积累有用的子程序，编写程序会越来越容易。
 
-\textbf{Example 8-3. Read a DNA FASTA file, translate to protein, and format output}
+\textbf{例8-3：读取DNA的FASTA文件，翻译成蛋白质，并格式化输出}
 \lstinputlisting[label=exam:example8.3]{./scripts/example8-3.pl}
 
-Here's the output of \autoref{exam:example8.3}:
+下面是\autoref{exam:example8.3}的输出：
 
 \begin{lstlisting}
 RWRR_GVLGALGRPPTGLQRRRRMG
@@ -905,32 +906,33 @@ KLGRIREDEGAVASSTVKEPPEATA
 TPEPLSDEDL
 \end{lstlisting}
 
-\section{Reading Frames}
-The biologist knows that, given a sequence of DNA, it is necessary to examine all six \textit{reading frames} of the DNA to find the coding regions the cell uses to make proteins. 
+\section{阅读框}
+生物学家都知道，给定一个DNA序列，需要检查这个DNA所有的六种\textit{阅读框}，来寻找细胞用来编码蛋白质的编码区域。
 
-\subsection{What Are Reading Frames?}
-Very often you won't know where in the DNA you're studying the cell actually begins translating the DNA into protein. Only about 1-1.5\% of human DNA is in genes, which are the parts of DNA used for the translation into proteins. Furthermore, genes very often occur in pieces that are spliced together during the transcription/translation process.
+\subsection{什么是阅读框？}
+通常情况下你都不知道细胞实际上是从你研究的DNA的那个地方开始把它翻译成蛋白质的。只有大约1-1.5\%的人类DNA是基因\footnote{译者注：此段中的基因实际上指的是编码区，或者说是外显子。}，也就是用来翻译成蛋白质的DNA片段。此外，基因通常都是以片段的形式存在，在转录/翻译的过程中它们会被剪切、拼接在一起。
 
-If you don't know where the translation starts, you have to consider the six possible reading frames. Since the codons are three bases long, the translation happens in three "frames," for instance starting at the first base, or the second, or perhaps the third. (The fourth would be the same as starting from the first.) Each starting place gives a different series of codons, and, as a result, a different series of amino acids.
+如果你不知道翻译从何处起始，你就必须要考虑六种可能的阅读框。因为密码子长3个碱基，所以翻译可以发生在三个“框”内，比如从第一个碱基、第二个碱基或者第三个碱基开始。（从第四个碱基开始实际上是和从第一个碱基开始完全一样的。）每一中起始位置都会给出一系列不同的密码子，最终就是一系列不同的氨基酸。
 
-Also, transcription and translation can happen on either strand of the DNA; that is, either the DNA sequence, or its reverse complement, might contain DNA code that is actually translated. The reverse complement can also be read in any one of three frames. So a total of six reading frames have to be considered when looking for coding regions , that part of the DNA that encodes proteins.
+此外，转录和翻译可以发生在DNA的两条链上，也就是DNA序列或者它的反向互补序列都可能包含最终被翻译的DNA编码。反向互补序列也可以从三种不同框的任意一种内进行阅读。所以，寻找编码区域、也就是编码蛋白质的DNA片段时，总共有六种阅读框需要考虑。
 
-It is therefore quite common to examine all six reading frames of a DNA sequence and to look at the resulting protein translations for long stretches of amino acids that lack stop codons.
+因此这非常常见，通过检查DNA序列的所有六种阅读框来寻找最终的蛋白质翻译，找到没有终止密码子的连续的长的氨基酸片段。
 
-The \textit{stop codons} are definite breaks in the DNA$\rightarrow$protein translation process. During translation (actually of RNA to protein, but I'm being deliberately informal and vague about the biochemistry), if a stop codon is reached, the translation stops, and the growing peptide chain grows no more.
+\textit{终止密码子}肯定会打断DNA$\rightarrow$protein的翻译过程。在翻译过程（实际上是从RNA到蛋白质，但是我故意模糊简化了生物化学）中，如果碰到一个终止密码子，翻译就会停止，不断增长的肽链也会停止增长。
 
-Long stretches of DNA that don't contain any stop codons are called \textit{open reading frames} (ORFs) and are important clues to the presence of a gene in the DNA under study. So gene finder programs need to perform the type of reading frame analysis we'll do in this chapter. 
+不包含终止密码子的长的DNA片段叫做\textit{开放阅读框}（ORFs，open reading
+frames)，是判断正在研究的DNA中存在基因的一个重要的依据。所以基因识别程序需要进行这种阅读框的分析，这也正是我们在本章中学习的内容。
 
-\subsection{Translating Reading Frames}
-Based on the facts just presented, let's write some code that translates the DNA in all six reading frames.  
-In the real world, you'd look around for some subroutines that are already written to do that task. Given the basic nature of the task—something anyone who studies DNA has to do—you'd likely find something. But this is a tutorial, not the real world, so let's soldier on.
+\subsection{翻译阅读框}
+基于上述事实，我们编写一些代码，来把DNA进行六个阅读框的翻译。
 
-This problem doesn't sound too daunting. So, take stock of the subroutines at your disposal, think of where you are and how you can get
-to your destination.
+在现实生活中，你可能会四处寻找已经写好的、可以完成该任务的子程序。基于任务的基本属性——研究DNA的工作者一定会做的事情——你很可能会找到这样的代码。但是这里是一个指南，而不是现实世界，所以还是让我们披挂上阵吧。
 
-Looking through the subroutines we've already written, recall \textit{dna2peptide}. You may recall considering adding some arguments to specify starting and end points. Let's do this now.
+这个问题并没有听上去那么吓人。所以，检查一下你的子程序行囊，（利用手头可以使用的子程序储备，）想想你现在身处何方、该如何到达目的地。
 
-Remember that although we calculated reverse complements back in \autoref{chap:chapter4}, we never made a subroutine out of it. So let's start there: 
+查看一下我们已经编写的子程序，回想一下\textit{dna2peptide}。你可能会想到添加一些参数来指定起始和结束位点。现在就让我们动手吧。
+
+还记得吗，尽管我们在\autoref{chap:chapter4}中计算了反向互补序列，但我们并没有把它编写成子程序。所以我们先从这里开始：
 
 \begin{lstlisting}
 # revcom 
@@ -952,7 +954,7 @@ sub revcom {
 }
 \end{lstlisting}
 
-Now, a little pseudocode to sketch an idea for the subroutine that will translate specific ranges of DNA: 
+现在，这是一点伪代码，展示将要翻译DNA特定区间的子程序的思路：
 
 \begin{lstlisting}
 Given DNA sequence
@@ -964,23 +966,23 @@ subroutine translate_frame ( DNA, start, end )
 }
 \end{lstlisting}
 
-That went well! Luckily, the substr built-in Perl function made it easy to apply the desired start and end points, while passing the DNA into the already written \textit{dna2peptide} subroutine.
+这就很好！幸运的是，当把DNA传递进已经写好的\textit{dna2peptide}子程序中时，Perl的内置函数\textit{substr}使得它可以非常容易的使用指定的起始和终止位点。
 
-Note that the length of the sequence is \verb|end-start+1|. To give a small example: if you start at position 3 and end at position 5, you've got the bases at positions 3, 4, and 5, three bases in all, which is exactly what 5 - 3 + 1 equals.
+注意序列的长度是\verb|end-start+1|。考虑一个简单的例子：如果你从位置3起始、到位置5终止，你会的到位置3、4和5的碱基，总共有三个碱基，正好等于5 - 3 + 1。
 
-Dealing with indices like this has to be done carefully, or the code won't work. For many programs, this is the worst the mathematics gets. 
+处理类似这样的索引要非常小心，否则代码可能无法正常工作。对于许多程序来说，这是数学最讨人烦的地方。
 
 
 \begin{adjustwidth}{2cm}{2cm}
   \parpic[l]{
   \includegraphics[width=1cm]{warning.png}
   }
-Pay attention to the indices!
+小心索引！
 \end{adjustwidth}
 
-You have to decide if you wish to keep the numbering of positions from 0, which is Perl's way to do it, or the first character of the sequence is in position 1, which is the biologist's way to do it. Let's do it the biologist's way. The positions will be decreased by one when passed to the Perl function substr, which, of course, does it Perl's way.
+你需要决定，你是要从0开始对位置进行计数，这是Perl的处理方式，还是把序列的第一个字符作为位置1，这是生物学家的处理方式。我们采用生物学家的处理方式。当传递给Perl的函数\textit{substr}时，位置要减一，当然，最终还是Perl的处理方式。
 
-The corrected pseudocode looks like this:
+纠正后的伪代码是这样子的：
 
 \begin{lstlisting}
 Given DNA sequence
@@ -993,14 +995,14 @@ subroutine translate_frame ( DNA, start, end )
 }
 \end{lstlisting}
 
-The length of the desired sequence doesn't change with the change in
+序列的长度并没有随索引的改变而改变，因为：
 indices, since:
 
 \begin{lstlisting}
 (end - 1) - (start - 1) + 1 = end - start + 1
 \end{lstlisting}
 
-So let's write this subroutine:
+现在我们来编写这个子程序：
 
 \begin{lstlisting}
 # translate_frame
@@ -1025,12 +1027,12 @@ sub translate_frame {
 }
 \end{lstlisting}
 
-\autoref{exam:example8.4} translates the DNA in all six reading frames. 
+\autoref{exam:example8.4}从六个阅读框上翻译DNA。
 
-\textbf{Example 8-4. Translate a DNA sequence in all six reading frames}
+\textbf{例8-4：从六个阅读框上翻译DNA序列}
 \lstinputlisting[label=exam:example8.4]{./scripts/example8-4.pl}
 
-Here's the output of \autoref{exam:example8.4}:
+下面是\autoref{exam:example8.4}的输出：
 
 \begin{lstlisting}
  -------Reading Frame 1--------
@@ -1088,66 +1090,66 @@ LPPYLRSRRTPSRPPPATREPAQTTRRRPRRLQRRPQLLPLLVTPPRQRTPIAQAPCVVSAANQ_VAGLE
 PPRPLSAAI
 \end{lstlisting}
 
-\section{Exercises}
-\textcolor{red}{\textit{Exercise 8.1}}
+\section{练习题}
+\textcolor{red}{\textit{习题8.1}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that checks a string and returns \verb|true| if it's a DNA sequence. Write another that checks for protein sequence data. 
+编写一个子程序，检查一个字符串，如果它是一个DNA序列就返回\verb|true|。编写另外一个子程序来检查蛋白质序列数据。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.2}}
+\textcolor{red}{\textit{习题8.2}}
 \begin{adjustwidth}{1cm}{}
-Write a program that can search by name for a gene in an unsorted array.
+编写一个程序，在未排序的数组中通过基因名查找一个基因。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.3}}
+\textcolor{red}{\textit{习题8.3}}
 \begin{adjustwidth}{1cm}{}
-Write a program that can search by name for a gene in a sorted array; use the Perl sort function to sort an array. For extra credit: write a binary search subroutine to do the searching. 
+编写一个程序，在一个排序的数组中通过基因名查找一个基因。使用Perl的\textit{sort}函数来对数组进行排序。额外的得分：编写一个折半查找的子程序进行搜索。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.4}}
+\textcolor{red}{\textit{习题8.4}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that inserts an element into a sorted array. Hint: use the \textit{splice} Perl function to insert the element, as shown in \autoref{chap:chapter4}. 
+编写一个子程序，把一个元素插入到一个排序的数组中。提示：就像在\autoref{chap:chapter4}中演示的那样，使用Perl的\textit{splice}函数插入元素。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.5}}
+\textcolor{red}{\textit{习题8.5}}
 \begin{adjustwidth}{1cm}{}
-Write a program that searches by name for a gene in a hash. Get the genes from your own work or try downloading a list of all genes for a given organism from \href{www.ncbi.nlm.nih.gov}{www.ncbi.nlm.nih.gov} or one of the web sites given in \autoref{chap:chapteraa}. Make a hash of all the genes (key=name, value=gene ID or sequence). Hint: you may have to write a short Perl program to reformat the list of genes you start with to make it easy to populate the Perl hash. 
+编写一个程序，在散列中通过基因名查找一个基因。从你自己的工作中获取基因，或者尝试从\href{www.ncbi.nlm.nih.gov}{www.ncbi.nlm.nih.gov}或\autoref{chap:chapteraa}中的一个网站上下载一个物种的全部基因列表。为所有的基因制作一个散列（键是基因名，值是基因ID或者基因序列）。提示：你可能需要编写一个简短的Perl程序，来重新格式化你手头的基因列表，这样就容易把它做成Perl的散列了。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.6}}
+\textcolor{red}{\textit{习题8.6}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that checks an array of data and returns \verb|true| if it's in FASTA format. Note that FASTA expects the standard IUB/IUPAC amino acid and nucleic acid codes, plus the dash (-) that represents a gap of unknown length. Also, the asterisk (*) represents a stop codon for amino acids. Be careful using an asterisk in regular expressions; use a \verb|\*| to escape it to match an actual asterisk. 
-
-The remaining problems deal with the effect of mutations in DNA on the proteins they encode. They combine the subject of randomization and mutations from \autoref{chap:chapter7} plus the subject of the genetic code from this chapter. 
+编写一个子程序，检查数组中的数据，如果是FASTA格式就返回\verb|true|。注意FASTA格式使用标准的IUB/IUPAC氨基酸和核苷酸代码，以及代表未知长度的空位的破折号（-）。此外，对于氨基酸来说，星号（*）代表终止密码子。 在正则表达式中使用星号时一定要小心，使用\verb|\*|对它进行转义，来匹配真正的星号。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.7}}
+剩下的问题就是，DNA的突变对它们编码的蛋白质的影响。这需要把\autoref{chap:chapter7}中随机化和突变的主题与本章中遗传密码的主题结合起来。
+
+\textcolor{red}{\textit{习题8.7}}
 \begin{adjustwidth}{1cm}{}
-For each codon, make note of what effect single nucleotide mutations have on the codon: does the same amino acid result, or does the codon now encode a different amino acid? Which one? Write a subroutine that, given a codon, returns a list of all the amino acids that may result from any single mutation in the codon. 
+对于每一个密码子，看看密码子上单核苷酸的突变会产生什么影响：是编码同样的氨基酸，还是新的密码子会编码一个完全不同的氨基酸？新编码的是那种氨基酸？编写一个子程序，给定一个密码子，返回密码子上任意一个突变导致的编码出的新的所有的氨基酸列表。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.8}}
+\textcolor{red}{\textit{习题8.8}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that, given an amino acid, randomly changes it to one of the amino acids calculated in Exercise 8.7. 
+编写一个子程序，给定一个氨基酸，随机把它改变成习题8.7计算出来的氨基酸中的一种。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.9}}
+\textcolor{red}{\textit{习题8.9}}
 \begin{adjustwidth}{1cm}{}
-Write a program that randomly mutates the amino acids in a protein but restricts the possibilities to those that can occur due to a single mutation in the original codons, as in Exercises 8.7 and 8.8.
+编写一个程序，随机突变蛋白质中的氨基酸，但是要限定在原始密码子的单核苷酸突变能导致的突变范围内，就像习题8.7和8.8中的那样。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.10}}
+\textcolor{red}{\textit{习题8.10}}
 \begin{adjustwidth}{1cm}{}
-Some codons are more likely than others to occur in random DNA. For instance, there are 6 of the 64 possible codons that code for the amino acid serine, but only 2 of the 64 codes for phenylalanine. Write a subroutine that, given an amino acid, returns the probability that it's coded by a randomly generated codon (see \autoref{chap:chapter7}). 
+有些密码子比其他的密码子更容易出现在随机DNA中。比如，在64种可能的密码子中，有6种编码丝氨酸，但只有2中编码苯丙氨酸。编写一个子程序，给定一个氨基酸，返回它被随机生成的密码子编码的可能性（参看\autoref{chap:chapter7}）。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.11}}
+\textcolor{red}{\textit{习题8.11}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that takes as arguments an amino acid; a position 1, 2, or 3; and a nucleotide. It then takes each codon that encodes the specified amino acid (there may be from one to six such codons), and mutates it at the specified position to the specified nucleotide.  Finally, it returns the set of amino acids that are encoded by the mutated codons. 
+编写一个子程序，以一个氨基酸、位置1、2或3和一个核苷酸作为它的参数。然后，对于编码这个特定氨基酸的每一个密码子（可能有一到六个不等的密码子），都在指定的位置上突变称指定的核苷酸。最后，返回突变后的密码子编码的氨基酸集。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 8.12}}
+\textcolor{red}{\textit{习题8.12}}
 \begin{adjustwidth}{1cm}{}
-Write a program that, given two amino acids, returns the probability that a single mutation in their underlying (but unspecified) codons results in the codon of one amino acid mutating to the codon of the other amino acid. 
+编写一个程序，给定两个氨基酸，返回它们潜在（而非指定）密码子上单核苷酸突变从而导致一个氨基酸的密码子突变成另一个氨基酸的密码子的概率。
 \end{adjustwidth}
 

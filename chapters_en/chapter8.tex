@@ -229,74 +229,74 @@ Here's a subroutine that returns an amino acid (represented by a one-letter abbr
 
 sub codon2aa {
   my($codon) = @_;
-    
-     if ( $codon =~ /TCA/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /TCC/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /TCG/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /TCT/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /TTC/i )    { return 'F' }    # Phenylalanine
-  elsif ( $codon =~ /TTT/i )    { return 'F' }    # Phenylalanine
-  elsif ( $codon =~ /TTA/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /TTG/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /TAC/i )    { return 'Y' }    # Tyrosine
-  elsif ( $codon =~ /TAT/i )    { return 'Y' }    # Tyrosine
-  elsif ( $codon =~ /TAA/i )    { return '_' }    # Stop
-  elsif ( $codon =~ /TAG/i )    { return '_' }    # Stop
-  elsif ( $codon =~ /TGC/i )    { return 'C' }    # Cysteine
-  elsif ( $codon =~ /TGT/i )    { return 'C' }    # Cysteine
-  elsif ( $codon =~ /TGA/i )    { return '_' }    # Stop
-  elsif ( $codon =~ /TGG/i )    { return 'W' }    # Tryptophan
-  elsif ( $codon =~ /CTA/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /CTC/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /CTG/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /CTT/i )    { return 'L' }    # Leucine
-  elsif ( $codon =~ /CCA/i )    { return 'P' }    # Proline
-  elsif ( $codon =~ /CCC/i )    { return 'P' }    # Proline
-  elsif ( $codon =~ /CCG/i )    { return 'P' }    # Proline
-  elsif ( $codon =~ /CCT/i )    { return 'P' }    # Proline
-  elsif ( $codon =~ /CAC/i )    { return 'H' }    # Histidine
-  elsif ( $codon =~ /CAT/i )    { return 'H' }    # Histidine
-  elsif ( $codon =~ /CAA/i )    { return 'Q' }    # Glutamine
-  elsif ( $codon =~ /CAG/i )    { return 'Q' }    # Glutamine
-  elsif ( $codon =~ /CGA/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /CGC/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /CGG/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /CGT/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /ATA/i )    { return 'I' }    # Isoleucine
-  elsif ( $codon =~ /ATC/i )    { return 'I' }    # Isoleucine
-  elsif ( $codon =~ /ATT/i )    { return 'I' }    # Isoleucine
-  elsif ( $codon =~ /ATG/i )    { return 'M' }    # Methionine
-  elsif ( $codon =~ /ACA/i )    { return 'T' }    # Threonine
-  elsif ( $codon =~ /ACC/i )    { return 'T' }    # Threonine
-  elsif ( $codon =~ /ACG/i )    { return 'T' }    # Threonine
-  elsif ( $codon =~ /ACT/i )    { return 'T' }    # Threonine
-  elsif ( $codon =~ /AAC/i )    { return 'N' }    # Asparagine
-  elsif ( $codon =~ /AAT/i )    { return 'N' }    # Asparagine
-  elsif ( $codon =~ /AAA/i )    { return 'K' }    # Lysine
-  elsif ( $codon =~ /AAG/i )    { return 'K' }    # Lysine
-  elsif ( $codon =~ /AGC/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /AGT/i )    { return 'S' }    # Serine
-  elsif ( $codon =~ /AGA/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /AGG/i )    { return 'R' }    # Arginine
-  elsif ( $codon =~ /GTA/i )    { return 'V' }    # Valine
-  elsif ( $codon =~ /GTC/i )    { return 'V' }    # Valine
-  elsif ( $codon =~ /GTG/i )    { return 'V' }    # Valine
-  elsif ( $codon =~ /GTT/i )    { return 'V' }    # Valine
-  elsif ( $codon =~ /GCA/i )    { return 'A' }    # Alanine
-  elsif ( $codon =~ /GCC/i )    { return 'A' }    # Alanine
-  elsif ( $codon =~ /GCG/i )    { return 'A' }    # Alanine
-  elsif ( $codon =~ /GCT/i )    { return 'A' }    # Alanine
-  elsif ( $codon =~ /GAC/i )    { return 'D' }    # Aspartic Acid
-  elsif ( $codon =~ /GAT/i )    { return 'D' }    # Aspartic Acid
-  elsif ( $codon =~ /GAA/i )    { return 'E' }    # Glutamic Acid
-  elsif ( $codon =~ /GAG/i )    { return 'E' }    # Glutamic Acid
-  elsif ( $codon =~ /GGA/i )    { return 'G' }    # Glycine
-  elsif ( $codon =~ /GGC/i )    { return 'G' }    # Glycine
-  elsif ( $codon =~ /GGG/i )    { return 'G' }    # Glycine
-  elsif ( $codon =~ /GGT/i )    { return 'G' }    # Glycine
+   
+     if ( $codon =~ /TCA/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /TCC/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /TCG/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /TCT/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /TTC/i )   { return 'F' }   # Phenylalanine
+  elsif ( $codon =~ /TTT/i )   { return 'F' }   # Phenylalanine
+  elsif ( $codon =~ /TTA/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /TTG/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /TAC/i )   { return 'Y' }   # Tyrosine
+  elsif ( $codon =~ /TAT/i )   { return 'Y' }   # Tyrosine
+  elsif ( $codon =~ /TAA/i )   { return '_' }   # Stop
+  elsif ( $codon =~ /TAG/i )   { return '_' }   # Stop
+  elsif ( $codon =~ /TGC/i )   { return 'C' }   # Cysteine
+  elsif ( $codon =~ /TGT/i )   { return 'C' }   # Cysteine
+  elsif ( $codon =~ /TGA/i )   { return '_' }   # Stop
+  elsif ( $codon =~ /TGG/i )   { return 'W' }   # Tryptophan
+  elsif ( $codon =~ /CTA/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /CTC/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /CTG/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /CTT/i )   { return 'L' }   # Leucine
+  elsif ( $codon =~ /CCA/i )   { return 'P' }   # Proline
+  elsif ( $codon =~ /CCC/i )   { return 'P' }   # Proline
+  elsif ( $codon =~ /CCG/i )   { return 'P' }   # Proline
+  elsif ( $codon =~ /CCT/i )   { return 'P' }   # Proline
+  elsif ( $codon =~ /CAC/i )   { return 'H' }   # Histidine
+  elsif ( $codon =~ /CAT/i )   { return 'H' }   # Histidine
+  elsif ( $codon =~ /CAA/i )   { return 'Q' }   # Glutamine
+  elsif ( $codon =~ /CAG/i )   { return 'Q' }   # Glutamine
+  elsif ( $codon =~ /CGA/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /CGC/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /CGG/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /CGT/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /ATA/i )   { return 'I' }   # Isoleucine
+  elsif ( $codon =~ /ATC/i )   { return 'I' }   # Isoleucine
+  elsif ( $codon =~ /ATT/i )   { return 'I' }   # Isoleucine
+  elsif ( $codon =~ /ATG/i )   { return 'M' }   # Methionine
+  elsif ( $codon =~ /ACA/i )   { return 'T' }   # Threonine
+  elsif ( $codon =~ /ACC/i )   { return 'T' }   # Threonine
+  elsif ( $codon =~ /ACG/i )   { return 'T' }   # Threonine
+  elsif ( $codon =~ /ACT/i )   { return 'T' }   # Threonine
+  elsif ( $codon =~ /AAC/i )   { return 'N' }   # Asparagine
+  elsif ( $codon =~ /AAT/i )   { return 'N' }   # Asparagine
+  elsif ( $codon =~ /AAA/i )   { return 'K' }   # Lysine
+  elsif ( $codon =~ /AAG/i )   { return 'K' }   # Lysine
+  elsif ( $codon =~ /AGC/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /AGT/i )   { return 'S' }   # Serine
+  elsif ( $codon =~ /AGA/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /AGG/i )   { return 'R' }   # Arginine
+  elsif ( $codon =~ /GTA/i )   { return 'V' }   # Valine
+  elsif ( $codon =~ /GTC/i )   { return 'V' }   # Valine
+  elsif ( $codon =~ /GTG/i )   { return 'V' }   # Valine
+  elsif ( $codon =~ /GTT/i )   { return 'V' }   # Valine
+  elsif ( $codon =~ /GCA/i )   { return 'A' }   # Alanine
+  elsif ( $codon =~ /GCC/i )   { return 'A' }   # Alanine
+  elsif ( $codon =~ /GCG/i )   { return 'A' }   # Alanine
+  elsif ( $codon =~ /GCT/i )   { return 'A' }   # Alanine
+  elsif ( $codon =~ /GAC/i )   { return 'D' }   # Aspartic Acid
+  elsif ( $codon =~ /GAT/i )   { return 'D' }   # Aspartic Acid
+  elsif ( $codon =~ /GAA/i )   { return 'E' }   # Glutamic Acid
+  elsif ( $codon =~ /GAG/i )   { return 'E' }   # Glutamic Acid
+  elsif ( $codon =~ /GGA/i )   { return 'G' }   # Glycine
+  elsif ( $codon =~ /GGC/i )   { return 'G' }   # Glycine
+  elsif ( $codon =~ /GGG/i )   { return 'G' }   # Glycine
+  elsif ( $codon =~ /GGT/i )   { return 'G' }   # Glycine
   else {
-    print STDERR "Bad codon \"$codon\"!!\n";
-    exit;
+   print STDERR "Bad codon \"$codon\"!!\n";
+   exit;
   }
 }
 \end{lstlisting}
@@ -448,9 +448,9 @@ sub codon2aa {
 
 This subroutine is simple: it initializes a hash and then performs a single lookup of its single argument in the hash. The hash has 64 keys, one for each codon.
 
-Notice there's a function exists that returns \verb|true| if the key \verb|$codon| exists in the hash. It's equivalent to the \textit{else} statement in the two previous versions of the codon2aa subroutine.\footnote{A key might exist in a hash, but its value can be undefined.  The defined function checks for defined values. Also, of course, the value might be 0 or the empty string, in which case, it fails a test such as \verb|if ($hash{$key}|) because, even though the key exists and the value is defined, the value evaluates to \verb|false| in a conditional test.}
+Notice there's a function \textit{exists} that returns \verb|true| if the key \verb|$codon| exists in the hash. It's equivalent to the \textit{else} statement in the two previous versions of the \textit{codon2aa} subroutine.\footnote{A key might exist in a hash, but its value can be undefined. The \textit{defined} function checks for defined values. Also, of course, the value might be 0 or the empty string, in which case, it fails a test such as \verb|if ($hash{$key})| because, even though the key exists and the value is defined, the value evaluates to \verb|false| in a conditional test.}
 
-Also notice that to make this subroutine work on lowercase DNA as well as uppercase, you translate the incoming argument into uppercase to match the data in the \verb|%genetic_code| hash. You can't give a regular expression to a hash as a key; it must be a simple scalar value, such as a string or a number, so the case translation must be done first.  (Alternatively, you can make the hash twice as big.) Similarly, character classes don't work in the keys for hashes, so you have to specify each one of the 64 codons individually.
+Also notice that to make this subroutine work on lowercase DNA as well as uppercase, you translate the incoming argument into uppercase to match the data in the \verb|%genetic_code| hash. You can't give a regular expression to a hash as a key; it must be a simple scalar value, such as a string or a number, so the case translation must be done first. (Alternatively, you can make the hash twice as big.) Similarly, character classes don't work in the keys for hashes, so you have to specify each one of the 64 codons individually.
 
 You may wonder why bother wrapping this last bit of code in a subroutine at all. Why not just declare and initialize the hash and do the lookups directly in the hash instead of going through the subroutine? Well, the subroutine does do a little bit of error checking for nonexistent keys, so having a subroutine saves doing that error checking yourself each time you use the hash.
 
@@ -458,7 +458,7 @@ Additionally, wrapping the code in a subroutine gives a little insurance for the
 
 There's another good, and biological, reason why you should use a subroutine for the genetic code. There is actually more than one genetic code, because there are differences as to how DNA encodes amino acids among mammals, plants, insects, and yeast—especially in the mitochondria. So if you have modularized the genetic code, you can easily modify your program to work with a range of organisms.
 
-One of the benefits of hashes is that they are fast. Unfortunately, our subroutine declares the whole hash each time the subroutine is called, even for one lookup. This isn't so efficient; in fact, it's kind of slow. There are other, much faster ways that involve declaring the genetic code hash only once as a global variable, but they would take us a little far afield at this point. Our current version has the advantage of being easy to read. So, let's be officially happy with the hash version of codon2aa and put it into our module in the file \textit{BeginPerlBioinfo.pm} (see \autoref{chap:chapter6}).
+One of the benefits of hashes is that they are fast. Unfortunately, our subroutine declares the whole hash each time the subroutine is called, even for one lookup. This isn't so efficient; in fact, it's kind of slow. There are other, much faster ways that involve declaring the genetic code hash only once as a global variable, but they would take us a little far afield at this point. Our current version has the advantage of being easy to read. So, let's be officially happy with the hash version of \textit{codon2aa} and put it into our module in the file \textit{BeginPerlBioinfo.pm} (see \autoref{chap:chapter6}).
 
 Now that we've got a satisfactory way to translate codons to amino acids, we'll start to use it in the next section and in the examples. 
 
@@ -468,7 +468,7 @@ Now that we've got a satisfactory way to translate codons to amino acids, we'll 
 \textbf{Example 8-1. Translate DNA into protein }
 \lstinputlisting[label=exam:example8.1]{./scripts/example8-1.pl}
 
-To make this work, you'll need the \textit{BeginPerlBioinfo.pm} module for your subroutines in a separate file the program can find, as discussed in \autoref{chap:chapter6}. You also have to add the \textit{codon2aa} subroutine to it.  Alternatively, you can add the code for the subroutine \textit{condon2aa} directly to the program in \autoref{exam:example8.1} and remove the reference to the \textit{BeginPerlBioinfo.pm} module.
+To make this work, you'll need the \textit{BeginPerlBioinfo.pm} module for your subroutines in a separate file the program can find, as discussed in \autoref{chap:chapter6}. You also have to add the \textit{codon2aa} subroutine to it. Alternatively, you can add the code for the subroutine \textit{condon2aa} directly to the program in \autoref{exam:example8.1} and remove the reference to the \textit{BeginPerlBioinfo.pm} module.
 
 Here's the output from \autoref{exam:example8.1}:
 
@@ -482,13 +482,13 @@ CGACGTCTTCGTACGGGACTAGCTCGTGTCGGTCGC
 RRLRTGLARVGR
 \end{lstlisting}
 
-You've seen all the elements in i\autoref{exam:example8.1} before, except for the way it loops through the DNA with this statement:
+You've seen all the elements in \autoref{exam:example8.1} before, except for the way it loops through the DNA with this statement:
 
 \begin{lstlisting}
 for(my $i=0; $i < (length($dna) - 2) ; $i += 3) {
 \end{lstlisting}
 
-Recall that a \verb|for| loop has three parts, delimited by the two semicolons.  The first part initializes a counter: \verb|my $i=0| statically scopes the \verb|$i| variable so it's visible only inside this block, and any other \verb|$i| elsewhere in the code (well, in this case, there aren't any, but it can happen) is now invisible inside the block. The third part of the \verb|for| loop increments the counter after all the statements in the block are executed and before returning to the beginning of the loop:
+Recall that a \verb|for| loop has three parts, delimited by the two semicolons. The first part initializes a counter: \verb|my $i=0| statically scopes the \verb|$i| variable so it's visible only inside this block, and any other \verb|$i| elsewhere in the code (well, in this case, there aren't any, but it can happen) is now invisible inside the block. The third part of the \verb|for| loop increments the counter after all the statements in the block are executed and before returning to the beginning of the loop:
 
 \begin{lstlisting}
 $i += 3
@@ -553,7 +553,7 @@ Now add subroutine \textit{dna2peptide} to the \textit{BeginPerlBioinfo.pm} modu
 
 Notice that you've eliminated one of the variables in making the subroutine out of \autoref{exam:example8.1}: the variable \verb|$codon|. Why?
 
-Well, one reason is because you can. In \autoref{exam:example8.1}, you were using substr to extract the codon from \verb|$dna|, saving it in variable \verb|$codon| and then passing it into the subroutine codon2aa. This new way eliminates the middleman. Put the call to \textit{substr} that extracts the codon as the argument to the subroutine codon2aa so that the value is passed in just as before, but without having to copy it to the variable \verb|$codon| first. 
+Well, one reason is because you can. In \autoref{exam:example8.1}, you were using \textit{substr} to extract the codon from \verb|$dna|, saving it in variable \verb|$codon| and then passing it into the subroutine \textit{codon2aa}. This new way eliminates the middleman. Put the call to \textit{substr} that extracts the codon as the argument to the subroutine \textit{codon2aa} so that the value is passed in just as before, but without having to copy it to the variable \verb|$codon| first. 
 
 This has somewhat improved efficiency and speed. Since copying strings is one of the slower things computer programs do, eliminating a bunch of string copies is an easy and effective way to speed up a program.
 
@@ -615,7 +615,7 @@ FASTA format is basically just lines of sequence data with newlines at the end s
 
 Much FASTA-aware software insists that there must be only one header line; others permit several lines. Our subroutine will accept either one or several header lines plus comments beginning with \#.
 
-The following is a FASTA file. We'll call it sample.dna and use it in several programs. You should copy it, download it from this book's web site, or make up your own file with your own data. 
+The following is a FASTA file. We'll call it \textit{sample.dna} and use it in several programs. You should copy it, download it from this book's web site, or make up your own file with your own data. 
 
 \begin{lstlisting}
 > sample dna | (This is a typical fasta header.)
@@ -644,7 +644,7 @@ acacctgagccactctcagatgaggaccta
 \end{lstlisting}
 
 \subsection{A Design to Read FASTA Files}
-In \autoref{chap:chapter4}, you learned how to read in sequence data; here, you just have to extend that method to deal with the header lines.  You'll also learn how to discard empty lines and lines that begin with the pound sign \#, i.e., comments in Perl and other languages and file formats. (These don't appear in the FASTA file \textit{sample.dna} just shown.)
+In \autoref{chap:chapter4}, you learned how to read in sequence data; here, you just have to extend that method to deal with the header lines. You'll also learn how to discard empty lines and lines that begin with the pound sign \#, i.e., comments in Perl and other languages and file formats. (These don't appear in the FASTA file \textit{sample.dna} just shown.)
 
 There are two choices when reading in the data. You can read from the open file one line at a time, making decisions as you go. Or, you can slurp the whole file into an array and then operate on the array. For very big files, it's sometimes best to read them one line at a time, especially if you're looking for some small bit of information. (This is because reading a large file into an array uses a large amount of memory. If your system isn't robust enough, it may crash.)
 
@@ -763,7 +763,7 @@ sub extract_sequence_from_fasta_data {
 }
 \end{lstlisting}
 
-Notice that nowhere in the code for \textit{extract\_sequence\_from\_fasta\_data} do you check to see what's in the file: is it really DNA or protein sequence data in FASTA format?  Of course, you can write a subroutine—call it \textit{is\_fasta}—that checks the data to see if it's what we expect. But I'll leave that for the exercises. 
+Notice that nowhere in the code for \textit{extract\_sequence\_from\_fasta\_data} do you check to see what's in the file: is it really DNA or protein sequence data in FASTA format? Of course, you can write a subroutine—call it \textit{is\_fasta}—that checks the data to see if it's what we expect. But I'll leave that for the exercises. 
 
 A few comments about the \textit{extract\_sequence\_from\_fasta\_data} subroutine should be made. The following line includes a variable declaration as it is used in a loop: 
 
@@ -779,7 +779,7 @@ Some of the regular expressions deserve brief comment. In this line:
 if ($line =~ /^\s*$/) {
 \end{lstlisting}
 
-the \verb|\s| matches whitespace, that is, space, tab, formfeed, carriage return, or newline. \verb|\s*| matches any amount of whitespace (even none).  The \verb|^| matches the beginning of the line, and the \verb|$| matches the end of the line. So altogether, this regular expression matches blank lines with nothing or only whitespace in them.
+the \verb|\s| matches whitespace, that is, space, tab, formfeed, carriage return, or newline. \verb|\s*| matches any amount of whitespace (even none). The \verb|^| matches the beginning of the line, and the \verb|$| matches the end of the line. So altogether, this regular expression matches blank lines with nothing or only whitespace in them.
 
 This regular expression also has nothing or only whitespace at the beginning of the line, up to a pound sign:
 
@@ -823,7 +823,7 @@ sub print_sequence {
 }
 \end{lstlisting}
 
-The code depends on the behavior of substr, which gives the partial substring at the end of the string, even if it's less than the requested length. You can see there's a new \textit{print\_sequence} subroutine in the \textit{BeginPerlBioinfo.pm} module (see \autoref{chap:chapter6}). We remembered to keep the statement \verb|1|; as the last line of the module. \autoref{exam:example8.2} shows the main program. 
+The code depends on the behavior of \textit{substr}, which gives the partial substring at the end of the string, even if it's less than the requested length. You can see there's a new \textit{print\_sequence} subroutine in the \textit{BeginPerlBioinfo.pm} module (see \autoref{chap:chapter6}). We remembered to keep the statement \verb|1;| as the last line of the module. \autoref{exam:example8.2} shows the main program. 
 
 \textbf{Example 8-2. Read a FASTA file and extract the sequence data}
 \lstinputlisting[label=exam:example8.2]{./scripts/example8-2.pl}
@@ -923,8 +923,7 @@ Long stretches of DNA that don't contain any stop codons are called \textit{open
 Based on the facts just presented, let's write some code that translates the DNA in all six reading frames.  
 In the real world, you'd look around for some subroutines that are already written to do that task. Given the basic nature of the task—something anyone who studies DNA has to do—you'd likely find something. But this is a tutorial, not the real world, so let's soldier on.
 
-This problem doesn't sound too daunting. So, take stock of the subroutines at your disposal, think of where you are and how you can get
-to your destination.
+This problem doesn't sound too daunting. So, take stock of the subroutines at your disposal, think of where you are and how you can get to your destination.
 
 Looking through the subroutines we've already written, recall \textit{dna2peptide}. You may recall considering adding some arguments to specify starting and end points. Let's do this now.
 
@@ -962,7 +961,7 @@ subroutine translate_frame ( DNA, start, end )
 }
 \end{lstlisting}
 
-That went well! Luckily, the substr built-in Perl function made it easy to apply the desired start and end points, while passing the DNA into the already written \textit{dna2peptide} subroutine.
+That went well! Luckily, the \textit{substr} built-in Perl function made it easy to apply the desired start and end points, while passing the DNA into the already written \textit{dna2peptide} subroutine.
 
 Note that the length of the sequence is \verb|end-start+1|. To give a small example: if you start at position 3 and end at position 5, you've got the bases at positions 3, 4, and 5, three bases in all, which is exactly what 5 - 3 + 1 equals.
 
@@ -976,7 +975,7 @@ Dealing with indices like this has to be done carefully, or the code won't work.
 Pay attention to the indices!
 \end{adjustwidth}
 
-You have to decide if you wish to keep the numbering of positions from 0, which is Perl's way to do it, or the first character of the sequence is in position 1, which is the biologist's way to do it. Let's do it the biologist's way. The positions will be decreased by one when passed to the Perl function substr, which, of course, does it Perl's way.
+You have to decide if you wish to keep the numbering of positions from 0, which is Perl's way to do it, or the first character of the sequence is in position 1, which is the biologist's way to do it. Let's do it the biologist's way. The positions will be decreased by one when passed to the Perl function \textit{substr}, which, of course, does it Perl's way.
 
 The corrected pseudocode looks like this:
 
@@ -991,8 +990,7 @@ subroutine translate_frame ( DNA, start, end )
 }
 \end{lstlisting}
 
-The length of the desired sequence doesn't change with the change in
-indices, since:
+The length of the desired sequence doesn't change with the change in indices, since:
 
 \begin{lstlisting}
 (end - 1) - (start - 1) + 1 = end - start + 1
@@ -1099,7 +1097,7 @@ Write a program that can search by name for a gene in an unsorted array.
 
 \textcolor{red}{\textit{Exercise 8.3}}
 \begin{adjustwidth}{1cm}{}
-Write a program that can search by name for a gene in a sorted array; use the Perl sort function to sort an array. For extra credit: write a binary search subroutine to do the searching. 
+Write a program that can search by name for a gene in a sorted array; use the Perl \textit{sort} function to sort an array. For extra credit: write a binary search subroutine to do the searching. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.4}}
@@ -1115,9 +1113,9 @@ Write a program that searches by name for a gene in a hash. Get the genes from y
 \textcolor{red}{\textit{Exercise 8.6}}
 \begin{adjustwidth}{1cm}{}
 Write a subroutine that checks an array of data and returns \verb|true| if it's in FASTA format. Note that FASTA expects the standard IUB/IUPAC amino acid and nucleic acid codes, plus the dash (-) that represents a gap of unknown length. Also, the asterisk (*) represents a stop codon for amino acids. Be careful using an asterisk in regular expressions; use a \verb|\*| to escape it to match an actual asterisk. 
+\end{adjustwidth}
 
 The remaining problems deal with the effect of mutations in DNA on the proteins they encode. They combine the subject of randomization and mutations from \autoref{chap:chapter7} plus the subject of the genetic code from this chapter. 
-\end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.7}}
 \begin{adjustwidth}{1cm}{}
@@ -1141,7 +1139,7 @@ Some codons are more likely than others to occur in random DNA. For instance, th
 
 \textcolor{red}{\textit{Exercise 8.11}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that takes as arguments an amino acid; a position 1, 2, or 3; and a nucleotide. It then takes each codon that encodes the specified amino acid (there may be from one to six such codons), and mutates it at the specified position to the specified nucleotide.  Finally, it returns the set of amino acids that are encoded by the mutated codons. 
+Write a subroutine that takes as arguments an amino acid; a position 1, 2, or 3; and a nucleotide. It then takes each codon that encodes the specified amino acid (there may be from one to six such codons), and mutates it at the specified position to the specified nucleotide. Finally, it returns the set of amino acids that are encoded by the mutated codons. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.12}}
