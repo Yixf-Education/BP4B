@@ -1,0 +1,481 @@
+\chapter{Restriction Maps and Regular Expressions}
+\label{chap:chapter9}
+\minitoc
+
+In this chapter, I'll give an overview of Perl regular expressions and Perl operators, two essential features of the language we've been using all along. We'll also investigate the programming of a standard, fundamental molecular-biology technique: the discovery of a restriction map for a sequence. Restriction digests were one of the original ways to "fingerprint" DNA; this can now be simulated on the computer.
+
+Restriction maps and their associated restriction digests are common calculations in the laboratory and are provided by several software packages. They are essential tools in the planning of cloning experiments; they can be used to insert a desired stretch of DNA into a cloning vector, for instance. Restriction maps also find application in sequencing projects, for instance in shotgun or directed sequencing.
+
+\section{Regular Expressions}
+We've been dealing with regular expressions for a while now. This section fills in some background an.d ties together the somewhat scattered discussions of regular expressions from earlier parts of the book.
+
+Regular expressions are interesting, important, and rich in capabilities. Jeffrey Friedl's book \textit{Mastering Regular Expressions} (O'Reilly) is entirely devoted to them. Perl makes particularly good use of regular expressions, and the Perl documentation explains them well.  Regular expressions are useful when programming with biological data such as sequence, or with GenBank, PDB, and BLAST files.
+
+Regular expressions are ways of representing—and searching for—many strings with one string. Although they are not strictly the same thing, it's useful to think of regular expressions as a kind of highly developed set of wildcards. The special characters in regular expressions are more properly known as metacharacters.
+
+Most people are familiar with wildcards, which are found in search engines or in the game of poker. You might find the reference to every word that starts with \verb|biolog| by typing \verb|biolog*|, for instance. Or you may find yourself holding five aces. (Different situations may use different wildcards. Perl regular expressions use * to mean "0 or more of the preceding item," not "followed by anything" as in the wildcard example just given.)
+
+In computer science, these kinds of wildcards or metacharacters have an important history, both practically and theoretically. The asterisk character in particular is called the Kleene closure after the eminent logician who invented it. As a nod to the theory, I'll mention there is a simple model of a computer, less powerful than a Turing machine, that can deal with exactly the same kinds of languages that can be described by regular expressions. This machine model is called a \textit{finite state automaton}. But enough theory for now. 
+
+We've already seen many examples that use regular expressions to find things in a DNA or protein sequence. Here I'll talk briefly about the fundamental ideas behind regular expressions as an introduction to some terminology. There is a useful summary of regular-expression features in \autoref{chap:chapterab}. Finally, we'll see how to learn more about them in the Perl documentation.
+
+So let's start with a practical example that should be familiar by now to those who have been reading this text sequentially: using character classes to search DNA. Let's say there is a small motif you'd like to find in your library of DNA that is six basepairs long: CT followed by C or G or T followed by ACG. The third nucleotide in this motif is never A, but it can be C, G, or T. You can make a regular expression by letting the character class [CGT] stand for the variable position. The motif can then be represented by a regular expression that looks like this: CT[CGT]ACG. This is a motif that is six base pairs long with a C,G, or T in the third position. If your DNA was in a scalar variable \verb|$dna|, you can test for the presence of the motif by using the regular expression as a conditional test in a pattern-matching statement, like so:
+
+\begin{lstlisting}
+if( $dna =~ /CT[CGT]ACG/ ) {
+  print "I found the motif!!\n";
+}
+\end{lstlisting}
+
+Regular expressions are based on three fundamental ideas:
+
+\textcolor{red}{\textit{Repetition (or closure)}}
+\begin{adjustwidth}{1cm}{}
+The asterisk (*), also called Kleene closure or star, indicates 0 or more repetitions of the character just before it. For example, \verb|abc*| matches any of these strings: \verb|ab|, \verb|abc|, \verb|abcc|, \verb|abccc|, \verb|abcccc|, and so on. The regular expression matches an infinite number of strings. 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Alternation}}
+\begin{adjustwidth}{1cm}{}
+In Perl, the pattern \verb=(a|b)= (read: \verb|a or b|) matches the string \verb|a| or the string \verb|b|.
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Concatenation}}
+\begin{adjustwidth}{1cm}{}
+This is a real obvious one. In Perl, the string \verb|ab| means the character \verb|a| followed by (concatenated with) the character \verb|b|.
+\end{adjustwidth}
+
+The use of parentheses for grouping is important: they are also metacharacters. So, for instance, the string \verb|(abc|def)z*x| matches such strings as \verb|abcx|, \verb|abczx|, \verb|abczzx|, \verb|defx|, \verb|defzx|, \verb|defzzzzzx|, and so on. In English, it matches either \verb|abc| or \verb|def| followed by zero or more \verb|z|'s, and ending with an \verb|x|. This example combines the ideas of grouping, alternation, closure, and concatenation. The real power of regular expressions is seen in this combining of the three fundamental ideas. 
+
+Perl has many regular-expression features. They are basically shortcuts for the three fundamental ideas we've just seen—repetition, alternation, and concatenation. For instance, the character class shown earlier can be written using alternation as \verb|(C|G|T)|. Another common feature is the period, which can stand for any character, except a newline. So \verb|ACG.*GCA| stands for any DNA that starts with \verb|ACG| and ends with \verb|GCA|. In English, this reads as: \verb|ACG| followed by 0 or more characters followed by \verb|GCA|. 
+
+In Perl, regular expressions are usually enclosed within forward slashes and are used as pattern-matching specifiers. Check the documentation (or \autoref{chap:chapterab}), for \verb|m//|, which includes some options that affect the behavior of the regular expressions. Regular expressions are also used in many of Perl's built-in commands, as you will see.
+
+The Perl documentation is essential: start with the perlre section of the Perl manual at\\
+\href{http://www.perldoc.com/perl5.6/pod/perlre.html\#top}{http://www.perldoc.com/perl5.6/pod/perlre.html\#top}. 
+
+\section{Restriction Maps and Restriction Enzymes}
+One of the great discoveries in molecular biology, which paved the way for the current golden age in biological research, was the discovery of restriction enzymes. For the nonbiologist, and to help set up the programming material that follows, here's a short overview. 
+
+\subsection{Background}
+\textit{Restriction enzymes} are proteins that cut DNA at short, specific sequences; for example, the popular restriction enzymes EcoRI and HindIII are widely used in the lab. EcoRI cuts where it finds \verb|GAATTC|, between the \verb|G| and \verb|A|. Actually, it cuts both complementary strands, leaving an overhang on each end. These "sticky ends" of a few bases in single strands make it possible for the fragments to re-form, making possible the insertion of DNA into vectors for cloning and sequencing, for instance. HindIII cuts at \verb|AAGCTT| and cuts between the \verb|A|s. Some restriction enzymes cut in the middle and result in "blunt ends" with no overhang. About 1,000 restriction enzymes are known. 
+
+If you look at the reverse complement of the restriction enzyme EcoRI, you see it's \verb|GAATTC|, the same sequence. This is a biological version of a palindrome, a word that reads the same in reverse. Many restriction sites are palindromes.
+
+Computing restriction maps is a common and practical bioinformatics calculation in the laboratory. Restriction maps are computed to plan experiments, to find the best way to cut DNA to insert a gene, to make a site-specific mutation, or for several other applications of recombinant DNA techniques. By computing first, the laboratory scientist saves considerably on the necessary trial-and-error at the laboratory bench.  Look for more about restriction enzymes at \href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html}.
+
+We'll now write a program that does something useful in the lab: it will look for restriction enzymes in a sequence of DNA and report back with a restriction map of exactly where in the DNA the restriction enzymes appear. 
+
+\subsection{Planning the Program}
+Back in \autoref{chap:chpater5}, you saw how to look for regular expressions in text.  So you've an idea of how to find motifs in sequences with Perl. Now let's think about how to use those techniques to create restriction maps. Here are some questions to ask:
+
+\textcolor{red}{\textit{Where do I find restriction enzyme data?}}
+\begin{adjustwidth}{1cm}{}
+Restriction enzyme data can be found at the Restriction Enzyme Database, (REBASE), which is on the Web at \href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html}.
+\end{adjustwidth}
+
+\textcolor{red}{\textit{How do I represent restriction enzymes in regular expressions?}}
+\begin{adjustwidth}{1cm}{}
+Exploring that site, you'll see that restriction enzymes are represented in their own language. We'll try to translate that language into the language of regular expressions.
+\end{adjustwidth}
+
+\textcolor{red}{\textit{How do I store restriction enzyme data?}}
+\begin{adjustwidth}{1cm}{}
+There are about 1,000 restriction enzymes with names and definitions.  This makes them candidates for the fast key-value type of lookup hashes provide. When you write a real application, say for the Web, it's a good idea to create a DBM file to store the information, ready to use when a program needs a lookup. I will cover DBM files in \autoref{chap:chapter10}; here, I'll just demonstrate the principle. We'll keep only a few restriction enzyme definitions in the program.
+\end{adjustwidth}
+
+\textcolor{red}{\textit{How do I accept queries from the user?}}
+\begin{adjustwidth}{1cm}{}
+You can ask for a restriction enzyme name, or you can allow the user to type in a regular expression directly. We'll do the first. Also, you want to let the user specify which sequence to use. Again, to simplify matters, you'll just read in the data from a sample DNA file. 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{How do I report back the restriction map to the user?}}
+\begin{adjustwidth}{1cm}{}
+This is an important question. The simplest way is to generate a list of positions with the names of the restriction enzymes found there. This is useful for further processing, as it presents the information very simply.
+
+But what if you don't want to do further processing; you just want to communicate the restriction map to the user? Then, perhaps it'd be more useful to present a graphical display, perhaps print out the sequence with a line above it that flags the presence of the enzymes.
+
+There are lots of fancy bells and whistles you can use, but let's do it the simple way for now and output a list.
+\end{adjustwidth}
+
+So, the plan is to write a program that includes restriction enzyme data translated into regular expressions, stored as the values of the keys of the restriction enzyme names. DNA sequence data will be used from the file, and the user will be prompted for names of restriction enzymes.  The appropriate regular expression will be retrieved from the hash, and we'll search for all instances of that regular expression, plus their locations. Finally, the list of locations found will be returned. 
+
+\subsection{Restriction Enzyme Data}
+The restriction enzyme data is available in a variety of formats, as a visit to the REBASE web site will show you. After looking around, you decide to get the information from the \textit{bionet} file, which has a fairly simple layout. Here's the header and a few restriction enzymes from that file: 
+
+\begin{lstlisting}
+REBASE version 104                                              bionet.104
+ 
+    =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    REBASE, The Restriction Enzyme Database   http://rebase.neb.com
+    Copyright (c)  Dr. Richard J. Roberts, 2001.   All rights reserved.
+    =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 
+Rich Roberts                                                    Mar 30 2001
+ 
+AaaI (XmaIII)                     C^GGCCG
+AacI (BamHI)                      GGATCC
+AaeI (BamHI)                      GGATCC
+AagI (ClaI)                       AT^CGAT
+AaqI (ApaLI)                      GTGCAC
+AarI                              CACCTGCNNNN^
+AarI                              ^NNNNNNNNGCAGGTG
+AatI (StuI)                       AGG^CCT
+AatII                             GACGT^C
+AauI (Bsp1407I)                   T^GTACA
+AbaI (BclI)                       T^GATCA
+AbeI (BbvCI)                      CC^TCAGC
+AbeI (BbvCI)                      GC^TGAGG
+AbrI (XhoI)                       C^TCGAG
+AcaI (AsuII)                      TTCGAA
+AcaII (BamHI)                     GGATCC
+AcaIII (MstI)                     TGCGCA
+AcaIV (HaeIII)                    GGCC
+AccI                              GT^MKAC
+AccII (FnuDII)                    CG^CG
+AccIII (BspMII)                   T^CCGGA
+Acc16I (MstI)                     TGC^GCA
+Acc36I (BspMI)                    ACCTGCNNNN^
+Acc36I (BspMI)                    ^NNNNNNNNGCAGGT
+Acc38I (EcoRII)                   CCWGG
+Acc65I (KpnI)                     G^GTACC
+Acc113I (ScaI)                    AGT^ACT
+AccB1I (HgiCI)                    G^GYRCC
+AccB2I (HaeII)                    RGCGC^Y
+AccB7I (PflMI)                    CCANNNN^NTGG
+AccBSI (BsrBI)                    CCG^CTC
+AccBSI (BsrBI)                    GAG^CGG
+AccEBI (BamHI)                    G^GATCC
+AceI (TseI)                       G^CWGC
+AceII (NheI)                      GCTAG^C
+AceIII                            CAGCTCNNNNNNN^
+AceIII                            ^NNNNNNNNNNNGAGCTG
+AciI                              C^CGC
+AciI                              G^CGG
+AclI                              AA^CGTT
+AclNI (SpeI)                      A^CTAGT
+AclWI (BinI)                      GGATCNNNN^
+\end{lstlisting}
+
+Your first task is to read this file and get the names and the recognition site (or restriction site) for each enzyme.To simplify matters for now, simply discard the parenthesized enzyme names.
+
+How can this data be read?
+
+\begin{lstlisting}
+Discard header lines 
+
+For each data line:
+
+  remove parenthesized names, for simplicity's sake
+
+  get and store the name and the recognition site
+
+  Translate the recognition sites to regular expressions
+    --but keep the recognition site, for printing out results
+}
+
+return the names, recognition sites, and the regular expressions
+\end{lstlisting}
+
+This is high-level undetailed pseudocode, so let's refine and expand it.  (Notice that the curly brace isn't properly matched. That's okay, because there are no syntax rules for pseudocode; do whatever works for you!) Here's some pseudocode that discards the header lines: 
+
+\begin{lstlisting}
+foreach line 
+
+  if /Rich Roberts/ 
+
+    break out of the foreach loop
+
+}
+\end{lstlisting}
+
+This is based on the format of the file, in which the string you're looking for is the last text before the data lines start. (Of course, if the format of the file should change, this might no longer work.)
+
+Now let's further expand the pseudocode, thinking how to do the tasks involved: 
+
+\begin{lstlisting}
+# Discard header lines
+# This keeps reading lines, up to a line containing "Rich Roberts"
+foreach line 
+  if /Rich Roberts/ 
+    break out of the foreach loop
+}
+
+For each data line:
+
+  # Split the two or three (if there's a parenthesized name) fields
+  @fields = split( " ", $_);
+
+  # Get and store the name and the recognition site
+  $name = shift @fields;
+
+  $site = pop @fields;
+
+  # Translate the recognition sites to regular expressions
+    --but keep the recognition site, for printing out results
+}
+
+return the names, recognition sites, and the regular expressions
+\end{lstlisting}
+
+This isn't the translation, but let's look at what you've done.
+
+First, you want to extract the name and recognition site data from a string. The most common way to separate words in a line of Perl, especially if the string is nicely formatted, is with the Perl built-in function \textit{split}.
+
+If you have two or three per line that have whitespace and are separated from each other by whitespace, you can get them into an array with the following simple call to split (which acts on the line as stored in the special variable @\_.):
+
+\begin{lstlisting}
+($name, $site) = split(" ")
+\end{lstlisting}
+
+The \verb|@fields| array may have two or three elements depending on whether there was a parenthesized alternate enzyme named. But you always want the first and the last elements: 
+
+\begin{lstlisting}
+$name = shift@fields;
+$site = pop@fields;
+\end{lstlisting}
+
+You now have the problem of translating the recognition site to a regular expression.
+
+Looking over the recognition sites and having read the documentation on REBASE you found on its web site, you know that the cut site is represented by the caret (\^). This doesn't help make a regular expression that finds the site in sequence, so you should remove it (see Exercise 9.6 in the \autoref{sect:section9.4} section).
+
+Also notice that the bases given in the recognition sites are not just the bases A, C, G, and T, but they also use the more extended alphabet presented in \autoref{tab:table4.1}. These additional letters include a letter for every possible group of two, three, or four bases. They're really like abbreviations for character classes in that respect. Aha! Let's write a subroutine that substitutes character classes for these codes, and then we'll have our regular expression.
+
+Of course, REBASE uses them, because a given restriction enzyme might well match a few different recognition sites.
+
+\autoref{exam:example9.1} is a subroutine that, given a string, translates these codes into character classes. 
+
+\textbf{Example 9-1. Translate IUB ambiguity codes to regular expressions}
+\lstinputlisting[label=exam:example9.1]{./scripts/example9-1.pl}
+
+It seems you're almost ready to write a subroutine to get the data from the REBASE datafile. But there's one important item you haven't addressed: what exactly is the data you want to return?
+
+You plan to return three data items per line of the original REBASE file: the enzyme name, the recognition site, and the regular expression. This doesn't fit easily into a hash. You can return an array that stores these three data items in three consecutive slots. This can work: to read the data, you'd have to read groups of three items from the array. It's doable but might make lookup a little difficult. As you get into more advanced Perl, you'll find that you can create your own complex data structures.
+
+Since you've learned about \textit{split}, maybe you can have a hash in which the key is the enzyme name, and the value is a string with the recognition site and the regular expression separated by whitespace. Then you can look up the data fast and just extract the desired values using \textit{split}. \autoref{exam:example9.2} shows this method. 
+
+\textbf{Example 9-2. Subroutine to parse a REBASE datafile}
+\lstinputlisting[label=exam:example9.2]{./scripts/example9-2.pl}
+
+This \textit{parseREBASE} subroutine does quite a lot. Is there, however, too much in one subroutine; should it be rewritten? It's a good question to ask yourself as you're writing code. In this case, let's leave it as it is. However, in addition to doing a lot, it also does it in a few new ways, which we'll look at now. 
+
+\subsection{Logical Operators and the Range Operator}
+You're using a \textit{foreach} loop to process the lines of the \textit{bionet} file stored in the \verb|@rebasefile| array.
+
+Within that loop you use a new feature of Perl to skip the header lines,
+called the \textit{range operator} (..), which is used in this line:
+
+\begin{lstlisting}
+( 1 .. /Rich Roberts/ ) and next;
+\end{lstlisting}
+
+This has the effect of skipping everything from the first line up to and including the line with "Rich Roberts," in other words, the header lines. (Range operators must have at least one of their endpoints given as a number to work like this.)
+
+The \textit{and} function is a \textit{logical operator}. Logical operators are available in most programming languages. In Perl they've become very popular, so although we haven't used them a great deal in this book, you'll often come across code that does. In fact, you'll start to see them a bit more as the book continues.
+
+Logical operators can test if two conditions are both \verb|true|, for instance:
+
+\begin{lstlisting}
+if( $string eq 'kinase'  and  $num == 3 ) {
+  ...
+}
+\end{lstlisting}
+
+Only if both the conditions are \verb|true| is the entire statement \verb|true|.
+
+Similarly, with logical operators you can test if at least one of the conditions is \verb|true| using the or operator, for instance: 
+
+\begin{lstlisting}
+if( $string eq 'kinase'  or  $num == 3 ) {
+  ...
+}
+\end{lstlisting}
+
+Here, the \verb|if| statement is \verb|true| if either or both of the conditionals are \verb|true|.
+
+There is also the \textit{not} logical operator, a negation operator with which you can test if something is \verb|false|: 
+
+\begin{lstlisting}
+if( not  6 == 9  ) {
+  ...
+}
+\end{lstlisting}
+
+\verb|6 == 9| returns \verb|false|, which is negated by the \textit{not} operator, so the entire conditional returns \verb|true|.
+
+There are also the closely related operators, \verb=&&= for and, \verb=||= for or, and \verb=!= for not. These have slightly different behavior (actually, different precedence); most Perl code uses the versions I've shown, but both are common.
+
+When in doubt about precedence, you can always parenthesize expressions to ensure your statement means what you intend it to mean. (See \autoref{sect:section9.3.1} later in this chapter.)
+
+Logical operators also have an order of evaluation, which makes them useful for controlling the flow of programs. Let's take a look at how the \textit{and} operator evaluates its two arguments. It first evaluates the left argument, and if it's \verb|true|, evaluates and returns the right. If the left argument evaluates to \verb|false|, the right argument is never touched.  So the \textit{and} operator can act like a mini \verb|if| statement. For instance, the following two examples are equivalent: 
+
+\begin{lstlisting}
+if( $verbose ) {
+  print $helpful_but_verbose_message;
+}
+
+$verbose and print $helpful_but_verbose_message;
+\end{lstlisting}
+
+Of course, the \textit{if} statement is more flexible, because it allows you to easily add more statements to the block, and \textit{elsif} and \textit{else} conditions to their own blocks. But for simple situations, the \verb|and| operator works well.\footnote{You can even chain logical operators one after the other to build up more complicated expressions and use parentheses to group them. Personally, I don't like that style much, but in Perl, there's more than one way to do it!}
+
+The logical operator \textit{or} evaluates and returns the left argument if it's \verb|true|; if the left argument doesn't evaluate to \verb|true|, the or operator then evaluates and returns the right argument. So here's another way to write a one-line statement that you'll often see in Perl programs: 
+
+\begin{lstlisting}
+open(MYFILE, $file) or die "I cannot open file $file: $!";
+\end{lstlisting}
+
+This is basically equivalent to our frequent:
+
+\begin{lstlisting}
+unless(open(MYFILE, $file)) {
+  print "I cannot open file $file\n";
+  exit;
+}
+\end{lstlisting}
+
+Let's go back and take a look at the \textit{parseREBASE} subroutine with the line: 
+
+\begin{lstlisting}
+( 1 .. /Rich Roberts/ ) and next;
+\end{lstlisting}
+
+The left argument is the range \verb|1 .. /Rich Roberts/|. When you're in that range of lines, the range operator returns a \verb|true| value.  Because it's \verb|true|, the \verb|and| boolean operator goes on to see if the value on the other side is \verb|true| and finds the \textit{next} function, which evaluates to \verb|true|, even as it takes you back to the "next" iteration of the enclosing \textit{foreach} loop. So if you're between the first line and the \verb|Rich Roberts| line, you skip the rest of the loop.  
+
+Similarly, the line:
+
+\begin{lstlisting}
+/^\s*$/ and next;
+\end{lstlisting}
+
+takes you back to the next iteration of the \verb|foreach| if the left
+argument, which matches a blank line, is \verb|true|.
+
+The other parts of this \textit{parseREBASE} subroutine have already been
+discussed, during the design phase. 
+
+\subsection{Finding the Restriction Sites}
+So now it's time to write a main program and see our code in action. Let's start with a little pseudocode to see what still needs to be done: 
+
+\begin{lstlisting}
+#
+# Get DNA
+#
+get_file_data
+
+extract_sequence_from_fasta_data
+
+#
+# Get the REBASE data into a hash, from file "bionet"
+#
+parseREBASE('bionet');
+
+for each user query
+
+  If query is defined in the hash
+    Get positions of query in DNA
+
+  Report on positions, if any
+
+}
+\end{lstlisting}
+
+You now need to write a subroutine that finds the positions of the query in the DNA. Remember that trick of putting a global search in a \verb|while| loop from \autoref{exam:example5.7} and take heart. No sooner said than: 
+
+\begin{lstlisting}
+Given arguments $query and $dna
+
+while ( $dna =~ /$query/ig ) {
+  save the position of the match
+}
+
+return @positions
+\end{lstlisting}
+
+When you used this trick before, you just counted how many matches there were, not what the positions were. Let's check the documentation for clues, specifically the list of built-in functions in the documentation.  It looks like the \verb|pos| function will solve the problem. It gives the location of the last match of a variable in an \verb|m//g| search.  \autoref{exam:example9.3} shows the main program followed by the required subroutine. It's a simple subroutine, given the Perl functions like pos that make it easy. 
+
+\textbf{Example 9-3. Make restriction map from user queries}
+\lstinputlisting[label=exam:example9.3]{./scripts/example9-3.pl}
+
+Here is some sample output from \autoref{exam:example9.3}:
+
+\begin{lstlisting}
+Search for what restriction enzyme (or quit)?: AceI
+Searching for AceI G^CWGC GC[AT]GC
+A restriction site for AceI at locations:
+54 94 582 660 696 702 840 855 957
+
+Search for what restriction enzyme (or quit)?: AccII
+Searching for AccII CG^CG CGCG
+A restriction site for AccII at locations:
+181
+
+Search for what restriction enzyme (or quit)?: AaeI
+A restriction site for AaeI is not in the DNA:
+
+Search for what restriction enzyme (or quit)?: quit
+\end{lstlisting}
+
+Notice the \verb|length($&)| in the subroutine \textit{match\_positions}. That \verb|$&| is a special variable that's set after a successful regular-expression match.  It stands for the sequence that matched the regular expression. Since \textit{pos} gives the position of the first base \textit{following} the match, you have to subtract the length of the matching sequences, plus one (to make the bases start at position 1 instead of position 0) to report the starting position of the match. Other special variables include \verb|$`| which contains everything in the string before the successful match; and \verb|$´|, which contains everything in the string after the successful match. So, for example: \verb|'123456' =~ /34/| succeeds at setting these special variables like so: \verb|$`= '12'|, \verb|$& = '34'|, and \verb|$´ = '56'|.
+
+What we have here is admittedly bare bones, but it does work. See the exercises at the end of the chapter for ways to extend this code. 
+
+\section{Perl Operations}
+We've made it pretty far in this introductory programming book without talking about basic arithmetic operations, because you haven't really needed much more than addition to increment counters.
+
+However, an important part of any programming language, Perl included, is the ability to do mathematical calculations. Look at \autoref{chap:chpaterab}, which shows the basic operations available in Perl. 
+
+\subsection{Precedence of Operations and Parentheses}
+Operations have rules of precedence. These enable the language to decide which operations should be done first when there are a few of them in a row. The order of operations can change the result, as the following example demonstrates.
+
+Say you have the code \verb|8 + 4 / 2|. If you did the division first, you'd get \verb|8 + 2|, or \verb|10|. However, if you did the addition first, you'd get \verb|12 / 2|, or \verb|6|.
+
+Now programming languages assign precedences to operations. If you know these, you can write expressions such as \verb|8 + 4 / 2|, and you'd know what to expect. But this is a slippery slope.
+
+For one thing, what if you get it wrong? Or, what if someone else has to read the code who doesn't have the memorization powers you do? Or, what if you memorize it for one language and Perl does it differently?  (Different languages do indeed have different precedence rules.)
+
+There is a solution, and it's called \textit{using parentheses}. For \autoref{exam:example9.3}, if you simply add parentheses: \verb|(8 + ( 4 / 2  ))|, it's clear to you, other readers, and the Perl program, that you want to do the division first. Note that "inner" parentheses, contained within another pair of parentheses, are evaluated first.
+
+Remember to use parentheses in complicated expressions to specify the order of operations. Among other things, it will save you some long debugging sessions! 
+
+\section{Exercises}
+\textcolor{red}{\textit{Exercise 9.1}}
+\begin{adjustwidth}{1cm}{}
+Modify \autoref{exam:example9.3} to accept DNA from the command line; if it's not specified there, prompt the user for a FASTA filename and read in the DNA sequence data. 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 9.2}}
+\begin{adjustwidth}{1cm}{}
+Modify Exercise 9.1 to read in, and make a hash of, the entire REBASE restriction site data from the \textit{bionet} file. 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 9.3}}
+\begin{adjustwidth}{1cm}{}
+Modify Exercise 9.2 to store the REBASE hash created in a DBM file if it doesn't exist or to use the DBM file if it does exist. (Look ahead to \autoref{chap:chapter10} for more information about DBM.) 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 9.4}}
+\begin{adjustwidth}{1cm}{}
+Modify \autoref{exam:example5.3} to report on the locations of the motifs that it finds, even if motif appears multiple times in the sequence data. 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 9.5}}
+\begin{adjustwidth}{1cm}{}
+Include a graphic display of the cut sites in the restriction map by printing the sequence and labeling the recognition sites with the enzyme name. Can you make a map that handles multiple restriction enzymes? How can you handle overlapping restriction sites? 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 9.6}}
+\begin{adjustwidth}{1cm}{}
+Write a subroutine that returns a restriction digest, the fragments of DNA left after performing a restriction reaction. Remember to take into account the location of the cut site. (This requires you to parse the REBASE \textit{bionet} in a different manner. You may, if you wish, ignore restriction enzymes that are not given with a \verb|^| indicating a cut site.) 
+\end{adjustwidth}
+
+
+\textcolor{red}{\textit{Exercise 9.7}}
+\begin{adjustwidth}{1cm}{}
+Extend the restriction map software to take into account the opposite strand for nonpalindromic recognition sites. 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 9.8}}
+\begin{adjustwidth}{1cm}{}
+Given an arithmetic expression without parentheses, write a subroutine that adds the appropriate parentheses to conform to Perl's precedence rules. (Warning: this is a pretty hard exercise and should be skipped by all but the true believers who have extra time on their hands. See the Perl documentation for the precedence rules.) 
+\end{adjustwidth}
+
