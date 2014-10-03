@@ -1,25 +1,27 @@
-\chapter{Restriction Maps and Regular Expressions}
+\chapter{限制酶图谱和正则表达式}
 \label{chap:chapter9}
 \minitoc
 
-In this chapter, I'll give an overview of Perl regular expressions and Perl operators, two essential features of the language we've been using all along. We'll also investigate the programming of a standard, fundamental molecular-biology technique: the discovery of a restriction map for a sequence. Restriction digests were one of the original ways to "fingerprint" DNA; this can now be simulated on the computer.
+在本章中，我会对Perl的正则表达式和操作符进行概述，这是我们一直在使用的Perl语言的两个基本特性。我们也会探讨一个标准的、基础的分子生物学技术的编程：找到一个序列的限制酶图谱。对DNA进行限制酶切消化是对把它“指纹化”的最原始的方法之一，现在可以在计算机上对其进行模拟了。
 
-Restriction maps and their associated restriction digests are common calculations in the laboratory and are provided by several software packages. They are essential tools in the planning of cloning experiments; they can be used to insert a desired stretch of DNA into a cloning vector, for instance. Restriction maps also find application in sequencing projects, for instance in shotgun or directed sequencing.
+在实验室中，限制酶图谱和与之相关的限制酶切消化都是非常常见的计算，并且多种软件包都可以进行这样的计算。它们是进行意欲进行克隆实验的基本工具，比如，应用它，可以把一个期望的DNA片段插入到克隆载体中。限制酶图谱在序列测序项目中也有其应用，比如鸟枪法或直接测序。
 
-\section{Regular Expressions}
-We've been dealing with regular expressions for a while now. This section fills in some background an.d ties together the somewhat scattered discussions of regular expressions from earlier parts of the book.
+\section{正则表达式}
+现在我们已经使用了一段时间的正则表达式了。本小节将补充一些背景知识，并把本书前面部分中对正则表达式进行的那些零散的讨论串联起来。
 
-Regular expressions are interesting, important, and rich in capabilities. Jeffrey Friedl's book \textit{Mastering Regular Expressions} (O'Reilly) is entirely devoted to them. Perl makes particularly good use of regular expressions, and the Perl documentation explains them well.  Regular expressions are useful when programming with biological data such as sequence, or with GenBank, PDB, and BLAST files.
+正则表达式有趣、主要，而且应用潜能无限。Jeffrey
+Friedl的\textit{精通正则表达式}
+(O'Reilly出版)这本书就对它们进行了全面深入的讲解。Perl尤其擅长使用正则表达式，Perl的文档中对此进行了很好的讲解。当处理序列或者GenBank、PDB和BLAST文件等生物学数据时，正则表达式非常有用。
 
-Regular expressions are ways of representing—and searching for—many strings with one string. Although they are not strictly the same thing, it's useful to think of regular expressions as a kind of highly developed set of wildcards. The special characters in regular expressions are more properly known as metacharacters.
+正则表达式是用一个字符串来表征并搜索多个字符串的方法。尽管严格来说它们并不是一样的东西，但是你可以把正则表达式看做是一种高度发展的通配符集合，这会对你有所帮助。正则表达式中的特殊字符通常叫做元字符。
 
-Most people are familiar with wildcards, which are found in search engines or in the game of poker. You might find the reference to every word that starts with \verb|biolog| by typing \verb|biolog*|, for instance. Or you may find yourself holding five aces. (Different situations may use different wildcards. Perl regular expressions use * to mean "0 or more of the preceding item," not "followed by anything" as in the wildcard example just given.)
+许多人对通配符都非常熟悉，在搜索引擎或者纸牌游戏中都可以发现它的身影。举个例子，你可能会发现，通过键入\verb|biolog*|可以指代所有以\verb|biolog|起始的单词。或者，你可能发现自己的牌中有五张尖儿。（不同的情况下可能会使用不同的通配符。Perl的正则表达式中使用*表示“前面的字符重复0次或多次”，而不是刚才那个通配符例子中的“后面跟任何字符”。）
 
-In computer science, these kinds of wildcards or metacharacters have an important history, both practically and theoretically. The asterisk character in particular is called the Kleene closure after the eminent logician who invented it. As a nod to the theory, I'll mention there is a simple model of a computer, less powerful than a Turing machine, that can deal with exactly the same kinds of languages that can be described by regular expressions. This machine model is called a \textit{finite state automaton}. But enough theory for now. 
+在计算机科学中，不管是在实践中还是在理论上，这种类型的通配符或者元字符都有一个重要的历史。被知名的逻辑学家发明之后，在实践中，星号字符就被叫做克莱尼闭包\footnote{译者注：亦称克莱尼星号。}了。作为对理论的致敬，我会提到有有一个简单的计算机模型，它没有图灵机那么强大，但完全可以处理用正则表达式描述的同样类型的语言。这种机器模型叫做\textit{有限自动机}。现在理论知识已经够多了。
 
-We've already seen many examples that use regular expressions to find things in a DNA or protein sequence. Here I'll talk briefly about the fundamental ideas behind regular expressions as an introduction to some terminology. There is a useful summary of regular-expression features in \autoref{chap:chapterab}. Finally, we'll see how to learn more about them in the Perl documentation.
+我们已经看到了好多正则表达式的例子，在DNA或者蛋白质序列中进行查找。此处，我将对正则表达式背后的一些基础观念进行简要的介绍，作为多一些术语的引言。在\autoref{chap:chapterab}中有一个非常有用的正则表达式特性的总结。最后，我们将看看如何在Perl的文档中对它们进行更加深入的学习。
 
-So let's start with a practical example that should be familiar by now to those who have been reading this text sequentially: using character classes to search DNA. Let's say there is a small motif you'd like to find in your library of DNA that is six basepairs long: CT followed by C or G or T followed by ACG. The third nucleotide in this motif is never A, but it can be C, G, or T. You can make a regular expression by letting the character class [CGT] stand for the variable position. The motif can then be represented by a regular expression that looks like this: CT[CGT]ACG. This is a motif that is six base pairs long with a C,G, or T in the third position. If your DNA was in a scalar variable \verb|$dna|, you can test for the presence of the motif by using the regular expression as a conditional test in a pattern-matching statement, like so:
+所以让我们从一个实际的例子开始吧，对于逐章阅读至今的读者来说这应该已经非常熟悉了：使用字符集来查找DNA。假设有一个小的基序，你想在你的DNA库中尽心查找，这个基序有六个碱基对之长：CT后面跟着C或G或T，之后是ACG。这个基序中的第三个核苷酸不是A，但可以是C、G或者T。你可以使用字符集[CGT]制作一个正则表达式来表示这个变异的位点。这样，基序就可以用这样一个正则表达式来进行表征了：CT[CGT]ACG。这是一个有六个碱基对之长的基序，在它的第三个位置是一个C、G或者T。如果你的DNA保存在标量变量\verb|$dna|中，你就可以检测一下其中是否存在这个基序，在模式匹配语句的条件测试中使用正则表达式即可，就像这样：
 
 \begin{lstlisting}
 if( $dna =~ /CT[CGT]ACG/ ) {
@@ -27,80 +29,79 @@ if( $dna =~ /CT[CGT]ACG/ ) {
 }
 \end{lstlisting}
 
-Regular expressions are based on three fundamental ideas:
+正则表达式基于三个基础的理念：
 
-\textcolor{red}{\textit{Repetition (or closure)}}
+\textcolor{red}{\textit{重复（或闭包）}}
 \begin{adjustwidth}{1cm}{}
-The asterisk (*), also called Kleene closure or star, indicates 0 or more repetitions of the character just before it. For example, \verb|abc*| matches any of these strings: \verb|ab|, \verb|abc|, \verb|abcc|, \verb|abccc|, \verb|abcccc|, and so on. The regular expression matches an infinite number of strings. 
+星号（*），也叫做克莱尼闭包或克莱尼星号，表示前面的字符重复0次或多次。比如，\verb|abc*|匹配所有这些字符串：\verb|ab|，\verb|abc|，\verb|abcc|，\verb|abccc|，\verb|abcccc|等等。这个正则表达式匹配无穷多个字符串。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Alternation}}
+\textcolor{red}{\textit{择一}}
 \begin{adjustwidth}{1cm}{}
-In Perl, the pattern \verb=(a|b)= (read: \verb|a or b|) matches the string \verb|a| or the string \verb|b|.
+在Perl中，模式\verb=(a|b)=（读作：\verb|a or b|）匹配字符串\verb|a|或者字符串\verb|b|。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Concatenation}}
+\textcolor{red}{\textit{串联}}
 \begin{adjustwidth}{1cm}{}
-This is a real obvious one. In Perl, the string \verb|ab| means the character \verb|a| followed by (concatenated with) the character \verb|b|.
+这是显而易见的一点。在Perl中，字符串\verb|ab|表示字符\verb|a|后面跟着（与之相串联）字符\verb|b|。
 \end{adjustwidth}
 
-The use of parentheses for grouping is important: they are also metacharacters. So, for instance, the string \verb|(abc|def)z*x| matches such strings as \verb|abcx|, \verb|abczx|, \verb|abczzx|, \verb|defx|, \verb|defzx|, \verb|defzzzzzx|, and so on. In English, it matches either \verb|abc| or \verb|def| followed by zero or more \verb|z|'s, and ending with an \verb|x|. This example combines the ideas of grouping, alternation, closure, and concatenation. The real power of regular expressions is seen in this combining of the three fundamental ideas. 
+使用小括号进行分组是非常重要的：它们也是元字符。所以，举个例子，字符串\verb|(abc|def)z*x|匹配\verb|abcx|、\verb|abczx|、\verb|abczzx|、\verb|defx|、\verb|defzx|、\verb|defzzzzzx|等等这样的字符串。用白话来说，它匹配的是\verb|abc|或者\verb|def|后面跟着零个或多个\verb|z|，并且最后是一个\verb|x|。这个例子把分组、择一、闭包和串联的理念整合在了一起。通过把这三个基础的理念整合起来，就可以真正看出正则表达式的强大之处来了。
 
-Perl has many regular-expression features. They are basically shortcuts for the three fundamental ideas we've just seen—repetition, alternation, and concatenation. For instance, the character class shown earlier can be written using alternation as \verb|(C|G|T)|. Another common feature is the period, which can stand for any character, except a newline. So \verb|ACG.*GCA| stands for any DNA that starts with \verb|ACG| and ends with \verb|GCA|. In English, this reads as: \verb|ACG| followed by 0 or more characters followed by \verb|GCA|. 
+Perl有许多正则表达式的特性。它们基本上都是我们刚刚提到的三个基础理念——重复、择一和串联的快捷键而已。比如，前面演示的字符集使用择一可以写成\verb|(C|G|T)|。另外一个常见的特性是点号，它可以用来表示除换行符以外的任意字符。所以\verb|ACG.*GCA|表示任意起始于\verb|ACG|、终止于\verb|GCA|的DNA。用白话来说，它读作：\verb|ACG|后面跟着0或多个字符，然后是\verb|GCA|。
 
-In Perl, regular expressions are usually enclosed within forward slashes and are used as pattern-matching specifiers. Check the documentation (or \autoref{chap:chapterab}), for \verb|m//|, which includes some options that affect the behavior of the regular expressions. Regular expressions are also used in many of Perl's built-in commands, as you will see.
+在Perl中，正则表达式通常被用作模式匹配界定符的正斜线包裹在中间。查看\verb|m//|的文档（或者是\autoref{chap:chapterab}），其中包括影响正则表达式行为的一些选项。就像你将看到的那样，正则表达式也被用在许多Perl的内置命令中。
 
-The Perl documentation is essential: start with the perlre section of the Perl manual at\\
-\href{http://www.perldoc.com/perl5.6/pod/perlre.html\#top}{http://www.perldoc.com/perl5.6/pod/perlre.html\#top}. 
+Perl文档是最基本的：从\href{http://www.perldoc.com/perl5.6/pod/perlre.html\#top}{http://www.perldoc.com/perl5.6/pod/perlre.html\#top}上的Perl手册中的\textit{perlre}小节开始吧。
 
-\section{Restriction Maps and Restriction Enzymes}
-One of the great discoveries in molecular biology, which paved the way for the current golden age in biological research, was the discovery of restriction enzymes. For the nonbiologist, and to help set up the programming material that follows, here's a short overview. 
+\section{限制酶切图谱和限制性内切酶}
+分子生物学的重大发现之一就是限制性内切酶的发现，它为生物学研究的当今黄金时代铺平了道路。为了非生物学家，同时也为后面准备好编程材料，这里先对其进行一个概述。
 
-\subsection{Background}
-\textit{Restriction enzymes} are proteins that cut DNA at short, specific sequences; for example, the popular restriction enzymes EcoRI and HindIII are widely used in the lab. EcoRI cuts where it finds \verb|GAATTC|, between the \verb|G| and \verb|A|. Actually, it cuts both complementary strands, leaving an overhang on each end. These "sticky ends" of a few bases in single strands make it possible for the fragments to re-form, making possible the insertion of DNA into vectors for cloning and sequencing, for instance. HindIII cuts at \verb|AAGCTT| and cuts between the \verb|A|s. Some restriction enzymes cut in the middle and result in "blunt ends" with no overhang. About 1,000 restriction enzymes are known. 
+\subsection{背景}
+\textit{限制性内切酶}是把DNA切割成短的、特定序列的蛋白质，比如，最常见的限制性内切酶EcoRI和HindIII就在实验室中被广泛应用。EcoRI切割找到的\verb|GAATTC|，切割位点在\verb|G|和\verb|A|之间。实际上，它同时切割互补的两条链，在每一端都留下一个突出部分。这些在单链上有几个碱基的“粘性末端”，使得片段有可能被重排，比如在克隆和测序中它使得把DNA插入倒载体中成为可能。HindIII切割\verb|AAGCTT|，切割位点在两个\verb|A|之间。有些限制性内切酶会在中间进行切割，从而产生没有突出的“平滑末端”。已知大约有1,000种限制性内切酶。
 
-If you look at the reverse complement of the restriction enzyme EcoRI, you see it's \verb|GAATTC|, the same sequence. This is a biological version of a palindrome, a word that reads the same in reverse. Many restriction sites are palindromes.
+如果你查看限制性内切酶EcoRI的反向互补链，你会看到同样的序列\verb|GAATTC|。这是一种生物学的回文，也就是说正反读都一样。许多限制性位点都是回文结构。
 
-Computing restriction maps is a common and practical bioinformatics calculation in the laboratory. Restriction maps are computed to plan experiments, to find the best way to cut DNA to insert a gene, to make a site-specific mutation, or for several other applications of recombinant DNA techniques. By computing first, the laboratory scientist saves considerably on the necessary trial-and-error at the laboratory bench.  Look for more about restriction enzymes at \href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html}.
+在实验室中，计算限制酶图谱是一个常见且实用的生物信息学工作。通过计算限制酶图谱，可以对实验进行规划，找到切割DNA并插入基因的最佳方法，进行特定位点的突变，或者是其他重组DNA技术的各种应用。通过初步的计算，实验室科学家就可以不用实验台上不断的进行试错性的实验了。在\href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html}上可以查阅更多关于限制性内切酶的相关内容。
 
-We'll now write a program that does something useful in the lab: it will look for restriction enzymes in a sequence of DNA and report back with a restriction map of exactly where in the DNA the restriction enzymes appear. 
+现在我们要编写一个在实验室中非常有用的程序：它会在DNA序列中查找限制性内切酶，并报告限制酶切图谱以及这个限制性内切酶出现在DNA上的精确位点。
 
-\subsection{Planning the Program}
-Back in \autoref{chap:chpater5}, you saw how to look for regular expressions in text.  So you've an idea of how to find motifs in sequences with Perl. Now let's think about how to use those techniques to create restriction maps. Here are some questions to ask:
+\subsection{程序规划}
+在前面的\autoref{chap:chpater5}中，你已经看到如何在文本中查找正则表达式了。所以你也知道如何使用Perl来查找序列中的基序。现在让我们想想，该如何利用这些技术来生成限制酶切图谱。下面是需要询问的一些问题：
 
-\textcolor{red}{\textit{Where do I find restriction enzyme data?}}
+\textcolor{red}{\textit{我在哪里可以找到限制性内切酶的数据？}}
 \begin{adjustwidth}{1cm}{}
-Restriction enzyme data can be found at the Restriction Enzyme Database, (REBASE), which is on the Web at \href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html}.
+限制性内切酶的数据可以在限制性酶切酶数据库（REBASE，Restriction Enzyme Database）中找到，它的网址是\href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html}。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{How do I represent restriction enzymes in regular expressions?}}
+\textcolor{red}{\textit{我该如何使用正则表达式表征限制性内切酶？}}
 \begin{adjustwidth}{1cm}{}
-Exploring that site, you'll see that restriction enzymes are represented in their own language. We'll try to translate that language into the language of regular expressions.
+浏览那个网站，你会看到限制性内切酶用它们自己的语言进行了表征。我们会尝试把这种语言翻译成正则表达式的语言。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{How do I store restriction enzyme data?}}
+\textcolor{red}{\textit{我该如何存储限制性内切酶的数据？}}
 \begin{adjustwidth}{1cm}{}
-There are about 1,000 restriction enzymes with names and definitions.  This makes them candidates for the fast key-value type of lookup hashes provide. When you write a real application, say for the Web, it's a good idea to create a DBM file to store the information, ready to use when a program needs a lookup. I will cover DBM files in \autoref{chap:chapter10}; here, I'll just demonstrate the principle. We'll keep only a few restriction enzyme definitions in the program.
+大约有1,000种有名字和定义的限制性内切酶。这使得可以使用散列提供的快速的键-值查找对它们进行处理。当你编写一个真正的应用程序时，比如应用于网站，最好是创建一个DBM文件来存储这些信息，当程序需要就行查找时立马就可以使用它。我会在\autoref{chap:chapter10}中对DBM文件进行介绍。此处，我们仅仅是指出这种方式而已。我们将只在程序中保存几个限制性内切酶的定义。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{How do I accept queries from the user?}}
+\textcolor{red}{\textit{我该如何接受用户的查询？}}
 \begin{adjustwidth}{1cm}{}
-You can ask for a restriction enzyme name, or you can allow the user to type in a regular expression directly. We'll do the first. Also, you want to let the user specify which sequence to use. Again, to simplify matters, you'll just read in the data from a sample DNA file. 
+你可以询问一个限制性内切酶的名字，或者可以让用户直接键入一个正则表达式。我们将采用第一种方法。此外，你想要让用户指定使用的序列。再重复一次，为了简化问题，你将只从一个DNA样本文件中读入数据。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{How do I report back the restriction map to the user?}}
+\textcolor{red}{\textit{我该如何向用户报告返回限制酶切图谱呢？}}
 \begin{adjustwidth}{1cm}{}
-This is an important question. The simplest way is to generate a list of positions with the names of the restriction enzymes found there. This is useful for further processing, as it presents the information very simply.
+这是一个非常重要的问题。最简单的方式就是生成一个位置以及在此处找到的限制性内切酶的名字的列表。因为它呈现的信息非常简单，所以对于进一步的处理非常有用。
 
-But what if you don't want to do further processing; you just want to communicate the restriction map to the user? Then, perhaps it'd be more useful to present a graphical display, perhaps print out the sequence with a line above it that flags the presence of the enzymes.
+但是如果你不想进行进一步的处理，只想把限制酶切图谱展示给用户呢？这时，进行一个图形化展示就会更加有用，可能是打印出序列，并在其上用一条线来标明限制性内切酶存在的位置。
 
-There are lots of fancy bells and whistles you can use, but let's do it the simple way for now and output a list.
+你可以使用各种精致花哨的东西，但我们现在只采用简单的方式来进行处理，输出一个列表。
 \end{adjustwidth}
 
-So, the plan is to write a program that includes restriction enzyme data translated into regular expressions, stored as the values of the keys of the restriction enzyme names. DNA sequence data will be used from the file, and the user will be prompted for names of restriction enzymes.  The appropriate regular expression will be retrieved from the hash, and we'll search for all instances of that regular expression, plus their locations. Finally, the list of locations found will be returned. 
+所以，我们的规划就是编写一个程序，包括把限制性内切酶的数据翻译成正则表达式，并把它存储为以限制性内切酶名字作为键的值中。DNA序列数据从文件中读入，用户将被提示输入限制性内切酶的名字。相应的正则表达式会从散列中提取出来，我们将会查找正则表达式所有的出现，以及出现的位置。最后，返回找到的位置列表。
 
-\subsection{Restriction Enzyme Data}
-The restriction enzyme data is available in a variety of formats, as a visit to the REBASE web site will show you. After looking around, you decide to get the information from the \textit{bionet} file, which has a fairly simple layout. Here's the header and a few restriction enzymes from that file: 
+\subsection{限制性内切酶数据}
+访问REBASE网站时你会看到，有多种格式的限制性内切酶数据可供使用。在查看之后，你决定使用存储在\textit{bionet}文件中的信息，它有一个相当简单的排版。下面是这个文件的头信息以及一些限制性内切酶的信息：
 
 \begin{lstlisting}
 REBASE version 104                                              bionet.104
@@ -156,9 +157,9 @@ AclNI (SpeI)                      A^CTAGT
 AclWI (BinI)                      GGATCNNNN^
 \end{lstlisting}
 
-Your first task is to read this file and get the names and the recognition site (or restriction site) for each enzyme.To simplify matters for now, simply discard the parenthesized enzyme names.
+你的第一个任务就是读入这个文件，获取每一个酶的名字和识别位点（或说是限制性内切位点）。现在为了简化问题，简单的把括号中的限制性内切酶的名字丢掉。
 
-How can this data be read?
+该如何读入这个数据呢？
 
 \begin{lstlisting}
 Discard header lines 
@@ -176,7 +177,7 @@ For each data line:
 return the names, recognition sites, and the regular expressions
 \end{lstlisting}
 
-This is high-level undetailed pseudocode, so let's refine and expand it.  (Notice that the curly brace isn't properly matched. That's okay, because there are no syntax rules for pseudocode; do whatever works for you!) Here's some pseudocode that discards the header lines: 
+这是一个高等级的粗犷的伪代码，所以让我们来把它细化扩展开。（注意大括号并没有配对。这样是完全可以的，因为对于伪代码来说没有什么语法规则，只要它能使用就行了！）下面是丢弃头信息行的伪代码：
 
 \begin{lstlisting}
 foreach line 
@@ -188,9 +189,9 @@ foreach line
 }
 \end{lstlisting}
 
-This is based on the format of the file, in which the string you're looking for is the last text before the data lines start. (Of course, if the format of the file should change, this might no longer work.)
+这是基于文件的格式，你寻找的字符串是数据行开始之前的最后一行文本。（当然，如果文件的格式发生了变化，它可能就无法再使用了。）
 
-Now let's further expand the pseudocode, thinking how to do the tasks involved: 
+现在，我们来进一步展开伪代码，想想如何来完成下面的任务：
 
 \begin{lstlisting}
 # Discard header lines
@@ -217,62 +218,61 @@ For each data line:
 return the names, recognition sites, and the regular expressions
 \end{lstlisting}
 
-This isn't the translation, but let's look at what you've done.
+这并不是翻译，但让我们来看看你都做了哪些事情。
 
-First, you want to extract the name and recognition site data from a string. The most common way to separate words in a line of Perl, especially if the string is nicely formatted, is with the Perl built-in function \textit{split}.
+首先，你想从一个字符串中提取出名字和识别位点的数据。在Perl中把一行分割成单词的最常用的方法，就是使用Perl的内置函数 \textit{split}，尤其是当字符串有着很规整的格式时。
 
-If you have two or three per line that have whitespace and are separated from each other by whitespace, you can get them into an array with the following simple call to split (which acts on the line as stored in the special variable @\_.):
+对于有空白的一行，如果其中有两三个单词被空白分隔开来，你可以把它们提取保存到数组中，使用下面这个简单的\textit{split}调用即可（它处理的是存储在特殊变量@\_中的行）：
 
 \begin{lstlisting}
 ($name, $site) = split(" ")
 \end{lstlisting}
 
-The \verb|@fields| array may have two or three elements depending on whether there was a parenthesized alternate enzyme named. But you always want the first and the last elements: 
+取决于是否有用括号扩起来的酶的别名，\verb|@fields|数组可能有两个或三个元素。但你总可以这样提取处第一个和最后一个元素：
 
 \begin{lstlisting}
 $name = shift@fields;
 $site = pop@fields;
 \end{lstlisting}
 
-You now have the problem of translating the recognition site to a regular expression.
+现在，你面临的问题是要把识别位点翻译成正则表达式。
 
-Looking over the recognition sites and having read the documentation on REBASE you found on its web site, you know that the cut site is represented by the caret (\^). This doesn't help make a regular expression that finds the site in sequence, so you should remove it (see Exercise 9.6 in the \autoref{sect:section9.4} section).
+仔细查看这些识别位点，并阅读网站上找到的REBASE的文档后，你知道切割位点是用脱字符（\^~）来表示的。这对于在序列中查找位点用的正则表达式的制作并没有什么帮助，所以你应该把它删除掉（参看\autoref{sect:section9.4}中的Exercise 9.6）。
 
-Also notice that the bases given in the recognition sites are not just the bases A, C, G, and T, but they also use the more extended alphabet presented in \autoref{tab:table4.1}. These additional letters include a letter for every possible group of two, three, or four bases. They're really like abbreviations for character classes in that respect. Aha! Let's write a subroutine that substitutes character classes for these codes, and then we'll have our regular expression.
+还要注意，识别位点中的碱基并不仅仅只是A、C、G和T四种碱基，它们还使用到了\autoref{tab:table4.1}中的更多的扩展字符。这些额外的字母包括代表两个、三个或四个碱基的所有可能组合的字母。在这方面，它们真的很像字符集的简写。奥！我们来编写一个子程序，把这些代码都替换成字符集，这样我们就有了我们要的正则表达式。
 
-Of course, REBASE uses them, because a given restriction enzyme might well match a few different recognition sites.
+当然，REBASE使用它们，是因为一个限制性内切酶可能能匹配几个不同的识别位点。
 
-\autoref{exam:example9.1} is a subroutine that, given a string, translates these codes into character classes. 
+\autoref{exam:example9.1}是一个子程序，对于给定的一个字符串，它会把这样的代码转换成字符集。
 
-\textbf{Example 9-1. Translate IUB ambiguity codes to regular expressions}
+\textbf{例9-1：把IUB的模糊代码翻译成正则表达式}
 \lstinputlisting[label=exam:example9.1]{./scripts/example9-1.pl}
 
-It seems you're almost ready to write a subroutine to get the data from the REBASE datafile. But there's one important item you haven't addressed: what exactly is the data you want to return?
+看起来你已经准备好编写一个子程序，从REBASE的数据文件中提取数据。但还有一个重要的问题没有解决：你想要返回的数据有多精确？
 
-You plan to return three data items per line of the original REBASE file: the enzyme name, the recognition site, and the regular expression. This doesn't fit easily into a hash. You can return an array that stores these three data items in three consecutive slots. This can work: to read the data, you'd have to read groups of three items from the array. It's doable but might make lookup a little difficult. As you get into more advanced Perl, you'll find that you can create your own complex data structures.
+对于原始的REBASE文件的每一行，你打算返回三个数据项：酶的名字、识别位点和正则表达式。这并不能很容易的转换成散列。你可以返回一个数据，把这三个数据项连续的存储在一起。这是可行的：要读入数据，你必须从数组中读取成组的三个项目。这是完全可以的，但使得查询有些困难。随着你学习更多Perl的进阶知识，你会发现你可以创建自己的复杂数据结构。
 
-Since you've learned about \textit{split}, maybe you can have a hash in which the key is the enzyme name, and the value is a string with the recognition site and the regular expression separated by whitespace. Then you can look up the data fast and just extract the desired values using \textit{split}. \autoref{exam:example9.2} shows this method. 
+既然你已经学习了\textit{split}，也许你可以使用一个散列，它的键是酶的名字，它的值是包含用空白分隔开的识别位点和正则表达式的字符串。然后你就可以对数据进行快速的查找，并使用\textit{split}提取出需要的值。\autoref{exam:example9.2}展示了这种方法。
 
-\textbf{Example 9-2. Subroutine to parse a REBASE datafile}
+\textbf{例9-2：解析REBASE数据文件的子程序}
 \lstinputlisting[label=exam:example9.2]{./scripts/example9-2.pl}
 
-This \textit{parseREBASE} subroutine does quite a lot. Is there, however, too much in one subroutine; should it be rewritten? It's a good question to ask yourself as you're writing code. In this case, let's leave it as it is. However, in addition to doing a lot, it also does it in a few new ways, which we'll look at now. 
+这个\textit{parseREBASE}子程序做了大量的工作。对于一个子程序来说，做的事情是不是太多了，要不要重新编写它？当你编写代码时，这是你应该问自己的一个很好的问题。在这个例子中，就先这样吧。然而，除了多了大量的事情以外，它也采用了一些新的处理方法，现在我们就来看看吧。
 
-\subsection{Logical Operators and the Range Operator}
-You're using a \textit{foreach} loop to process the lines of the \textit{bionet} file stored in the \verb|@rebasefile| array.
+\subsection{逻辑操作符和范围操作符}
+你使用\textit{foreach}循环来处理存储在\verb|@rebasefile|数组中的\textit{bionet}文件的每一行。
 
-Within that loop you use a new feature of Perl to skip the header lines,
-called the \textit{range operator} (..), which is used in this line:
+在这个循环中，你使用了一个Perl的新特性来跳过头信息行，这就是\textit{范围操作符}（..），它出现在这一行中：
 
 \begin{lstlisting}
 ( 1 .. /Rich Roberts/ ) and next;
 \end{lstlisting}
 
-This has the effect of skipping everything from the first line up to and including the line with "Rich Roberts," in other words, the header lines. (Range operators must have at least one of their endpoints given as a number to work like this.)
+它的作用是跳过从第一行到包含“Rich Roberts”这一行的所有行，换句话说，就是头信息行。（范围操作符必须至少有一个可以作为数字的终点，就像这样，它才能正常工作。）
 
-The \textit{and} function is a \textit{logical operator}. Logical operators are available in most programming languages. In Perl they've become very popular, so although we haven't used them a great deal in this book, you'll often come across code that does. In fact, you'll start to see them a bit more as the book continues.
+\textit{and}函数是一个\textit{逻辑操作符}。在绝大多数编程语言中都有逻辑操作符。在Perl，它们变得非常流行，所以尽管我们在本书中并没有大量使用它们，但你将来会经常遇到使用它们的代码。事实上，随着本书的输入，你将开始越来越多的看到它们。
 
-Logical operators can test if two conditions are both \verb|true|, for instance:
+逻辑操作符可以用来测试两个条件是不是都为\verb|真|，例如：
 
 \begin{lstlisting}
 if( $string eq 'kinase'  and  $num == 3 ) {
@@ -280,9 +280,9 @@ if( $string eq 'kinase'  and  $num == 3 ) {
 }
 \end{lstlisting}
 
-Only if both the conditions are \verb|true| is the entire statement \verb|true|.
+只有当两个条件都为\verb|真|时，整个语句才为\verb|真|。
 
-Similarly, with logical operators you can test if at least one of the conditions is \verb|true| using the or operator, for instance: 
+类似的，通过逻辑操作符，使用\textit{or}操作符，你可以测试是不是至少有一个条件为\verb|真|，例如：
 
 \begin{lstlisting}
 if( $string eq 'kinase'  or  $num == 3 ) {
@@ -290,9 +290,9 @@ if( $string eq 'kinase'  or  $num == 3 ) {
 }
 \end{lstlisting}
 
-Here, the \verb|if| statement is \verb|true| if either or both of the conditionals are \verb|true|.
+这里，如果两个条件至少有一个为\verb|真|，那么\verb|if|语句就为\verb|真|。
 
-There is also the \textit{not} logical operator, a negation operator with which you can test if something is \verb|false|: 
+此外，还有一个\textit{not}逻辑操作符，一个否定操作符，使用它你可以测试某个东西是不是为\verb|假|：
 
 \begin{lstlisting}
 if( not  6 == 9  ) {
@@ -300,13 +300,13 @@ if( not  6 == 9  ) {
 }
 \end{lstlisting}
 
-\verb|6 == 9| returns \verb|false|, which is negated by the \textit{not} operator, so the entire conditional returns \verb|true|.
+\verb|6 == 9|返回\verb|假|，但它被\textit{not}操作符否定了，所以真个条件测试返回\verb|真|。
 
-There are also the closely related operators, \verb=&&= for and, \verb=||= for or, and \verb=!= for not. These have slightly different behavior (actually, different precedence); most Perl code uses the versions I've shown, but both are common.
+此外还有非常相关的操作符，与\textit{and}相关的是\verb=&&=，与\textit{or}相关的是\verb=||=，与\textit{not}相关的是\verb=!=。它们在行为上有少许的不同（实际上，优先级不同）。大多数Perl代码都使用我演示的版本，但两者都很常见。
 
-When in doubt about precedence, you can always parenthesize expressions to ensure your statement means what you intend it to mean. (See \autoref{sect:section9.3.1} later in this chapter.)
+当你对优先级有所怀疑时，你总是可以把表达式用小括号包裹起来，确保你的语句的执行结果就是你所期望的那样。（参看本章后面的\autoref{sect:section9.3.1}。）
 
-Logical operators also have an order of evaluation, which makes them useful for controlling the flow of programs. Let's take a look at how the \textit{and} operator evaluates its two arguments. It first evaluates the left argument, and if it's \verb|true|, evaluates and returns the right. If the left argument evaluates to \verb|false|, the right argument is never touched.  So the \textit{and} operator can act like a mini \verb|if| statement. For instance, the following two examples are equivalent: 
+逻辑操作符也有一定的求值顺序，这使得它们在控制程序流程方面非常有用。让我们看一下\textit{and}操作符是如何对它的两个参数进行求值的。它首先对左边的参数进行求值，当且仅当它为\verb|真|时，才会对右边的参数求值并返回结果。如果左边参数的求值结果为\verb|假|，右边的参数就永远不会被求值了。所以\textit{and}操作符的行为就像一个小的\verb|if|语句。举个例子，下面这两个语句就是完全等同的：
 
 \begin{lstlisting}
 if( $verbose ) {
@@ -316,15 +316,15 @@ if( $verbose ) {
 $verbose and print $helpful_but_verbose_message;
 \end{lstlisting}
 
-Of course, the \textit{if} statement is more flexible, because it allows you to easily add more statements to the block, and \textit{elsif} and \textit{else} conditions to their own blocks. But for simple situations, the \verb|and| operator works well.\footnote{You can even chain logical operators one after the other to build up more complicated expressions and use parentheses to group them. Personally, I don't like that style much, but in Perl, there's more than one way to do it!}
+当然，\textit{if}语句要更加灵活一些，因为它允许你轻松地向代码块中添加更多的语句，对于\textit{elsif}和\textit{else}条件和它们的代码块也是一样。但对于简单的情况，\verb|and|操作符会更好一些。\footnote{你甚至可以把逻辑操作符一个接一个的串成长串，来构建更加复杂的表达式，并用括号对它们进行分组。个人而言，我不太喜欢这种风格，但在Perl中，方法不止一种！}
 
-The logical operator \textit{or} evaluates and returns the left argument if it's \verb|true|; if the left argument doesn't evaluate to \verb|true|, the or operator then evaluates and returns the right argument. So here's another way to write a one-line statement that you'll often see in Perl programs: 
+逻辑操作符\textit{or}会对左边的参数求值，如果它为\verb|真|就会返回求值结果；如果左边的参数求值结果不为\verb|真|，\textit{or}操作符就会对右边的参数求值并返回结果。所以还有另一种方法来编写单行的语句，在Perl程序中你会经常看到：
 
 \begin{lstlisting}
 open(MYFILE, $file) or die "I cannot open file $file: $!";
 \end{lstlisting}
 
-This is basically equivalent to our frequent:
+这和我们常用的基本上是等同的：
 
 \begin{lstlisting}
 unless(open(MYFILE, $file)) {
@@ -333,28 +333,27 @@ unless(open(MYFILE, $file)) {
 }
 \end{lstlisting}
 
-Let's go back and take a look at the \textit{parseREBASE} subroutine with the line: 
+言归正传，来看一下\textit{parseREBASE}子程序中的这一行：
 
 \begin{lstlisting}
 ( 1 .. /Rich Roberts/ ) and next;
 \end{lstlisting}
 
-The left argument is the range \verb|1 .. /Rich Roberts/|. When you're in that range of lines, the range operator returns a \verb|true| value.  Because it's \verb|true|, the \verb|and| boolean operator goes on to see if the value on the other side is \verb|true| and finds the \textit{next} function, which evaluates to \verb|true|, even as it takes you back to the "next" iteration of the enclosing \textit{foreach} loop. So if you're between the first line and the \verb|Rich Roberts| line, you skip the rest of the loop.  
+左边的参数是\verb|1 .. /Rich Roberts/|这个范围。当你在这些行的范围之中时，范围操作符返回\verb|真|值。因为它为\verb|真|，所以\verb|and|布尔操作符就会继续看看另一边的值是不是也为\verb|true|，它会找到\textit{next}函数，它的求值为\verb|true|，而它则会把你带到包裹在\textit{foreach}循环中的“下一个”迭代。所以当你在第一行和\verb|Rich Roberts|这一行之间时，回直接跳过循环的剩余部分。
 
-Similarly, the line:
+类似的，这一行：
 
 \begin{lstlisting}
 /^\s*$/ and next;
 \end{lstlisting}
 
-takes you back to the next iteration of the \verb|foreach| if the left
-argument, which matches a blank line, is \verb|true|.
+也会把你带回到\verb|foreach|的下一个迭代，当左边的参数为\verb|真|、也就是匹配一个空行时。
 
-The other parts of this \textit{parseREBASE} subroutine have already been
-discussed, during the design phase. 
 
-\subsection{Finding the Restriction Sites}
-So now it's time to write a main program and see our code in action. Let's start with a little pseudocode to see what still needs to be done: 
+在设计阶段，我们已经讨论过\textit{parseREBASE}子程序的其他部分了。
+
+\subsection{寻找限制性内切位点}
+所以现在是时候来编写主程序了，看看我们的代码的实际表现。让我们从一个小的伪代码开始，看看我们还需要做什么：
 
 \begin{lstlisting}
 #
@@ -379,7 +378,7 @@ for each user query
 }
 \end{lstlisting}
 
-You now need to write a subroutine that finds the positions of the query in the DNA. Remember that trick of putting a global search in a \verb|while| loop from \autoref{exam:example5.7} and take heart. No sooner said than: 
+你现在需要编写一个子程序，在DNA中寻找查询的位置。记住\autoref{exam:example5.7}在\verb|foreach|循环中进行全局查找的技巧，并且牢记在心。说到做到：
 
 \begin{lstlisting}
 Given arguments $query and $dna
@@ -391,12 +390,12 @@ while ( $dna =~ /$query/ig ) {
 return @positions
 \end{lstlisting}
 
-When you used this trick before, you just counted how many matches there were, not what the positions were. Let's check the documentation for clues, specifically the list of built-in functions in the documentation.  It looks like the \verb|pos| function will solve the problem. It gives the location of the last match of a variable in an \verb|m//g| search.  \autoref{exam:example9.3} shows the main program followed by the required subroutine. It's a simple subroutine, given the Perl functions like pos that make it easy. 
+在你之前使用这个技巧的时候，你仅仅计数了有多少匹配，而没有处理匹配的位置。我们来看看文档找点线索，尤其是文档中的内置函数列表。看起来，\verb|pos|函数可以解决这个问题。它给出了\verb|m//g|查找中最后一次变量匹配的位置。\autoref{exam:example9.3}演示了主程序，其后是需要的子程序。这是一个简单的子程序，因为像\textit{pos}这样的Perl函数使得问题简单了许多。
 
-\textbf{Example 9-3. Make restriction map from user queries}
+\textbf{例9-3：为用户的查询制作限制酶切图谱}
 \lstinputlisting[label=exam:example9.3]{./scripts/example9-3.pl}
 
-Here is some sample output from \autoref{exam:example9.3}:
+下面是\autoref{exam:example9.3}的一些示例输出：
 
 \begin{lstlisting}
 Search for what restriction enzyme (or quit)?: AceI
@@ -415,67 +414,68 @@ A restriction site for AaeI is not in the DNA:
 Search for what restriction enzyme (or quit)?: quit
 \end{lstlisting}
 
-Notice the \verb|length($&)| in the subroutine \textit{match\_positions}. That \verb|$&| is a special variable that's set after a successful regular-expression match.  It stands for the sequence that matched the regular expression. Since \textit{pos} gives the position of the first base \textit{following} the match, you have to subtract the length of the matching sequences, plus one (to make the bases start at position 1 instead of position 0) to report the starting position of the match. Other special variables include \verb|$`| which contains everything in the string before the successful match; and \verb|$´|, which contains everything in the string after the successful match. So, for example: \verb|'123456' =~ /34/| succeeds at setting these special variables like so: \verb|$`= '12'|, \verb|$& = '34'|, and \verb|$´ = '56'|.
+注意子程序\textit{match\_positions}中的\verb|length($&)|。\verb|$&|是在正则表达式匹配成功后设置的一个特殊变量。它表示匹配正则表达式的序列。因为\textit{pos}给出的是匹配序列\textit{后面}的第一个碱基的位置，所以你必须减去匹配序列的长度并加一（让碱基开始于位置1而非位置0），这样才是匹配开始的位置。其他的特殊变量包括包含字符串中成功匹配前面的所有内容的\verb|$`|，和包含字符串中成功匹配后面的所有内容的\verb|$´|。所以，举个例子：\verb|'123456' =~ /34/|匹配成功，并把这些特殊变量设置为：\verb|$`= '12'|，\verb|$& = '34'|，以及\verb|$´ = '56'|。
 
-What we have here is admittedly bare bones, but it does work. See the exercises at the end of the chapter for ways to extend this code. 
+不可否认我们此处完成的仅仅是个赤裸的骨架而已，但它确实可以工作。参看本章末尾的练习题，其中给出了扩展这个代码的方法。
 
-\section{Perl Operations}
-We've made it pretty far in this introductory programming book without talking about basic arithmetic operations, because you haven't really needed much more than addition to increment counters.
+\section{Perl的操作}
+在这本指南性的编程书籍中，我们没有讨论基本的算术运算，就已经做的很好的，因为实际上你并不需要比增加计数器的加法更多的内容。
 
-However, an important part of any programming language, Perl included, is the ability to do mathematical calculations. Look at \autoref{chap:chpaterab}, which shows the basic operations available in Perl. 
+然而，包括Perl在内的编程语言的一个重要部分，就是进行数学计算的能力。参看\autoref{chap:chpaterab}，它展示了Perl中的基本运算。
 
-\subsection{Precedence of Operations and Parentheses}
-Operations have rules of precedence. These enable the language to decide which operations should be done first when there are a few of them in a row. The order of operations can change the result, as the following example demonstrates.
+\subsection{运算和括号的优先级}
+运算有一套优先级规则。这使得语言可以在一行中有多个运算时决定先进行哪个运算。运算的顺序会改变运算的结果，就像下面的例子演示的那样。
 
-Say you have the code \verb|8 + 4 / 2|. If you did the division first, you'd get \verb|8 + 2|, or \verb|10|. However, if you did the addition first, you'd get \verb|12 / 2|, or \verb|6|.
+假设你有\verb|8 + 4 / 2|这样的代码。如果你先进行除法预算，你会得到\verb|8 + 2|，或者是\verb|10|。然而，如果你先进行加法运算，你就会得到\verb|12 / 2|，或者是\verb|6|.
 
-Now programming languages assign precedences to operations. If you know these, you can write expressions such as \verb|8 + 4 / 2|, and you'd know what to expect. But this is a slippery slope.
+现在编程语言对运算都赋予了优先级。如果你知道这些优先级，你可以编写\verb|8 + 4 / 2|这样的表达式，并且你知道它的运算结果。但是这并不可靠。
 
-For one thing, what if you get it wrong? Or, what if someone else has to read the code who doesn't have the memorization powers you do? Or, what if you memorize it for one language and Perl does it differently?  (Different languages do indeed have different precedence rules.)
+首先，要是你得到了错误的结果会怎样呢？或者，要是其他查看代码的人并没有你这样的记忆力会怎样呢？再或者，要是你记住了一种语言的优先级、但Perl采用的是不同的优先级会怎样呢？（不同的语言确实有不同的优先级规则。）
 
-There is a solution, and it's called \textit{using parentheses}. For \autoref{exam:example9.3}, if you simply add parentheses: \verb|(8 + ( 4 / 2  ))|, it's clear to you, other readers, and the Perl program, that you want to do the division first. Note that "inner" parentheses, contained within another pair of parentheses, are evaluated first.
+有一种解决办法，这就是\textit{使用括号}。对于\autoref{exam:example9.3}，如果你简单的添加上括号：\verb|(8 + ( 4 / 2))|，对于你自己、其他读者以及Perl程序来说，都可以明确无误地知道你想首先进行除法运算。注意包裹在另外一对括号中的“内部”括号，会被首先求值。
 
-Remember to use parentheses in complicated expressions to specify the order of operations. Among other things, it will save you some long debugging sessions! 
+记住，在复杂的表达式中使用括号来指明运算的顺序。另外，它会让你避免大量的程序调试！
 
-\section{Exercises}
-\textcolor{red}{\textit{Exercise 9.1}}
+\section{练习题}
+\textcolor{red}{\textit{习题9.1}}
 \begin{adjustwidth}{1cm}{}
-Modify \autoref{exam:example9.3} to accept DNA from the command line; if it's not specified there, prompt the user for a FASTA filename and read in the DNA sequence data. 
+修改\autoref{exam:example9.3}，让它可以从命令行接收DNA；如果它没有被指定，提示用户键入FASTA文件名并读入DNA序列数据。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 9.2}}
+\textcolor{red}{\textit{习题9.2}}
 \begin{adjustwidth}{1cm}{}
-Modify Exercise 9.1 to read in, and make a hash of, the entire REBASE restriction site data from the \textit{bionet} file. 
+  修改Exercise
+  9.1，从\textit{bionet}文件中读入全部的REBASE限制性内切位点数据，并把它制作成一个散列。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 9.3}}
+\textcolor{red}{\textit{习题9.3}}
 \begin{adjustwidth}{1cm}{}
-Modify Exercise 9.2 to store the REBASE hash created in a DBM file if it doesn't exist or to use the DBM file if it does exist. (Look ahead to \autoref{chap:chapter10} for more information about DBM.) 
+修改Exercise 9.2，如果不存在DBM文件，就通过存储的REBASE散列生成一个DBM文件，如果DBM文件存在，就直接使用DBM文件。（提前查阅\autoref{chap:chapter10}中关于DBM的更多的信息。）
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 9.4}}
+\textcolor{red}{\textit{习题9.4}}
 \begin{adjustwidth}{1cm}{}
-Modify \autoref{exam:example5.3} to report on the locations of the motifs that it finds, even if motif appears multiple times in the sequence data. 
+修改\autoref{exam:example5.3}，报告它找到的基序的位置，即使基序在序列数据中出现多次。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 9.5}}
+\textcolor{red}{\textit{习题9.5}}
 \begin{adjustwidth}{1cm}{}
-Include a graphic display of the cut sites in the restriction map by printing the sequence and labeling the recognition sites with the enzyme name. Can you make a map that handles multiple restriction enzymes? How can you handle overlapping restriction sites? 
+通过打印出序列、并用酶的名字把限制性内切位点标记出来，为限制酶切图谱添加一个切割位点的图形化展示。你能制作一个处理多个限制性内切酶的图谱吗？你该如何处理重叠的限制性内切位点呢？
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 9.6}}
+\textcolor{red}{\textit{习题9.6}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that returns a restriction digest, the fragments of DNA left after performing a restriction reaction. Remember to take into account the location of the cut site. (This requires you to parse the REBASE \textit{bionet} in a different manner. You may, if you wish, ignore restriction enzymes that are not given with a \verb|^| indicating a cut site.) 
+编写一个子程序，返回限制酶切消化片段，就是进行限制性酶切反应后留下的DNA片段。记住要考虑切割位点的位置。（这需要你以另一种方式解析REBASE的\textit{bionet}文件。如果你愿意的话，可以把没有用\^~指明切割位点的限制性内切酶忽略掉。）
 \end{adjustwidth}
 
 
-\textcolor{red}{\textit{Exercise 9.7}}
+\textcolor{red}{\textit{习题9.7}}
 \begin{adjustwidth}{1cm}{}
-Extend the restriction map software to take into account the opposite strand for nonpalindromic recognition sites. 
+扩展限制酶切图谱软件，对于非回文识别位点，把相反的另一条链也考虑在内。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 9.8}}
+\textcolor{red}{\textit{习题9.8}}
 \begin{adjustwidth}{1cm}{}
-Given an arithmetic expression without parentheses, write a subroutine that adds the appropriate parentheses to conform to Perl's precedence rules. (Warning: this is a pretty hard exercise and should be skipped by all but the true believers who have extra time on their hands. See the Perl documentation for the precedence rules.) 
+对于没有括号的算术运算，编写一个子程序，根据Perl的优先级规则为其添加上合适的括号。（警告：这是一个相当有难度的练习题，除非你确信有足够的课余时间，否则请跳过该题。对于优先级规则，可以参看Perl的文档。）
 \end{adjustwidth}
 
