@@ -1,0 +1,1003 @@
+\chapter{Protein Data Bank}
+\label{chap:chapter11}
+\minitoc
+
+The success of the Human Genome Project in decoding the DNA sequence of human genes has captured the public imagination, but another project has been quietly gaining momentum, and it promises equally revolutionary results. This project is an international effort to determine the 3D structure of a comprehensive range of proteins on a genome-wide level using high-throughput analytical technologies. This international effort is the foundation of the new field of structural genomics.
+
+Recent and expected advances in technology promise an accelerating pace of protein structure determination. The storehouse for all of this data is the \textit{Protein Data Bank} (PDB). The PDB may be found on the web at \href{http://www.rcsb.org/pdb/}{http://www.rcsb.org/pdb/}.
+
+Finding the amino acid or primary sequence is just the beginning of studying a protein. Proteins fold locally into secondary structures such as alpha helices, beta-strands, and turns. Two or three adjacent secondary structures might combine into common local folds called "motifs" or "supersecondary" structures such as beta sheets or alpha-alpha units. These building blocks then fold into the 3D or tertiary structure of a protein. Finally, one or more tertiary structures may be combined as subunits into a quaternary structure such as an enzyme or a virus.
+
+Without knowing how a protein folds into a 3D structure, you are less likely to know what the protein does or how it does it. Even if you know that the protein is implicated in a disease, knowledge of its tertiary structure is usually needed to find a possible treatment. Knowing the tertiary conformation of the \textit{active site} of a protein (which may involve amino acids that are far apart in terms of the primary sequence but which are brought together by the folding of the protein) is critical to guide the selection of targets for new drugs.
+
+Now that the basic genetic information of a number of organisms, including humans, has been decoded, a primary challenge facing biologists is to learn as much as possible about the proteins those genes produce and how they interact.
+
+In fact, one of the great questions of modern biology is how the primary amino acid sequence of a protein determines its ultimate 3D shape. If a computational method can be found to reliably predict the fold of a protein from its amino acid sequence, the effect on biology and medicine would be profound.
+
+In this chapter, you'll learn the basics of PDB files and how to parse out selected information form them. You'll also explore interesting Perl techniques for finding and iterating over lots of files, as well as controlling other bioinformatics programs from a Perl program. The exercises at the end of the chapter challenge you to extend the introductory material presented here to gain access to more of the PDB data.
+
+\section{Overview of PDB}
+The main source for information about 3D structures of macromolecules (including proteins, peptides, viruses, protein/nucleic acid complexes, nucleic acids, and carbohydrates) is PDB, and its format is the de facto standard for the exchange of structural information. Most of these structures are determined experimentally by means of X-ray diffraction or nuclear magnetic resonance (NMR) studies.
+
+PDB started in 1971 with seven proteins; it will soon grow to 20,000 structures. With the international effort in structural genomics increasing, the PDB is certain to continue its rapid growth. Within a few short years the number of known structures will approach 100,000.  
+
+PDB files are like GenBank records, in that they are human-readable ASCII flat files. The text conforms to a specific format, so computer programs may be written to extract the information. PDB is organized with one structure per file, unlike Genbank, which is distributed with many records in each "library" file.
+
+Bioinformaticians who work extensively with PDB files report that there are serious problems with the consistency of the PDB format. For instance, as the field has advanced and the data format has evolved to meet new knowledge requirements, some of the older files have become out of date, and efforts are underway to address the uniformity of PDB data.  Until these efforts are complete and a new data format is developed, inconsistencies in the current data format are a challenge programmers have to face. If you do a lot of programming with PDB files, you'll find many inconsistencies and errors in the data, especially in the older files. Plus, many parsing tools that work well on newer files perform poorly on older files.
+
+As you become a more experienced programmer, these and other issues the PDB faces become more important. For instance, as PDB evolves, the code you write to interact with it must also evolve; you must always maintain your code with an eye on how the rest of the world is changing. As links between databases become better supported, your code will take advantage of the new opportunities the links provide. With new standards of data storage becoming established, your code will have to evolve to include them.
+
+The PDB web site contains a wealth of information on how to download all the files. They are also conveniently distributed—and at no cost—on a set of CDs, which is a real advantage for those lacking high-throughput Internet connections. 
+
+\section{Files and Folders}
+The PDB is distributed as files within directories. Each protein structure occupies its own file. PDB contains a huge amount of data, and it can be a challenge to deal with it. So in this section, you'll learn to deal with large numbers of files organized in directories and subdirectories.
+
+You'll frequently find a need to write programs that manipulate large numbers of files. For example: perhaps you keep all your sequencing runs in a directory, organized into subdirectories labeled by the dates of the sequencing runs and containing whatever the sequencer produced on those days. After a few years, you could have quite a number of files.
+
+Then, one day you discover a new sequence of DNA that seems to be implicated in cell division. You do a BLAST search (see Chapter 12) but find no significant hits for your new DNA. At that point you want to know whether you've seen this DNA before in any previous sequencing runs.\footnote{You may do a comparison by keeping copies of all your sequencing runs in one large BLAST library; building such a BLAST library can be done using the techniques shown in this section.} What you need to do is run a comparison subroutine on each of the hundreds or thousands of files in all your various sequencing run subdirectories. But that's going to take several days of repetitive, boring work sitting at the computer screen.
+
+You can write a program in much less time than that! Then all you have to do is sit back and examine the results of any significant matches your program finds. To write the program, however, you have to know how to manipulate all the files and folders in Perl. The following sections show you how to do it. 
+
+\subsection{Opening Directories}
+A filesystem is organized in a \textit{tree} structure. The metaphor is apt.  Starting from anyplace on the tree, you can proceed up the branches and get to any leaves that stem from your starting place. If you start from the root of the tree, you can reach all the leaves. Similarly, in a filesystem, if you start at a certain directory, you can reach all the files in all the subdirectories that stem from your starting place, and if you start at the root (which, strangely enough, is also called the "top") of the filesystem, you can reach all the files.
+
+You've already had plenty of practice opening, reading from, writing to, and closing files. I will show a simple method with which you can open a folder (also called a directory) and get the filenames of all the files in that folder. Following that, you'll see how to get the names of all files from all directories and subdirectories from a certain starting point.
+
+Let's look at the Perlish way to list all the files in a folder, beginning with some pseudocode: 
+
+\begin{lstlisting}
+open folder
+
+read contents of folder (files and subfolders)
+
+print their names
+\end{lstlisting}
+
+\autoref{exam:example11.1} shows the actual Perl code.
+
+\textbf{Example 11-1. Listing the contents of a folder (or directory)}
+\lstinputlisting[label=exam:example11.1]{./scripts/example11-1.pl}
+
+Since you're running this program on a folder that contains PDB files, this is what you'll see: 
+
+\begin{lstlisting}
+.
+..
+3c
+44
+pdb1a4o.ent
+\end{lstlisting}
+
+If you want to list the files in the current directory, you can give the directory name the special name "." for the current directory, like so:
+
+\begin{lstlisting}
+my $folder = '.';
+\end{lstlisting}
+
+On Unix or Linux systems, the special files "." and ".." refer to the current directory and the parent directory, respectively. These aren't "really" files, at least not files you'd want to read; you can avoid listing them with the wonderful and amazing \textit{grep} function. \textit{grep} allows you to select elements from an array based on a test, such as a regular expression. Here's how to filter out the array entries "." and "..": 
+
+\begin{lstlisting}
+@files = grep( !/^\.\.?$/, @files );
+\end{lstlisting}
+
+\textit{grep} selects all lines that don't match the regular expression, due to the negation operator written as the exclamation mark. The regular expression \verb|/^\.\.?$/| is looking for a line that begins with (the beginning of a line is indicated with the \verb|^| metacharacter) a period \verb|\.| (escaped with a backslash since a period is a metacharacter) followed by 0 or 1 periods \verb|\.?| (the \verb|?| matches 0 or 1 of the preceding items), and nothing more (indicated by the \verb|$| end-of-string metacharacter).
+
+In fact, this is so often used when reading a directory that it's usually combined into one step: 
+
+\begin{lstlisting}
+@files = grep (!/^\.\.?$/, readdir(FOLDER));
+\end{lstlisting}
+
+Okay, now all the files are listed. But wait: what if some of these files aren't files at all but are subfolders? You can use the handy file test operators to test each filename and then even open each subfolder and list the files in them. First, some pseudocode: 
+
+\begin{lstlisting}
+open folder
+
+for each item in the folder
+
+    if it's a file
+        print its name
+
+    else if it's a folder
+        open the folder
+        print the names of the contents of the folder
+    }
+}
+\end{lstlisting}
+
+\autoref{exam:example11.2} shows the program.
+
+\textbf{Example 11-2. List contents of a folder and its subfolders}
+\lstinputlisting[label=exam:example11.2]{./scripts/example11-2.pl}
+
+Here's the output of \autoref{exam:example11.2}:
+
+\begin{lstlisting}
+pdb/3c/pdb43c9.ent
+pdb/3c/pdb43ca.ent
+pdb/44/pdb144d.ent
+pdb/44/pdb144l.ent
+pdb/44/pdb244d.ent
+pdb/44/pdb244l.ent
+pdb/44/pdb344d.ent
+pdb/44/pdb444d.ent
+pdb/pdb1a4o.ent
+\end{lstlisting}
+
+Notice how variable names such as \verb|$file| and \verb|@files| have been reused in this code, using lexical scoping in the inner blocks with \verb|my|. If the overall structure of the program wasn't so short and simple, this could get really hard to read. When the program says \verb|$file|, does it mean this \verb|$file| or that \verb|$file|? This code is an example of how to get into trouble. It works, but it's hard to read, despite its brevity.
+
+In fact, there's a deeper problem with \autoref{exam:example11.2}. It's not well designed. By extending \autoref{exam:example11.1}, it can now list subdirectories. But what if there are further levels of subdirectories? 
+
+\subsection{Recursion}
+If you have a subroutine that lists the contents of directories and recursively calls itself to list the contents of any subdirectories it finds, you can call it on the top-level directory, and it eventually lists all the files.
+
+Let's write another program that does just that. A \textit{recursive} subroutine is defined simply as a subroutine that calls itself. Here is the pseudocode and the code (\autoref{exam:example11.3}) followed by a discussion of how recursion works: 
+
+\begin{lstlisting}
+subroutine list_recursively
+
+    open folder
+
+    for each item in the folder
+
+        if it's a file
+            print its name
+
+        else if it's a folder
+            list_recursively
+    }
+}
+\end{lstlisting}
+
+\textbf{Example 11-3. A recursive subroutine to list a filesystem}
+\lstinputlisting[label=exam:example11.3]{./scripts/example11-3.pl}
+
+Here's the output of \autoref{exam:example11.3} (notice that it's the same as the output of \autoref{exam:example11.2}): 
+
+\begin{lstlisting}
+pdb/3c/pdb43c9.ent
+pdb/3c/pdb43ca.ent
+pdb/44/pdb144d.ent
+pdb/44/pdb144l.ent
+pdb/44/pdb244d.ent
+pdb/44/pdb244l.ent
+pdb/44/pdb344d.ent
+pdb/44/pdb444d.ent
+pdb/pdb1a4o.ent
+\end{lstlisting}
+
+Look over the code for \autoref{exam:example11.3} and compare it to \autoref{exam:example11.2}. As you can see, the programs are largely identical. \autoref{exam:example11.2} is all one main program; \autoref{exam:example11.3} has almost identical code but has packaged it up as a subroutine that is called by a short main program. The main program of \autoref{exam:example11.3} simply calls a recursive function, giving it a directory name (for a directory that exists on my computer; you may need to change the directory name when you attempt to run this program on your own computer). Here is the call:
+
+\begin{lstlisting}
+list_recursively('pdb');
+\end{lstlisting}
+
+I don't know if you feel let down, but I do. This looks just like any other subroutine call. Clearly, the recursion must be defined within the subroutine. It's not until the very end of the \textit{list\_recursively} subroutine, where the program finds (using the \verb|-d| file test operator) that one of the contents of the directory that it's listing is itself a directory, that there's a significant difference in the code as compared with \autoref{exam:example11.2}. At that point, \autoref{exam:example11.2} has code to once again look for regular files or for directories. But this subroutine in \autoref{exam:example11.3} simply calls a subroutine, which happens to be itself, namely, \textit{list\_recursively}: 
+
+\begin{lstlisting}
+list_recursively("$directory/$file");
+\end{lstlisting}
+
+That's recursion.
+
+As you've seen here, there are times when the data—for instance, the hierarchical structure of a filesystem—is well matched by the capabilities of recursive programs. The fact that the recursive call happens at the end of the subroutine means that it's a special type of recursion called \textit{tail recursion}. Although recursion can be slow, due to all the subroutine calls it can create, the good news about tail recursion is that many compilers can optimize the code to make it run much faster. Using recursion can result in clean, short, easy-to-understand programs. (Although Perl doesn't yet optimize it, current plans for Perl 6 include support for optimizing tail recursion.) 
+
+\subsection{Processing Many Files}
+Perl has modules for a variety of tasks. Some come standard with Perl; more can be installed after obtaining them from CPAN or elsewhere: \href{http://www.CPAN.org/}{http://www.CPAN.org/}.
+
+\autoref{exam:example11.3} in the previous section showed how to locate all files and directories under a given directory. There's a module that is standard in any recent version of Perl called \textit{File::Find}. You can find it in your manual pages: on Unix or Linux, for instance, you issue the command \verb|perldoc File::Find|. This module makes it easy—and efficient—to process all files under a given directory, performing whatever operations you specify.
+
+\autoref{exam:example11.4} uses \textit{File::Find}. Consult the documentation for more examples of this useful module. The example shows the same functionality as \autoref{exam:example11.3} but now uses \textit{File::Find}. It simply lists the files and directories. Notice how much less code you have to write if you find a good module, ready to use! 
+
+\textbf{Example 11-4. Demonstrate File::Find}
+\lstinputlisting[label=exam:example11.4]{./scripts/example11-4.pl}
+
+Notice that a reference is passed to the \textit{my\_sub} subroutine by prefacing it with the backslash character. You also need to preface the name with the ampersand character, as mentioned in \autoref{chap:chapter6}.
+
+The call to \textit{find} can also be done like this:
+
+\begin{lstlisting}
+find sub { -f and (print $File\dotsFind\dotsname, "\n")  }, ('pdb');
+\end{lstlisting}
+
+This puts an anonymous subroutine in place of the reference to the \textit{my\_sub} subroutine, and it's a convenience for these types of short subroutines. 
+
+Here's the output:
+
+\begin{lstlisting}
+pdb/pdb1a4o.ent
+pdb/44/pdb144d.ent
+pdb/44/pdb144l.ent
+pdb/44/pdb244d.ent
+pdb/44/pdb244l.ent
+pdb/44/pdb344d.ent
+pdb/44/pdb444d.ent
+pdb/3c/pdb43c9.ent
+pdb/3c/pdb43ca.ent
+\end{lstlisting}
+
+As a final example of processing files with Perl, here's the same functionality as the preceding programs, with a one-line program, issued at the command line: 
+
+\begin{lstlisting}
+  perl -e 'use File::Find;find sub{-f and (print $File::Find::name,"\n")},("pdb")'
+\end{lstlisting}
+
+Pretty cool, for those who admire terseness, although it doesn't really eschew obfuscation. Also note that for those on Unix systems, \verb|ls -R pdb| and \verb|find pdb -print| do the same thing with even less typing.
+
+The reason for using a subroutine that you define is that it enables you to perform any arbitrary tests on the files you find and then take any actions with those files. It's another case of modularization: the \textit{File::Find} module makes it easy to recurse over all the files and directories in a file structure and lets you do as you wish with the files and directories you find. 
+
+\section{PDB Files}
+Here's a section of an actual PDB file:
+
+\begin{lstlisting}
+HEADER    SUGAR BINDING PROTEIN                   03-MAR-99   1C1F              
+TITLE     LIGAND-FREE CONGERIN I                                                
+COMPND    MOL_ID: 1;                                                            
+COMPND   2 MOLECULE: CONGERIN I;                                                
+COMPND   3 CHAIN: A;                                                            
+COMPND   4 FRAGMENT: CARBOHYDRATE-RECOGNITION-DOMAIN;                           
+COMPND   5 BIOLOGICAL_UNIT: HOMODIMER                                           
+SOURCE    MOL_ID: 1;                                                            
+SOURCE   2 ORGANISM_SCIENTIFIC: CONGER MYRIASTER;                               
+SOURCE   3 ORGANISM_COMMON: CONGER EEL;                                         
+SOURCE   4 TISSUE: SKIN MUCUS;                                                  
+SOURCE   5 SECRETION: NON-CLASSICAL                                             
+KEYWDS    GALECTIN, LECTIN, BETA-GALACTOSE-BINDING, SUGAR BINDING               
+KEYWDS   2 PROTEIN                                                              
+EXPDTA    X-RAY DIFFRACTION                                                     
+AUTHOR    T.SHIRAI,C.MITSUYAMA,Y.NIWA,Y.MATSUI,H.HOTTA,T.YAMANE,                
+AUTHOR   2 H.KAMIYA,C.ISHII,T.OGAWA,K.MURAMOTO                                  
+REVDAT   2   14-OCT-99 1C1F    1       SEQADV HEADER                            
+REVDAT   1   08-OCT-99 1C1F    0                                                
+JRNL        AUTH   T.SHIRAI,C.MITSUYAMA,Y.NIWA,Y.MATSUI,H.HOTTA,                
+JRNL        AUTH 2 T.YAMANE,H.KAMIYA,C.ISHII,T.OGAWA,K.MURAMOTO                 
+JRNL        TITL   HIGH-RESOLUTION STRUCTURE OF CONGER EEL GALECTIN,            
+JRNL        TITL 2 CONGERIN I, IN LACTOSE- LIGANDED AND LIGAND-FREE             
+JRNL        TITL 3 FORMS: EMERGENCE OF A NEW STRUCTURE CLASS BY                 
+JRNL        TITL 4 ACCELERATED EVOLUTION                                        
+JRNL        REF    STRUCTURE (LONDON)            V.   7  1223 1999              
+JRNL        REFN   ASTM STRUE6  UK ISSN 0969-2126                 2005          
+REMARK   1                                                                      
+REMARK   2                                                                      
+REMARK   2 RESOLUTION. 1.6 ANGSTROMS.                                           
+REMARK   3                                                                      
+REMARK   3 REFINEMENT.                                                          
+REMARK   3   PROGRAM     : X-PLOR 3.1                                           
+REMARK   3   AUTHORS     : BRUNGER                                              
+REMARK   3                                                                      
+REMARK   3  DATA USED IN REFINEMENT.                                            
+REMARK   3   RESOLUTION RANGE HIGH (ANGSTROMS) : 1.60                           
+REMARK   3   RESOLUTION RANGE LOW  (ANGSTROMS) : 8.00                           
+REMARK   3   DATA CUTOFF            (SIGMA(F)) : 3.000                          
+REMARK   3   DATA CUTOFF HIGH         (ABS(F)) : NULL                           
+REMARK   3   DATA CUTOFF LOW          (ABS(F)) : NULL                           
+REMARK   3   COMPLETENESS (WORKING+TEST)   (%) : 85.0                           
+REMARK   3   NUMBER OF REFLECTIONS             : 17099                          
+REMARK   3                                                                      
+REMARK   3                                                                      
+REMARK   3  FIT TO DATA USED IN REFINEMENT.                                     
+REMARK   3   CROSS-VALIDATION METHOD          : THROUGHOUT                      
+REMARK   3   FREE R VALUE TEST SET SELECTION  : RANDOM                          
+REMARK   3   R VALUE            (WORKING SET) : 0.201                           
+REMARK   3   FREE R VALUE                     : 0.247                           
+REMARK   3   FREE R VALUE TEST SET SIZE   (%) : 5.000                           
+REMARK   3   FREE R VALUE TEST SET COUNT      : 855                             
+REMARK   3   ESTIMATED ERROR OF FREE R VALUE  : NULL                            
+REMARK   3                                                                      
+... 
+
+(file truncated here)
+
+
+REMARK   4                                                                      
+REMARK   4 1C1F COMPLIES WITH FORMAT V. 2.3, 09-JULY-1998                       
+REMARK   7                                                                      
+REMARK   7 >>> WARNING: CHECK REMARK 999 CAREFULLY                              
+REMARK   8                                                                      
+REMARK   8 SIDE-CHAINS OF SER123 AND LEU124 ARE MODELED AS ALTERNATIVE          
+REMARK   8 CONFORMERS.                                                          
+REMARK   9                                                                      
+REMARK   9 SER1 IS ACETYLATED.                                                  
+REMARK  10                                                                      
+REMARK  10 TER                                                                  
+REMARK  10  SER: THE N-TERMINAL RESIDUE WAS NOT OBSERVED                        
+REMARK 100                                                                      
+REMARK 100 THIS ENTRY HAS BEEN PROCESSED BY RCSB ON 07-MAR-1999.                
+REMARK 100 THE RCSB ID CODE IS RCSB000566.                                      
+REMARK 200                                                                      
+REMARK 200 EXPERIMENTAL DETAILS                                                 
+REMARK 200  EXPERIMENT TYPE                : X-RAY DIFFRACTION                  
+REMARK 200  DATE OF DATA COLLECTION        : NULL                               
+REMARK 200  TEMPERATURE           (KELVIN) : 291.0                              
+REMARK 200  PH                             : 9.00                               
+REMARK 200  NUMBER OF CRYSTALS USED        : 1                                  
+REMARK 200                                                                      
+REMARK 200  SYNCHROTRON              (Y/N) : Y                                  
+REMARK 200  RADIATION SOURCE               : PHOTON FACTORY                     
+REMARK 200  BEAMLINE                       : BL6A                               
+REMARK 200  X-RAY GENERATOR MODEL          : NULL                               
+REMARK 200  MONOCHROMATIC OR LAUE    (M/L) : M                                  
+REMARK 200  WAVELENGTH OR RANGE        (A) : 1.00                               
+REMARK 200  MONOCHROMATOR                  : NULL                               
+REMARK 200  OPTICS                         : NULL                               
+REMARK 200                                                                      
+... 
+
+(file truncated here)
+
+
+REMARK 500                                                                      
+REMARK 500 GEOMETRY AND STEREOCHEMISTRY                                         
+REMARK 500 SUBTOPIC: COVALENT BOND ANGLES                                       
+REMARK 500                                                                      
+REMARK 500 THE STEREOCHEMICAL PARAMETERS OF THE FOLLOWING RESIDUES              
+REMARK 500 HAVE VALUES WHICH DEVIATE FROM EXPECTED VALUES BY MORE               
+REMARK 500 THAN 4*RMSD (M=MODEL NUMBER; RES=RESIDUE NAME; C=CHAIN               
+REMARK 500 IDENTIFIER; SSEQ=SEQUENCE NUMBER; I=INSERTION CODE).                 
+REMARK 500                                                                      
+REMARK 500 STANDARD TABLE:                                                      
+REMARK 500 FORMAT: (10X,I3,1X,A3,1X,A1,I4,A1,3(1X,A4,2X),12X,F5.1)              
+REMARK 500                                                                      
+REMARK 500 EXPECTED VALUES: ENGH AND HUBER, 1991                                
+REMARK 500                                                                      
+REMARK 500  M RES CSSEQI ATM1   ATM2   ATM3                                     
+REMARK 500    HIS A  44   N   -  CA  -  C   ANGL. DEV. =-10.3 DEGREES           
+REMARK 500    LEU A 132   CA  -  CB  -  CG  ANGL. DEV. = 12.5 DEGREES           
+REMARK 700                                                                      
+REMARK 700 SHEET                                                                
+REMARK 700 DETERMINATION METHOD: AUTHOR-DETERMINED                              
+REMARK 999                                                                      
+REMARK 999 SEQUENCE                                                             
+REMARK 999 LEU A 135 IS NOT PRESENT IN SEQUENCE DATABASE                        
+REMARK 999                                                                      
+DBREF  1C1F A    1   136  SWS    P26788   LEG_CONMY        1    135             
+SEQADV 1C1F LEU A  135  SWS  P26788              SEE REMARK 999                 
+SEQRES   1 A  136  SER GLY GLY LEU GLN VAL LYS ASN PHE ASP PHE THR VAL          
+SEQRES   2 A  136  GLY LYS PHE LEU THR VAL GLY GLY PHE ILE ASN ASN SER          
+SEQRES   3 A  136  PRO GLN ARG PHE SER VAL ASN VAL GLY GLU SER MET ASN          
+SEQRES   4 A  136  SER LEU SER LEU HIS LEU ASP HIS ARG PHE ASN TYR GLY          
+SEQRES   5 A  136  ALA ASP GLN ASN THR ILE VAL MET ASN SER THR LEU LYS          
+SEQRES   6 A  136  GLY ASP ASN GLY TRP GLU THR GLU GLN ARG SER THR ASN          
+SEQRES   7 A  136  PHE THR LEU SER ALA GLY GLN TYR PHE GLU ILE THR LEU          
+SEQRES   8 A  136  SER TYR ASP ILE ASN LYS PHE TYR ILE ASP ILE LEU ASP          
+SEQRES   9 A  136  GLY PRO ASN LEU GLU PHE PRO ASN ARG TYR SER LYS GLU          
+SEQRES  10 A  136  PHE LEU PRO PHE LEU SER LEU ALA GLY ASP ALA ARG LEU          
+SEQRES  11 A  136  THR LEU VAL LYS LEU GLU                                      
+FORMUL   2  HOH   *81(H2 O1)                                                    
+HELIX    1   1 GLY A   66  ASN A   68  5                                   3    
+SHEET    1  S1 1 GLY A   3  VAL A   6  0                                        
+SHEET    1  S2 1 PHE A 121  GLY A 126  0                                        
+SHEET    1  S3 1 ARG A  29  GLY A  35  0                                        
+SHEET    1  S4 1 LEU A  41  ASN A  50  0                                        
+SHEET    1  S5 1 GLN A  55  THR A  63  0                                        
+SHEET    1  S6 1 GLN A  74  SER A  76  0                                        
+SHEET    1  F1 1 ALA A 128  GLU A 136  0                                        
+SHEET    1  F2 1 PHE A  16  ILE A  23  0                                        
+SHEET    1  F3 1 TYR A  86  TYR A  93  0                                        
+SHEET    1  F4 1 LYS A  97  ILE A 102  0                                        
+SHEET    1  F5 1 ASN A 107  PRO A 111  0                                        
+CRYST1   94.340   36.920   40.540  90.00  90.00  90.00 P 21 21 2     4          
+ORIGX1      1.000000  0.000000  0.000000        0.00000                         
+ORIGX2      0.000000  1.000000  0.000000        0.00000                         
+ORIGX3      0.000000  0.000000  1.000000        0.00000                         
+SCALE1      0.010600  0.000000  0.000000        0.00000                         
+SCALE2      0.000000  0.027085  0.000000        0.00000                         
+SCALE3      0.000000  0.000000  0.024667        0.00000                         
+ATOM      1  N   GLY A   2       1.888  -8.251  -2.511  1.00 36.63           N  
+ATOM      2  CA  GLY A   2       2.571  -8.428  -1.248  1.00 33.02           C  
+ATOM      3  C   GLY A   2       2.586  -7.069  -0.589  1.00 30.43           C  
+ATOM      4  O   GLY A   2       2.833  -6.107  -1.311  1.00 33.27           O  
+ATOM      5  N   GLY A   3       2.302  -6.984   0.693  1.00 24.67           N  
+ATOM      6  CA  GLY A   3       2.176  -5.723   1.348  1.00 18.88           C  
+ATOM      7  C   GLY A   3       0.700  -5.426   1.526  1.00 16.58           C  
+ATOM      8  O   GLY A   3      -0.187  -6.142   1.010  1.00 12.47           O  
+ATOM      9  N   LEU A   4       0.494  -4.400   2.328  1.00 15.00           N  
+... 
+
+(file truncated here)
+
+
+ATOM   1078  CG  GLU A 136      -0.873   9.368  16.046  1.00 38.96           C  
+ATOM   1079  CD  GLU A 136      -0.399   9.054  17.456  1.00 44.66           C  
+ATOM   1080  OE1 GLU A 136       0.789   8.749  17.641  1.00 47.97           O  
+ATOM   1081  OE2 GLU A 136      -1.236   9.099  18.361  1.00 47.75           O  
+ATOM   1082  OXT GLU A 136       0.764  12.146  12.712  1.00 26.22           O  
+TER    1083      GLU A 136                                                      
+HETATM 1084  O   HOH   200      -1.905  -7.624   2.822  1.00 14.50           O  
+HETATM 1085  O   HOH   201      -8.374   7.981   9.202  1.00 20.77           O  
+HETATM 1086  O   HOH   202      -4.047   9.199  11.632  1.00 38.24           O  
+HETATM 1087  O   HOH   203       6.172  14.210   8.483  1.00 14.50           O  
+HETATM 1088  O   HOH   204       2.903   7.804  15.329  1.00 24.51           O  
+HETATM 1089  O   HOH   205      16.654   0.676  11.968  1.00 10.49           O  
+... 
+
+(file truncated here)
+
+
+HETATM 1157  O   HOH   286       6.960  14.840  -3.025  1.00 35.59           O  
+HETATM 1158  O   HOH   287      -3.222  10.410   7.061  1.00 38.91           O  
+HETATM 1159  O   HOH   288      28.306   0.551   4.876  1.00 52.13           O  
+HETATM 1160  O   HOH   290      21.506 -12.424   9.751  1.00 31.68           O  
+HETATM 1161  O   HOH   291      12.951  10.424  -7.324  1.00 46.10           O  
+HETATM 1162  O   HOH   292      18.119 -15.184  14.793  1.00 56.82           O  
+HETATM 1163  O   HOH   293      13.501  22.220   8.216  1.00 43.30           O  
+HETATM 1164  O   HOH   294      13.916 -11.387   9.695  1.00 47.13           O  
+MASTER      240    0    0    1   11    0    0    6 1163    1    0   11          
+END                                                                  
+\end{lstlisting}
+
+PDB files are long, mostly due to the need for information about each atom in the molecule; this relatively short one, when complete, is extensive—28 formatted pages. I cut it here to a little over three pages, showing just enough of the principal sections to give you the overall idea.
+
+The PDB web site has the basic documents you need to read and program with PDB files. The Protein Data Bank Contents Guide (\href{http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2\_frame.html}{http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2\_frame.html}) is the best reference, and there are also FAQs and additional documents available.
+
+In the following sections, you'll extract information from these files. Since the information in these files describes the 3D structure of macromolecules, the files are frequently used by graphical programs that display a spatial representation of the molecules. The scope of this book does not include graphics; however, you will see how to get spatial coordinates out of the files. The largest part of PDB files are the ATOM record type lines containing the coordinates of the atoms. Because of this level of detail, PDB files are typically longer than GenBank records. (Note the inconsistent terminology—a unit of PDB is the file, which contains one structure; a unit of GenBank is the record, which contains one entry.) 
+
+\subsection{PDB File Format}
+Let's take a look at a PDB file and the documentation that tells how the information is formatted in a PDB file. Based on that information, you'll parse the file to extract information of interest.
+
+PDB files are composed of lines of 80 columns that begin with one of several predefined record names and end with a newline. ("Column" means position on a line: the first character is in the first column, and so forth.) Blank columns are padded with spaces. A \textit{record type} is one or more lines with the same record name. Different record types have different types of fields defined within the lines. They are also grouped according to function.
+
+The SEQRES record type is one of four record types in the Primary Structure Section, which presents the primary structure of the peptide or nucleotide sequence: 
+
+\textcolor{red}{\textit{DBREF}}
+\begin{adjustwidth}{1cm}{}
+Reference to the entry in the sequence database(s)
+\end{adjustwidth}
+
+\textcolor{red}{\textit{SEQADV}}
+\begin{adjustwidth}{1cm}{}
+Identification of conflicts between PDB and the named sequence database 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{SEQRES}}
+\begin{adjustwidth}{1cm}{}
+Primary sequence of backbone residues 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{MODRES}}
+\begin{adjustwidth}{1cm}{}
+Identification of modifications to standard residues 
+\end{adjustwidth}
+
+The DBREF and SEQADV record types in the example PDB entry from the previous section give reference information and details on conflicts between the PDB and the original database. (The example doesn't include a MODRES record type.) Here are those record types from the entry: 
+
+\begin{lstlisting}
+DBREF  1C1F A    1   136  SWS    P26788   LEG_CONMY        1    135             
+SEQADV 1C1F LEU A  135  SWS  P26788              SEE REMARK 999 
+\end{lstlisting}
+
+Briefly, the DBREF line states there's a PDB file called \textit{1C1F} (from a file named \textit{pdb1c1f.ent}), the residues in chain A are numbered from 1 to 136 in the original Swiss-Prot (SWS) database, the ID number P26788 and the name LEG\_CONMY are assigned in that database (in many databases these are identical), and the residues are numbered 1 to 135 in PDB. The discrepancy in the numbering between the original database and PDB is explained in the SEQADV record type, which refers you to a REMARK 999 line (not shown here) where you discover that the PDB entry disagrees with the Swiss-Prot sequence concerning a leucine at position 135 (perhaps two different groups determined the structure, and they disagree at this point).\footnote{The cross-referencing to different databases is problematic in older PDB files: it may be missing, or buried somewhere in a REMARK 999 line.} 
+
+You can see that to parse the information in those two lines by a program requires several steps, such as following links to other lines in the PDB entry that further explain discrepancies and identifying other databases.
+
+Links between databases are important in bioinformatics. \autoref{tab:table11.1} displays the databases that are referred to in PDB files. As you already know, there are many biological databases; those shown here have a good deal of protein or structural data. 
+
+\begin{table}[!htbp]
+  \begin{center}
+  \caption{Databases referenced in PDB files}
+  \label{tab:table11.1}
+  \begin{tabu} to 0.6\linewidth {X[3,l]X[1,l]}
+  \toprule
+  Database & PDB code\\
+  \midrule
+  BioMagResBank & BMRB \\
+  BLOCKS & BLOCKS\\
+  European Molecular Biology Laboratory & EMBL\\
+  GenBank & GB\\
+  Genome Data Base & GDB\\
+  Nucleic Acid Database & NDB\\
+  PROSITE & PROSIT\\
+  Protein Data Bank & PDB\\
+  Protein Identification Resource & PIR\\
+  SWISS-PROT & SWS\\
+  TREMBL & TREMBL\\
+  \bottomrule
+  \end{tabu}
+  \end{center}
+\end{table}
+
+\subsection{SEQRES}
+For starters, let's try a fairly easy task in Perl: extracting the amino acid sequence data. To extract the amino acid primary sequence information, you need to parse the record type SEQRES. Here is a SEQRES line from the PDB file listed earlier: 
+
+\begin{lstlisting}
+SEQRES   1 A  136  SER GLY GLY LEU GLN VAL LYS ASN PHE ASP PHE THR VAL
+\end{lstlisting}
+
+The following code shows the SEQRES record type as defined in the Protein Data Bank Contents Guide. This section on SEQRES, which is a fairly simple record type, is shown in its entirely to help familiarize you with this kind of documentation. 
+
+\begin{lstlisting}
+SEQRES 
+ 
+Overview 
+
+SEQRES records contain the amino acid or nucleic acid sequence of residues in
+each chain of the 
+macromolecule that was studied. 
+
+Record Format 
+
+COLUMNS        DATA TYPE       FIELD         DEFINITION                           
+---------------------------------------------------------------------------------
+ 1 -  6        Record name     "SEQRES"                                           
+
+ 9 - 10        Integer         serNum        Serial number of the SEQRES record   
+                                             for the current chain.  Starts at 1  
+                                             and increments by one each line.     
+                                             Reset to 1 for each chain.           
+
+12             Character       chainID       Chain identifier.  This may be any   
+                                             single legal character, including a  
+                                             blank which is used if there is      
+                                             only one chain.                      
+
+14 - 17        Integer         numRes        Number of residues in the chain.     
+                                             This value is repeated on every      
+                                             record.                              
+
+20 - 22        Residue name    resName       Residue name.                        
+
+24 - 26        Residue name    resName       Residue name.                        
+
+28 - 30        Residue name    resName       Residue name.                        
+
+32 - 34        Residue name    resName       Residue name.                        
+
+36 - 38        Residue name    resName       Residue name.                        
+
+40 - 42        Residue name    resName       Residue name.                        
+
+44 - 46        Residue name    resName       Residue name.                        
+
+48 - 50        Residue name    resName       Residue name.                        
+
+52 - 54        Residue name    resName       Residue name.                        
+
+56 - 58        Residue name    resName       Residue name.                        
+
+60 - 62        Residue name    resName       Residue name.                        
+
+64 - 66        Residue name    resName       Residue name.                        
+
+68 - 70        Residue name    resName       Residue name.                        
+
+Details 
+
+* PDB entries use the three-letter abbreviation for amino acid names and the
+  one-letter code for nucleic acids. 
+
+* In the case of non-standard groups, a hetID of up to three (3) alphanumeric
+  characters is used. Common HET names appear in the HET dictionary. 
+
+* Each covalently contiguous sequence of residues (connected via the "backbone"
+  atoms) is represented as an individual chain. 
+
+* Heterogens which are integrated into the backbone of the chain are listed as
+  being part of the chain and are included in the SEQRES records for that chain. 
+
+* Each set of SEQRES records and each HET group is assigned a component number.
+  The component number is assigned serially beginning with 1 for the first set
+  of SEQRES records. This number is given explicitly in the FORMUL record, but
+  only implicitly in the SEQRES record. 
+
+* The SEQRES records must list residues present in the molecule studied, even
+  if the coordinates are not present. 
+
+* C- and N-terminus residues for which no coordinates are provided due to
+  disorder must be listed on SEQRES. 
+
+* All occurrences of standard amino or nucleic acid residues (ATOM records)
+  must be listed on a SEQRES record. This implies that a numRes of 1 is valid. 
+
+* No distinction is made between ribo- and deoxyribonucleotides in the SEQRES
+  records. These residues are identified with the same residue name (i.e., A,
+  C, G, T, U, I). 
+
+* If the entire residue sequence is unknown, the serNum in column 10 is "0",
+  the number of residues thought to comprise the molecule is entered as numRes
+  in columns 14 - 17, and resName in columns 20 - 22 is "UNK". 
+
+* In case of microheterogeneity, only one of the sequences is presented. A
+  REMARK is generated to explain this and a SEQADV is also generated. 
+
+Verification/Validation/Value Authority Control 
+
+The residues presented on the SEQRES records must agree with those found in
+the ATOM records. 
+
+The SEQRES records are checked by PDB using the sequence databases and
+information provided by the depositor. 
+
+SEQRES is compared to the ATOM records during processing, and both are checked
+against the sequence database. All discrepancies are either resolved or
+annotated in the entry. 
+
+Relationships to Other Record Types 
+
+The residues presented on the SEQRES records must agree with those found in
+the ATOM records. DBREF refers to the corresponding entry in the sequence
+databases. SEQADV lists all discrepancies between the entry's sequence for
+which there are coordinates and that referenced in the sequence database.
+MODRES describes modifications to a standard residue. 
+
+Example 
+
+         1         2         3         4         5         6         7
+1234567890123456789012345678901234567890123456789012345678901234567890
+SEQRES   1 A   21  GLY ILE VAL GLU GLN CYS CYS THR SER ILE CYS SER LEU
+SEQRES   2 A   21  TYR GLN LEU GLU ASN TYR CYS ASN                    
+SEQRES   1 B   30  PHE VAL ASN GLN HIS LEU CYS GLY SER HIS LEU VAL GLU
+SEQRES   2 B   30  ALA LEU TYR LEU VAL CYS GLY GLU ARG GLY PHE PHE TYR
+SEQRES   3 B   30  THR PRO LYS ALA                                    
+SEQRES   1 C   21  GLY ILE VAL GLU GLN CYS CYS THR SER ILE CYS SER LEU
+SEQRES   2 C   21  TYR GLN LEU GLU ASN TYR CYS ASN                    
+SEQRES   1 D   30  PHE VAL ASN GLN HIS LEU CYS GLY SER HIS LEU VAL GLU
+SEQRES   2 D   30  ALA LEU TYR LEU VAL CYS GLY GLU ARG GLY PHE PHE TYR
+SEQRES   3 D   30  THR PRO LYS ALA                                    
+
+Known Problems 
+
+Polysaccharides do not lend themselves to being represented in SEQRES. 
+
+There is no mechanism provided to describe sequence runs when the exact
+ordering of the sequence is not known. 
+
+For cyclic peptides, PDB arbitrarily assigns a residue as the N-terminus. 
+
+For microheterogeneity only one of the possible residues in a given position
+is provided in SEQRES. 
+
+No distinction is made between ribo- and deoxyribonucleotides in the SEQRES
+records. These residues are identified with the same residue name (i.e., A,
+C, G, T, U). 
+\end{lstlisting}
+
+The structure of the line containing the SEQRES record type is fairly straightforward, with fields assigned to specific locations or columns in the line. You'll see later how to use these locations to parse the information. Note that the documentation includes many details that arise when handling such complex experimental data.
+
+Apart from the fairly standard problem of accumulating the sequence, there is the added complication of multiple strands. By reading the documentation just shown, you'll see that the SEQRES identifier is followed by a number representing the line number for that chain, and the chain is given in the next field (although in older records it was optional and may be blank). Following those fields comes a number that gives the total number of residues in the chain. Finally, after that, come residues represented as three-letter codes. What is needed, and what can be ignored to meet our programming goals? 
+
+\section{Parsing PDB Files}
+First, \autoref{exam:example11.5} shows the main program and three subroutines that will be discussed in this section. 
+
+\textbf{Example 11-5. Extract sequence chains from PDB file}
+\lstinputlisting[label=exam:example11.5]{./scripts/example11-5.pl}
+
+It's important to note that the main program, which calls the subroutine \verb|get_file_data| to read in the PDB file, has included a warning about the potentially large size of any given PDB file. (For instance, the PDB file \textit{1gav} weighs in at 3.45 MB.) Plus, the main program follows the reading in of the entire file, with the subroutine \verb|parsePDBrecordtypes| that makes copies of all lines in the input file, separated by record type. At this point, the running program is using twice the amount of memory as the size of the file. This design has the advantage of clarity and modularity, but it can cause problems if main memory is in short supply. The use of memory can be lessened by not saving the results of reading in the file, but instead passing the file data directly to the \verb|parsePDBrecordtypes| subroutine, like so: 
+
+\begin{lstlisting}
+  # Get the file data and parse the record types of the PDB file
+  %recordtypes = parsePDBrecordtypes(get_file_data('pdb/c1/pdb1c1f.ent'));
+\end{lstlisting}
+
+Further savings of memory are possible. For instance, you can rewrite the program to just read the file one line at a time while parsing the data into the record types. I point out these considerations to give you an idea of the kinds of choices that are practically important in processing large files. However, let's stick with this design for now. It may be expensive in terms of memory, but it's very clear in terms of overall program structure.
+
+In \autoref{chap:chapter10}, I demonstrated two ways to parse GenBank files into sequence and annotation and then how to parse the annotation into finer and finer levels of detail.
+
+The first method involved iterating through an array of the lines of the record. Recall that due to the structure of multiline fields, it was necessary to set flags while iterating to keep track of which field the input line was in.\footnote{In GenBank, the multiline information sets were called fields; in PDB, they're called record types. Just as in biology different researchers may use their own terminology for some structures or concepts, so too in computer science there can be a certain creativity in terminology. This is one of the interesting difficulties in integrating biological data sources.}
+
+The other method, which worked better for GenBank files, involved regular expressions. Which method will work best for PDB files? (Or should you settle on a third approach?)
+
+There are several ways to extract this information. PDB makes it easy to collect record types, since they all start with the same keyword at the beginning of the line. The technique in the last chapter that used regular expressions parsed the top-level fields of the file; this would be somewhat unwieldy for PDB files. (See the exercises at the end of the chapter.) For instance, a regular expression such as the following matches all adjacent SEQRES lines into a scalar string: 
+
+\begin{lstlisting}
+$record =~ /SEQRES.*\n(SEQRES.*\n)*/;
+$seqres = $&;
+\end{lstlisting}
+
+The regular expression matches a single SEQRES line with \verb|SEQRES.*\n| and then matches zero or more additional lines with \verb|(SEQRES.*\n)*|. Notice how the final \verb|*| indicates zero or more of the preceding item, namely, the parenthesized expression \verb|(SEQRES.*\n)|. Also note that the \verb|.*| matches zero or more nonnewline characters. Finally, the second line captures the pattern matched, denoted by \verb|$&|, into the variable \verb|$seqres|.
+
+To extend this to capture all record types, see the exercises at the end of the chapter.
+
+For PDB files, each line starts with a keyword that explicitly states to which record type that line belongs. You will find in the documentation that each record type has all its lines adjacent to each other in a group. In this case, it seems that simply iterating through the lines and collecting the record types would be the simplest programming approach.
+
+\autoref{exam:example11.5} contains a subroutine \textit{parsePDBrecordtypes} that parses the PDB record types from an array containing the lines of the PDB record.  This is a short, clean subroutine that accomplishes what is needed. The comments describe what's happening pretty well, which, as you know, is a critical factor in writing good code. Basically, each line is examined for its record type and is then added to the value of a hash entry with the record type as the key. The hash is returned from the subroutine. 
+
+\subsection{Extracting Primary Sequence}
+Let's examine the subroutine \textit{extractSEQRES}, now that the record types have been parsed out, and extract the primary amino acid sequence.
+
+You need to extract each chain separately and return an array of one or more strings of sequence corresponding to those chains, instead of just one sequence.
+
+The previous parse, in \autoref{exam:example11.4}, left the required SEQRES record type, which stretches over several lines, in a scalar string that is the value of the key '\verb|SEQRES|' in a hash. Our success with the previous \textit{parsePDBrecordtypes} subroutine that used iteration over lines (as opposed to regular expressions over multiline strings) leads to the same approach here. The \textit{split} Perl function enables you to turn a multiline string into an array.
+
+As you iterate through the lines of the SEQRES record type, notice when a new chain is starting, save the previous chain in \verb|@results|, reset the \verb|$sequence| array, and reset the \verb|$lastchain| flag to the new chain. Also, when done with all the lines, make sure to save the last sequence chain in the \verb|@results| array.
+
+Also notice (and verify by exploring the Perl documentation for the function) that \textit{split}, with the arguments you gave it, does what you want.
+
+The third and final subroutine of \autoref{exam:example11.5} is called \textit{iub3to1}. Since in PDB the sequence information is in three-character codes, you need this subroutine to change those sequences into one-character codes. It uses a straightforward hash lookup to perform the translation.
+
+We've now decomposed the problem into a few complementary subroutines.  It's always interesting as to how to best divide a problem into cooperating subroutines. You can put the call to \textit{iub3to1} inside the \textit{extractSEQRES} subroutine; that might be a cleaner way to package these subroutines together, since, outside the PDB file format, you won't have use for the strings of amino acids in three-character codes.
+
+The important observation at this juncture is to point out that a few short subroutines, tied together with a very short main program, were sufficient to do a great deal of parsing of PDB files. 
+
+\subsection{Finding Atomic Coordinates}
+So far, I've tried not to give more than a very brief overview of protein structure. However, in parsing PDB files, you will be faced with a great deal of detailed information about the structures and the experimental conditions under which they were determined. I will now present a short program that extracts the coordinates of atoms in a PDB file. I don't cover the whole story: for that, you will want to read the PDB documentation in detail and consult texts on protein structure, X-ray crystallography, and NMR techniques.
+
+That said, let's extract the coordinates from the ATOM record type. ATOM record types are the most numerous of the several record types that deal with atomic-coordinate data: MODEL, ATOM, SIGATM, ANISOU, SIGUIJ, TER, HETATM, and ENDMDL. There are also several record types that handle coordinate transformation: ORIGXn, SCALEn, MTRIXn, and TVECT.
+
+Here is part of the PDB documentation that shows the field definitions of each ATOM record: 
+
+\begin{lstlisting}
+ATOM 
+
+Overview 
+
+The ATOM records present the atomic coordinates for standard residues.
+They also present the occupancy and temperature factor for each atom.
+Heterogen coordinates use the HETATM record type. The element symbol
+is always present on each ATOM record; segment identifier and charge
+are optional. 
+
+Record Format 
+
+COLUMNS        DATA TYPE       FIELD         DEFINITION                            
+---------------------------------------------------------------------------------
+ 1 -  6        Record name     "ATOM  "                                            
+
+ 7 - 11        Integer         serial        Atom serial number.                   
+
+13 - 16        Atom            name          Atom name.                            
+
+17             Character       altLoc        Alternate location indicator.         
+
+18 - 20        Residue name    resName       Residue name.                         
+
+22             Character       chainID       Chain identifier.                     
+
+23 - 26        Integer         resSeq        Residue sequence number.              
+
+27             AChar           iCode         Code for insertion of residues.       
+
+31 - 38        Real(8.3)       x             Orthogonal coordinates for X in       
+                                             Angstroms.                       
+
+39 - 46        Real(8.3)       y             Orthogonal coordinates for Y in       
+                                             Angstroms.                            
+
+47 - 54        Real(8.3)       z             Orthogonal coordinates for Z in       
+                                             Angstroms.                            
+
+55 - 60        Real(6.2)       occupancy     Occupancy.                            
+
+61 - 66        Real(6.2)       tempFactor    Temperature factor.                   
+
+73 - 76        LString(4)      segID         Segment identifier, left-justified.   
+
+77 - 78        LString(2)      element       Element symbol, right-justified.      
+
+79 - 80        LString(2)      charge        Charge on the atom.       
+\end{lstlisting}
+
+Here is a typical ATOM line:
+
+\begin{lstlisting}
+ATOM      1  N   GLY A   2       1.888  -8.251  -2.511  1.00 36.63           N  
+\end{lstlisting}
+
+Let's do something fairly simple: let's extract all x, y, and z coordinates for each atom, plus the serial number (a unique integer for each atom in the molecule) and the element symbol. \autoref{exam:example11.6} is a subroutine that accomplishes that, with a main program to exercise the subroutine. 
+
+\textbf{Example 11-6. Extract atomic coordinates from PDB file}
+\lstinputlisting[label=exam:example11.6]{./scripts/example11-6.pl}
+
+The \textit{parseATOM} subroutine is quite short: the strict format of these ATOM records makes parsing the information quite straightforward. You first split the scalar argument, which contains the ATOM lines, into an array of lines.
+
+Then, for each line, use the \verb|substr| function to extract the specific columns of the line that contains the needed data: the serial number of the atom; the x, y, and z coordinates; and the element symbol.
+
+Finally, save the results by making a hash with keys equal to the serial numbers and values set to strings containing the other four relevant fields. Now, this may not always be the most convenient way to return the data. For one thing, hashes are not sorted on the keys, so that would need to be an additional step if you had to sort the atoms by serial number. In particular, an array is a logical choice to store information sorted by serial number. Or, it could be that what you really want is to find all the metals, in which case, another data structure would be suggested. Nevertheless, this short subroutine shows one way to find and report information.
+
+It often happens that what you really need is a reformatting of the data for use by another program. Using the technique of this subroutine, you can see how to extract the needed data and add a \verb|print| statement that formats the data into the desired form. Take a look at the \textit{printf} and \textit{sprintf} functions to get more specific control over the format. For real heavy-duty formatting, there's the \textit{format} function, which merits its own chapter in O'Reilly's comprehensive \textit{Programming Perl}. (See also \autoref{chap:chapter12} and \autoref{chap:chapterab} of this book.)
+
+Here's the output from \autoref{exam:example11.6}:
+
+\begin{lstlisting}
+ 1.888   -8.251   -2.511  N
+18.955  -10.180   10.777  C
+\end{lstlisting}
+
+You can now extract at least the major portion of the atomic coordinates from a PDB file. Again, notice the good news: it doesn't take a long or particularly complex program to do what is needed.
+
+This program has been designed so that its parts can be used in the future to work well for other purposes. You parse all record types, for instance, not only the ATOM record types. Let's take a look at a very short program that just parses the ATOM record type lines from an input file; by targeting only this one problem, you can write a much shorter program. Here's the program: 
+
+\begin{lstlisting}
+while(<>) {
+  /^ATOM/ or next;
+
+  my($n, $x, $y, $z, $element)
+    = ($_ =~ /^.{6}(.{5}).{19}(.{8})(.{8})(.{8}).{22}(..)/);
+
+  # $n and $element may have leading spaces: strip them
+  $n      =~ s/^\s*//;
+  $element =~ s/^\s*//;
+
+  if (($n == 1) or ($n == 1078)) {
+    printf "%8.3f%8.3f%8.3f %2s\n", $x, $y, $z, $element;
+  }
+}
+\end{lstlisting}
+
+For each line, a regular-expression match extracts just the needed information. Recall that a regular expression that contains parentheses metacharacters returns an array whose elements are the parts of the string that matched within the parentheses. You assign the five variables \verb|$number|, \verb|$x|, \verb|$y|, \verb|$z|, and \verb|$element| to the substrings from these matched parentheses.
+
+The actual regular expression is simply using dots and the quantifier operator \verb|.{num}| to stand for num characters. In this way, you can, starting from the beginning of the string as represented by the caret \verb|^| metacharacter, specify the columns with the information you want returned by surrounding them with parentheses.
+
+For instance, you don't want the first six characters, so you specify them as \verb|^.{6}|, but you do want the next five characters because they contain the serial number of the atom; so, specify that field as \verb|(.{5})|.
+
+Frankly, I think that the use of \verb|substr| is clearer for this purpose, but I wanted to show you an alternative way using regular expressions as well.
+
+We've already seen the use of the \verb|printf| function to format output with more options then with the \verb|print| function.
+
+This program has another important shortcut. It doesn't specify the file to open and read from. In Perl, you can give the input filename on the command line (or drag and drop it onto a Mac droplet), and the program takes its input from that file. Just use the angle brackets as shown in the first line of the program to read from the file. For short, fast programs, such as the one demonstrated here, this is a great convenience. You can leave out all the calls and tests for success of the \verb|open| function and just use the angle brackets. You would call it from the command line like so, assuming you saved the program in a file called \textit{get\_two\_atoms}: 
+
+\begin{lstlisting}
+%perl get_two_atoms pdb1a4o.ent
+\end{lstlisting}
+
+Alternatively, you can pipe data to the program with the commands:
+
+\begin{lstlisting}
+% cat pdb1a40.cat | perl get_two_atoms
+\end{lstlisting}
+
+or:
+
+\begin{lstlisting}
+% perl get_two__atoms < pdb1a40.ent 
+\end{lstlisting}
+
+and use \verb|<STDIN>| instead of \verb|<>| in your program to read the data. 
+
+\section{Controlling Other Programs}
+Perl makes it easy to start other programs and collect their output, all from within your Perl program. This is an extremely useful capability; for most programs, Perl makes it fairly simple to accomplish.
+
+You may need to run some particular program many times, for instance over every file in PDB to extract secondary structure information. The program itself may not have a way to tell it "run yourself over all these files." Also, the output of the program may have all sorts of extraneous information. What you need is a much simpler report that just presents the information that interests you—perhaps in a format that could then be input to another program! With Perl you can write a program to do exactly this.
+
+An important kind of program to automate is a web site that provides some useful program or data online. Using the appropriate Perl modules, you can connect to the web site, send it your input, collect the output, and then parse and reformat as you wish. It's actually not hard to do!  O'Reilly's \textit{Perl Cookbook}, a companion volume to \textit{Programming Perl}, is an excellent source of short programs and helpful descriptions to get you started.
+
+Perl is a great way to automate other programs. The next section shows an example of a Perl program that starts another program and collects, parses, reformats, and outputs the results. This program will control another program on the same computer. The example will be from a Unix or Linux environment; consult your Perl documentation on how to get the same functionality from your Windows or Macintosh platform. 
+
+\subsection{The Stride Secondary Structure Predictor}
+We will use an external program to calculate the secondary structure from the 3D coordinates of a PDB file. As a secondary structure assignment engine, I use a program that outputs a secondary structure report, called \textit{stride}. \textit{stride} is available from EMBL (\href{http://www.embl-heidelberg.de/stride/stride\_info.html}{http://www.embl-heidelberg.de/stride/stride\_info.html}) and runs on Unix, Linux, Windows, Macintosh, and VMS systems. The program works very simply; just give it a command-line argument of a PDB filename and collect the output in the subroutine \textit{call\_stride} that follows.
+
+\autoref{exam:example11.7} is the entire program: two subroutines and a main program, followed by a discussion. 
+
+\textbf{Example 11-7. Call another program for secondary structure prediction}
+\lstinputlisting[label=exam:example11.7]{./scripts/example11-7.pl}
+
+As you can see in the subroutine \textit{call\_stride}, variables have been made for the program name (\verb|$stride|) and for the options you may want to pass (\verb|$options|). Since these are parts of the program you may want to change, put them as variables near the top of the code, to make them easy to find and alter. The argument to the subroutine is the PDB filename (\verb|$filename|). (Of course, if you expect the options to change frequently, you can make them another argument to the subroutine.)
+
+Since you're dealing with a program that takes a file, do a little error checking to see if a file by that name actually exists. Use the \verb|-e| file test operator. Or you can omit this and let the \textit{stride} program figure it out, and capture its error output. But that requires parsing the stride output for its error output, which involves figuring out how \textit{stride} reports errors. This can get complicated, so I'd stick with using the \verb|-e| file test operator.
+
+The actual running of the program and collecting its output happens in just one line. The program to be run is enclosed in backticks, which run the program (first expanding variables) and return the output as an array of lines.
+
+There are other ways to run a program. One common way is the system function call. It behaves differently from the backticks: it doesn't return the output of the command it calls (it just returns the exit status, an integer indicating success or failure of the command). Other methods include \textit{qx}, the \textit{open} system call, and the \textit{fork} and \textit{exec} functions. 
+
+\subsection{Parsing Stride Output}
+I don't go into too much detail here about parsing the output of \textit{stride}. Let's just exhibit some code that extracts the primary sequence and the secondary structure prediction. See the exercises at the end of the chapter for a challenge to extract the secondary structure information from a PDB file's HELIX, SHEET, and TURN record types and output the information in a similar format as \textit{stride} does here.
+  
+Here is a typical section of a \textit{stride} output (not the entire output):
+
+\begin{lstlisting}
+SEQ  1    MDKNELVQKAKLAEQAERYDDMAACMKSVTEQGAELSNEERNLLSVAYKN   50          1A4O
+STR         HHHHHHHHHHHHHH  HHHHHHHHHHHHHTTT   HHHHHHHHHHHHH               1A4O
+REM                                                                        1A4O
+REM                .         .         .         .         .               1A4O
+SEQ  51   VVGARRSSWRVVSSIEQKEKKQQMAREYREKIETELRDICNDVLSLLEKF  100          1A4O
+STR       HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHT               1A4O
+REM                                                                        1A4O
+REM                .         .         .         .         .               1A4O
+SEQ  101  LIPNAAESKVFYLKMKGDYYRYLAEVAAGDDKKGIVDQSQQAYQEAFEIS  150          1A4O
+STR       TTTTT HHHHHHHHHHHHHHHHHHHH   HHHHHHHHHHHHHHHHHHHHH               1A4O
+REM                                                                        1A4O
+REM                .         .         .         .                         1A4O
+SEQ  151  KKEMIRLGLALNFSVFYYACSLAKTAFDEAIAELLIMQLLRDNLTLW     197          1A4O
+STR       TTTTHHHHHHHHHHHH   HHHHHHHHHHHHH  HHHHHHHHHH                     1A4O
+\end{lstlisting}
+
+Notice that each line is prefaced by an identifier, which should make collecting the different record types easy. Without even consulting the documentation (a slightly dangerous but sometimes expedient approach), you can see that the primary sequence has keyword \verb|SEQ|, the structure prediction has keyword \verb|STR|, and the data of interest lies from position 11 up to position 60 on each line. (We'll ignore everything else for now.)
+
+The following list shows the one-letter secondary structure codes used by \textit{stride}: 
+
+\begin{table}[!htbp]
+  \begin{center}
+  \begin{tabu} to 0.5\linewidth {X[1,l]X[2,l]}
+  \toprule
+  H & Alpha helix\\
+  G & 3-10 helix\\
+  I & PI helix\\
+  E & Extended conformation\\
+  B or b& Isolated bridge\\
+  T & Turn\\
+  C & Coil (none of the above)\\
+  \bottomrule
+  \end{tabu}
+  \end{center}
+\end{table}
+
+Using the \verb|substr| function, the two \verb|for| loops alter each line of the two arrays by saving the 11th to the 60th positions of those strings. This is where the desired information lies.
+
+Now let's examine the subroutine \textit{parse\_stride} in \autoref{exam:example11.7} that takes \textit{stride} output and returns an array of two strings, the primary sequence and the structure prediction.
+
+This is a very "Perlish" subroutine that uses some features that manipulate text. What's interesting is the brevity of the program, which some of Perl's built-in functions make possible.
+
+First, you receive the output of the \textit{stride} program in the subroutine argument \verb|@_|. Next, use the \textit{grep} function to extract those lines of interest, which are easy to identify in this output, as they begin with clear identifiers \verb|SEQ| and \verb|STR|.  
+
+Next, you want to save just those positions (or columns) of these lines that have the sequence or structure information; you don't need the keywords, position numbers, or the PDB entry name at the end of the lines.
+
+Finally, join the arrays into single strings. Here, there's one detail to handle; you need to remove any unneeded spaces from the ends of the strings. Notice that \textit{stride} sometimes leaves spaces in the structure prediction, and in this example, has left some at the end of the structure prediction. So you shouldn't throw away all the spaces at the ends of the strings. Instead, throw away all the spaces at the end of the sequence string, because they are just superfluous spaces on the line. Now, see how many spaces that was, and throw the equal amount away at the end of the structure prediction string, thus preserving spaces that correspond to undetermined secondary structure.
+
+\autoref{exam:example11.7} contains a main program that calls two subroutines, which, since they are short, are all included (so there's no need here for the \textit{BeginPerlBioinfo} module). Here's the output of \autoref{exam:example11.7}: 
+
+\begin{lstlisting}
+GGLQVKNFDFTVGKFLTVGGFINNSPQRFSVNVGESMNSLSLHLDHRFNYGADQNTIVMNSTLKGDNGWETEQRSTNFTL
+    TTTTTTBTTT EEEEEEETTTT EEEEEEEEETTEEEEEEEEEEEETTEEEEEEEEEETTGGG B   EEE     
+\end{lstlisting}
+
+The first line shows the amino acids, and the second line shows the prediction of the secondary structure. Check the next section for a subroutine that will improve that output. 
+
+
+\textcolor{red}{\textit{}}
+\begin{adjustwidth}{1cm}{}
+
+\end{adjustwidth}
+
+
+\textbf{}
+\lstinputlisting[label=exam:example11.1]{./scripts/example11-1.pl}
+
+
+
+\section{Exercises}
+\textcolor{red}{\textit{Exercise 11.1}}
+\begin{adjustwidth}{1cm}{}
+Use \textit{File::Find} and the file test operators to find the oldest and largest files on the hard drive of your computer. (You can delete them or store them elsewhere if you're running short on disk space.)
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 11.2}}
+\begin{adjustwidth}{1cm}{}
+Find all the Perl programs on your computer.
+
+\textit{Hint}: Use \textit{File::Find}. What do all Perl programs have in common?
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 11.3}}
+\begin{adjustwidth}{1cm}{}
+Parse the HEADER, TITLE, and KEYWORDS record types of all PDB files on your computer. Make a hash with \textit{key} as a word from those record types and \textit{value} as a list of filenames that contained that word. Save it as a DBM file and build a query program for it. In the end, you should be able to ask for, say, sugar, and get a list of all PDB files that contain that word in the HEADER, TITLE, or KEYWORDS records.
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 11.4}}
+\begin{adjustwidth}{1cm}{}
+Parse out the record types of a PDB file using regular expressions (as used in \autoref{chap:chapter10}) instead of iterating through an array of input lines (as in this chapter.) 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 11.5}}
+\begin{adjustwidth}{1cm}{}
+Write a program that extracts the secondary structure information contained in the HELIX, SHEET, and TURN record types of PDB files. Print out the secondary structure and the primary sequence together, so that it's easy to see by what secondary structure a given residue is included. (Consider using a special alphabet for secondary structure, so that every residue in a helix is represented by H, for example.)
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 11.6}}
+\begin{adjustwidth}{1cm}{}
+Write a program that finds all PDB files under a given folder and runs a program (such as \textit{stride}, or the program you wrote in Exercise 11.5) that reports on the secondary structure of each PDB file. Store the results in a DBM file keyed on the filename.
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 11.7}}
+\begin{adjustwidth}{1cm}{}
+Write a subroutine that, given two strings, prints them out one over the other, but with line breaks (similar to the \textit{stride} program output). Use this subroutine to print out the strings from \autoref{exam:example11.7}. 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 11.8}}
+\begin{adjustwidth}{1cm}{}
+Write a recursive subroutine to determine the size of an array. You may want to use the \verb|pop| or \verb|unshift| functions. (Ignore the fact that the \verb|scalar @array| returns the size of \verb|@array|!)
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 11.9}}
+\begin{adjustwidth}{1cm}{}
+Write a recursive subroutine that extracts the primary amino acid sequence from the SEQRES record type of a PDB file. 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 11.10}}
+\begin{adjustwidth}{1cm}{}
+(\textit{Extra credit}) Given an atom and a distance, find all other atoms in a PDB file that are within that distance of the atom. 
+\end{adjustwidth}
+
+\textcolor{red}{\textit{Exercise 11.11}}
+\begin{adjustwidth}{1cm}{}
+(\textit{Extra credit}) Write a program to find some correlation between the primary amino acid sequence and the location of alpha helices. 
+\end{adjustwidth}
+
