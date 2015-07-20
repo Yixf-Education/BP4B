@@ -65,18 +65,14 @@ Numbers are scalar values that can be:
 
 \begin{itemize}
   \item Integers:\\ \verb|3|\\ \verb|-4|\\ \verb|0|
-  \item F loating-point (decimal):\\ \verb|4.5326|
-  \item Scientific (exponential) notation (3.13 x 1023 or 313000000000000000000000):\\ \verb|3.13E23|
+  \item Floating-point (decimal):\\ \verb|4.5326|
+  \item Scientific (exponential) notation ($3.13 \times 10^{23}$ or 313000000000000000000000):\\ \verb|3.13E23|
   \item Hexadecimal (base 16):\\ \verb|Ox12bc3|
   \item Octal (base 8):\\ \verb|O5777|
   \item Binary (base 2):\\ \verb|0b10101011|
 \end{itemize}
 
-Complex (or imaginary) numbers, such as \verb|3 + i|, and fractions (or ratios,
-or rational numbers), such as \verb|1/3|, can be a little tricky. Perl can
-handle fractions but converts them internally to floating-point numbers,
-which can make certain operations go wrong (Perl is not alone among
-computer languages in this regard.):
+Complex (or imaginary) numbers, such as \verb|3 + i|, and fractions (or ratios, or rational numbers), such as \verb|1/3|, can be a little tricky. Perl can handle fractions but converts them internally to floating-point numbers, which can make certain operations go wrong (Perl is not alone among computer languages in this regard.):
 
 \begin{lstlisting}
 if ( 10/3  == ( (1/3) * 10  ) {
@@ -124,7 +120,7 @@ $thousand = 1000;
 
 assigns the integer 1,000, a scalar value, to the scalar variable \verb|$thousand|.
 
-The assignment statement looks like an equal sign from elementary mathematics, but its meaning is different. The assignment statement is an instruction, not an assertion. It doesn't mean "\verb|$thousand| equals 1,000." It means "store the scalar value 1,000 into the scalar variable \verb|$thousand|". However, after the statement, the value of the scalar variable \verb|$thousand| is, indeed, equal to 1000.
+The assignment statement looks like an equal sign from elementary mathematics, but its meaning is different. The assignment statement is an instruction, not an assertion. It doesn't mean "\verb|$thousand| equals 1,000." It means "store the scalar value 1,000 into the scalar variable \verb|$thousand|". However, after the statement, the value of the scalar variable \verb|$thousand| is, indeed, equal to 1,000.
 
 You can assign values to several scalar variables by surrounding variables and values in parentheses and separating them by commas, thus making lists:
 
@@ -132,7 +128,7 @@ You can assign values to several scalar variables by surrounding variables and v
 ($one, $two, $three) = ( 1, 2, 3 );
 \end{lstlisting}
 
-There are several assignment operators besides = that are shorthand for longer expressions. For instance, \verb|$a += $b| is equivalent to \verb|$a = $a + $b|. \autoref{tab:tablea.b1} is a complete list (it includes several operators that aren't covered in this book).
+There are several assignment operators besides \verb|=| that are shorthand for longer expressions. For instance, \verb|$a += $b| is equivalent to \verb|$a = $a + $b|. \autoref{tab:tablea.b1} is a complete list (it includes several operators that aren't covered in this book).
 
 \begin{table}[!htbp]
   \begin{center}
@@ -151,12 +147,12 @@ There are several assignment operators besides = that are shorthand for longer e
     \verb|$a |\%\verb|= $b| & \verb|$a = $a |\%\verb| $b| (remainder of \verb|$a/$b|)\\
     \verb|$a x= $b| & \verb|$a = $a x $b| (string \verb|$a| repeated \verb|$b| times)\\
     \verb|$a &= $b| & \verb|$a = $a & $b| (bitwise AND)\\
-    \verb+$a |= $b+ & \verb+$a = $a | $b+ (bitwise XOR)\\
+    \verb+$a |= $b+ & \verb+$a = $a | $b+ (bitwise OR)\\
     \verb|$a ^= $b| & \verb|$a = $a ^ $b| (bitwise XOR)\\
     \verb|$a >>= $b| & \verb|$a = $a >> $b| (\verb|$a| shift \verb|$b| bits)\\
     \verb|$a <<= $b| & \verb|$a = $a << $b| (\verb|$a| shift \verb|$b| bits to left)\\
     \verb|$a &&= $b| & \verb|$a = $a && $b| (logical AND)\\
-    \verb+$a ||= $b+ & \verb+$a = $a || $b+ (logical XOR)\\
+    \verb+$a ||= $b+ & \verb+$a = $a || $b+ (logical OR)\\
     \verb|$a .= $b| & \verb|$a = $a . $b| (append string \verb|$b| to \verb|$a|)\\
     \bottomrule
     \end{tabu*}
@@ -166,11 +162,9 @@ There are several assignment operators besides = that are shorthand for longer e
 \section{Statements and Blocks}
 Programs are composed of statements often grouped together into blocks.
 
-A statement ends with a semicolon (;), which is optional for the last
-statement in a block.
+A statement ends with a semicolon (;), which is optional for the last statement in a block.
 
-A block is one or more statements usually surrounded by curly braces;
-here's an example:
+A block is one or more statements usually surrounded by curly braces; here's an example:
 
 \begin{lstlisting}
 {
@@ -217,13 +211,13 @@ You can make a copy of an array using an assignment operator \verb|=|, as in thi
 @output = @input;
 \end{lstlisting}
 
-If you evaluate an array in scalar context, the value is the number of elements in the array. So if array \verb|@input| has five elements, the following example assigns the value 5 to \verb|$count|: 
+If you evaluate an array in scalar context, the value is the number of elements in the array. So if array \verb|@input| has five elements, the following example assigns the value 5 to \verb|$count|:
 
 \begin{lstlisting}
 $count = @input;
 \end{lstlisting}
 
-\autoref{fig:figurea.b1} shows an array \verb|@myarray| with three elements, which demonstrates the ordered nature of an array; by which each element appears, and can be found by its position in the array. 
+\autoref{fig:figurea.b1} shows an array \verb|@myarray| with three elements, which demonstrates the ordered nature of an array; by which each element appears, and can be found by its position in the array.
 
 \begin{figure}
   \centering
@@ -233,7 +227,7 @@ $count = @input;
  \end{figure}{}
 
 \section{Hashes}
-A hash (also called an associative array) is a collection of zero or more pairs of scalar values, called keys and values. The values are indexed by the keys. An array variable begins with the percent sign \verb|%| followed by a legal variable name. For instance, possible hash variable names are:
+A hash (also called an associative array) is a collection of zero or more pairs of scalar values, called keys and values. The values are indexed by the keys. An hash variable begins with the percent sign \verb|%| followed by a legal variable name. For instance, possible hash variable names are:
 
 \begin{lstlisting}
 %hash1
@@ -275,7 +269,7 @@ To get the value associated with a particular key, precede the hash name with a 
 $genes_by_name{'gene1'}
 \end{lstlisting}
 
-This returns the value '\verb|AACCCGGTTGGTT|', given the value previously assigned to the key '\verb|gene1|' in the hash \verb|%genes_by_name|. \autoref{fig:figurea.b2} shows a hash with three keys. 
+This returns the value '\verb|AACCCGGTTGGTT|', given the value previously assigned to the key '\verb|gene1|' in the hash \verb|%genes_by_name|. \autoref{fig:figurea.b2} shows a hash with three keys.
 
 \begin{figure}
   \centering
@@ -319,7 +313,7 @@ evaluates to 15.
 \section{Basic Operators}
 For more information on how operators work, consult the \verb|perlop| documentation bundled with Perl. 
 
-\subsection{rithmetic Operators}
+\subsection{Arithmetic Operators}
 Perl has the basic five arithmetic operators:
 
 \textcolor{red}{+}
@@ -360,7 +354,7 @@ Perl also has autoincrement and autodecrement operators:
 -- subtract one
 \end{lstlisting}
 
-Unlike the previous six operators, these change a variable's value.  \verb|$x++| adds one to \verb|$x|, changing 4 to 5 (or a to b). 
+Unlike the previous six operators, these change a variable's value. \verb|$x++| adds one to \verb|$x|, changing 4 to 5 (or a to b). 
 
 \subsection{Bitwise Operators}
 All scalars, whether numbers or strings, are represented as sequences of individual bits "under the hood." Every once in a while, you need to manipulate those bits, and Perl provides five operators to help:
@@ -427,8 +421,8 @@ File test operators are unary operators that test files for certain characterist
     -s & File has nonzero size (return size in bytes)\\
     -f & File is a plain file\\
     -d & File is a directory (a.k.a. folder)\\
-    -l & File is a symbolic lin\\
-    -t & FIlehandle is opened to a terminal\\
+    -l & File is a symbolic link\\
+    -t & Filehandle is opened to a terminal\\
     -T & File is a text file\\
     -B & File is a binary file\\
     -M & Age of file (at startup of program) in days since modification\\
@@ -538,7 +532,7 @@ A quick and popular way to take an action depending on the results of a previous
 open(FH, $filename) or die "Cannot open file $filename: $!";
 \end{lstlisting}
 
-The use of \verb|or| in this statement shows another important thing about the binary logical operators: they evaluate their arguments left to right. In this case, if the open succeeds, the \verb|or| operator never bothers to check the value of the second operand (\verb|die|, which exits the program with the message in the string, plus additional messages if \verb|$!| is included).  The \verb|or| never bothers, because if one operand is \verb|true|, the \verb|or| is \verb|true|, so it doesn't need to check the second operand. However, if the open fails, the \verb|or| needs to check that the second operand is \verb|true| or \verb|false|, so it goes ahead and executes the \verb|die| statement.
+The use of \verb|or| in this statement shows another important thing about the binary logical operators: they evaluate their arguments left to right. In this case, if the open succeeds, the \verb|or| operator never bothers to check the value of the second operand (\verb|die|, which exits the program with the message in the string, plus additional messages if \verb|$!| is included). The \verb|or| never bothers, because if one operand is \verb|true|, the \verb|or| is \verb|true|, so it doesn't need to check the second operand. However, if the open fails, the \verb|or| needs to check that the second operand is \verb|true| or \verb|false|, so it goes ahead and executes the \verb|die| statement.
 
 You can use the \verb|and| statement similarly to test the second operand only if the first operand succeeds.
 
@@ -547,11 +541,10 @@ You can use the \verb|and| statement similarly to test the second operand only i
 I haven't used this chaining of logical operators much; I've used \verb|if| statements instead. This is because I often find that I want to add more statements following a test, and it's easier if the original is written as an \verb|if| statement with a block, and harder if the original is written as a logical operator.
 
 \subsection{The if Statement}
-Conditional tests are commonly found in \verb|if| statements and in their
-variants and loops. Here's an example of an \verb|if| statement:
+Conditional tests are commonly found in \verb|if| statements and in their variants and loops. Here's an example of an \verb|if| statement:
 
 \begin{lstlisting}
-if (open (FH, $filename) {
+if (open (FH, $filename) ) {
   print "Hurray, I opened the file.";
 }
 \end{lstlisting}
@@ -561,49 +554,49 @@ The \verb|if| statement is followed by a conditional expression enclosed in pare
 The \verb|if| statement may optionally be followed by an \verb|else|, which is executed when the conditional evaluates to \verb|false|:
 
 \begin{lstlisting}
-if ( open(FH, $filename) {
+if ( open(FH, $filename) ) {
   print "Hurray, I opened the file.";
 } else {
   print "Rats. The file did not open.";
 }
 \end{lstlisting}
 
-The \verb|if| statement may also optionally include any number of \verb|elsif| clauses, which check additional conditional statements if none of the preceding conditional statements are \verb|true|: 
+The \verb|if| statement may also optionally include any number of \verb|elsif| clauses, which check additional conditional statements if none of the preceding conditional statements are \verb|true|:
 
 \begin{lstlisting}
-if ( open(FH, $file1) {
+if ( open(FH, $file1) ) {
   print "Hurray, I opened file 1.";
-} elsif ( open(FH, $file2) {
+} elsif ( open(FH, $file2) ) {
   print "Hurray, I opened file 2.";
-} elsif ( open(FH, $file3) {
+} elsif ( open(FH, $file3) ) {
   print "Hurray, I opened file 3.";
 } else {
   print "None of the dadblasted files would open.";
 }
 \end{lstlisting}
 
-In the preceding example, if \verb|file 1| opened successfully, the \verb|if| statement doesn't try to open additional files.
+In the preceding example, if \verb|file1| opened successfully, the \verb|if| statement doesn't try to open additional files.
 
 There is also an \verb|unless| statement, which is the same as an \verb|if| statement with the conditional negated. So these two statements are equivalent:
 
 \begin{lstlisting}
-unless ( open(FH, $filename) {
+unless ( open(FH, $filename) ) {
   print "Rats. The file did not open.";
 }
 
-if ( not open(FH, $filename) {
+if ( not open(FH, $filename) ) {
   print "Rats. The file did not open.";
 }
 \end{lstlisting}
 
 \section{Binding Operators}
-Binding operators are used for pattern matching, substitution, and transliteration on strings. They are used in conjunction with regular expressions that specify the patterns. Here's an example: 
+Binding operators are used for pattern matching, substitution, and transliteration on strings. They are used in conjunction with regular expressions that specify the patterns. Here's an example:
 
 \begin{lstlisting}
 'ACGTACGTACGTACGT' =~ /CTA/
 \end{lstlisting}
 
-The pattern is the string \verb|CTA|, enclosed by forward slashes \verb|//|. The string binding operator is \verb|=~|; it tells the program which string to search, returning \verb|true| if the pattern appears in the string.  
+The pattern is the string \verb|CTA|, enclosed by forward slashes \verb|//|. The string binding operator is \verb|=~|; it tells the program which string to search, returning \verb|true| if the pattern appears in the string.
 
 Another string binding operator is \verb|!~|, which returns \verb|true| if the pattern isn't in the string:
 
@@ -652,7 +645,7 @@ $count = ($DNA =~ tr/A//);
 print $count;
 \end{lstlisting}
 
-This produces the value 3. This shows that a pattern match can return a count of the number of translations made in a string, which is then assigned to the variable \verb|$count|. 
+This produces the value 3. This shows that a pattern match can return a count of the number of translations made in a string, which is then assigned to the variable \verb|$count|.
 
 \section{Loops}
 Loops repeatedly execute the statements in a block until a conditional test changes value. There are several forms of loops in Perl:
@@ -741,8 +734,7 @@ four
 four
 \end{lstlisting}
 
-In the \verb|do-until| loop, the block is executed before the conditional test,
-and the test succeeds until the condition is \verb|true|:
+In the \verb|do-until| loop, the block is executed before the conditional test, and the test succeeds until the condition is \verb|true|:
 
 \begin{lstlisting}
 $i = 3;
@@ -788,7 +780,7 @@ open(FILEHANDLE, "informationfile");
 close(FILEHANDLE);
 \end{lstlisting}
 
-This code opens the file \textit{informationfile} and associates the filehandle FILEHANDLE with it. The filehandle is then used within angle brackets \verb|< >| to actually read in the contents of the file and store the contents in the array \verb|@data_from_informationfile|. Finally, the file is closed by referring once again to the opened filehandle.
+This code opens the file \textit{informationfile} and associates the filehandle \verb|FILEHANDLE| with it. The filehandle is then used within angle brackets \verb|< >| to actually read in the contents of the file and store the contents in the array \verb|@data_from_informationfile|. Finally, the file is closed by referring once again to the opened filehandle.
 
 \subsection{Input from STDIN}
 Perl allows you to read in any input that is automatically sent to your program via standard input (STDIN). STDIN is a filehandle that by default is always open. Your program may be expecting some input that way. For instance, on a Mac, you can drag and drop a file icon onto the Perl applet for your program to make the file's contents appear in STDIN. On Unix systems, you can pipe the output of some other program into the STDIN of your program with shell commands such as:
@@ -865,7 +857,7 @@ The \verb|printf| function gives more control over the formatting of the output 
 
 The \verb|sprintf| function is related to the \verb|printf| function; it formats a string instead of printing it out.
 
-The \verb|format| and \verb|write| commands are a way to format a multiline output, as when generating reports. \verb|format| can be a useful command, but in practice it isn't used much. The full details are available in your Perl documentation, and O'Reilly's \textit{Programming Perl} contains an entire chapter on \verb|format|. You can also see \verb|format| in \autoref{chap:chapter12} of this book. 
+The \verb|format| and \verb|write| commands are a way to format a multiline output, as when generating reports. \verb|format| can be a useful command, but in practice it isn't used much. The full details are available in your Perl documentation, and O'Reilly's \textit{Programming Perl} contains an entire chapter on \verb|format|. You can also see \verb|format| in \autoref{chap:chapter12} of this book.
 
 \subsubsection{Output to STDOUT, STDERR, and Files}
 Standard output, with the filehandle STDOUT, is the default destination for output from a Perl program, so it doesn't have to be named. The following two statements are equivalent unless you used \verb|select| to change the default output filehandle:
@@ -902,7 +894,7 @@ STDERR is also usually directed to the computer screen by default, but it can be
 myprogram 2>myprogram.error
 \end{lstlisting}
 
-You can also direct STDERR to a file from within your Perl program by including code such as the following before the first output to STDERR.  This is the most portable way to redirect STDERR:
+You can also direct STDERR to a file from within your Perl program by including code such as the following before the first output to STDERR. This is the most portable way to redirect STDERR:
 
 \begin{lstlisting}
 open (STDERR, ">myprogram.error") or die "Cannot open error file myprogram.error:$!\n";
@@ -934,7 +926,7 @@ open (ERRORMESSAGES, ">myprogram.error")
 print ERRORMESSAGES "This is an error message\n";
 \end{lstlisting}
 
-Note that the \verb|die| function, and the closely related \verb|warn| function, print their error messages to STDERR. 
+Note that the \verb|die| function, and the closely related \verb|warn| function, print their error messages to STDERR.
 
 \section{Regular Expressions}
 Regular expressions are, in effect, an extra language that lives inside the Perl language. In Perl, they have quite a lot of features. First, I'll summarize how regular expressions work in Perl; then, I'll present some of their many features.
@@ -944,7 +936,7 @@ Regular expressions describe patterns in strings. The pattern described by a sin
 
 Regular expressions are used in pattern matching, that is, when you look to see if a certain pattern exists in a string. They can also change strings, as with the \verb|s///| operator that substitutes the pattern, if found, for a replacement. Additionally, they are used in the \verb|tr| function that can transliterate several characters into replacement characters throughout a string. Regular expressions are case-sensitive, unless explicitly told otherwise.
 
-The simplest pattern match is a string that matches itself. For instance, to see if the pattern '\verb|abc|' appears in the string '\verb|abcdefghijklmnopqrstuvwxyz|', write the following in Perl:
+The simplest pattern match is a string that matches itself. For instance, to see if the pattern `\verb|abc|' appears in the string `\verb|abcdefghijklmnopqrstuvwxyz|', write the following in Perl:
 
 \begin{lstlisting}
 $alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -953,11 +945,11 @@ if( $alphabet =~ /abc/ ) {
 }
 \end{lstlisting}
 
-The \verb|=~| operator binds a pattern match to a string. \verb|/abc/| is the pattern abc, enclosed in forward slashes \verb|//| to indicate that it's a regular-expression pattern. \verb|$&| is set to the matched pattern, if any. In this case, the match succeeds, since '\verb|abc|' appears in the string \verb|$alphabet|, and the code just given prints out \verb|abc|.
+The \verb|=~| operator binds a pattern match to a string. \verb|/abc/| is the pattern \verb|abc|, enclosed in forward slashes \verb|//| to indicate that it's a regular-expression pattern. \verb|$&| is set to the matched pattern, if any. In this case, the match succeeds, since `\verb|abc|' appears in the string \verb|$alphabet|, and the code just given prints out \verb|abc|.
 
-Regular expressions are made from two kinds of characters. Many characters, such as '\verb|a|' or '\verb|Z|', match themselves. Metacharacters have a special meaning in the regular-expression language. For instance, parentheses \verb|( )| are used to group other characters and don't match themselves. If you want to match a metacharacter such as \verb|(| in a string, you have to precede it with the backslash metacharacter \verb|\(| in the pattern.
+Regular expressions are made from two kinds of characters. Many characters, such as `\verb|a|' or `\verb|Z|', match themselves. Metacharacters have a special meaning in the regular-expression language. For instance, parentheses \verb|( )| are used to group other characters and don't match themselves. If you want to match a metacharacter such as \verb|(| in a string, you have to precede it with the backslash metacharacter \verb|\(| in the pattern.
 
-There are three basic ideas behind regular expressions. The first is concatenation: two items next to each other in a regular-expression pattern (that's the string between the forward slashes \verb|//| in the examples) must match two items next to each other in the string being matched (the \verb|$alphabet| in the examples). So to match '\verb|abc|' followed by '\verb|def|', concatenate them in the regular expression: )
+There are three basic ideas behind regular expressions. The first is concatenation: two items next to each other in a regular-expression pattern (that's the string between the forward slashes \verb|//| in the examples) must match two items next to each other in the string being matched (the \verb|$alphabet| in the examples). So to match `\verb|abc|' followed by `\verb|def|', concatenate them in the regular expression:
 
 \begin{lstlisting}
 $alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -1009,14 +1001,14 @@ A backslash \verb|\| before a metacharacter causes it to match itself; for insta
 \subsubsection{Alternation with |}
 The pipe \verb=|= indicates alternation, as described previously.
 
-\subsubsection{Grouping with ()}
+\subsubsection{Grouping with ( )}
 The parentheses \verb|( )| provide grouping, as described previously.
 
 \subsubsection{Character classes}
 Square brackets \verb|[ ]| specify a character class. A character class matches one character, which can be any character specified. For instance, \verb|[abc]| matches either \verb|a|, or \verb|b|, or \verb|c| at that position (so it's the same as \verb=a|b|c=). \verb|A-Z| is a range that matches any uppercase letter, \verb|a-z| matches any lowercase letter, and \verb|0-9| matches any digit. For instance, \verb|[A-Za-z0-9]| matches any single letter or digit at that position. If the first character in a character class is \verb|^|, any character except those specified match; for instance, \verb|[^0-9]| matches any character that isn't a digit.
 
 \subsubsection{Matching any character with .}
-The period or dot \verb|.| represents any character except a newline.  (The pattern modifier \verb|/s| makes it also match a newline.) So, \verb|.| is like a character class that specifies every character.
+The period or dot \verb|.| represents any character except a newline. (The pattern modifier \verb|/s| makes it also match a newline.) So, \verb|.| is like a character class that specifies every character.
 
 \subsubsection{Beginning and end of strings with \^{} and \$}
 The \verb|^| metacharacter doesn't match a character; rather, it asserts that the item that follows must be at the beginning of the string. Similarly, the \verb|$| metacharacter doesn't match a character but asserts that the item that precedes it must be at the end of the string (or before the final newline). For example: \verb|/^Watson and Crick/| matches if the string starts with \verb|Watson and Crick|; and \verb|/Watson and Crick$/| matches if the string ends with \verb|Watson and Crick| or \verb|Watson and Crick\n|.
@@ -1032,7 +1024,7 @@ The quantifiers just shown are greedy (or maximal) by default, meaning that they
 print $&;
 \end{lstlisting}
 
-This matches '\verb|hear|' followed by \verb|.*| (as many characters as possible), followed by '\verb|ye|', and prints:
+This matches `\verb|hear|' followed by \verb|.*| (as many characters as possible), followed by `\verb|ye|', and prints:
 
 \begin{lstlisting}
 hear ye hear ye hear ye
@@ -1045,12 +1037,11 @@ Here is a minimal match:
 print $&;
 \end{lstlisting}
 
-This matches '\verb|hear|' followed by \verb|.*?| (the fewest number of characters possible), followed by '\verb|ye|', and prints:
+This matches `\verb|hear|' followed by \verb|.*?| (the fewest number of characters possible), followed by `\verb|ye|', and prints:
 
 \begin{lstlisting}
 hear ye
 \end{lstlisting}
-
 
 \subsection{Capturing Matched Patterns}
 You can place parentheses around parts of the pattern for which you want to know the matched string. For example:
@@ -1067,7 +1058,7 @@ prints:
 lmnop
 \end{lstlisting}
 
-You can place as many pairs of parentheses in a regular expression as you like; Perl automatically stores their matched substrings in special variables named \verb|$1|, \verb|$2|, and so on. The matches are numbered in order of the left-to-right appearance of their opening parenthesis.  
+You can place as many pairs of parentheses in a regular expression as you like; Perl automatically stores their matched substrings in special variables named \verb|$1|, \verb|$2|, and so on. The matches are numbered in order of the left-to-right appearance of their opening parenthesis.
 
 Here's a more intricate example of capturing parts of a matched pattern in a string:
 
@@ -1135,7 +1126,7 @@ Metasymbols are sequences of two or more characters consisting of backslashes be
 \end{table}
 
 \subsection{Extending Regular-Expression Sequences}
-\autoref{tab:tablea.b4} includes several useful features that have been added to Perl's regular-expression capabilities. 
+\autoref{tab:tablea.b4} includes several useful features that have been added to Perl's regular-expression capabilities.
 
 \begin{table}[!htbp]
   \begin{center}
@@ -1164,7 +1155,7 @@ Metasymbols are sequences of two or more characters consisting of backslashes be
 \end{table}
 
 \subsection{Pattern Modifiers}
-Pattern modifiers are single-letter commands placed after the forward slashes. They are used to delimit a regular expression or a substitution and change the behavior of some regular-expression features.  \autoref{tab:tablea.b5} lists the most common pattern modifiers, followed by an example.
+Pattern modifiers are single-letter commands placed after the forward slashes. They are used to delimit a regular expression or a substitution and change the behavior of some regular-expression features. \autoref{tab:tablea.b5} lists the most common pattern modifiers, followed by an example.
 
 \begin{table}[!htbp]
   \begin{center}
@@ -1186,7 +1177,7 @@ Pattern modifiers are single-letter commands placed after the forward slashes. T
   \end{center}
 \end{table}
 
-As an example, say you were looking for a name in text, but you didn't know if the name had an initial capital letter or was all capitalized.  You can use the \verb|/i| modifier, like so: 
+As an example, say you were looking for a name in text, but you didn't know if the name had an initial capital letter or was all capitalized. You can use the \verb|/i| modifier, like so:
 
 \begin{lstlisting}
 $text = "WATSON and CRICK won the Nobel Prize";
@@ -1248,12 +1239,12 @@ When reading about Perl functions and operations, notice what the documentation 
 Here are some general guidelines on when to expect scalar or list context:
 
 \begin{itemize}
-  \item You get list context from function calls (anything in the argument position is evaluated in list context) and from list assignments. 
+  \item You get list context from function calls (anything in the argument position is evaluated in list context) and from list assignments.
   \item You get scalar context from string and number operators (arguments to such operators as \verb|.| and \verb|+| are assumed to be scalars); from boolean tests such as the conditional of an \verb|if ()| statement or the arguments to the \verb=||= logical operator; and from scalar assignment.
 \end{itemize}
 
 \section{Subroutines and Modules}
-Subroutines a re defined by the keyword \verb|sub|, followed by the name of the subroutine, followed by a block enclosed by curly braces \verb|{ }| containing the body of the subroutine. Here's a simple example:
+Subroutines are defined by the keyword \verb|sub|, followed by the name of the subroutine, followed by a block enclosed by curly braces \verb|{ }| containing the body of the subroutine. Here's a simple example:
 
 \begin{lstlisting}
 sub a_subroutine {
@@ -1271,8 +1262,8 @@ Arguments can be passed into subroutines as a list of scalars. If any arrays are
 
 \begin{lstlisting}
 sub concatenate_dna {
-  my($dna1, $dna2) = @_;
-  my($concatenation);
+  my ($dna1, $dna2) = @_;
+  my ($concatenation);
   $concatenation = "$dna1$dna2";
   return $concatenation;
 }
@@ -1286,10 +1277,10 @@ This prints:
 AAACGC
 \end{lstlisting}
 
-The arguments '\verb|AAA|' and '\verb|CGC|' are passed into the subroutine as a list of scalars. The first statement in the subroutine's block:
+The arguments `\verb|AAA|' and `\verb|CGC|' are passed into the subroutine as a list of scalars. The first statement in the subroutine's block:
 
 \begin{lstlisting}
-my($dna1, $dna2) = @_; 
+my ($dna1, $dna2) = @_;
 \end{lstlisting}
 
 assigns this list, available in the special variable \verb|@_|, to the variables \verb|$dna1| and \verb|$dna2|.
@@ -1299,7 +1290,7 @@ The variables \verb|$dna1| and \verb|$dna2| are declared as \verb|my| variables 
 The statement:
 
 \begin{lstlisting}
-my($concatenation);
+my ($concatenation);
 \end{lstlisting}
 
 declares another variable for use by the subroutine.
@@ -1322,7 +1313,7 @@ If any arrays are given as arguments, their elements are interpolated into the \
 
 \begin{lstlisting}
 sub example_sub {
-  my(@arguments) = @_;
+  my (@arguments) = @_;
 
   print "@arguments\n";
 }
@@ -1343,7 +1334,7 @@ Note that the following attempt to mix arrays and scalars in the arguments to a 
 \begin{lstlisting}
 # This won't work!!
 sub bad_sub {
-  my(@array, $scalar) = @_;
+  my (@array, $scalar) = @_;
 
   print $scalar;
 }
@@ -1358,7 +1349,7 @@ In this example, the subroutine's variable \verb|@array| on the left side in the
 
 \begin{lstlisting}
 sub good_sub {
-  my($arrayref, $hashref) = @_;
+  my ($arrayref, $hashref) = @_;
 
   print "@$arrayref", "\n";
 
@@ -1412,10 +1403,9 @@ Perl has a great many built-in functions. \autoref{tab:tablea.b6} is a partial l
     closedir DIRHANDLE & Close the directory associated with DIRHANDLE\\
     cos EXPR & Return the cosine of the radian number EXPR\\
     dbmclose HASH & Break the binding between a DBM file and a hash\\
-    dbmopen HASH, DBNAME, MODE & Bind a DBM file to a HASH with
-    permissions given in MODE\\
+    dbmopen HASH, DBNAME, MODE & Bind a DBM file to a HASH with permissions given in MODE\\
     defined EXPR & Return true or false if EXPR has a defined value or not\\
-    delete EXPR & Delete an element (or slice) from a hash or an array.\\
+    delete EXPR & Delete an element (or slice) from a hash or an array\\
     die LIST & Exit the program with an error message that includes LIST\\
     each HASH & Step through a hash with one key, or key-value pair, at a time\\
     exec PATHNAME LIST & Terminate the program and execute the program PATHNAME with arguments LIST\\
@@ -1424,7 +1414,7 @@ Perl has a great many built-in functions. \autoref{tab:tablea.b6} is a partial l
     exp EXPR & Return the value of e raised to the exponent EXPR\\
     format & Declare a format for use by the write function\\
     grep EXPR, LIST & Return list of elements of LIST for which EXPR is true\\
-    gmtime & Get Greenwich mean time; Sunday is day 0, January is month 0, year is number of years since 1900—example: \verb|($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,| \verb|$isdaylightsavingstime) = gmtime;|\\
+    gmtime & Get Greenwich mean time; Sunday is day 0, January is month 0, year is number of years since 1900—example: \verb|($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdaylightsavingstime) = gmtime;|\\
     goto LABEL & Program control goes to statement marked with LABEL\\
     hex EXPR & Return decimal value of hexadecimal EXPR\\
     index STR, SUBSTR & Give the position of the first occurrence of SUBSTR in STR\\
@@ -1469,13 +1459,13 @@ Perl has a great many built-in functions. \autoref{tab:tablea.b6} is a partial l
     splice ARRAY, OFFSET, LENGTH, LIST & Remove LENGTH elements at OFFSET in ARRAY and replace with LIST, if present\\
     split /PATTERN/, EXPR & Split the string EXPR at occurrences of /PATTERN/, return list\\
     sprintf FORMAT, LIST & Return a string formatted as in the printf function\\
-    sqrt EXPR & Return the square root of the number EXPR.\\
+    sqrt EXPR & Return the square root of the number EXPR\\
     srand EXPR & Set random number seed for rand operator; only needed in versions of Perl before 5.004\\
-    stat (FILEHANDLE or EXPR) & Return statistics on file EXPR or its FILEHANDLE—example: \verb|($dev,$inode,$mode,$num_of_links,$uid,$gid,$rdev,$size,| \verb|$accesstime,$modifiedtime,$changetime,$blksize,$blocks)| \verb|= stat $filename;|\\
+    stat (FILEHANDLE or EXPR) & Return statistics on file EXPR or its FILEHANDLE—example: \verb|($dev,$inode,$mode,$num_of_links,$uid,$gid,$rdev,$size,$accesstime,$modifiedtime,$changetime,$blksize,$blocks) = stat $filename;|\\
     study SCALAR & Try to optimize subsequent pattern matches on string SCALAR\\
     sub NAME BLOCK & Define a subroutine named NAME with program code in BLOCK\\
     substr EXPR, OFFSET, LENGTH,REPLACEMENT & Return substring of string EXPR at position OFFSET and length LENGTH; the substring is replaced with REPLACEMENT if used\\
-    system PATHNAME LIST & Execute any program PATHNAME with arguments LIST; returns exit status of program, not its output; to capture ouput, use backticks—example: \verb|@output = `bin/who`;|\\
+    system PATHNAME LIST & Execute any program PATHNAME with arguments LIST; returns exit status of program, not its output; to capture ouput, use backticks—example: \verb|@output = `/bin/who`;|\\
     tell FILEHANDLE & Return current file position in bytes in FILEHANDLE\\
     tr/ORIGINAL/REPLACEMENT/ & Transliterates each character in ORIGINAL with corresponding character in REPLACEMENT\\
     truncate (FILEHANDLE or EXPR), LENGTH & Shorten file EXPR or opened with FILEHANDLE to LENGTH bytes\\

@@ -1,50 +1,50 @@
-\chapter{Appendix B. Perl Summary}
+\chapter{附录B Perl概要}
 \label{chap:chapterab}
 \minitoc
 
-This appendix summarizes those parts of the Perl programming language that will be most useful to you as you read this book. It is not a comprehensive summary of the Perl language. Remember that Perl is designed so that you don't need to know everything in order to use it. Source material for this appendix came from \textit{Programming Perl, Third Edition} (O'Reilly \& Associates).
+本附录对Perl编程语言的相关内容进行了总结，这些知识对于你阅读本书大有裨益。它并不是对Perl语言进行的全面的总结。牢记一点，你不需要知道Perl的所有知识，就可以去使用它。本附录的原始材料是来源于\textit{Programming Perl, Third Edition} (O'Reilly \& Associates)的。
 
-\section{Command Interpretation}
-The Perl programs in this book start with the line:
+\section{命令解释}
+本书中的Perl程序都起始于这样一行：
 
 \begin{lstlisting}
 #!/usr/bin/perl -w
 \end{lstlisting}
 
-On Unix (or Linux) systems, the first line of a file can include the name of a program and some flags, which are optional. The line must start with \verb|#!|, followed by the full pathname of the program (in our case, the Perl interpreter), followed optionally by a single group of one or more flags.
+在Unix（或Linux）系统中，文件的第一行可以包含程序的名称和一些可选的标志。该行必须以\verb|#!|起始，后面紧跟程序（这我们的例子中，就是Perl解释器）的全路径\footnote{译者注：即绝对路径。}名，之后是可选的由一个或多个标志做成的标志组。
 
-If the Perl program file was called \textit{myprogram}, and had executable permissions, you can type \verb|myprogram| (or possibly \verb|./myprogram|, or the full or relative pathname for the program) to start the program running.
+如果Perl程序文件名为\textit{myprogram}，并且有可执行的权限，你直接键入\verb|myprogram|（或者可能是\verb|./myprogram|，或者是程序的绝对或相对路径名）就可以运行程序了。
 
-The Unix operating system starts the program specified in the command interpretation line and gives it as input the rest of the file after the first line. So, in this case, it starts the Perl interpreter and gives it the program in the file to run.
+Unix操作系统会启动由命令解释行指定的程序，并把文件中第一行之后的所有内容作为程序的输入。所以，在这个例子中，它会启动Perl解释器，并把文件中的程序交由Perl解释器来运行。
 
-This is just a shortcut for typing:
+上述其实是在命令行中输入：
 
 \begin{lstlisting}
 /usr/bin/perl -w myprogram 
 \end{lstlisting}
 
-at the command line.
+的一种简写。
 
-\section{Comments}
-A comment begins with a \# sign and continues from there to the end of the same line. It is ignored by the Perl interpreter and is only there for programmers to read. A comment can include any text.
+\section{注释}
+从\#起始，一直到该行的结尾都是注释的内容。注释会被Perl解释器忽略掉，它仅供程序员阅读。在注释中可以包含任何文本内容。
 
-\section{Scalar Values and Scalar Variables}
-A scalar value is a single item of data, like a string or a number.
+\section{标量值和标量变量}
+一个标量值是数据的单一项目，比如一个字符串或者一个数字。
 
-\subsection{Strings}
-Strings are scalar values and are written as text enclosed within single quotes, like so:
+\subsection{字符串}
+字符串是标量值，书写形式就是包裹在单引号内的文本，就像这样：
 
 \begin{lstlisting}
 'This is a string in single quotes.'
 \end{lstlisting}
 
-or double quotes, such as:
+或者使用双引号，像这样：
 
 \begin{lstlisting}
 "This is a string in double quotes."
 \end{lstlisting}
 
-A single-quoted string prints out exactly as written. With double quotes, you can include a variable in the string, and its value will be inserted or "interpolated." You can also include commands such as \verb|\n| to represent a newline (see \autoref{tab:tablea.b3}):
+单引号包裹的字符串会被原样输出。使用双引号时，你可以在字符串中包含变量，在输出时变量的值会被插入或者“以内插值替换”。你还可以使用\verb|\n|这样的命令来表示一个新行（参看\autoref{tab:tablea.b3}）：
 
 \begin{lstlisting}
 $aside = '(or so they say)';
@@ -52,7 +52,7 @@ $declaration = "Misery\n $aside \nloves company.";
 print $declaration;
 \end{lstlisting}
 
-This snippet prints out:
+这个代码片段会输出：
 
 \begin{lstlisting}
 Misery 
@@ -60,23 +60,19 @@ Misery
 loves company.
 \end{lstlisting}
 
-\subsection{Numbers}
-Numbers are scalar values that can be:
+\subsection{数字}
+数字可以是如下的标量值：
 
 \begin{itemize}
-  \item Integers:\\ \verb|3|\\ \verb|-4|\\ \verb|0|
-  \item F loating-point (decimal):\\ \verb|4.5326|
-  \item Scientific (exponential) notation (3.13 x 1023 or 313000000000000000000000):\\ \verb|3.13E23|
-  \item Hexadecimal (base 16):\\ \verb|Ox12bc3|
-  \item Octal (base 8):\\ \verb|O5777|
-  \item Binary (base 2):\\ \verb|0b10101011|
+  \item 整数：\\ \verb|3|\\ \verb|-4|\\ \verb|0|
+  \item 浮点数（小数）：\\ \verb|4.5326|
+  \item 科学计数法（指数）（$3.13 \times 10^{23}$或313000000000000000000000）：\\ \verb|3.13E23|
+  \item 十六进制（以16为基数）：\\ \verb|Ox12bc3|
+  \item 八进制（以8为基数）：\\ \verb|O5777|
+  \item 二进制（以2为基数）：\\ \verb|0b10101011|
 \end{itemize}
 
-Complex (or imaginary) numbers, such as \verb|3 + i|, and fractions (or ratios,
-or rational numbers), such as \verb|1/3|, can be a little tricky. Perl can
-handle fractions but converts them internally to floating-point numbers,
-which can make certain operations go wrong (Perl is not alone among
-computer languages in this regard.):
+\verb|3 + i|这样的复数（或虚数），以及\verb|1/3|这样的分数（或比率，或有理数），使用起来会有点麻烦。Perl可以处理分数，但在内部会把它们转换成浮点数，这会使某些操作符出现错误（计算机语言中存在该问题的不仅仅是Perl）：
 
 \begin{lstlisting}
 if ( 10/3  == ( (1/3) * 10  ) {
@@ -86,91 +82,89 @@ if ( 10/3  == ( (1/3) * 10  ) {
 }
 \end{lstlisting}
 
-This prints:
+这会输出：
 
 \begin{lstlisting}
 Failure!
 \end{lstlisting}
 
-To properly handle rational arithmetic with fractions, complex numbers, or many other mathematical constructs, there are mathematics modules available, which aren't covered here.
+要准确地处理分数、复数或其他许多数学结构的有理运算，可以使用相应的数学模块，此处不进行赘述。
 
-\subsection{Scalar Variables}
-Scalar values can be stored in scalar variables. A scalar variable is indicated with a \verb|$| before the variable's name. The name begins with a letter or underscore and can have any number of letters, underscores, or digits. A digit, however, can't be the first character in a variable name. Here are some examples of legal names of scalar variables:
+\subsection{标量变量}
+标量值可以存储在标量变量中。一个标量变量用变量名前面的\verb|$|来进行表明。变量名以字母或下划线起始，可以包含任意数量的字母、下划线和数字。但是，数字不可以是变量名的第一个字符。下面是标量变量合法名称的一些例子：
 
 \begin{lstlisting}
 $Var
 $var_1
 \end{lstlisting}
 
-Here are some improper names for scalar variables:
+下面是变量变量的一些不合法的名称：
 
 \begin{lstlisting}
 $1var
 $var!iable
 \end{lstlisting}
 
-Names are case sensitive: \verb|$dna| is different from \verb|$DNA|.
+变量名是大小写敏感的：\verb|$dna|和\verb|$DNA|是两个不同的变量。
 
-These rules for making proper variable names (apart from the beginning \verb|$|) also hold for the names of array and hash variables and for subroutine names.
+这些用来生成合法标量变量名的规则（除以\verb|$|起始外），同样适用于数组和散列的变量名，以及子程序的命名。
 
-A scalar variable may hold any type of scalar value mentioned previously, such as strings or the different types of numbers.
+一个标量变量可能存储前面提到的任意一种变量值，比如字符串或者不同类型的数字。
 
-\section{Assignment}
-Scalar variables are assigned scalar values with an assignment statement. For instance:
+\section{赋值}
+使用赋值语句，把标量值赋值给标量变量。例如：
 
 \begin{lstlisting}
 $thousand = 1000;
 \end{lstlisting}
 
-assigns the integer 1,000, a scalar value, to the scalar variable \verb|$thousand|.
+把1,000这个标量值赋值给了标量变量\verb|$thousand|。
 
-The assignment statement looks like an equal sign from elementary mathematics, but its meaning is different. The assignment statement is an instruction, not an assertion. It doesn't mean "\verb|$thousand| equals 1,000." It means "store the scalar value 1,000 into the scalar variable \verb|$thousand|". However, after the statement, the value of the scalar variable \verb|$thousand| is, indeed, equal to 1000.
+赋值语句和初等数学里面的等号看起来非常相似，但意义完全不同。赋值语句是一个操作指令，而不是一个论断。它表示的不是“\verb|$thousand|等于1,000”，而是“把标量值1,000存储到标量变量\verb|$thousand|中去”。不管怎样，在这个语句执行后，标量变量\verb|$thousand|的值确实等于1,000了。
 
-You can assign values to several scalar variables by surrounding variables and values in parentheses and separating them by commas, thus making lists:
+你可以把多个值赋值给多个标量变量，方法就是把变量和值包裹在括号中并用逗号分隔开来，这实际上是构造了列表：
 
 \begin{lstlisting}
 ($one, $two, $three) = ( 1, 2, 3 );
 \end{lstlisting}
 
-There are several assignment operators besides = that are shorthand for longer expressions. For instance, \verb|$a += $b| is equivalent to \verb|$a = $a + $b|. \autoref{tab:tablea.b1} is a complete list (it includes several operators that aren't covered in this book).
+除了\verb|=|以外，还有许多复制操作符，它们都是长表达式的简写。比如，\verb|$a += $b|等同于\verb|$a = $a + $b|。\autoref{tab:tablea.b1}给出了完整的列表（它包含了本书中没有提到的一些操作符）。
 
 \begin{table}[!htbp]
   \begin{center}
-  \caption{Assignment operator shorthands}
+  \caption{复制操作符简写}
   \label{tab:tablea.b1}
   %\begin{tabu}{X[1,c]X[2,l]}
     \begin{tabu*} to 0.7\linewidth {X[1,c]X[3,l]}
     \toprule
-    Example of operator & Equivalent\\
+    操作符实例 & 等同于\\
     \midrule
-    \verb|$a += $b| & \verb|$a = $a + $b| (addition)\\
-    \verb|$a -= $b| & \verb|$a = $a - $b| (subtraction)\\
-    \verb|$a *= $b| & \verb|$a = $a * $b| (multiplication)\\
-    \verb|$a /= $b| & \verb|$a = $a / $b| (division)\\
-    \verb|$a **= $b| & \verb|$a = $a ** $b| (exponentiation)\\
-    \verb|$a |\%\verb|= $b| & \verb|$a = $a |\%\verb| $b| (remainder of \verb|$a/$b|)\\
-    \verb|$a x= $b| & \verb|$a = $a x $b| (string \verb|$a| repeated \verb|$b| times)\\
-    \verb|$a &= $b| & \verb|$a = $a & $b| (bitwise AND)\\
-    \verb+$a |= $b+ & \verb+$a = $a | $b+ (bitwise XOR)\\
-    \verb|$a ^= $b| & \verb|$a = $a ^ $b| (bitwise XOR)\\
-    \verb|$a >>= $b| & \verb|$a = $a >> $b| (\verb|$a| shift \verb|$b| bits)\\
-    \verb|$a <<= $b| & \verb|$a = $a << $b| (\verb|$a| shift \verb|$b| bits to left)\\
-    \verb|$a &&= $b| & \verb|$a = $a && $b| (logical AND)\\
-    \verb+$a ||= $b+ & \verb+$a = $a || $b+ (logical XOR)\\
-    \verb|$a .= $b| & \verb|$a = $a . $b| (append string \verb|$b| to \verb|$a|)\\
+    \verb|$a += $b| & \verb|$a = $a + $b| （加法）\\
+    \verb|$a -= $b| & \verb|$a = $a - $b| （减法）\\
+    \verb|$a *= $b| & \verb|$a = $a * $b| （乘法）\\
+    \verb|$a /= $b| & \verb|$a = $a / $b| （除法）\\
+    \verb|$a **= $b| & \verb|$a = $a ** $b| （求幂）\\
+    \verb|$a |\%\verb|= $b| & \verb|$a = $a |\%\verb| $b| （取模，\verb|$a/$b|的余数）)\\
+    \verb|$a x= $b| & \verb|$a = $a x $b| （把字符串\verb|$a|重复\verb|$b|次）\\
+    \verb|$a &= $b| & \verb|$a = $a & $b| （位与）\\
+    \verb+$a |= $b+ & \verb+$a = $a | $b+ （位或）\\
+    \verb|$a ^= $b| & \verb|$a = $a ^ $b| （位异或）\\
+    \verb|$a >>= $b| & \verb|$a = $a >> $b| （\verb|$a|右移\verb|$b|位）\\
+    \verb|$a <<= $b| & \verb|$a = $a << $b| （\verb|$a|左移\verb|$b|位）\\
+    \verb|$a &&= $b| & \verb|$a = $a && $b| （逻辑与）\\
+    \verb+$a ||= $b+ & \verb+$a = $a || $b+ （逻辑或）\\
+    \verb|$a .= $b| & \verb|$a = $a . $b| （把字符串\verb|$b|附加到\verb|$a|后）\\
     \bottomrule
     \end{tabu*}
   \end{center}
 \end{table}
 
-\section{Statements and Blocks}
-Programs are composed of statements often grouped together into blocks.
+\section{语句和块}
+程序是由语句构成的，而语句通常组合成块。
 
-A statement ends with a semicolon (;), which is optional for the last
-statement in a block.
+语句以分号（;）结束，而对于块中的最后一个语句来说分号是可有可无的。
 
-A block is one or more statements usually surrounded by curly braces;
-here's an example:
+一个块通常就是用大括号包裹起来的一个或多个语句。下面是一个例子：
 
 \begin{lstlisting}
 {
@@ -179,88 +173,88 @@ here's an example:
 }
 \end{lstlisting}
 
-Blocks may stand by themselves but are often associated with such constructs as loops or \verb|if| statements.
+块可以独立存在，但通常都会与循环或\verb|if|语句结构关联在一起。
 
-\section{Arrays}
-Arrays are ordered collections of zero or more scalar values, indexed by position. An array variable begins with the at sign \verb|@| followed by a legal variable name. For instance, here are two possible array variable names:
+\section{数组}
+数组是有序的零个或多个标量值的集合，通过位置进行索引。一个数组变量起始于一个\verb|@|符号，后面是一个合法的变量名。比如，下面是两个可能的数组变量名：
 
 \begin{lstlisting}
 @array1
 @dna_fragments
 \end{lstlisting}
 
-You can assign scalar values to an array by placing the scalar values in a list, separated by commas and surrounded by a pair of parentheses. For instance, you can assign an array the empty list:
+你可以把标量值赋值给数组，方法就是把这些标量值放在列表中，用逗号分隔开、并用成对的括号包裹起来。比如，你可以把空列表赋值给数组：
 
 \begin{lstlisting}
 @array = ( );
 \end{lstlisting}
 
-or one or more scalar values:
+或者，把一个或多个标量值赋值给数组：
 
 \begin{lstlisting}
 @dna_fragments = ('ACGT', $fragment2, 'GGCGGA');
 \end{lstlisting}
 
-Notice that it's okay to specify a scalar variable such as \verb|$fragment2| in a list. Its current value, not the variable name, is placed into the array.
+注意，在一个列表中，完全可以指定像\verb|$fragment2|这样的一个标量变量。存放到数组中的，是它现在的值，而非变量名。
 
-The individual scalar values of an array (the elements) are indexed by their position in the array. The index numbers begin at 0. You can specify the individual elements of an array by preceding the array name by a \verb|$| and following it with the index number of the element within square brackets \verb|[ ]|, like so:
+数组中单个的标量值（元素）通过它们在数组中的位置进行索引。索引数组从0开始。在数组名前面使用\verb|$|，在其后面紧跟用中括号\verb|[ ]|包裹起来的元素索引数字，这样你就可以指定数组中特定的一个元素了，就想这样：
 
 \begin{lstlisting}
 $dna_fragments[2]
 \end{lstlisting}
 
-This equals the value of '\verb|GGCGGA|', given the values previously set for this array. Notice that the array has three scalar values, indexed by numbers 0, 1, and 2. The third and last element is indexed 2, one less than the total number of elements 3, because the first element is indexed number 0.
+考虑到先前对数组进行的赋值，它现在的值就等于'\verb|GGCGGA|'。注意数组有三个标量值，分别用0、1和2进行索引。第三个、也就是最后一个元素的索引值是2，比总的元素数目3小1，这是因为第一个元素的索引值是0。
 
-You can make a copy of an array using an assignment operator \verb|=|, as in this example that makes a copy \verb|@output| of an existing array \verb|@input|: 
+使用复制操作符\verb|=|，你可以把数组复制一份，就像下面这个例子中一样，它为现有的数组\verb|@input|复制了一份拷贝\verb|@output|：
 
 \begin{lstlisting}
 @output = @input;
 \end{lstlisting}
 
-If you evaluate an array in scalar context, the value is the number of elements in the array. So if array \verb|@input| has five elements, the following example assigns the value 5 to \verb|$count|: 
+如果你在标量上下文中对数组进行求值，得到的值是数组中元素的数目。所以如果数组\verb|@input|有五个元素，下面的这个例子就会把5这个值赋值给\verb|$count|：
 
 \begin{lstlisting}
 $count = @input;
 \end{lstlisting}
 
-\autoref{fig:figurea.b1} shows an array \verb|@myarray| with three elements, which demonstrates the ordered nature of an array; by which each element appears, and can be found by its position in the array. 
+\autoref{fig:figurea.b1}展示了含有三个元素的数组\verb|@myarray|，它演示了数组的有序属性。对于其中的每一个元素，都可以通过它在数组中的位置找到。
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{figurea.b1.png}
-  \caption{Schematic of an array}
+  \caption{图解数组}
   \label{fig:figurea.b1}
  \end{figure}{}
 
-\section{Hashes}
-A hash (also called an associative array) is a collection of zero or more pairs of scalar values, called keys and values. The values are indexed by the keys. An array variable begins with the percent sign \verb|%| followed by a legal variable name. For instance, possible hash variable names are:
+\section{散列}
+散列（也叫做关联数组）是零个或多个成对标量值的集合，这些成对的标量值叫做键和值。其中的值通过键进行索引。一个散列标量起始于一个\verb|%|符号，后面是一个合法的变量名。比如，可能的散列变量名：
 
 \begin{lstlisting}
 %hash1
 %genes_by_name
 \end{lstlisting}
 
-You can assign a value to a key with a simple assignment statement. For example, say you have a hash called \verb|%baseball_stadiums| and a key \verb|Phillies| to which you want to assign the value \verb|Veterans Stadium|. This statement accomplishes the assignment:
+你可以使用一个简单的赋值语句把值赋值给键。比如，假设你有一个叫做\verb|%baseball_stadiums|散列和一个叫做\verb|Phillies|的键，你想把值\verb|Veterans Stadium|赋值给这个键。下面的这个语句就可以完成赋值：
 
 \begin{lstlisting}
 $baseball_stadiums{'Phillies'} = 'Veterans Stadium';
 \end{lstlisting}
 
-Note that a single hash value is referenced by a \verb|$| instead of a \verb|%| at the beginning of the hash name; this is similar to the way you reference individual array values by using a \verb|$| instead of a \verb|@|.
+注意，单独的一个散列值用散列名前面的\verb|$|而非\verb|%|进行指代；这和数组中使用的方法非常类似，当指代单独的一个数组值时使用\verb|$|而非\verb|@|。
 
-You can assign several keys and values to a hash by placing their scalar values in a list, separated by commas and surrounded by a pair of parentheses. Each successive pair of scalars becomes a key and a value in the hash. For instance, you can assign a hash the empty list:
+你可以把多个键、值赋值给散列，方法就是把它们的标量值放在列表中，用逗号分隔开、并用成对的括号把它们包裹起来。每一个连续的标量对都会称为散列中的一个键和一个值。比如，你可以把空列表赋值给散列：
 
 \begin{lstlisting}
 %hash = ( );
 \end{lstlisting}
 
-You can also assign one or more scalar key-value pairs:
+你也可以把一个或多个标量键-值对赋值给散列：
 
 \begin{lstlisting}
 %genes_by_name = ('gene1', 'AACCCGGTTGGTT', 'gene2', 'CCTTTCGGAAGGTC');
 \end{lstlisting}
 
-There is an another way to do the same thing, which makes the key-value pairs more readily apparent. This accomplishes the same thing as the preceding example:
+还有另一种方法也可以完成同样的事情，但它使得键-值对的关系更加一目了然。下面做的事情和前面的例子完全一样：
 
 \begin{lstlisting}
 %genes_by_name = (
@@ -269,146 +263,148 @@ There is an another way to do the same thing, which makes the key-value pairs mo
 );
 \end{lstlisting}
 
-To get the value associated with a particular key, precede the hash name with a \verb|$| and follow it with a pair of curly braces \verb|{ }| containing the scalar value of the key:
+要提取和某个特定键相关联的值，只需要在散列名前使用\verb|$|，并在其后紧跟包裹键的标量值的成对大括号\verb|{ }|即可：
 
 \begin{lstlisting}
 $genes_by_name{'gene1'}
 \end{lstlisting}
 
-This returns the value '\verb|AACCCGGTTGGTT|', given the value previously assigned to the key '\verb|gene1|' in the hash \verb|%genes_by_name|. \autoref{fig:figurea.b2} shows a hash with three keys. 
+考虑到先前在散列\verb|%genes_by_name|中对'\verb|gene1|'进行的赋值，它会返回'\verb|AACCCGGTTGGTT|'这个值。\autoref{fig:figurea.b2}展示了一个含有三个键的散列。
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{figurea.b2.png}
-  \caption{Schematic of a hash}
+  \caption{图解散列}
   \label{fig:figurea.b2}
  \end{figure}{}
 
-\section{Operators}
-Operators are functions that represent basic operations on values: addition, subtraction, etc. They are frequently used and are core parts of the Perl programming language. They are really just functions that take arguments. For instance, \verb|+| is the operator that adds two numbers, like so:
+\section{操作符}
+操作符是代表对值进行加减等基本操作的函数。它们的使用非常频繁，是Perl编程语言的核心部分。它们其实就是需要参数的函数。举个例子，\verb|+|是把两个数进行相加的操作符，就像这样：
 
 \begin{lstlisting}
 3 + 4;
 \end{lstlisting}
 
-Operators typically have one, two, or three operands; in the example just given, there are two operands \verb|3| and \verb|4|.
+操作符通常有一个、两个或三个运算对象。在刚才的例子中，有\verb|3|和\verb|4|这么两个运算对象。
 
-Operators can appear before, between, or after their operands. For example, the plus operator \verb|+| appears between its operands.
+操作符可以出现在它们的运算对象的前面、中间或者后面。比如，加法运算符\verb|+|就出现在它的运算对象的中间。
 
-\section{Operator Precedence}
-Operator precedence determines the order in which the operations are applied. For instance, in Perl, the expression:
+\section{操作符优先级}
+操作符优先级决定了运算的顺序。比如，在Perl中，下面这个表达式：
 
 \begin{lstlisting}
 3 + 3 * 4
 \end{lstlisting}
 
-isn't evaluated left to right, which calculates 3 + 3 equals 6, and 6 times 4 results in a value of 24; the precedence rules cause the multiplication to be applied first, for a final result of 15. The precedence rules are available in the \textit{perlop} manual page and in most Perl books. However, I recommend you use parentheses to make your code more readable and to avoid bugs. They make these expressions unambiguous; the first:
+并不是从左到右进行求值的，也就是说，并不是先计算3加3等于6、然后把6乘以4得到24这个值的。优先级规则决定先乘法后加法，最终得到15这个结果。在\textit{perlop}手册页和大多数Perl书籍中都可以找到优先级规则。但是，我建议你使用括号来使你的代码更加易读，同时避免bugs。它们使得表达式清晰明确。第一个例子：
 
 \begin{lstlisting}
 (3 + 3) * 4
 \end{lstlisting}
 
-evaluates to 24, and the second:
+求值后得到24，而第二个例子：
 
 \begin{lstlisting}
 3 + (3 * 4)
 \end{lstlisting}
 
-evaluates to 15.
+求之后得到15。
 
-\section{Basic Operators}
-For more information on how operators work, consult the \verb|perlop| documentation bundled with Perl. 
+\section{基本操作符}
+关于操作符运算的更多信息，请查阅和Perl绑定在一起的\verb|perlop|文档。
 
-\subsection{rithmetic Operators}
-Perl has the basic five arithmetic operators:
+\subsection{算术操作符}
+Perl有五个基本的算术操作符：
 
+\noindent
 \textcolor{red}{+}
 \begin{adjustwidth}{1cm}{}
-Addition
+加法
 \end{adjustwidth}
 \textcolor{red}{-}
 \begin{adjustwidth}{1cm}{}
-Subtraction
+减法
 \end{adjustwidth}
 \textcolor{red}{*}
 \begin{adjustwidth}{1cm}{}
-Multiplication
+乘法
 \end{adjustwidth}
 \textcolor{red}{/}
 \begin{adjustwidth}{1cm}{}
-Division
+除法
 \end{adjustwidth}
 \textcolor{red}{**}
 \begin{adjustwidth}{1cm}{}
-Exponentiation
+求幂
 \end{adjustwidth}
 
-These operators work on both integers and floating-point values (and if you're not careful, strings as well).
+这些操作符对整数和浮点数值都适用（如果你不小心地话，也可以对字符串使用）。
 
-Perl also has a \verb|modulus| operator, which computes the remainder of two integers:
+Perl还有一个\verb|取模|操作符，它会计算两个整数的余数：
 
 \begin{lstlisting}
 % modulus
 \end{lstlisting}
 
-For example, \verb|17 % 3| is 2, because 2 is left over when you divide 3 into 17.
+比如，\verb|17 % 3|的值为2，因为当你把17除以3后得到的余数是2。
 
-Perl also has autoincrement and autodecrement operators:
+Perl还有自增和自减操作符：
 
 \begin{lstlisting}
-++ add one
--- subtract one
+++ 加一
+-- 减一
 \end{lstlisting}
 
-Unlike the previous six operators, these change a variable's value.  \verb|$x++| adds one to \verb|$x|, changing 4 to 5 (or a to b). 
+和前面的六个操作符不同，它们会改变变量的值。\verb|$x++|会给\verb|$x|加一，把值从4变到5（或者从a变到b）。
 
-\subsection{Bitwise Operators}
-All scalars, whether numbers or strings, are represented as sequences of individual bits "under the hood." Every once in a while, you need to manipulate those bits, and Perl provides five operators to help:
+\subsection{位操作符}
+所有的标量，不管是数字还是字符串，“在底层”都是用一串单个的位（比特）来表示的。偶尔你需要操作这些位，而Perl提供了五个操作符可供使用：
 
+\noindent
 \textcolor{red}{\&}
 \begin{adjustwidth}{1cm}{}
-Bitwise and
+位与
 \end{adjustwidth}
 \textcolor{red}{|}
 \begin{adjustwidth}{1cm}{}
-Bitwise or
+位或
 \end{adjustwidth}
 \textcolor{red}{\^{}}
 \begin{adjustwidth}{1cm}{}
-Bitwise xor
+位异或
 \end{adjustwidth}
 \textcolor{red}{\textgreater\textgreater}
 \begin{adjustwidth}{1cm}{}
-Right shift
+右移
 \end{adjustwidth}
 \textcolor{red}{\textless\textless}
 \begin{adjustwidth}{1cm}{}
-Left shift
+左移
 \end{adjustwidth}
 
-\subsection{String Operators}
-strings may be concatenated—joined together end to end—with the dot operator:
+\subsection{字符串操作符}
+使用点操作符，可以把字符串串联起来——头尾相连：
 
 \begin{lstlisting}
 'This is a ' . 'joined string'
 \end{lstlisting}
 
-This results in the value '\verb|This is a joined string|'.
+这会得到'\verb|This is a joined string|'这个值。
 
-A string may be repeated with the \verb|x| operator:
+使用\verb|x|操作符也可以把一个字符串进行重复：
 
 \begin{lstlisting}
 print "Hear ye! " x 3;
 \end{lstlisting}
 
-This prints out:
+这会输出：
 
 \begin{lstlisting}
 Hear ye! Hear ye! Hear ye!
 \end{lstlisting}
 
-\subsection{File Test Operators}
-File test operators are unary operators that test files for certain characteristics, such as \verb|-e $file|, which returns \verb|true| if the file \textit{\$file} exists. \autoref{tab:tablea.b2} lists some available file test operators. 
+\subsection{文件测试操作符}
+文件测试操作符是一元操作符，它会检测文件的特定属性，比如对于\verb|-e $file|，当文件\textit{\$file}存在时它会返回\verb|真|。\autoref{tab:tablea.b2}列出了一些可用的文件测试操作符。
 
 \begin{table}[!htbp]
   \begin{center}
@@ -416,43 +412,43 @@ File test operators are unary operators that test files for certain characterist
   \label{tab:tablea.b2}
     \begin{tabu*} to 0.8\linewidth {X[1,c]X[5,l]}
     \toprule
-    Operator & Meaning\\
+    操作符 & 含义\\
     \midrule
-    -r & File is readable\\
-    -w & File is writable\\
-    -x & File is executable\\
-    -o & File is owned by "you"\\
-    -e & File exists\\
-    -z & File has zero size in bytes\\
-    -s & File has nonzero size (return size in bytes)\\
-    -f & File is a plain file\\
-    -d & File is a directory (a.k.a. folder)\\
-    -l & File is a symbolic lin\\
-    -t & FIlehandle is opened to a terminal\\
-    -T & File is a text file\\
-    -B & File is a binary file\\
-    -M & Age of file (at startup of program) in days since modification\\
-    -A & Age of file (at startup of program) in days since last access\\
-    -C & Age of file (at startup of program) in days since last inode change\\
+    -r & 文件是可读的\\
+    -w & 文件是可写的\\
+    -x & 文件是可执行的\\
+    -o & 文件为“你”所有\\
+    -e & 文件存在\\
+    -z & 文件字节单位的大小为零\\
+    -s & 文件的大小非零（返回以字节为单位的大小）\\
+    -f & 文件是一个普通文件\\
+    -d & 文件是一个目录（也就是文件夹）\\
+    -l & 文件是一个符号链接\\
+    -t & 文件句柄打开的是终端\\
+    -T & 文件是一个文本文件\\
+    -B & 文件是一个二进制文件\\
+    -M & 文件最后一次被修改后至今（程序启动时）的天数\\
+    -A & 文件最后一次被访问后至今（程序启动时）的天数\\
+    -C & 文件最后一次节点编号被变更后至今（程序启动时）的天数\\
     \bottomrule
     \end{tabu*}
   \end{center}
 \end{table}
 
 
-\section{Conditionals and Logical Operators}
-This section covers conditional statements and logical operators.
+\section{条件和逻辑操作符}
+本节涵盖条件语句和逻辑操作符的相关内容。
 
-\subsection{true and false}
-In a conditional test, an expression evaluates to \verb|true| or \verb|false|, and based on the result, a statement or block may or may not be executed.
+\subsection{真和假}
+在条件测试中，一个表达式求值的结果为\verb|true|（真）或\verb|false|（假）。基于求值结果的不同，一个语句或者代码块有可能执行，也有可能不执行。
 
-A scalar value can be \verb|true| or \verb|false| in a conditional. A string is \verb|false| if it's the empty string (represented as "" or ''). A string is \verb|true| if it's not the empty string.
+在条件中，一个标量的值可能为\verb|true|（真）或\verb|false|（假）。如果一个字符串是空字符串（用""或''表示），那么它的值就为\verb|false|；如果字符串不是空字符串，那么它的值就为\verb|true|。
 
-Similarly, an array or a hash is \verb|false| if empty, and \verb|true| if nonempty.
+与之类似，如果一个数组或者散列为空，它的值就是\verb|false|，不为空值就是\verb|true|。
 
-A number is \verb|false| if it's 0; a number is \verb|true| if it's not 0.
+如果一个数字是0，它的值就为\verb|false|；数字不是0，值就为\verb|true|。
 
-Most things you evaluate in Perl return some value (such as a number from an arithmetic expression or an array returned from a subroutine), so you can use most things in Perl in conditional tests. Sometimes you may get an undefined value, for instance if you try to add a number to a variable that has not been assigned a value. Then things might fail to work as expected. For instance:
+在Perl中，大多数东西在求值后都会返回一些值（比如：算数运算表达式返回的数字，或者子程序返回的数组），因此你可以在Perl的条件测试中使用它们。有时，你可能会得到一个未定义的值，例如当你把一个数字和一个还没有赋值的变量相加时，此时一切就会可能和预期相差甚远。举个例子：
 
 \begin{lstlisting}
 use strict;
@@ -462,16 +458,16 @@ my $b;
 $b = $a + 2;
 \end{lstlisting}
 
-produces the warning output:
+会得到警告：
 
 \begin{lstlisting}
 Use of uninitialized value in addition (+) at - line 5.
 \end{lstlisting}
 
-You can test for defined and undefined values with the Perl function \verb|defined|.
+使用Perl的函数\verb|defined|来检测值是定义的还是未定义的。
 
-\subsection{Logical Operators}
-There are four logical operators:
+\subsection{逻辑操作符}
+一共有四种逻辑操作符：
 
 \begin{lstlisting}
 not
@@ -480,15 +476,15 @@ or
 xor
 \end{lstlisting}
 
-\verb|not| turns \verb|true| values into \verb|false| and \verb|false| values into \verb|true|. Its use is best illustrated in code:
+\verb|not|（非）会把\verb|true|（真）值变\verb|false|（假），把\verb|false|（假）值变\verb|true|（真）。用代码来更好的阐释以下：
 
 \begin{lstlisting}
 if(not $done) {...}
 \end{lstlisting}
 
-This executes the code only if \verb|$done| is \verb|false|.
+只有在\verb|$done|的值为\verb|false|（假）时，代码才会执行。
 
-\verb|and| is a binary operator that returns \verb|true| if both its operands are \verb|true|. If one or both of the operands are \verb|false|, the operator returns \verb|false|:
+\verb|and|（与）是一个二元操作符，只有当两边操作数的值都为\verb|true|（真）时，它才会返回\verb|true|（真）。如果有一个操作数为\verb|false|（假），运算符都会返回\verb|false|（假）：
 
 \begin{lstlisting}
 1   and  1    returns true
@@ -496,7 +492,7 @@ This executes the code only if \verb|$done| is \verb|false|.
 ''  and  0    returns false
 \end{lstlisting}
 
-\verb|or| is a binary operator that returns \verb|true| if one or both of the operands are \verb|true|. If both operands are \verb|false|, it returns \verb|false|:
+\verb|or|（或）也是一个二元操作符，只要两个操作数中至少有一个为\verb|true|（真），它就会返回\verb|true|（真）。如果两个操作数都为\verb|false|（假），它会返回\verb|false|（假）：
 
 \begin{lstlisting}
 1   or  1    returns true
@@ -504,7 +500,7 @@ This executes the code only if \verb|$done| is \verb|false|.
 ''  or  0    returns false
 \end{lstlisting}
 
-\verb|xor|, or exclusive-OR, returns \verb|true| if one operand is \verb|true| and the other operand is \verb|false|; \verb|xor| returns \verb|false| if both operands are \verb|true| or if both operands are \verb|false|:
+\verb|xor|（异或）只有在两个操作数中一个为\verb|true|（真）一个为\verb|false|（假）的情况下才会返回\verb|true|（真）。如果两个都为\verb|true|（真）或者都为\verb|false|，\verb|xor|会返回\verb|false|（假）：
 
 \begin{lstlisting}
 1 xor 0   returns true
@@ -513,7 +509,7 @@ This executes the code only if \verb|$done| is \verb|false|.
 0 xor 0   returns false
 \end{lstlisting}
 
-There are also variants on most of these:
+这几个操作符大多数都有变体：
 
 \begin{lstlisting}
 ! for not
@@ -521,7 +517,7 @@ There are also variants on most of these:
 || for or
 \end{lstlisting}
 
-These have different precedence but otherwise behave the same. Some older versions of Perl may only have:
+除了优先级不同以外，其他没有什么区别。一些老版本的Perl可能只有：
 
 \begin{lstlisting}
 !
@@ -529,95 +525,94 @@ These have different precedence but otherwise behave the same. Some older versio
 &&
 \end{lstlisting}
 
-instead of \verb|not| or \verb|and|.
+而没有\verb|not|或者\verb|and|。
 
-\subsection{Using Logical Operators for Control Flow}
-A quick and popular way to take an action depending on the results of a previous action is to chain the statements together with logical operators. For instance, it's common in Perl programs to see the following statement to open a file:
+\subsection{使用逻辑操作符控制流程}
+要想依据上一个动作的结果来决定下一步的动作，最简便也是最流行的做法就是用逻辑操作符把语句链接组合在一起。比如，在Perl程序中，用来打开文件的下面这一个语句就非常常见：
 
 \begin{lstlisting}
 open(FH, $filename) or die "Cannot open file $filename: $!";
 \end{lstlisting}
 
-The use of \verb|or| in this statement shows another important thing about the binary logical operators: they evaluate their arguments left to right. In this case, if the open succeeds, the \verb|or| operator never bothers to check the value of the second operand (\verb|die|, which exits the program with the message in the string, plus additional messages if \verb|$!| is included).  The \verb|or| never bothers, because if one operand is \verb|true|, the \verb|or| is \verb|true|, so it doesn't need to check the second operand. However, if the open fails, the \verb|or| needs to check that the second operand is \verb|true| or \verb|false|, so it goes ahead and executes the \verb|die| statement.
+这个语句中\verb|or|的使用展示了关于二元逻辑操作符的另一个重要的事情：它们是从左向右对参数进行求值的。在这个例子中，如果文件打开成功，\verb|or|操作符永远都不会去检查第二个操作数的值（\verb|die|会输出字符串中的信息并退出程序，如果使用了\verb|$!|还会有一些额外的信息）。之所以会这样，是因为如果一个操作数为\verb|true|（真），\verb|or|就为\verb|true|，所以它根本不需要去检查第二个操作数的值。然而，如果文件打开失败，\verb|or|就需要去检查一下第二个操作数的值是\verb|true|还是\verb|false|，所以它就会继续执行\verb|die|语句。
 
-You can use the \verb|and| statement similarly to test the second operand only if the first operand succeeds.
+与之类似，你也可以使用\verb|and|语句，在只有第一个操作成功的情况下才去测试第二个操作。
 
-\verb|xor| doesn't work for control flow, since both its arguments have to be evaluated each time.
+\verb|xor|不会用于控制流程，因为每次都要对它的两个参数进行求值。
 
-I haven't used this chaining of logical operators much; I've used \verb|if| statements instead. This is because I often find that I want to add more statements following a test, and it's easier if the original is written as an \verb|if| statement with a block, and harder if the original is written as a logical operator.
+对于这种逻辑操作符控制的流程链我使用的并不多，我主要使用\verb|if|语句。这是因为，我尝尝发现我需要在测试后面添加一些语句，这种情况下，如果使用\verb|if|语句包裹代码块修改起来就比较方便，如果使用的逻辑操作符修改起来就麻烦多了。
 
-\subsection{The if Statement}
-Conditional tests are commonly found in \verb|if| statements and in their
-variants and loops. Here's an example of an \verb|if| statement:
+\subsection{if语句}
+在\verb|if|语句以及它们的变体和循环中，条件测试非常常见。下面是一个\verb|if|语句的例子：
 
 \begin{lstlisting}
-if (open (FH, $filename) {
+if (open (FH, $filename) ) {
   print "Hurray, I opened the file.";
 }
 \end{lstlisting}
 
-The \verb|if| statement is followed by a conditional expression enclosed in parentheses, which is followed by a block enclosed in curly braces \verb|{ }|. When the conditional expression evaluates as \verb|true|, the statements in the block are executed.
+\verb|if|语句后面紧跟着一个包裹在小括号中的条件表达式，条件表达式的后面是包裹在大括号\verb|{ }|中的代码块。当条件表达式求值为\verb|true|（真）时，代码块中的语句就会执行。
 
-The \verb|if| statement may optionally be followed by an \verb|else|, which is executed when the conditional evaluates to \verb|false|:
+\verb|if|语句后面也可能会跟着一个\verb|else|，当条件表达式求值为\verb|false|时，其中的代码块就会执行：
 
 \begin{lstlisting}
-if ( open(FH, $filename) {
+if ( open(FH, $filename) ) {
   print "Hurray, I opened the file.";
 } else {
   print "Rats. The file did not open.";
 }
 \end{lstlisting}
 
-The \verb|if| statement may also optionally include any number of \verb|elsif| clauses, which check additional conditional statements if none of the preceding conditional statements are \verb|true|: 
+\verb|if|表达式中也可能会包括可选的不定个数的\verb|elsif|语句，当前面的所有条件语句都不为\verb|true|（真）时，它会检查额外的条件语句：
 
 \begin{lstlisting}
-if ( open(FH, $file1) {
+if ( open(FH, $file1) ) {
   print "Hurray, I opened file 1.";
-} elsif ( open(FH, $file2) {
+} elsif ( open(FH, $file2) ) {
   print "Hurray, I opened file 2.";
-} elsif ( open(FH, $file3) {
+} elsif ( open(FH, $file3) ) {
   print "Hurray, I opened file 3.";
 } else {
   print "None of the dadblasted files would open.";
 }
 \end{lstlisting}
 
-In the preceding example, if \verb|file 1| opened successfully, the \verb|if| statement doesn't try to open additional files.
+在上面这个例子中，如果\verb|file1|成功打开，\verb|if|语句就不会再去尝试打开其他的文件了。
 
-There is also an \verb|unless| statement, which is the same as an \verb|if| statement with the conditional negated. So these two statements are equivalent:
+也有一个\verb|unless|语句，除了条件取反外，和\verb|if|语句完全一样。所以，下面这两个语句是完全等价的：
 
 \begin{lstlisting}
-unless ( open(FH, $filename) {
+unless ( open(FH, $filename) ) {
   print "Rats. The file did not open.";
 }
 
-if ( not open(FH, $filename) {
+if ( not open(FH, $filename) ) {
   print "Rats. The file did not open.";
 }
 \end{lstlisting}
 
-\section{Binding Operators}
-Binding operators are used for pattern matching, substitution, and transliteration on strings. They are used in conjunction with regular expressions that specify the patterns. Here's an example: 
+\section{绑定操作符}
+绑定操作符用于字符串的模式匹配、替换和转换。它们和指定模式的正则表达式配合使用。下面是一个例子：
 
 \begin{lstlisting}
 'ACGTACGTACGTACGT' =~ /CTA/
 \end{lstlisting}
 
-The pattern is the string \verb|CTA|, enclosed by forward slashes \verb|//|. The string binding operator is \verb|=~|; it tells the program which string to search, returning \verb|true| if the pattern appears in the string.  
+模式就是用反斜杠\verb|//|包裹起来的字符串\verb|CTA|。字符串绑定操作符是\verb|=~|，它告诉程序对哪个字符串进行搜索，如果字符串中有这个模式，它就会返回\verb|true|。
 
-Another string binding operator is \verb|!~|, which returns \verb|true| if the pattern isn't in the string:
+另一个字符串绑定操作符是\verb|!~|，如果字符串中没有这个模式，它就会返回\verb|true|。
 
 \begin{lstlisting}
 'ACGTACGTACGTACGT' !~ /CTA/
 \end{lstlisting}
 
-This is equivalent to:
+这等同于：
 
 \begin{lstlisting}
 not 'ACGTACGTACGTACGT' =~ /CTA/
 \end{lstlisting}
 
-You can substitute one pattern for another using the string binding operator. In the next example, \verb|s/thine/nine/| is the substitution command, which substitutes the first occurrence of \verb|thine| with the string \verb|nine|:
+使用字符串绑定操作符，你可以把一个模式替换成另一个模式。在接下来的这个例子中，\verb|s/thine/nine/|是替换命令，它会把第一个出现的\verb|thine|替换成字符串\verb|nine|：
 
 \begin{lstlisting}
 $poor_richard = 'A stitch in time saves thine.';
@@ -625,26 +620,26 @@ $poor_richard =~ s/thine/nine/;
 print $poor_richard;
 \end{lstlisting}
 
-This produces the output:
+这会得到如下输出：
 
 \begin{lstlisting}
 A stitch in time saves nine.
 \end{lstlisting}
 
-Finally, the transliteration (or translate) operator \verb|tr| substitutes characters in a string. It has several uses, but the two uses I've covered are first, to change bases to their complements A$\rightarrow$T, C$\rightarrow$G, G$\rightarrow$C, T$\rightarrow$A:
+最后，转换（或者翻译）操作符\verb|tr|会替换字符串中的字符。它有很多的用处，我已经提到过了两个。第一，可以用它来把碱基变成它们的互补碱基A$\rightarrow$T、C$\rightarrow$G、G$\rightarrow$C、T$\rightarrow$A：
 
 \begin{lstlisting}
 $DNA = 'ACGTTTAA';
 $DNA =~ tr/ACGT/TGCA/;
 \end{lstlisting}
 
-This produces the value:
+这会得到如下的值：
 
 \begin{lstlisting}
 TGCAAATT
 \end{lstlisting}
 
-Second, the \verb|tr| operator counts the number of a particular character in a string, as in this example which counts the number of Gs in a string of DNA sequence data:
+第二，\verb|tr|操作符计算一个字符串中特定字符的数目，在下面这个例子中，它计算DNA序列字符串中G的个数：
 
 \begin{lstlisting}
 $DNA = 'ACGTTTAA';
@@ -652,10 +647,10 @@ $count = ($DNA =~ tr/A//);
 print $count;
 \end{lstlisting}
 
-This produces the value 3. This shows that a pattern match can return a count of the number of translations made in a string, which is then assigned to the variable \verb|$count|. 
+它会输出值3。这展示了，一个模式匹配可以返回在一个字符串中进行转换的次数，随后这个计数被赋值给了变量\verb|$count|。
 
-\section{Loops}
-Loops repeatedly execute the statements in a block until a conditional test changes value. There are several forms of loops in Perl:
+\section{循环}
+循环会重复执行代码块中的语句，直到条件测试的值发生改变。在Perl中有多种类型的循环：
 
 \begin{lstlisting}
 while(CONDITION) {BLOCK}
@@ -667,7 +662,7 @@ do {BLOCK} while (CONDITION)
 do {BLOCK} until (CONDITION)
 \end{lstlisting}
 
-The \verb|while| loop first tests if the conditional is \verb|true|; if so, it executes the block and then returns to the conditional to repeat the process; if \verb|false|, it does nothing, and the loop is over. For example:
+\verb|while|循环首先测试条件是否为\verb|true|：如果为\verb|真|，它就会执行代码块，然后返回到条件重复上面的过程；如果为\verb|假|，它什么也不会做，同时循环结束。比如：
 
 \begin{lstlisting}
 $i = 3;
@@ -677,7 +672,7 @@ while ( $i ) {
 }
 \end{lstlisting}
 
-This produces the output:
+这会得到下面的输出：
 
 \begin{lstlisting}
 3
@@ -685,11 +680,11 @@ This produces the output:
 1
 \end{lstlisting}
 
-Here's how the loop works. The scalar variable \verb|$i| is first initialized to \verb|3| (this isn't part of the loop). The loop is then entered, and \verb|$i| is tested to see if it has a \verb|true| (nonzero) value. It does, so the number \verb|3| is printed, and the decrement operator is applied to \verb|$i|, which reduces its value to \verb|2|. The block is now over, and the loop starts again with the conditional test. It succeeds with the \verb|true| value \verb|2|, which is printed and decremented. The loop restarts with a test of \verb|$i|, which is now the \verb|true| value \verb|1|; \verb|1| is printed and decremented to \verb|0|. The loop starts again; \verb|0| is tested to see if it's \verb|true|, and it's not, so the loop is now finished.
+循环的过程是这样子的。标量变量\verb|$i|首先被初始化为\verb|3|（这并不是循环的部分）。接着进入循环，\verb|$i|被测试来看一下它是否有个\verb|true|（非零）值。如果是，数字\verb|3|就会被输出出来，并且减量操作符会被应用到\verb|$i|上，这会使它的值减小为\verb|2|。现在代码块就结束了，循环从条件测试再次开始。因为是\verb|true|值\verb|2|，所以测试成功，值被打印出来，同时减一。循环又一次从\verb|$i|的测试开始，它现在是\verb|true|值\verb|1|，\verb|1|会被打印出来，同时减小为\verb|0|。循环再一次开始，\verb|0|被测试来看看它是不是为\verb|true|，因为它不为\verb|真|，所以现在循环就结束了。
 
-Loops often follow the same pattern, in which a variable is set, and a loop is called, which tests the variable's value and then executes a block, which includes changing the value of the variable.
+循环通常都遵循同样的模式：先初始化一个变量，然后调用一个循环，它会测试变量的值，然后执行一个代码块，代码块中会有语句改变变量的值。
 
-The \verb|for| loop makes this easy by including the variable initialization and the variable change in the loop statement. The following is exactly equivalent to the preceding example and produces the same output:
+\verb|for|循环让这些简便了许多，它把变量的初始化和变量值的改变都放在了循环语句中。下面这个例子和刚才的例子是完全等价的，输出也完全一样：
 
 \begin{lstlisting}
 for ( $i = 3 ; $i ; $i-- ) {
@@ -697,7 +692,7 @@ for ( $i = 3 ; $i ; $i-- ) {
 }
 \end{lstlisting}
 
-The \verb|foreach| loop is a convenient way to iterate through the elements in an array. Here's an example:
+要想对一个数组中的元素进行循环处理，使用\verb|foreach|循环是一个比较便捷的方式。下面是一个例子：
 
 \begin{lstlisting}
 @array = ('one', 'two', 'three');
@@ -707,7 +702,7 @@ foreach $element (@array) {
 }
 \end{lstlisting}
 
-This prints the output:
+它会输出：
 
 \begin{lstlisting}
 one
@@ -715,11 +710,11 @@ two
 three
 \end{lstlisting}
 
-The \verb|foreach| loop specifies a scalar variable \verb|$element| to be set to each element of the array. (You may use any variable name or \verb|none|, in which case the special variable \verb|$_| is used automatically.) The array to be iterated over is then placed in parentheses, followed by the block. You can use \verb|for| instead of \verb|foreach| as the name of this loop, with identical behavior.
+\verb|foreach|循环指定了一个标量变量\verb|$element|来依次表示数组中的每一个元素。（你可以使用任意的变量名，甚至是\verb|none|，在这种情况下，会自动使用特殊变量\verb|$_|。）小括号中的数组会被循环处理，执行后面的代码块。你也可以使用\verb|for|来代替这个循环中的\verb|foreach|，效果是完全一样的。
 
-The first time through the loop, the value of the first element of the array is assigned to the \verb|foreach| variable \verb|$element|. On each succeeding pass through the loop, the value of the next element of the array is assigned to the \verb|foreach| variable \verb|$element|. The loop exits after it has reached the end of the array.
+进行第一个循环的时候，数组第一个元素的值会赋值给\verb|foreach|中的变量\verb|$element|。每当循环成功执行依次，数组下一个元素的值就会赋值给\verb|foreach|中的变量\verb|$element|。当循环到达数组的末尾时，循环就会结束。
 
-There is one important point to make, however. If in the block you change the value of the loop variable \verb|$element|, the array is changed, and the change stays in effect after you've left the \verb|foreach| loop. For example:
+然而，有一点需要强调一下。如果在代码块中，你改变了循环变量\verb|$element|的值，数组也会随之改变，即使你离开了\verb|foreach|循环，这种改变也会一直有效。举个例子：
 
 \begin{lstlisting}
 @array = ('one', 'two', 'three');
@@ -733,7 +728,7 @@ foreach $element (@array) {
 }
 \end{lstlisting}
 
-produces the output:
+会输出：
 
 \begin{lstlisting}
 four
@@ -741,8 +736,7 @@ four
 four
 \end{lstlisting}
 
-In the \verb|do-until| loop, the block is executed before the conditional test,
-and the test succeeds until the condition is \verb|true|:
+在\verb|do-until|循环中，代码块在条件测试之前就会执行，并且测试会一直成功，直到条件为\verb|true|为止：
 
 \begin{lstlisting}
 $i = 3;
@@ -752,13 +746,13 @@ do {
 } until ( $i );
 \end{lstlisting}
 
-This prints:
+会输出：
 
 \begin{lstlisting}
 3
 \end{lstlisting}
 
-In the \verb|do-while| loop, the block is executed before the conditional test, and the test succeeds while the condition is \verb|true|:
+在\verb|do-while|循环中，代码块在条件测试之前就会执行，并且当条件为\verb|true|时，测试会一直成功。
 
 \begin{lstlisting}
 $i = 3;
@@ -768,7 +762,7 @@ do {
 } while ( $i );
 \end{lstlisting}
 
-This prints:
+会输出：
 
 \begin{lstlisting}
 3
@@ -776,11 +770,11 @@ This prints:
 1
 \end{lstlisting}
 
-\section{Input/Output}
-This section covers getting information into programs and receiving data back from them.
+\section{输入/输出}
+本节涵盖向程序输入信息、并从程序中获取输出的相关内容。
 
-\subsection{Input from Files}
-Perl has several convenient ways to get information into a program. In this book, I've emphasized opening files and reading in the information contained in them, because it is frequently used, and because it behaves very much the same way on all different operating systems. You've observed the \verb|open| and \verb|close| system calls and how to associate a filehandle with a file when you open it, which then is used to read in the data. As an example:
+\subsection{从文件获取输入}
+Perl有许多便捷的方法可以把信息输入到程序中。在本书中，我强调的是打开文件并读取其中的信息，因为它使用非常频繁，并且在所有不同操作系统中它的操作都是一样的。你已经见过\verb|open|和\verb|close|系统调用，以及当你打开文件的时候如果把它和文件句柄相关联，之后使用文件句柄来读取数据。像下面这个例子：
 
 \begin{lstlisting}
 open(FILEHANDLE, "informationfile");
@@ -788,106 +782,106 @@ open(FILEHANDLE, "informationfile");
 close(FILEHANDLE);
 \end{lstlisting}
 
-This code opens the file \textit{informationfile} and associates the filehandle FILEHANDLE with it. The filehandle is then used within angle brackets \verb|< >| to actually read in the contents of the file and store the contents in the array \verb|@data_from_informationfile|. Finally, the file is closed by referring once again to the opened filehandle.
+上述代码会打开文件\textit{informationfile}，并把它和文件句柄\verb|FILEHANDLE|关联在一起。之后在尖括号\verb|< >|中使用文件句柄把文件的内容读取进来，并且把这些内容存储到数组\verb|@data_from_informationfile|中。最后，通过再一次调用已经打开的文件句柄把文件关闭掉。
 
-\subsection{Input from STDIN}
-Perl allows you to read in any input that is automatically sent to your program via standard input (STDIN). STDIN is a filehandle that by default is always open. Your program may be expecting some input that way. For instance, on a Mac, you can drag and drop a file icon onto the Perl applet for your program to make the file's contents appear in STDIN. On Unix systems, you can pipe the output of some other program into the STDIN of your program with shell commands such as:
+\subsection{从STDIN获取输入}
+Perl允许你读入通过标准输入（STDIN）自动发送到程序的任何输入。STDIN是一个默认一直打开的文件句柄。你的程序可能会期望通过这种方式获取一些输入。比如，在Mac中，你可以通过拖放一个文件的图标到你的Perl程序的applet上，让这个文件的内容出现在STDIN中。在Unix系统中，你可以使用shell命令的管道把其他程序的输出作为你的程序的标准输入，就想这样：
 
 \begin{lstlisting}
 someprog | my_perl_program 
 \end{lstlisting}
 
-You can also pipe the contents of a file into your program with:
+通过下面这种方式，你也可以使用管道把文件的内容作为你的程序的输入：
 
 \begin{lstlisting}
 cat file | my_perl_program 
 \end{lstlisting}
 
-or with:
+或者这样：
 
 \begin{lstlisting}
 my_perl_program < file.
 \end{lstlisting}
 
-Your program can then read in the data (from program or file) that comes as STDIN just as if it came from a file that you've opened:
+之后，你的程序就可以读入STDIN的（来自程序或者文件的）数据了，就像这些数据来在于你已经打开的一个文件一样：
 
 \begin{lstlisting}
 @data_from_stdin = <STDIN>;
 \end{lstlisting}
 
-\subsection{Input from Files Named on the Command Line}
-You can name your input files on the command line. \verb|<>| is shorthand for \verb|<ARGV>|. The \verb|ARGV| filehandle treats the array \verb|@ARGV| as a list of filenames and returns the contents of all those files, one line at a time. Perl places all command-line arguments into the array \verb|@ARGV|. Some of these may be special flags, which should be read and removed from \verb|@ARGV| if there will also be datafiles named. Perl assumes that anything in \verb|@ARGV| refers to an input filename when it reaches a \verb|< >| command. The contents of the file or files are then available to the program using the angle brackets \verb|< >| without a filehandle, like so:
+\subsection{从命令行指定的文件中获取输入}
+你可以在命令行中指定你的输入文件。\verb|<>|是\verb|<ARGV>|的简写。\verb|ARGV|文件句柄把数组\verb|@ARGV|作为一个文件名的列表，并且一次一行得返回所有这些文件的内容。Perl把所有的命令行参数都放在数组\verb|@ARGV|中。其中有些可能是特殊的标志，当同时也有制定的数据文件时，它们应该从\verb|@ARGV|中读取并删除掉。当看到\verb|< >|命令时，Perl假定\verb|@ARGV|中的所有内容都代表一个输入文件名。使用尖括号\verb|< >|，而不需要文件句柄，就可以让程序获取文件的内容，就像这样：
 
 \begin{lstlisting}
 @data_from_files = <>;
 \end{lstlisting}
 
-For example, on Microsoft, Unix, or on the MacOS X, you specify input files at the command line, like so:
+比如，在Microsoft、Unix或者MacOS X上，你在命令行中指定输入文件，就像这样：
 
 \begin{lstlisting}
 % my_program file1 file2 file3
 \end{lstlisting}
 
-\subsection{Output Commands}
-The \verb|print| statement is the most common way to output data from a Perl program. The \verb|print| statement takes as arguments a list of scalars separated by commas. An array can be an argument, in which case, the elements of the array are all printed one after the other:
+\subsection{输出命令}
+\verb|print|语句是从Perl程序中输出数据最常用的方法。\verb|print|语句把用逗号分隔开的一堆标量作为它的参数。一个数组也可以作为参数，在这种情况下，数组中的元素会一个接一个得全部输出出来：
 
 \begin{lstlisting}
 @array = ('DNA', 'RNA', 'Protein');
 print @array;
 \end{lstlisting}
 
-This prints out:
+这会输出：
 
 \begin{lstlisting}
 DNARNAProtein
 \end{lstlisting}
 
-If you want to put spaces between the elements of an array, place it between double quotes in the \verb|print| statement, like this:
+如果你想在数组的元素之间加上空格，使用\verb|print|语句的时候就把它放在双引号中，就像这样：
 
 \begin{lstlisting}
 @array = ('DNA', 'RNA', 'Protein');
 print "@array";
 \end{lstlisting}
 
-This prints out:
+这会输出：
 
 \begin{lstlisting}
 DNA RNA Protein
 \end{lstlisting}
 
-The \verb|print| statement can specify a filehandle as an optional indirect object between the \verb|print| statement and the arguments, like so:
+在\verb|print|语句和参数之间，可以指定一个文件句柄作为可选的间接对象，就像这样：
 
 \begin{lstlisting}
 print FH "@array";
 \end{lstlisting}
 
-The \verb|printf| function gives more control over the formatting of the output of numbers. For instance, you can specify field widths; the precision, or number of places after the decimal point; and whether the value is right- or left-justified in the field. I showed the most common options in \autoref{chap:chapter12} and refer you to the Perl documentation that comes with your copy of Perl for all the details.
+\verb|printf|函数给予用户更多的控制，来格式化输出数字。比如，你可以指定字段宽度，精度或说小数点后的数字位数，以及字段中的值是右对齐或者左对齐。在\autoref{chap:chapter12}中我已经展示了大多数常见的选项，推荐你去随Perl附带的Perl文档中常阅更加详细的内容。
 
-The \verb|sprintf| function is related to the \verb|printf| function; it formats a string instead of printing it out.
+\verb|sprintf|函数和\verb|printf|函数相关，它会格式化字符串而不是把它输出出来。
 
-The \verb|format| and \verb|write| commands are a way to format a multiline output, as when generating reports. \verb|format| can be a useful command, but in practice it isn't used much. The full details are available in your Perl documentation, and O'Reilly's \textit{Programming Perl} contains an entire chapter on \verb|format|. You can also see \verb|format| in \autoref{chap:chapter12} of this book. 
+当生成报表时，可以使用\verb|format|和\verb|write|命令来格式化多行的输出。\verb|format|是一个非常有用的命令，但在实际使用中用的并不是很多。详细的细节可以查阅Perl文档，在O'Reilly's \textit{Programming Perl}中有整整一章的内容介绍\verb|format|。你还可以在本书的\autoref{chap:chapter12}的看到\verb|format|。
 
-\subsubsection{Output to STDOUT, STDERR, and Files}
-Standard output, with the filehandle STDOUT, is the default destination for output from a Perl program, so it doesn't have to be named. The following two statements are equivalent unless you used \verb|select| to change the default output filehandle:
+\subsubsection{输出至STDOUT、STDERR和文件}
+标准输出的文件句柄是STDOUT，它是Perl程序的默认输出位置，所以不需要明确指明。下面这两个语句是完全等价的，除非你使用\verb|select|改变了默认的输出文件句柄：
 
 \begin{lstlisting}
 print "Hello biology world!\n";
 print STDOUT "Hello biology world!\n";
 \end{lstlisting}
 
-Note that the STDOUT isn't followed by a comma. STDOUT is usually directed to the computer screen, but it may be redirected at the command line to other programs or files. This Unix command pipes the STDOUT of \verb|my_program| to the STDIN of \verb|your_program|:
+注意STDOUT后面没有逗号。STDOUT通常指向计算机屏幕，但是可以在命令行中把它重定向到其他程序或者文件。下面这行Unix命令通过管道把\verb|my_program|的STDOUT定向到了\verb|your_program|的STDIN：
 
 \begin{lstlisting}
 my_program | your_program 
 \end{lstlisting} 
 
-This Unix command directs the output of \verb|my_program| to the file \textit{outputfile}:
+而下面这行Unix命令则把\verb|my_program|的输出定向到了\textit{outputfile}文件：
 
 \begin{lstlisting}
 my_program > outputfile
 \end{lstlisting}
 
-It's also common to direct certain error messages to the predefined standard error filehandle STDERR or to a file you've opened for input and named with a particular filehandle. Here are examples of these two tasks:
+把特定的错误信息定向到预先定义的标准错误文件句柄STDERR，或者你已经打开用于输出的、通过特定文件句柄调用的文件，这非常常见。下面是这两种情况的例子：
 
 \begin{lstlisting}
 print STDERR "If you reached this part of the program, something is terribly wrong!";
@@ -896,19 +890,19 @@ open(OUTPUTFD, ">output_file");
 print OUTPUTFD "Here is the first line in the output file output_file\n";
 \end{lstlisting}
 
-STDERR is also usually directed to the computer screen by default, but it can be directed into a file from the command line. This is done differently for different systems, for example, as follows (on Unix with the \textit{sh} or \textit{bash} shells):
+STDERR默认也是定向到计算机屏幕，但是可以在命令行中把它定向到一个文件。不同操作系统中的实现方法不一样，例如下面这个例子（在Unix系统中使用\textit{sh}或者\textit{bash}）：
 
 \begin{lstlisting}
 myprogram 2>myprogram.error
 \end{lstlisting}
 
-You can also direct STDERR to a file from within your Perl program by including code such as the following before the first output to STDERR.  This is the most portable way to redirect STDERR:
+在Perl程序中，你也可以把STDERR定向到一个文件，使用下面这行代码，它会在把第一个输出信息输出到STDERR之前对其重定向。这是重定向STDERR最便捷的方法：
 
 \begin{lstlisting}
 open (STDERR, ">myprogram.error") or die "Cannot open error file myprogram.error:$!\n";
 \end{lstlisting}
 
-The problem with this is that the original STDERR is lost. This method, taken from \textit{Programming Perl}, saves and restores the original STDERR:
+使用这种方法的问题在于原来的STDERR丢失了。下面这种方法摘抄自\textit{Programming Perl}，它会保存并恢复原来的STDERR。
 
 \begin{lstlisting}
 open ERRORFILE, ">myprogram.error" 
@@ -925,7 +919,7 @@ open STDERR, ">&SAVEERR";
 print STDERR "This will appear on the computer screen\n";
 \end{lstlisting}
 
-There are a lot of details concerning filehandles not covered in this book, and redirecting one of the predefined filehandles such as STDERR can cause problems, especially as your programs get bigger and rely more on modules and libraries of subroutines. One safe way is to define a new filehandle associated with an error file and to send all your error messages to it:
+在本书中，还有许多关于文件句柄的内容没有涉及到。并且，重定向STDERR等预先定义的文件句柄可能会出现问题，尤其是当你的程序越来越大、并且依赖于众多的模块和子程序库时。一种比较安全的做法是定义一个与错误文件相关联的新文件句柄，把所有的错误信息都输出到它里面去：
 
 \begin{lstlisting}
 open (ERRORMESSAGES, ">myprogram.error") 
@@ -934,17 +928,17 @@ open (ERRORMESSAGES, ">myprogram.error")
 print ERRORMESSAGES "This is an error message\n";
 \end{lstlisting}
 
-Note that the \verb|die| function, and the closely related \verb|warn| function, print their error messages to STDERR. 
+注意一下\verb|die|函数，以及与之密切相关的\verb|warn|函数，它们会把错误信息输出到STDERR。
 
-\section{Regular Expressions}
-Regular expressions are, in effect, an extra language that lives inside the Perl language. In Perl, they have quite a lot of features. First, I'll summarize how regular expressions work in Perl; then, I'll present some of their many features.
+\section{正则表达式}
+正则表达式实际上是Perl语言里面的另外一种编程语言。在Perl中，它们有许多的特性。首先，我总结一下在Perl中正则表达式是如何工作的；之后，我会展示它们的一些特性。
 
-\subsection{Overview}
-Regular expressions describe patterns in strings. The pattern described by a single regular expression may match many different strings.
+\subsection{概述}
+正则表达式描述字符串中的模式。使用单个正则表达式描述的模式可能会匹配众多不同的字符串。
 
-Regular expressions are used in pattern matching, that is, when you look to see if a certain pattern exists in a string. They can also change strings, as with the \verb|s///| operator that substitutes the pattern, if found, for a replacement. Additionally, they are used in the \verb|tr| function that can transliterate several characters into replacement characters throughout a string. Regular expressions are case-sensitive, unless explicitly told otherwise.
+正则表达式在模式匹配中使用，也就是说，当你要看看某个特定的模式是不是存在于一个字符串中时使用正则表达式。它们也可以改变字符串，就像替换模式的\verb|s///|操作符，每当找到一个模式就会进行替换。另外，它们也在\verb|tr|函数中使用，它会把字符串中的一些字符转换成要替代的其他字符。正则表达式是大小写敏感的，除非明确告诉它不区分大小写。
 
-The simplest pattern match is a string that matches itself. For instance, to see if the pattern '\verb|abc|' appears in the string '\verb|abcdefghijklmnopqrstuvwxyz|', write the following in Perl:
+最简单的模式匹配是匹配它自身的一个字符串。举个例子，要看模式`\verb|abc|'是不是出现在了字符串`\verb|abcdefghijklmnopqrstuvwxyz|'中，在Perl中就可以这么写：
 
 \begin{lstlisting}
 $alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -953,11 +947,11 @@ if( $alphabet =~ /abc/ ) {
 }
 \end{lstlisting}
 
-The \verb|=~| operator binds a pattern match to a string. \verb|/abc/| is the pattern abc, enclosed in forward slashes \verb|//| to indicate that it's a regular-expression pattern. \verb|$&| is set to the matched pattern, if any. In this case, the match succeeds, since '\verb|abc|' appears in the string \verb|$alphabet|, and the code just given prints out \verb|abc|.
+\verb|=~|操作符把模式匹配绑定到一个字符串上。\verb|/abc/|就是模式\verb|abc|，包裹在反斜杠\verb|//|中表明这是一个正则表达式模式。如果有匹配，\verb|$&|就被设置成匹配到的模式。在这个例子下，匹配成功，因为`\verb|abc|'出现在了字符串\verb|$alphabet|中，而代码仅仅会输出\verb|abc|。
 
-Regular expressions are made from two kinds of characters. Many characters, such as '\verb|a|' or '\verb|Z|', match themselves. Metacharacters have a special meaning in the regular-expression language. For instance, parentheses \verb|( )| are used to group other characters and don't match themselves. If you want to match a metacharacter such as \verb|(| in a string, you have to precede it with the backslash metacharacter \verb|\(| in the pattern.
+正则表达式由两类字符构成。一类是匹配它们自身的字符，比如`\verb|a|'或者`\verb|Z|'。一类是在正则表达式中有特殊含义的元字符（metacharacter）。比如，小括号\verb|( )|不匹配它们自身，而是用于把其他的字符进行分组。如果你想匹配一个字符串中的元字符，就像\verb|(|，你编写模式时，必须要在元字符的前面加上反斜线，就像\verb|\(|这样。
 
-There are three basic ideas behind regular expressions. The first is concatenation: two items next to each other in a regular-expression pattern (that's the string between the forward slashes \verb|//| in the examples) must match two items next to each other in the string being matched (the \verb|$alphabet| in the examples). So to match '\verb|abc|' followed by '\verb|def|', concatenate them in the regular expression: )
+在正则表达式背后有三个基本的思想。第一个基本思想就是串联：在正则表达式模式（就是例子中两个反斜杠\verb|//|之间的字符串）中相邻的两个项目，必须匹配可以待匹配字符串（刚才例子中的\verb|$alphabet|）中相邻的两个项目。所以要匹配`\verb|abc|'后面紧跟着`\verb|def|'，在正则表达式中就把它们串联起来：
 
 \begin{lstlisting}
 $alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -966,13 +960,13 @@ if( $alphabet =~ /abcdef/ ) {
 }
 \end{lstlisting}
 
-This prints:
+这会输出：
 
 \begin{lstlisting}
 abcdef
 \end{lstlisting}
 
-The second major idea is alternation. Items separated by the \verb=|= metacharacter match any one of the items. For example:
+第二个主要的思想是择一。被元字符\verb=|=分隔开的项目会匹配其中的任何一个。例如：
 
 \begin{lstlisting}
 $alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -980,15 +974,15 @@ if( $alphabet =~ /a(b|c|d)c/ ) {
   print $&;
 }
 
-prints as:
+会输出：
 
 \begin{lstlisting}
 abc.
 \end{lstlisting}
 
-The example also shows how parentheses group things in a regular expression. The parentheses are metacharacters that aren't matched in the string; rather, they group the alternation, given as \verb=b|c|d=, meaning any one of \verb|b|, \verb|c|, or \verb|d| at that position in the pattern. Since \verb|b| is actually in \verb|$alphabet| at that position, the alternation, and indeed the entire pattern \verb=a(b|c|d)c=, matches in the \verb|$alphabet|. (One additional point: \verb=ab|cd= means \verb=(ab)|(cd)=, not \verb=a(b|c)d=.)
+这个例子还演示了在正则表达式中如果使用小括号进行分组。小括号是元字符，它不会匹配字符串中它们自身，而是对选择项进行分组。对于\verb=b|c|d=来说，它表示模式中那个位置可以是\verb|b|、\verb|c|和\verb|d|中的任何一个。因为\verb|$alphabet|中的那个位置是\verb|b|，所以这种择一匹配，实际上就是整个模式\verb=a(b|c|d)c=能够匹配\verb|$alphabet|。（补充一点：\verb=ab|cd=表示\verb=(ab)|(cd)=而不是\verb=a(b|c)d=。）
 
-The third major idea of regular expressions is repetition (or closure).  This is indicated in a pattern with the quantifier metacharacter \verb|*|, sometimes called the Kleene star after one of the inventors of regular expressions. When \verb|*| appears after an item, it means that the item may appear 0, 1, or any number of times at that place in the string. So, for example, all of the following pattern matches will succeed:
+正则表达式第三个主要的思想就是重复（或称闭包）。它表现在模式中的量词元字符\verb|*|，有时也被称作克林星号，这源于正则表达式的发明人之一。当\verb|*|出现在一个项目后面时，表示这个项目在字符串的那个位置可能出现0次、1次或者任意次。所以，在下面这个例子中，所有的模式匹配都会成功：
 
 \begin{lstlisting}
 'AC' =~ /AB*C/;
@@ -996,64 +990,63 @@ The third major idea of regular expressions is repetition (or closure).  This is
 'ABBBBBBBBBBBC' =~ /AB*C/;
 \end{lstlisting}
 
-\subsection{Metacharacters}
-The following are metacharacters:
+\subsection{元字符}
+下面这些都是元字符：
 
 \begin{lstlisting}
 \ | (  ) [ { ^ $ * + ? .
 \end{lstlisting}
 
-\subsubsection{Escaping with \textbackslash}
-A backslash \verb|\| before a metacharacter causes it to match itself; for instance, \verb|\\| matches a single \verb|\| in the string.
+\subsubsection{使用 \textbackslash 进行转义}
+元字符前面的反斜线\verb|\|会让它匹配这些字符本身。举个例子，\verb|\\|会匹配字符串中的单个\verb|\|。
 
-\subsubsection{Alternation with |}
-The pipe \verb=|= indicates alternation, as described previously.
+\subsubsection{使用|进行择一匹配}
+如前所述，管道符\verb=|=表示择一匹配。
 
-\subsubsection{Grouping with ()}
-The parentheses \verb|( )| provide grouping, as described previously.
+\subsubsection{使用( )进行分组}
+如前所述，小括号\verb|( )|用于分组。
 
-\subsubsection{Character classes}
-Square brackets \verb|[ ]| specify a character class. A character class matches one character, which can be any character specified. For instance, \verb|[abc]| matches either \verb|a|, or \verb|b|, or \verb|c| at that position (so it's the same as \verb=a|b|c=). \verb|A-Z| is a range that matches any uppercase letter, \verb|a-z| matches any lowercase letter, and \verb|0-9| matches any digit. For instance, \verb|[A-Za-z0-9]| matches any single letter or digit at that position. If the first character in a character class is \verb|^|, any character except those specified match; for instance, \verb|[^0-9]| matches any character that isn't a digit.
+\subsubsection{字符集}
+中括号\verb|[ ]|指定一个字符集。一个字符集可以匹配指定字符中的任意一个字符。举个例子，\verb|[abc]|会匹配那个位置上的\verb|a|或者\verb|b|或者\verb|c|（所以和\verb=a|b|c=的效果是完全一样的）。\verb|A-Z|是一个范围，它匹配任意的一个大写字母，\verb|a-z|匹配任意的一个小写字母，而\verb|0-9|匹配任意的一个数字。举个例子，\verb|[A-Za-z0-9]|匹配那个位置上的任意单个字母或数字。如果字符集的第一个字符是\verb|^|，会匹配除指定字符外的任意一个字符。比如，\verb|[^0-9]|匹配非数字的任意一个字符。
 
-\subsubsection{Matching any character with .}
-The period or dot \verb|.| represents any character except a newline.  (The pattern modifier \verb|/s| makes it also match a newline.) So, \verb|.| is like a character class that specifies every character.
+\subsubsection{使用.匹配任意一个字符}
+句点或圆点\verb|.|代表除换行符以外的任意一个字符。（使用模式修饰符\verb|/s|可以让它匹配也匹配换行符。）所以，\verb|.|就像是一个指定了每一个字符的字符集一样。
 
-\subsubsection{Beginning and end of strings with \^{} and \$}
-The \verb|^| metacharacter doesn't match a character; rather, it asserts that the item that follows must be at the beginning of the string. Similarly, the \verb|$| metacharacter doesn't match a character but asserts that the item that precedes it must be at the end of the string (or before the final newline). For example: \verb|/^Watson and Crick/| matches if the string starts with \verb|Watson and Crick|; and \verb|/Watson and Crick$/| matches if the string ends with \verb|Watson and Crick| or \verb|Watson and Crick\n|.
+\subsubsection{使用\^{}和\$匹配字符串的开头和结尾}
+元字符\verb|^|不匹配任意一个字符，而是表明其后的项目必须位于字符串的开头。与之类似，元字符\verb|$|也不匹配任意一个字符，而是表明其前面的项目必须位于字符串的末尾（或者说在最后的换行符之前）。举个例子：如果字符串以\verb|Watson and Crick|起始，\verb|/^Watson and Crick/|就能够匹配成功了；如果字符串以\verb|Watson and Crick|或者\verb|Watson and Crick\n|结尾，\verb|/Watson and Crick$/|就能够匹配成功。
 
-\subsubsection{Quantifiers: *\ +\ \{MIN,\}\ \{MIN,MAX\}\ ?}
-These metacharacters indicate the repetition of an item. The \verb|*| metacharacter indicates zero, one, or more of the preceding item. The \verb|+| metacharacter indicates one or more of the preceding item. The brace \verb|{ }| metacharacters let you specify exactly the number of previous items, or a range. For instance, \verb|{3}| means exactly three of the preceding item; \verb|{3,7}| means three, four, five, six, or seven of the preceding item; and \verb|{3,}| means three or more of the preceding item. The \verb|?| matches none or one of the preceding item.
+\subsubsection{量词：*\ +\ \{MIN,\}\ \{MIN,MAX\}\ ?}
+这些元字符表明项目的重复次数。元字符\verb|*|表示前面的项目出现零次、一次或者多次。元字符\verb|+|表示前面的项目出现一次或者多次。大括号\verb|{ }|元字符让你指定前面项目出现的确切次数或者一个范围。比如， \verb|{3}|表示前面的项目正好出现了三次；\verb|{3,7}|表示前面的项目出现三次、四次、五次、六次或者七次；而\verb|{3,}|表示前面的项目出现了三次或者更多次。元字符\verb|?|匹配前面的项目零次或者一次。
 
-\subsubsection{Making quantifiers match minimally with ?}
-The quantifiers just shown are greedy (or maximal) by default, meaning that they match as many items as possible. Sometimes, you want a minimal match that will match as few items as possible. You get that by following each of \verb|* + {} ?| with a \verb|?|. So, for instance, \verb|*?| tries to match as few as possible, perhaps even none, of the preceding item before it tries to match one or more of the preceding item. Here's a maximal match:
+\subsubsection{通过?限定量词进行最小化匹配}
+刚才介绍的量词默认都是贪婪的（进行最大化匹配），也就是说，它们会匹配尽可能多的项目。有时，你想进行最小化匹配，匹配尽可能少的项目。在\verb|* + {} ?|每一个的后面加上\verb|?|就可以实现这一点。比如，\verb|*?|会尝试进行尽可能少的匹配，在它尝试匹配前面项目一次或多次之前，它可能会先去尝试匹配前面项目零次。下面是一个最大化匹配的例子：
 
 \begin{lstlisting}
 'hear ye hear ye hear ye' =~ /hear.*ye/;
 print $&;
 \end{lstlisting}
 
-This matches '\verb|hear|' followed by \verb|.*| (as many characters as possible), followed by '\verb|ye|', and prints:
+它匹配`\verb|hear|'后面紧跟着\verb|.*|（尽可能多的字符），再后面是`\verb|ye|'，这会输出：
 
 \begin{lstlisting}
 hear ye hear ye hear ye
 \end{lstlisting}
 
-Here is a minimal match:
+下面是一个最小化匹配的例子：
 
 \begin{lstlisting}
 'hear ye hear ye hear ye' =~ /hear.*?ye/;
 print $&;
 \end{lstlisting}
 
-This matches '\verb|hear|' followed by \verb|.*?| (the fewest number of characters possible), followed by '\verb|ye|', and prints:
+它匹配`\verb|hear|'后面紧跟着\verb|.*?|（尽可能少的字符），再后面是`\verb|ye|'，这会输出：
 
 \begin{lstlisting}
 hear ye
 \end{lstlisting}
 
-
-\subsection{Capturing Matched Patterns}
-You can place parentheses around parts of the pattern for which you want to know the matched string. For example:
+\subsection{捕获匹配的模式}
+如果想知道匹配到的字符串，你可以用小括号把模式的那些部分包裹起来。比如：
 
 \begin{lstlisting}
 $alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -1061,15 +1054,15 @@ $alphabet =~ /k(lmnop)q/;
 print $1;
 \end{lstlisting}
 
-prints:
+会输出：
 
 \begin{lstlisting}
 lmnop
 \end{lstlisting}
 
-You can place as many pairs of parentheses in a regular expression as you like; Perl automatically stores their matched substrings in special variables named \verb|$1|, \verb|$2|, and so on. The matches are numbered in order of the left-to-right appearance of their opening parenthesis.  
+在正则表达式中，你可以随意放置任意多的小括号。Perl会自动把匹配到的子字符串存储到叫做\verb|$1|、\verb|$2|等的特殊变量中去。按照左小括号从左到右出现的顺序，对匹配进行编号。
 
-Here's a more intricate example of capturing parts of a matched pattern in a string:
+下面是一个更加复杂的例子，演示了字符串中匹配模式的捕获：
 
 \begin{lstlisting}
 $alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -1079,7 +1072,7 @@ print "Second pattern = ", $2,"\n";
 print "Third pattern = ", $3,"\n";
 \end{lstlisting}
 
-This prints:
+这会输出：
 
 \begin{lstlisting}
 First pattern = abc
@@ -1087,106 +1080,105 @@ Second pattern = ab
 Third pattern = a
 \end{lstlisting}
 
-\subsection{Metasymbols}
-Metasymbols are sequences of two or more characters consisting of backslashes before normal characters. These metasymbols have special meanings in Perl regular expressions (and in double-quoted strings for most of them). There are quite a few of them, but that's because they're so useful. \autoref{tab:tablea.b3} lists most of these metasymbols. The column "Atomic" indicates Yes if the metasymbol matches an item, No if the metasymbol just makes an assertion, and - if it takes some other action.
+\subsection{元符号}
+元符号（转义字符）是两个或多个字符序列，在正常字符的前面有一个反斜线。在Perl的正则表达式中（对于其中的大多数来说在双引号括起来的字符串中也是一样），这些元符号有特殊的含义。元符号不是很多，但它们逗非常有用。\autoref{tab:tablea.b3}罗列了大部分的元符号。如果元符号匹配一个项目，“原子型”这一列就标明为“是”，如果它仅仅进行位置判定就标明为“否”，如果它触发了其他的行为就标明为“-”。
 
 \begin{table}[!htbp]
   \begin{center}
-  \caption{Alphanumeric metasymbols}
+  \caption{字母数字元符号}
   \label{tab:tablea.b3}
-    \begin{tabu*} to \linewidth {X[1,c]X[1,c]X[3,l]}
+    \begin{tabu*} to \linewidth {X[1,c]X[1,c]X[6,l]}
     \toprule
-    Symbol & Atomic & Meaning\\
+    符号 & 原子型 & 含义\\
     \midrule
-    \verb|\0| & Yes & Match the null character (ASCII NULL)\\
-    \verb|\NNN| & Yes & Match the character given in octal, up to 377\\
-    \verb|\n| & Yes & Match \textit{n}th previously captured string (decimal)\\
-    \verb|\a| & Yes & Match the alarm character (BEL)\\
-    \verb|\A| & No & true at the beginning of a string\\
-    \verb|\b| & Yes & Match the backspace character (BS)\\
-    \verb|\b| & No & True at word boundary\\
-    \verb|\B| & No & True when not at word boundary\\
-    \verb|\cX| & Yes & Match the control character Control-\textit{X}\\
-    \verb|\d| & Yes & Match any digit character\\
-    \verb|\D| & Yes & Match any nondigit character\\
-    \verb|\e| & Yes & Match the escape character (ASCII ESC, not backslash)\\
-    \verb|\E| & - & End case (\verb|\L|, \verb|\U|) or metaquote (\verb|\Q|) translation\\
-    \verb|\f| & Yes & Match the formfeed character (FF)\\
-    \verb|\G| & No & true at end-of-match position of prior \verb|m//g|\\
-    \verb|\l| & - & Lowercase the next character only\\
-    \verb|\L| & - & Lowercase till \verb|\E|\\
-    \verb|\n| & Yes & Match the newline character (usually NL, but CR on Macs)\\
-    \verb|\Q| & - & Quote (do-meta) metacharacters till \verb|\E|\\
-    \verb|\r| & Yes & Match the return character (usually CR, but NL on Macs)\\
-    \verb|\s| & Yes & Match any whitespace character\\
-    \verb|\S| & Yes & Match any nonwhitespace character\\
-    \verb|\t| & Yes & Match the tab character (HT)\\
-    \verb|\u| & - & Titlecase the next character only\\
-    \verb|\U| & - & Uppercase (not titlecase) till \verb|\E|\\
-    \verb|\w| & Yes & Match any "word" character (alphanumerics plus \_)\\
-    \verb|\W| & Yes & Match any nonword character\\
-    \verb|\x|\hspace*{-7pt}\verb|{abcd}| & Yes & Match the character given in hexadecimal\\
+    \verb|\0| & 是 & 匹配空字符（ASCII NULL）\\
+    \verb|\NNN| & 是 & 匹配八进制表示的字符，最大到377\\
+    \verb|\n| & 是 & 匹配第\textit{n}个先前捕获的字符串（十进制）\\
+    \verb|\a| & 是 & 匹配响铃符（BEL）\\
+    \verb|\A| & 否 & 位于字符串的开头时为真\\
+    \verb|\b| & 是 & 匹配退格符（BS）\\
+    \verb|\b| & 否 & 位于单词边界时为真\\
+    \verb|\B| & 否 & 不位于单词边界时为真\\
+    \verb|\cX| & 是 & 匹配控制字符Ctrl-\textit{X}\\
+    \verb|\d| & 是 & 匹配任意一个数字字符\\
+    \verb|\D| & 是 & 匹配任意一个非数字字符\\
+    \verb|\e| & 是 & 匹配转义（escape）符（ASCII ESC，而非反斜线）\\
+    \verb|\E| & - & 结束大小写（\verb|\L|、\verb|\U|）或元引用（\verb|\Q|）的转换\\
+    \verb|\f| & 是 & 匹配进纸符（FF）\\
+    \verb|\G| & 否 & 位于前一个\verb|m//g|匹配结尾的位置时为真\\
+    \verb|\l| & - & 仅将下一个字符转换为小写\\
+    \verb|\L| & - & 将后面的字符全部转换为小写，直到\verb|\E|为止\\
+    \verb|\n| & 是 & 匹配换行符（通常是NL，但在Macs中是CR）\\
+    \verb|\Q| & - & 引用（do-meta，转义)元字符，直到\verb|\E|为止\\
+    \verb|\r| & 是 & 匹配回车符（通常是CR，但在Macs中是NL）\\
+    \verb|\s| & 是 & 匹配任意一个空白字符\\
+    \verb|\S| & 是 & 匹配任意一个非空白字符\\
+    \verb|\t| & 是 & 匹配制表符（HT）\\
+    \verb|\u| & - & 仅将下一个字符转换为大写（单词首字母大写）\\
+    \verb|\U| & - & 将后面的字符全部转换为大写（非首字母大写），直到\verb|\E|为止\\
+    \verb|\w| & 是 & 匹配任意一个“单词”字符（字母数字加上\_）\\
+    \verb|\W| & 是 & 匹配任意一个非单词字符\\
+    \verb|\x|\hspace*{-7pt}\verb|{abcd}| & Yes & 匹配十六进制表示的字符\\
     %\verb|\x{abcd}| & Yes & Match the character given in hexadecimal\\
-    \verb|\z| & No & true at end of string only\\
-    \verb|\Z| & No & true at end of string or before optional newline\\
+    \verb|\z| & No & 仅位于字符串末尾时为真\\
+    \verb|\Z| & No & 位于字符串末尾或者可有可无的换行符前时为真\\
     \bottomrule
     \end{tabu*}
   \end{center}
 \end{table}
 
-\subsection{Extending Regular-Expression Sequences}
-\autoref{tab:tablea.b4} includes several useful features that have been added to Perl's regular-expression capabilities. 
+\subsection{扩展正则表达式序列}
+\autoref{tab:tablea.b4}包括一些有用的特性，它们被添加到Perl的正则表达式中，扩展了其能力。
 
 \begin{table}[!htbp]
   \begin{center}
-  \caption{Extended regular-expression sequences}
+  \caption{扩展正则表达式序列}
   \label{tab:tablea.b4}
     \begin{tabu*} to 0.9\linewidth {X[2,c]X[1,c]X[3,l]}
     \toprule
-    Extension & Atomic & Meaning\\
+    扩展 & 原子型 & 含义\\
     \midrule
-    \verb|(?#...)| & No & Comment, discard\\
-    \verb|(?:...)| & Yes & Cluster-only parentheses, no capturing\\
-    \verb|(?imsx-imsx)| & No & Enable/disable pattern modifiers\\
-    \verb|(?imsx-imsx:...)| & Yes & Cluster-only parentheses plus modifiers\\
-    \verb|(?=...)| & No & True if lookahead assertion succeeds\\
-    \verb|(?!...)| & No & True if lookahead assertion fails\\
-    \verb|(?<=...)| & No & True if lookbehind assertion succeeds\\
-    \verb|(?<!...)| & No & True if lookbehind assertion fails\\
-    \verb|(?>...)| & Yes & Match nonbacktracking subpattern\\
-    \verb|(?{...})| & No & Execute embedded Perl code\\
-    \verb|(??{...})| & Yes & Match regex from embedded Perl code\\
-    \verb=(?(...)...|...)= & Yes & Match with if-then-else pattern\\
-    \verb|(?(...)...)| & Yes & Match with if-then pattern\\
+    \verb|(?#...)| & 否 & 注释，弃用\\
+    \verb|(?:...)| & 是 & 小括号仅用于分组聚类，不用于捕获\\
+    \verb|(?imsx-imsx)| & 否 & 启用/弃用模式修饰符\\
+    \verb|(?imsx-imsx:...)| & 是 & 小括号仅用于分组聚类，外加修饰符\\
+    \verb|(?=...)| & 否 & 如果向前判断成功就为真\\
+    \verb|(?!...)| & 否 & 如果向前判断失败就为真\\
+    \verb|(?<=...)| & 否 & 如果向后判断成功就为真\\
+    \verb|(?<!...)| & 否 & 如果向后判断失败就为真\\
+    \verb|(?>...)| & 是 & 匹配非回溯的子模式\\
+    \verb|(?{...})| & 否 & 执行嵌入的Perl代码\\
+    \verb|(??{...})| & 是 & 匹配来自嵌入Perl代码的正则表达式\\
+    \verb=(?(...)...|...)= & 是 & 使用if-then-else模式进行匹配\\
+    \verb|(?(...)...)| & 是 & 使用if-then模式进行匹配\\
     \bottomrule
     \end{tabu*}
   \end{center}
 \end{table}
 
-\subsection{Pattern Modifiers}
-Pattern modifiers are single-letter commands placed after the forward slashes. They are used to delimit a regular expression or a substitution and change the behavior of some regular-expression features.  \autoref{tab:tablea.b5} lists the most common pattern modifiers, followed by an example.
+\subsection{模式修饰符}
+模式修饰符是放在反斜杠后面的单字母命令。它们被用来限定正则表达式或者替换，改变一些正则表达式特性的行为。\autoref{tab:tablea.b5}罗列了最常用的模式修饰符，之后给出一个例子。
 
 \begin{table}[!htbp]
   \begin{center}
-  \caption{Pattern modifiers}
+  \caption{模式修饰符}
   \label{tab:tablea.b5}
     \begin{tabu*} to 0.7\linewidth {X[0.5,c]X[3,l]}
     \toprule
-    Modifier & Meaning\\
+    修饰符 & 含义\\
     \midrule
-    \verb|/i| & Ignore upper- or lowercase distinctions\\
-    \verb|/s| & Let . match newline\\
-    \verb|/m| & Let \verb|^| and \verb|$| match next to embedded \verb|\n|\\
-    \verb|/x| & Ignore (most) whitespace and permit comments in
-    patterns\\
-    \verb|/o| & Compile pattern once only\\
-    \verb|/g| & Find all matches, not just the first one\\
+    \verb|/i| & 忽略大小写之间的区别\\
+    \verb|/s| & 使.匹配换行符\\
+    \verb|/m| & 使\verb|^| and \verb|$|匹配嵌入的\verb|\n|的紧邻位置（每行的开头和结尾）\\
+    \verb|/x| & 忽略（大多数）空白，允许在模式中添加注释\\
+    \verb|/o| & 仅仅编译模式一次\\
+    \verb|/g| & 找到所有的匹配，而不仅仅是第一个\\
     \bottomrule
     \end{tabu*}
   \end{center}
 \end{table}
 
-As an example, say you were looking for a name in text, but you didn't know if the name had an initial capital letter or was all capitalized.  You can use the \verb|/i| modifier, like so: 
+作为一个例子，假设你在一个文本中查找一个名字，但是你不知道这个名字是首字母大写的还是全部都是大写。你可以使用\verb|/i|修饰符，就想这样：
 
 \begin{lstlisting}
 $text = "WATSON and CRICK won the Nobel Prize";
@@ -1194,12 +1186,12 @@ $text =~ /Watson/i;
 print $&;
 \end{lstlisting}
 
-This matches (since \verb|/i| causes upper- and lowercase distinctions to be ignored) and prints out the matched string \verb|WATSON|.
+这会匹配（因为\verb|/i|使得大小写之间的区别被忽略掉了）并输出匹配到的字符串\verb|WATSON|。
 
-\section{Scalar and List Context}
-Every operation in Perl is evaluated in either scalar or list context. Many operators behave differently depending on the context they are in, returning a list in list context and a scalar in scalar context.
+\section{标量和列表上下文}
+Perl中的每一个操作都会在标量上下文或者列表上下文中求值。依据所处上下文的不同，许多操作符的行为也会有所不同，在列表上下文中返回列表，在标量上下文中返回标量。
 
-The simplest example of scalar and list contexts is the assignment statement. If the left side (the variable being assigned a value) is a scalar variable, the right side (the values being assigned) are evaluated in scalar context. In the following examples, the right side is an array \verb|@array| of two elements. When the left side is a scalar variable, it causes \verb|@array| to be evaluated in scalar context. In scalar context, an array returns the number of elements in an array: 
+标量和列表上下文的最简单的例子就是赋值语句。如果左边（将要被赋值的变量）是一个标量变量，右边（要赋予的值）就会在标量上下文中就行求值。在下面的这个例子中，右边是一个有两个元素的数组\verb|@array|。当左边是一个标量变量时，它会使得\verb|@array|在标量上下文中就行求值。在标量上下文中，一个数组返回这个数组中元素的个数：
 
 \begin{lstlisting}
 @array = ('one', 'two');
@@ -1207,13 +1199,13 @@ $a = @array;
 print $a;
 \end{lstlisting}
 
-This prints:
+这会输出：
 
 \begin{lstlisting}
 2
 \end{lstlisting}
 
-If you put parentheses around the \verb|$a|, you make it a list with one element, which causes \verb|@array| to be evaluated in list context:
+如果你用小括号把\verb|$a|包裹起来，你就把它变成了只有一个元素的列表，这会使得\verb|@array|在列表上下文中就行求值：
 
 \begin{lstlisting}
 @array = ('one', 'two');
@@ -1221,13 +1213,13 @@ If you put parentheses around the \verb|$a|, you make it a list with one element
 print $a;
 \end{lstlisting}
 
-This prints:
+这会输出：
 
 \begin{lstlisting}
 one
 \end{lstlisting}
 
-Notice that when assigning to a list, if there are not enough variables for all the values, the extra values are simply discarded. To capture all the variables, you'd do this:
+注意，当给列表进行赋值时，如果没有足够的变量存储所有的值，多余的值会被简单的丢弃掉。要捕获所有的变量，你可以这么做：
 
 \begin{lstlisting}
 @array = ('one', 'two');
@@ -1235,25 +1227,25 @@ Notice that when assigning to a list, if there are not enough variables for all 
 print "$a $b";
 \end{lstlisting}
 
-This prints:
+这会输出：
 
 \begin{lstlisting}
 one two
 \end{lstlisting}
 
-Similarly, if you have too many variables on the left for the number of right variables, the extra variables are assigned the undefined value \verb|undef|.
+类似的，如果左边的变量数目多于右边的变量数目，多余的变量会直接被赋值为非定义的值\verb|undef|。
 
-When reading about Perl functions and operations, notice what the documentation has to say about scalar and list context. Very often, if your program is behaving strangely, it's because it is evaluating in a different context than you had thought.
+当查阅Perl函数和操作符的问当时，一定要注意文档中对于标量上下文和列表上下文的描述。如果你的程序表现很诡异，通常情况下，是因为它在和你预期不同的上下文中进行的求值。
 
-Here are some general guidelines on when to expect scalar or list context:
+下面是预估标量上下文和列表上下文的一些常用的准则：
 
 \begin{itemize}
-  \item You get list context from function calls (anything in the argument position is evaluated in list context) and from list assignments. 
-  \item You get scalar context from string and number operators (arguments to such operators as \verb|.| and \verb|+| are assumed to be scalars); from boolean tests such as the conditional of an \verb|if ()| statement or the arguments to the \verb=||= logical operator; and from scalar assignment.
+  \item 以下情况下得到的是列表上下文：函数调用（在参数位置的所有内容都在列表上下文中就行求值）和列表赋值。
+  \item 以下情况下得到的是标量上下文：字符串和数字操作符（像\verb|.|和\verb|+|等操作符的参数都被假设为标量）；布尔测试，比如\verb|if ()|语句的条件测试和\verb=||=逻辑操作符的参数；标量赋值。
 \end{itemize}
 
-\section{Subroutines and Modules}
-Subroutines a re defined by the keyword \verb|sub|, followed by the name of the subroutine, followed by a block enclosed by curly braces \verb|{ }| containing the body of the subroutine. Here's a simple example:
+\section{子程序和模块}
+要定义子程序，使用关键词\verb|sub|，后面写上子程序的名字，之后就是用大括号\verb|{ }|包括起来的代码块，代码块就是子程序的主体。下面是一个简单的例子：
 
 \begin{lstlisting}
 sub a_subroutine {
@@ -1261,18 +1253,18 @@ sub a_subroutine {
 }
 \end{lstlisting}
 
-In general, you can call subroutines using the name of the subroutine followed by a parenthesized list of arguments:
+通常来说，你要调用子程序，只需要使用子程序的名字，后面跟上用小括号包裹起来的参数列表即可：
 
 \begin{lstlisting}
 a_subroutine();
 \end{lstlisting}
 
-Arguments can be passed into subroutines as a list of scalars. If any arrays are given as arguments, their elements are interpolated into the list of scalars. The subroutine receives all scalar values as a list in the special variable \verb|@_|. This example illustrates a subroutine definition and the calling of the subroutine with some arguments: 
+参数可以以标量列表的形式传递给子程序。如果把一个数组作为参数，数组的元素会被展开成标量列表。子程序把所有的标量值以列表进行接收，保存到特殊变量\verb|@_|中。下面这个例子展示了子程序的定义，以及使用一些参数调用子程序：
 
 \begin{lstlisting}
 sub concatenate_dna {
-  my($dna1, $dna2) = @_;
-  my($concatenation);
+  my ($dna1, $dna2) = @_;
+  my ($concatenation);
   $concatenation = "$dna1$dna2";
   return $concatenation;
 }
@@ -1280,49 +1272,49 @@ sub concatenate_dna {
 print concatenate_dna('AAA', 'CGC');
 \end{lstlisting}
 
-This prints:
+这会输出：
 
 \begin{lstlisting}
 AAACGC
 \end{lstlisting}
 
-The arguments '\verb|AAA|' and '\verb|CGC|' are passed into the subroutine as a list of scalars. The first statement in the subroutine's block:
+参数`\verb|AAA|'和`\verb|CGC|'作为标量列表传递给子程序，子程序代码块中的第一个语句：
 
 \begin{lstlisting}
-my($dna1, $dna2) = @_; 
+my ($dna1, $dna2) = @_;
 \end{lstlisting}
 
-assigns this list, available in the special variable \verb|@_|, to the variables \verb|$dna1| and \verb|$dna2|.
+把保存在特殊变量\verb|@_|中的这个列表赋值给变量\verb|$dna1|和\verb|$dna2|。
 
-The variables \verb|$dna1| and \verb|$dna2| are declared as \verb|my| variables to keep them local to the subroutine's block. In general, you declare all variables as \verb|my| variables; this can be enforced by adding the statement \verb|use strict;| near the beginning of your program. However, it is possible to use global variables that are not declared with \verb|my|, which can be used anywhere in a program, including within subroutines. In this book, I've not used global variables.
+把变量\verb|$dna1|和\verb|$dna2|声明为\verb|my|变量以保证它们只局限在自程序的代码块中。通常情况下，你应该把所有的变量都声明为\verb|my|变量；当你在程序开头处加上\verb|use strict;|语句后这就变成了强制行为。然而，使用不用\verb|my|声明的全局变量也是可能的，这样它就可以在程序的任何地方都可以使用了，包括子程序内部。在本书中，我还没有使用过全局变量。
 
-The statement:
+下面这个语句：
 
 \begin{lstlisting}
-my($concatenation);
+my ($concatenation);
 \end{lstlisting}
 
-declares another variable for use by the subroutine.
+声明了供子程序使用的另一个变量。
 
-After the statement:
+在这个语句之后：
 
 \begin{lstlisting}
 $concatenation = "$dna1$dna2"; 
 \end{lstlisting}
 
-performs the work of the subroutine, the subroutine defines its value with the \verb|return| statement:
+完成了子程序的任务，子程序使用\verb|return|语句定义了它的值：
 
 \begin{lstlisting}
 return $concatenation;
 \end{lstlisting}
 
-The value returned from a call to a subroutine can be used however you wish; in this example, it is given as the argument to the \verb|print| function.
+调用子程序后返回的值可以在你想用的任何地方使用。在这个例子中，它直接作为了\verb|print|函数的参数。
 
-If any arrays are given as arguments, their elements are interpolated into the \verb|@_| list, as in the following example:
+如果把数组作为参数，数组中的元素会被展开存储到到\verb|@_|列表中，就行下面这个例子演示的一样：
 
 \begin{lstlisting}
 sub example_sub {
-  my(@arguments) = @_;
+  my (@arguments) = @_;
 
   print "@arguments\n";
 }
@@ -1332,18 +1324,18 @@ my @array = ('two', 'three', 'four');
 example_sub('one', @array, 'five');
 \end{lstlisting}
 
-which prints:
+这会输出：
  
 \begin{lstlisting}
 one two three four five
 \end{lstlisting}
 
-Note that the following attempt to mix arrays and scalars in the arguments to a subroutine won't work:
+注意，下面这个例子试图在子程序的参数中混用数组和标量，但这并不会工作：
 
 \begin{lstlisting}
 # This won't work!!
 sub bad_sub {
-  my(@array, $scalar) = @_;
+  my (@array, $scalar) = @_;
 
   print $scalar;
 }
@@ -1354,11 +1346,11 @@ my $string = 'Protein';
 bad_sub(@arr, $string);
 \end{lstlisting}
 
-In this example, the subroutine's variable \verb|@array| on the left side in the assignment statement consumes the entire list on the right side in \verb|@_|, namely (\verb|'DNA', 'RNA', 'Protein'|). The subroutine's variable \verb|$scalar| won't be set, so the subroutine won't print '\verb|Protein|' as intended. To pass separate arrays and hashes to a subroutine, you need to use references; see \autoref{sect:section6.4.1} in \autoref{chap:chapter6}. Here's a brief example:
+在这个例子中，赋值语句左边的子程序变量\verb|@array|会把右边的\verb|@_|整个列表（也就是\verb|'DNA'、'RNA'、'Protein'|）都囊括进来。子程序变量\verb|$scalar|不会被赋值，所以子程序不会如预期一样把\verb|'Protein'|打印输出出来。要把单独的数组和散列传递给子程序，你需要使用引用；请参看\autoref{chap:chapter6}中的\autoref{sect:section6.4.1}。下面是一个简短的例子：
 
 \begin{lstlisting}
 sub good_sub {
-  my($arrayref, $hashref) = @_;
+  my ($arrayref, $hashref) = @_;
 
   print "@$arrayref", "\n";
 
@@ -1373,121 +1365,122 @@ my %nums = ( 'one' => 1, 'two' => 2 );
 good_sub(\@arr, \%nums);
 \end{lstlisting}
 
-which prints:
+这会输出：
 
 \begin{lstlisting}
 DNA RNA
 one two
 \end{lstlisting}
 
-\section{Built-in Functions}
-Perl has a great many built-in functions. \autoref{tab:tablea.b6} is a partial list with short descriptions.
+\section{内置函数}
+Perl有大量的内置函数。\autoref{tab:tablea.b6}只是罗列了其中的一部分，对它们进行了简短的描述。
 
 \begin{longtabu*} to \linewidth {X[2,l]X[5,l]}
-  \caption{Perl built-in functions}
+  \caption{Perl的内置函数}
   \label{tab:tablea.b6}\\
       \toprule
-      Function & Summary\\
+      函数 & 概要\\
       \midrule
       \endfirsthead
-      (Continued Table \ref{tab:tablea.b6})\\
+      (续表\ref{tab:tablea.b6})\\
       \toprule
-      Function & Summary\\
+      函数 & 概要\\
       \midrule
       \endhead
       \midrule
-      \multicolumn{2}{r}{To be continued\ldots}\\
+      \multicolumn{2}{r}{待续\ldots}\\
       \endfoot
       \bottomrule
       \endlastfoot
 
-    abs VALUE & Return the absolute value of its numeric argument\\
-    atan2 Y, X & Return the principal value of the arc tangent of Y/X from -$\pi$ to $\pi$\\
-    chdir EXPR & Change the working directory to \textit{EXPR} (or home directory by default)\\
-    chmod MODE LIST & Change the file permissions of the LIST of files to MODE\\
-    chomp (VARIABLE or LIST) & Remove ending newline from string(s), if present\\
-    chop (VARIABLE or LIST) & Remove ending character from string(s)\\
-    chown UID, GID, LIST & Change owner and group of LIST of files to numeric UID and GID\\
-    close FILEHANDLE & Close the file, socket, or pipe associated with FILEHANDLE\\
-    closedir DIRHANDLE & Close the directory associated with DIRHANDLE\\
-    cos EXPR & Return the cosine of the radian number EXPR\\
-    dbmclose HASH & Break the binding between a DBM file and a hash\\
-    dbmopen HASH, DBNAME, MODE & Bind a DBM file to a HASH with
-    permissions given in MODE\\
-    defined EXPR & Return true or false if EXPR has a defined value or not\\
-    delete EXPR & Delete an element (or slice) from a hash or an array.\\
-    die LIST & Exit the program with an error message that includes LIST\\
-    each HASH & Step through a hash with one key, or key-value pair, at a time\\
-    exec PATHNAME LIST & Terminate the program and execute the program PATHNAME with arguments LIST\\
-    exists EXPR & Return true if hash key or array index exists\\
-    exit EXPR & Exit the program with the return value of EXPR\\
-    exp EXPR & Return the value of e raised to the exponent EXPR\\
-    format & Declare a format for use by the write function\\
-    grep EXPR, LIST & Return list of elements of LIST for which EXPR is true\\
-    gmtime & Get Greenwich mean time; Sunday is day 0, January is month 0, year is number of years since 1900—example: \verb|($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,| \verb|$isdaylightsavingstime) = gmtime;|\\
-    goto LABEL & Program control goes to statement marked with LABEL\\
-    hex EXPR & Return decimal value of hexadecimal EXPR\\
-    index STR, SUBSTR & Give the position of the first occurrence of SUBSTR in STR\\
-    int EXPR & Give the integer portion of the number in EXPR\\
-    join EXPR, LIST & Join the strings in LIST into a single string, separated by EXPR\\
-    keys HASH & Return a list of all the keys in HASH\\
-    last LABEL & Exit the immediately enclosing loop by default, or loop with LABEL\\
-    lc EXPR & Return a lowercased copy of string in EXPR\\
-    lcfirst EXPR & Return a copy of EXPR with first character lowercased\\
-    length EXPR & Return the length in characters of EXPR\\
-    localtime & Get local time in same format as in gmtime function\\
-    log EXPR & Return natural logarithm of number EXPR\\
-    m/PATTERN/ & The match operator for the regular-expression PATTERN, often abbreviated as \verb|/PATTERN/|\\
-    map BLOCK LIST (or map EXPR, LIST) & Evaluate BLOCK or EXPR for each element of LIST, return list of return values\\
-    mkdir FILENAME & Create the directory \textit{FILENAME}\\
-    my EXPR & Localize the variables in EXPR to the enclosing block\\
-    next LABEL & Go to next iteration of enclosing loop by default or to loop marked with LABEL\\
-    oct EXPR & Return decimal value of octal value in EXPR\\
-    open FILEHANDLE, EXPR & Open a file by associating FILEHANDLE with the file and options given in EXPR\\ 
-    opendir DIRHANDLE, EXPR & Open the directory EXPR and assign handle DIRHANDLE\\
-    pop ARRAY & Remove and return the last element of ARRAY\\
-    pos SCALAR & Give location in string SCALAR where last m//g search left off\\
-    print FILEHANDLE LIST & Print LIST of strings to FILEHANDLE (default STDOUT)\\
-    printf FILEHANDLE FORMAT, LIST & Print string specified by FORMAT and variables LIST to FILEHANDLE\\
-    push ARRAY, LIST & Place the elements of LIST at the end of ARRAY\\
-    rand EXPR & Give pseudorandom decimal number from 0 to less than EXPR (default 1)\\
-    readdir DIRHANDLE & Return list of entries of directory DIRHANDLE\\
-    redo LABEL & Restart a loop block without reevaluating the conditional\\
-    ref EXPR & Return true or false if EXPR is a reference or not: if true, returned value indicates type of reference\\
-    rename OLDNAME, NEWNAME & Change the name of a file\\
-    return EXPR & Return from the current subroutine with value EXPR\\
-    reverse LIST & Give LIST in reverse order, or reverse strings in scalar context\\
-    rindex STR, SUBSTR & Like the index function but returns last occurrence of SUBSTR in STR\\
-    rmdir FILENAME & Delete the directory FILENAME\\
-    s/PATTERN/REPLACEMENT/ & Replace the match of regular-expression PATTERN with string REPLACEMENT\\
-    scalar EXPR & Force EXPR to be evaluated in scalar context\\
-    seek FILEHANDLE, OFFSET, WHENCE & Position the file pointer for FILEHANDLE to OFFSET bytes (if WHENCE is 0, current position plus OFFSET if WHENCE is 1, or OFFSET bytes from the end if WHENCE is 2)\\
-    shift ARRAY & Remove and return the first element of ARRAY\\
-    sin EXPR & Return the sine of the radian number EXPR\\
-    sleep EXPR & Cause the program to sleep for EXPR seconds\\
-    sort USERSUB LIST (or sort BLOCK LIST) & Sort the LIST according to the order in USERSUB or BLOCK (default standard string order)\\
-    splice ARRAY, OFFSET, LENGTH, LIST & Remove LENGTH elements at OFFSET in ARRAY and replace with LIST, if present\\
-    split /PATTERN/, EXPR & Split the string EXPR at occurrences of /PATTERN/, return list\\
-    sprintf FORMAT, LIST & Return a string formatted as in the printf function\\
-    sqrt EXPR & Return the square root of the number EXPR.\\
-    srand EXPR & Set random number seed for rand operator; only needed in versions of Perl before 5.004\\
-    stat (FILEHANDLE or EXPR) & Return statistics on file EXPR or its FILEHANDLE—example: \verb|($dev,$inode,$mode,$num_of_links,$uid,$gid,$rdev,$size,| \verb|$accesstime,$modifiedtime,$changetime,$blksize,$blocks)| \verb|= stat $filename;|\\
-    study SCALAR & Try to optimize subsequent pattern matches on string SCALAR\\
-    sub NAME BLOCK & Define a subroutine named NAME with program code in BLOCK\\
-    substr EXPR, OFFSET, LENGTH,REPLACEMENT & Return substring of string EXPR at position OFFSET and length LENGTH; the substring is replaced with REPLACEMENT if used\\
-    system PATHNAME LIST & Execute any program PATHNAME with arguments LIST; returns exit status of program, not its output; to capture ouput, use backticks—example: \verb|@output = `bin/who`;|\\
-    tell FILEHANDLE & Return current file position in bytes in FILEHANDLE\\
-    tr/ORIGINAL/REPLACEMENT/ & Transliterates each character in ORIGINAL with corresponding character in REPLACEMENT\\
-    truncate (FILEHANDLE or EXPR), LENGTH & Shorten file EXPR or opened with FILEHANDLE to LENGTH bytes\\
-    uc EXPR & Return uppercased version of string EXPR\\
-    ucfirst EXPR & Return string EXPR with first character capitalized\\
-    undef EXPR & Return the undefined value; if a defined variable or subroutine EXPR is given, it's no longer defined; it can be assigned a value when you don't need to save the value\\
-    unlink LIST & Delete the LIST of files\\
-    unshift ARRAY, LIST & Add LIST elements to the beginning of ARRAY\\
-    use MODULE & Load the MODULE\\
-    values HASH & Return a list of all values of the HASH\\
-    wantarray & In a subroutine, return true if calling program expects a list return value\\
-    warn LIST & Print error message including LIST\\
-    write FILEHANDLE & Write formatted record to FILEHANDLE (default STDOUT) as defined by the format function\\
+    abs VALUE & 返回它的数值参数的绝对值\\
+    atan2 Y, X & 返回从-$\pi$到$\pi$之间的Y/X的反正切值\\
+    chdir EXPR & 切换工作路径到\textit{EXPR}（或者默认切换到家目录）\\
+    chmod MODE LIST & 把LIST中的文件的权限修改为MODE\\
+    chomp (VARIABLE or LIST) & 如果有的话，删除字符串末尾的换行符\\
+    chop (VARIABLE or LIST) & 删除字符串末尾的字符\\
+    chown UID, GID, LIST & 把LIST中的文件的所有者和所属组修改为以数字表示的UID和GID\\
+    close FILEHANDLE & 关闭和FILEHANDLE相关联的文件、套接字或者管道\\
+    closedir DIRHANDLE & 关闭和DIRHANDLE相关联的目录\\
+    cos EXPR & 返回以弧度表示的EXPR的余弦值\\
+    dbmclose HASH & 打断DBM文件和散列之间的绑定\\
+    dbmopen HASH, DBNAME, MODE & 以MODE权限把DBM文件绑定到一个散列上\\
+    defined EXPR & 如果EXPR有一个定义的值返回真，否则返回假\\
+    delete EXPR & 删除散列或数组的元素（或切片）\\
+    die LIST & 输出包含LIST的错误信息，退出程序\\
+    each HASH & 一次一个得遍历散列的键或者键-值对\\
+    exec PATHNAME LIST & 终止程序，以参数LIST执行程序PATHNAME\\
+    exists EXPR & 如果散列的键或者数组索引存在返回真\\
+    exit EXPR & 以返回值EXPR退出程序\\
+    exp EXPR & 返回e（自然对数的底）的EXPR次方的值\\
+    format & 声明一个格式供write函数使用\\
+    grep EXPR, LIST & 返回EXPR为真的LIST的元素列表\\
+    gmtime & 获取格林尼治标准时间；星期天是第0天，一月是第0月，年是自1900年至今的年数。例子：\verb|($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdaylightsavingstime) = gmtime;|\\
+    goto LABEL & 程序控制，跳转至标记为LABEL的语句\\
+    hex EXPR & 返回十六进制数EXPR的十进制值\\
+    index STR, SUBSTR & 给出STR中SUBSTR第一次出现的位置\\
+    int EXPR & 给出数字EXPR的整数部分\\
+    join EXPR, LIST & 把LIST中的多个字符串合并成单个的字符串，用EXPR分隔开\\
+    keys HASH & 返回散列HASH所有键的列表\\
+    last LABEL & 默认立即跳出最内部的循环，或者跳出标记为LABEL的循环\\
+    lc EXPR & 返回EXPR字符串的小写格式\\
+    lcfirst EXPR & 返回EXPR的首字母小写格式\\
+    length EXPR & 返回EXPR的字符长度\\
+    localtime & 获取地方时间，格式同gmtime函数\\
+    log EXPR & 返回数字EXPR的自然对数\\
+    m/PATTERN/ & 匹配正则表达式PATTERN的匹配操作符，通常简写为\verb|/PATTERN/|\\
+    map BLOCK LIST (or map EXPR, LIST) & 针对LIST的每个元素，对BLOCK或者EXPR进行求值，返回返回值的列表\\
+    mkdir FILENAME & 创建目录\textit{FILENAME}\\
+    my EXPR & 把EXPR中的变量限定内内层的代码块中\\
+    next LABEL & 默认进入内层循环的下一个迭代，或者进入用LABEL标记的循环的下一个迭代\\
+    oct EXPR & 返回八进制数EXPR的十进制值\\
+    open FILEHANDLE, EXPR & 打开一个文件，以EXPR中的选项把它关联至FIELHANDLE\\ 
+    opendir DIRHANDLE, EXPR & 打开目录EXPR，并且关联至句柄DIRHANDLE\\
+    pop ARRAY & 移除并返回数组ARRAY的最后一个元素\\
+    pos SCALAR & 给出上一个m//g查找在字符串SCALAR中的位置\\
+    print FILEHANDLE LIST & 把字符串列表输出至FILEHANDLE（默认是STDOUT）\\
+    printf FILEHANDLE FORMAT, LIST & 把用FORMAT格式指定的字符串和变量LIST输出至FILEHANDLE\\
+    push ARRAY, LIST & 把LIST的元素放到数组ARRAY的末尾\\
+    rand EXPR & 给出0至（小于）EXPR（默认为1）之间的伪随机十进制数\\
+    readdir DIRHANDLE & 返回目录DIRHANDLE的内容列表\\
+    redo LABEL & 在不对条件进行再求值的前提下重新运行循环代码块\\
+    ref EXPR & 如果是引用返回真，否则返回假：如果为真，返回表示引用类型的值\\
+    rename OLDNAME, NEWNAME & 修改文件的名字\\
+    return EXPR & 返回值EXPR，退出当前子程序\\
+    reverse LIST & 以逆序返回LIST，或者在标量上下文中反转字符串\\
+    rindex STR, SUBSTR & 与index函数类似，但返回的是STR中SUBSTR最后一次出现的位置\\
+    rmdir FILENAME & 删除目录FILENAME\\
+    s/PATTERN/REPLACEMENT/ & 用字符串REPLACEMENT替换匹配的正则表达式PATTERN\\
+    scalar EXPR & 强制在标量上下文中对EXPR求值\\
+    seek FILEHANDLE, OFFSET, WHENCE &
+    把FILEHANDLE的文件指针定位到OFFSET字节（在WHENCE是0的情况下，如果WHENCE是1就定位到当前位置加上OFFSET，如果WHENCE是2就定位到距离末尾的OFFSET字节处）\\
+    shift ARRAY & 删除并返回数组的第一个元素\\
+    sin EXPR & 返回以弧度表示的EXPR的正弦值\\
+    sleep EXPR & 让程序沉睡EXPR秒\\
+    sort USERSUB LIST (or sort BLOCK LIST) & 以USERSUB或者BLOCK指定的顺序对LIST进行排序（默认按照标准字符串的顺序）\\
+    splice ARRAY, OFFSET, LENGTH, LIST & 从OFFSET开始，删除ARRAY中的LENGTH个元素，如果有LIST就把它们替换成LIST\\
+    split /PATTERN/, EXPR & 在出现/PATTERN/的地方对字符串EXPR进行分割，返回列表\\
+    sprintf FORMAT, LIST & 返回一个格式化的字符串，就像printf函数一样\\
+    sqrt EXPR & 返回数字EXPR的平方根\\
+    srand EXPR & 为rand操作符设定随机数种子；只在5.004版本之前的Perl中需要\\
+    stat (FILEHANDLE or EXPR) &
+    返回文件EXPR或者它的文件句柄FILEHANDLE的统计信息。例子：\verb|($dev,$inode,$mode,$num_of_links,$uid,$gid,$rdev,$size,$accesstime,$modifiedtime,$changetime,$blksize,$blocks) = stat $filename;|\\
+    study SCALAR & 尝试对接下来针对字符串SCALAR的模式匹配进行优化\\
+    sub NAME BLOCK & 使用BLOCK中的程序代码定义一个名为NAME的子程序\\
+    substr EXPR, OFFSET, LENGTH,REPLACEMENT & 返回字符串EXPR从OFFSET位置开始长度为LENGTH的子字符串；如果有REPLACEMENT就把子字符串替换成RELACEMENT\\
+    system PATHNAME LIST & 使用参数LIST执行程序PATHNAME；返回程序的退出状态而非其输出；使用反引号捕获输出。例子：\verb|@output = `/bin/who`;|\\
+    tell FILEHANDLE & 返回在FILEHANDLE中的当前文件位置，以字节表示\\
+    tr/ORIGINAL/REPLACEMENT/ & 把ORIGINAL中的每一个字符转换成REPLACEMENT中对应的字符\\
+    truncate (FILEHANDLE or EXPR), LENGTH & 截断文件EXPR或者使用FILEHANDLE打开至LENGTH字节\\
+    uc EXPR & 返回字符串EXPR的大写形式\\
+    ucfirst EXPR & 返回字符串EXPR的首字母大写形式\\
+    undef EXPR & 返回未定义值；如果EXPR是一个已定义的变量或者子程序，它就不再是已定义的了；当你不需要保存值的时候可以用它进行赋值\\
+    unlink LIST & 删除LIST中的文件\\
+    unshift ARRAY, LIST & 把LIST中的元素添加到数组ARRAY的开头\\
+    use MODULE & 载入模块MODULE\\
+    values HASH & 返回散列HASH的所有值的列表\\
+    wantarray & 在子程序中，如果调用的程序预期返回一个列表值，它就会返回真\\
+    warn LIST & 输出包括LIST在内的错误信息\\
+    write FILEHANDLE & 按照format函数中的定义，把格式化的记录写入到FILEHANLE（默认为STDOUT）\\
   \tabuphantomline
 \end{longtabu*}
