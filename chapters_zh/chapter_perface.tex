@@ -1,140 +1,142 @@
-\chapter*{Preface}
+\chapter*{前言}
 \minitoc % Creating an actual minitoc
 
-\section*{What Is Bioinformatics?}
-Biological data is proliferating rapidly. Public databases such as GenBank and the Protein Data Bank have been growing exponentially for some time now. With the advent of the World Wide Web and fast Internet connections, the data contained in these databases and a great many special-purpose programs can be accessed quickly, easily, and cheaply from any location in the world. As a consequence, computer-based tools now play an increasingly critical role in the advancement of biological research.
+\section*{什么是生物信息学？}
+生物学数据正在飞速增长。一段时间一来，GenBank和PDB（Protein Data
+Bank）等公共数据库都在以指数级别增长。随着万维网（World Wide
+Web）的到来，以及快速的网络连接，在世界上的任意一个地方，都可以快速、简便且廉价地获取到这些数据库中的数据和大量具有特定用途的程序。作为结果，在生物学研究的进步中，基于计算机的工具现在正起着越来越关键的作用。
 
-Bioinformatics, a rapidly evolving discipline, is the application of computational tools and techniques to the management and analysis of biological data. The term bioinformatics is relatively new, and as defined here, it encroaches on such terms as "computational biology" and others. The use of computers in biology research predates the term bioinformatics by many years. For example, the determination of 3D protein structure from X-ray crystallographic data has long relied on computer analysis. In this book I refer to the use of computers in biological research as bioinformatics. It's important to be aware, however, that others may make different distinctions between the terms.  In particular, bioinformatics is often the term used when referring to the data and the techniques used in large-scale sequencing and analysis of entire genomes, such as C. elegans, Arabidopsis, and Homo sapiens. 
+\textit{生物信息学}是一个快速发展的学科领域，它应用计算工具和技术来管理并分析生物学数据。生物信息学这个术语还相对较新，在此处的定义，它还包含了“计算生物学”和其他专业术语的含义。在生物学研究中使用计算机，要比生物信息学专业术语的使用早许多年。比如，通过X射线晶体数据来确定蛋白质的3D结构，一直以来都是依赖于计算机分析。在本书中，我把在生物学研究中计算机的使用就看做生物信息学。但是，需要强调的重要一点是，其他人可能会把这些术语严格区分开来。特别的是，当指代对于\textit{C.  elegans}（线虫）、\textit{Arabidopsis}（拟南芥）和\textit{Homo sapiens}（人）等物种的全基因组进行大规模测序和分析时的数据和技术时，通常都会使用生物信息学这个术语。
 
-\subsection*{What Bioinformatics Can Do}
-Here's a short example of bioinformatics in action. Let's say you have discovered a very interesting segment of mouse DNA and you suspect it may hold a clue to the development of fatal brain tumors in humans.  After sequencing the DNA, you perform a search of Genbank and other data sources using web-based sequence alignment tools such as BLAST. Although you find a few related sequences, you don't get a direct match or any information that indicates a link to the brain tumors you suspect exist. You know that the public genetic databases are growing daily and rapidly. You would like to perform your searches every day, comparing the results to the previous searches, to see if anything new appears in the databases. But this could take an hour or two each day! Luckily, you know Perl. With a day's work, you write a program (using the Bioperl module among other things) that automatically conducts a daily BLAST search of Genbank for your DNA sequence, compares the results with the previous day's results, and sends you email if there has been any change. This program is so useful that you start running it for other sequences as well, and your colleagues also start using it. Within a few months, your day's worth of work has saved many weeks of work for your community. This example is taken from real life. There are now existing programs you can use for this purpose, even web sites where you can submit your DNA sequence and your email address, and they'll do all the work for you!
+\subsection*{生物信息学能做什么}
+这是在实际中应用生物信息学的一个简单的例子。假设你发现了一个非常有趣的小鼠DNA的片段，你猜想它可能会为人类的致命脑肿瘤的发生发展提供线索。在对DNA进行测序后，你使用基于网络的序列比对工具，比如BLAST，在GenBank和其他数据资源中进行了检索。尽管你找到了一些相关的序列，但是你并没有找到你猜想的它和脑肿瘤之间联系的直接的证据或其他信息。你知道这些公共的遗传数据库每天都在快速增长这。你可能会想每天都进行一次检索，把结果和上一次的检索结果进行比较，来看看在数据库中是不是有新的东西出现。但这每天都会花费一两个小时的时间！幸运的是，你会Perl。经过一天的努力，你（使用Bioperl等模块）编写了一个程序，可以自动每天对你的DNA序列在GenBank中进行一次BLAST，并把结果和前一天的结果进行比较，如果有任何变换它就会发送邮件给你。这个程序是如此的有用，以至于你开始把它应用在其他的序列上，而你的同时也开始使用它。在几个月的时间内，你一天的努力节省了你团队数周的时间。这个例子来源于真实事件。现在你已经可以使用现成的程序来达成你的目的，甚至有网站可以让你提交自己的DNA序列和邮箱地址，它们会为你完成所有的工作！
 
-This is only a small example of what happens when you apply the power of computation to a biological problem. This is bioinformatics.
+当你把计算的强大能力应用的生物学问题中时，这只是一个很小的例子。这就是生物信息学。
 
-\section*{About This Book}
-This book is a tutorial for biologists on how to program, and is designed for beginning programmers. The examples and exercises with only a few exceptions use biological data. The book's goal is twofold: it teaches programming skills and applies them to interesting biological areas.
+\section*{关于本书}
+本书是一个指南，直到生物学家如何去编程，并且它是为程序员新手设计的。除了极个别以外，所有的例子和练习题使用的都是生物学数据。本书的目的有两个：教授编程技能，同时把它们应用到感兴趣的生物学领域中。
 
-I want to get you up and programming as quickly and painlessly as possible. I aim for simplicity of explanation, not completeness of coverage. I don't always strictly define the programming concepts, because formal definitions can be distracting.
+我想让你快速上手，并且尽快且愉快得进行编程。我会进行简洁的解释，而不会把一切都囊括其中。我不会对编程概念进行严格的定义，因为这可能会喧兵夺主，干扰你的学习。
 
-The Perl language makes it possible to start writing real programs quickly. As you continue reading this book and the online Perl documentation, you'll fill in the details, learn better ways of doing things, and improve your understanding of programming concepts.
+Perl语言使得通过快速编写真实的程序来开始学习称为可能。当你继续阅读本书和在线的Perl文档时，你会逐渐补充细节性的知识，在实践中学习，不断提高你对编程概念的理解。
 
-Depending on your style of learning, you can approach this material in different ways. One way, as the King gravely said to Alice, is to "Begin at the beginning and go on till you come to the end: then stop." (This line from Alice in Wonderland is often used as a whimsical definition of an algorithm.) The material is organized to be read in this fashion, as a narrative.
+根据你学习风格的不同，可能会通过不同的方式找到这些材料。一种方式，就像国王郑重地对爱丽丝说的那样，“从开始的地方开始吧，一直读到末尾，然后停止。”（《爱丽丝漫游仙境》中的这句话常常被用来作为算法的一个诙谐的定义。）作为一本叙述性的教材，本书的材料就是以从头到尾阅读的方式进行组织的。
 
-Another approach is to get the programs into your computer, run them, see what they do, and perhaps try to alter this or that in the program to see what effect your changes have. This may be combined with a quick skim of the text of the chapter. This is a common approach used by programmers when learning a new language. Basically, you learn by imitation, looking at actual programs.
+另一种方式是把程序摘抄下来，放到你的计算机中，运行它们，看看它们都做了什么，可能还尝试一下去改变程序中的某个地方，看看你的修改有什么影响。这种方式可能会和快速浏览各章节的文字结合起来。当程序员学习一个新的编程语言时，这是最常用的一种学习方式。基本上，你通过人造例子进行学习，目的是真实的程序。
 
-Anyone wishing to learn Perl programming for bioinformatics should try the exercises found at the end of most chapters. They are given in approximate order of difficulty, and some of the higher-numbered exercises are fairly challenging and may be appropriate for classroom projects. Because there's more than one way to do things in Perl, there is no one correct answer to an exercise. If you're a beginning programmer, and you manage to solve an exercise in any way whatsoever, you've succeeded at that exercise. My suggested solutions to the exercises may be found at \href{http://www.oreilly.com/catalog/begperlbio}{http://www.oreilly.com/catalog/begperlbio}.
+任何因为生物信息学而学习perl编程的读者，都应该尝试一下大多数章节末尾的练习题。它们基本上是按照由易到难的顺序进行排列的，并且排在后面的一些练习题相当有难度，可能作为课堂项目更加合适一些。因为在Perl中处理问题的方法不止一种，所以对于每一个练习题来说都没有绝对正确的唯一答案。如果你是一个程序员新手，你可以尝试尽量用不同的方法来解答一个练习题，那么对于这个练习题你就已经很好的掌握了。对于练习题，我推荐的解答可以在\href{http://www.oreilly.com/catalog/begperlbio}{http://www.oreilly.com/catalog/begperlbio}找到。
 
-I hope that the material in this book will serve not only as a practical tutorial, but also as a first step to a research program if you decide that bioinformatics is a promising research direction in itself or an adjunct to ongoing investigations. 
+我希望，本书中的材料不仅仅作为实践性的指南。如果你觉得生物信息学本身是一个前途无限的研究方向或者是正在进行的研究的附属物，它还能引领你编写出研究性的程序。
 
-\section*{Who This Book Is For}
-This books is a practical introduction to programming for biologists.
+\section*{本书为谁编写}
+本书是为生物学家编写的实践性编程指南。
 
-Programming skills are now in strong demand in biology research and development. Historically, programming has not often been viewed as a critical skill for biologists at the bench. However, recent trends in biology have made computer analysis of large amounts of data central to many research programs. This book is intended as a hands-on, one-volume course for the busy biologist to acquire practical bioinformatics programming abilities. So, if you are a biologist who needs to learn programming, this book is for you. Its goal is to teach you how to write useful and practical bioinformatics programs as quickly and as painlessly as possible.
+在生物学研究和发展中，编程技能现在已经是必需的了。历史上，对于实验室的生物学家来说，编程并不被看做一个关键性的技能。然而，如今生物学的发展趋势使得对于大规模数据的计算机分析成为了许多研究程序的重中之重。本书意在作为繁忙的生物学家手头的一本不算厚的教程，帮助它们获得实践性的生物信息学编程技能。所以，如果你是一个午休要学习编程的生物学家，这本书就是为你编写的。它的目的是教会你快速、愉快地编写有用的实践性的生物信息学程序。
 
-This book introduces programming as an important new laboratory skill; it presents a programming tutorial that includes a collection of "protocols," or programming techniques, that can be immediately useful in the lab. But its primary purpose is to teach programming, not to build a comprehensive toolkit.
+本书把编程作为一个重要的实验室技能，它是一个编程指南，包括了一堆的手册或者编程技术，这些在实验室中都是急需且非常有用的。但是它的初衷还是教授编程，而不是构建一个全面的工具包。
 
-There is a real blending of skills and approaches between the laboratory bench and the computer program. Many people do indeed find themselves shifting from running gels to writing Perl in the course of a day—or a career—in biology research. Of course, programming is its own discipline with its own methods and terminology, and so must be approached on its own terms. But there is cross-fertilization going on (if you'll pardon the metaphor between the two disciplines).
+在实验室的实验台和计算机程序之间，确实有一些技能和方法上的相似之处。不管是在一天的课程中，还是在整个的生物学研究职业生涯中，许多人确实都能够从跑胶转到编写Perl程序。当然，编程是一个有着自己独特方法和专业术语的独特学科，所以必须以其独特的方式学习特有的术语。但确实有“杂交”存在（如果你能原谅这两个学科之间的隐喻）。
 
-This book's exercises are of varying difficulty for those using it as a class textbook or for self study. (Almost) all examples and exercises are based on real biological problems, and this book will give you a good introduction to the most common bioinformatics programming problems and the most common computer-based biological data.
+本书的练习题由不同难度的题目组成，因此既可以把它当做课堂教材，也可以用来自学。（几乎）所有的例子和练习都是基于真实的生物学问题，所以本书将对大多数常见的生物信息学编程问题和最常见的基于计算机的生物学数据进行一个很好的介绍。
 
-This book's web site, \href{http://www.oreilly.com/catalog/begperlbio}{http://www.oreilly.com/catalog/begperlbio}, includes all the program code in the book for convenient download, including the exercises and solutions, plus errata and other information.\footnote{Program code, or simply code, means a computer program—the actual Perl language commands a programmer writes in a file.} 
+本书的网站，\href{http://www.oreilly.com/catalog/begperlbio}{http://www.oreilly.com/catalog/begperlbio}，包含了书中的所有程序代码便于下载，既包括练习和解答，也包括勘误表和其他的一些信息。\footnote{程序代码，或者简称代码，表示一个计算机程序——一个程序员写到一个文件中的真实的Perl语言命令。}
 
-\section*{Why Should I Learn to Program?}
-Since many researchers who describe their work as "bioinformatics" don't program at all, but rather, use programs written by others, it's tempting to ask, "Do I really need to learn programming to do bioinformatics?" At one level, the answer is no, you don't. You can accomplish quite a bit using existing tools, and there are books and documentation available to help you learn those tools. But at another, higher level, the answer to the question changes. What happens when you want to do something a preexisting tool doesn't do? What happens when you can't find a tool to accomplish a particular task, and you can't find someone to write it for you?
+\section*{为什么我应该学习编程？}
+因为许多研究人员把他们的工作描述为“生物信息学”，但它们并不编写程序，而是使用其他人编写的程序，所以你可能会问，“我真的需要学习编程才能做生物信息学吗？”在某种层面上讲，答案是否定的，你并不需要学习编程。使用现成的工具，你可以完成很多的工作，而且有相关的书籍和文档帮助你学习这些工具的使用。但是从另一个更高的层面上讲，答案因问题的不同而异。当你用现成的工具无法完成你要做的东西时会发生什么？当你无法找到一个工具来完成你实际的一个任务、而且你找不到一个人可以为你编写程序时会发生什么？
 
-At that point, you need to learn to program. And even if you still rely mainly on existing programs and tools, it can be worthwhile to learn enough to write small programs. Small programs can be incredibly useful.  For example, with a bit of practice, you can learn to write programs that run other programs and spare yourself hours sitting in front of the computer doing things by hand.
+从这点来看，你需要学习编程。即使你仍然主要依赖于现有的程序和工具，去学习编程从而能够写出小的程序也是值得的。小的程序会令人难以置信的有用。比如，通过一定的练习，你会学会编写程序来运行其他的程序，从而节省你大把的时间，避免你坐在计算机前手动去做这些事情。
 
-Many scientists start out writing small programs and find that they really like programming. As a programmer, you never need to worry about finding the right tools for your needs; you can write them yourself. This book will get you started. 
+许多科学家都是从编写小的程序开始的，然后发现他们真的很喜欢编程。作为一名程序员，你永远都不需要担心找不到满足你需要的合适的工具，因为你可以自己编写它们。本书就是助你起步的。
 
-\section*{Structure of This Book}
-There are thirteen chapters and two appendixes in this book. The following provides a brief introduction:
+\section*{本书的结构}
+本书总共包含十三章和两个附录。下面是对它们的一个简短介绍：
 
 \autoref{chap:chapter1}
 \begin{adjustwidth}{1cm}{0cm}
-This chapter covers some key concepts in molecular biology, as well as how biology and computer science fit together.
+本章涵盖了分子生物学中一些关键性的概念，以及生物学和计算机科学是纠缠在一起的。
 \end{adjustwidth}
 
 \autoref{chap:chapter2}
 \begin{adjustwidth}{1cm}{0cm}
-This chapter shows you how to get Perl up and running on your computer.
+本章向你展示如何让Perl在你的计算机上运行起来。
 \end{adjustwidth}
 
 \autoref{chap:chapter3}
 \begin{adjustwidth}{1cm}{0cm}
-\autoref{chap:chapter3} provides an overview as to how programmers accomplish their jobs. Some of the most important practical strategies good programmers use are explained, and where to find answers to questions that arise while you are programming is carefully laid out. These ideas are made concrete by brief narrative case studies that show how programmers, given a problem, find its solution.
+\autoref{chap:chapter3}对程序员完成他们工作的方式进行了概述。解释了一些好的程序员使用的最重要的实践性的策略，并对如何寻找编程过程中遇到的问题的答案进行了详细的规划。通过简短的描述性实例的分析，使这些观点更加具体化，展示程序员是如何针对一个问题寻找解决方案的。
 \end{adjustwidth}
 
 \autoref{chap:chapter4}
 \begin{adjustwidth}{1cm}{0cm}
-In \autoref{chap:chapter4} you start writing Perl programs with DNA and proteins. The programs transcribe DNA to RNA, concatenate sequences, make the reverse complement of DNA, read sequences data from files, and more.
+在\autoref{chap:chapter4}中，你开始使用DNA和蛋白质来编写Perl程序。编写程序把DNA转录成RNA，把序列串联起来，获得DNA的反向互补序列，从文件读取序列数据，等等。
 \end{adjustwidth}
 
 \autoref{chap:chapter5}
 \begin{adjustwidth}{1cm}{0cm}
-This chapter continues demonstrating the basics of the Perl language with programs that search for motifs in DNA or protein, interact with users at the keyboard, write data to files, use loops and conditional tests, use regular expressions, and operate on strings and arrays.
+本章继续示范Perl语言的基础，编写程序查找DNA或蛋白质中的基序，实现通过键盘与用户的交互，把数据保存到文件中，使用循环和条件测试，使用正则表达式，以及操作字符串和数组。
 \end{adjustwidth}
 
 \autoref{chap:chapter6}
 \begin{adjustwidth}{1cm}{0cm}
-This chapter extends the basic knowledge of Perl in two main directions: subroutines, which are an important way to structure programs, and the use of the Perl debugger, which can examine in detail a running Perl program.
+本章在两个方向上拓展了Perl的基础知识：一个是子程序，它是进行结构化编程的一种重要的方式，一个是Perl调试器的使用，它可以在运行Perl程序的时候对其进行详细的检查。
 \end{adjustwidth}
 
 \autoref{chap:chapter7}
 \begin{adjustwidth}{1cm}{0cm}
-Genetic mutations, fundamental to biology, are modelled as random events using the random number generator in Perl. This chapter uses random numbers to generate DNA sequence data sets, and to repeatedly mutate DNA sequence. Loops, subroutines, and lexical scoping are also discussed.
+遗传突变对于生物学来说是最基本的，通过使用Perl中的随机数生成器可以把以随机事件对其进行建模。本章使用随机数来生成DNA序列数据集，不断得突变DNA序列。循环，子程序和词汇作用域也会在本章中进行讨论。
 \end{adjustwidth}
 
 \autoref{chap:chapter8}
 \begin{adjustwidth}{1cm}{0cm}
-This chapter shows how to translate DNA to proteins, using the genetic code. It also covers a good bit more of the Perl programming language, such as the hash data type, sorted and unsorted arrays, binary search, relational databases, and DBM, and how to handle FASTA formatted sequence data.
+本章演示了如何使用遗传密码把DNA翻译成蛋白质。它还涵盖了Perl编程语言的更多内容，比如散列数据类型、排序和未排序的数组、折半查找、关系型数据库、DBM以及如何处理FASTA格式的序列数据。
 \end{adjustwidth}
 
 \autoref{chap:chapter9}
 \begin{adjustwidth}{1cm}{0cm}
-This chapter contains an introduction to Perl regular expressions. The main focus of the chapter is the development of a program to calculate a restriction map for a DNA sequence.
+本章包含对Perl正则表达式的介绍。本章的主要焦点是编写程序来计算一个DNA序列的限制酶切图谱。
 \end{adjustwidth}
 
 \autoref{chap:chapter10}
 \begin{adjustwidth}{1cm}{0cm}
-The Genetic Sequence Data Bank (GenBank) is central to modern biology and bioinformatics. In this chapter, you learn how to write programs to extract information from GenBank files and libraries. You will also make a database to create your own rapid access lookups on a GenBank library.
+GenBank（Genetic Sequence Data Bank）对于现代生物学和生物信息学是非常重要的。在本章中，你会学习如何编写程序从GenBank文件和库中提取信息。你也会制作一个数据库，来创建自己的对于GenBank库的快速访问和检索。
 \end{adjustwidth}
 
 \autoref{chap:chapter11}
 \begin{adjustwidth}{1cm}{0cm}
-This chapter develops a program that can parse Protein Data Bank (PDB) files. Some interesting Perl techniques are encountered while doing so, such as finding and iterating over lots of files and controlling other bioinformatics programs from a Perl program.
+本章编写一个能解析PDB（Protein Data Bank）文件的程序。在编写这个程序的过程中，会遇到一些有趣的Perl技术，比如查找并迭代大量的文件，以及在Perl程序中控制其他的生物信息学程序。
 \end{adjustwidth}
 
 \autoref{chap:chapter12}
 \begin{adjustwidth}{1cm}{0cm}
-\autoref{chap:chapter12} develops some code to parse a BLAST output file. Also mentioned are the Bioperl project and its BLAST parser, and some additional ways to format output in Perl.
+\autoref{chap:chapter12}逐步编写一些可以解析BLAST输出文件的代码。此外还会提到Bioperl项目与它的BLAST解析器，以及在Perl中格式化输出的其他一些方法。
 \end{adjustwidth}
 
 \autoref{chap:chapter13}
 \begin{adjustwidth}{1cm}{0cm}
-\autoref{chap:chapter13} looks ahead to topics beyond the scope of this book.
+\autoref{chap:chapter13}展望了一些超越本书范畴的主题。
 \end{adjustwidth}
 
 \autoref{chap:chapteraa}
 \begin{adjustwidth}{1cm}{0cm}
-Collected here are resources for Perl and for bioinformatics programming, such as books and Internet sites.
+此处收集的是Perl和生物信息学编程的相关资源，比如书籍和网站。
 \end{adjustwidth}
 
 \autoref{chap:chapterab}
 \begin{adjustwidth}{1cm}{0cm}
-This is a summary of the parts of Perl covered in this book, plus a little more.
+这是对本书中涉及到的Perl知识点的总结，还有一些其他的东西。
 \end{adjustwidth}
 
-\section*{Conventions Used in This Book}
-The following conventions are used in this book:
+\section*{本书中使用的约定}
+本书中使用下面这些约定：
 
-\textit{Italic}
+\textit{斜体}
 \begin{adjustwidth}{1cm}{0cm}
-Used for commands, filenames, directory names, variables, modules, URLs, and for the first use of a term 
+用于命令、文件名、目录名、变量、模块、URLs和术语的第一次使用
 \end{adjustwidth}
 
-\texttt{Constant width}
+\texttt{等宽}
 \begin{adjustwidth}{1cm}{0cm}
-Used in code examples and to show the output of commands
+用于代码实例和展示命令的输出
 \end{adjustwidth}
 
 \begin{adjustwidth}{2cm}{2cm}
@@ -144,7 +146,7 @@ Used in code examples and to show the output of commands
 \includegraphics[width=1cm]{note.png}
 }
 \noindent
-This icon designates a note, which is an important aside to the nearby text.
+该图标表示提醒，注意旁边的文字非常重要。
 %}
 \end{adjustwidth}
 
@@ -155,13 +157,13 @@ This icon designates a note, which is an important aside to the nearby text.
 \includegraphics[width=1cm]{warning.png}
 }
 \noindent
-This icon designates a warning relating to the nearby text.
+该图表表示和旁边文字相关的一个警告。
 %\hspace{2.55cm}
 %}
 \end{adjustwidth}
 
-\section*{Comments and Questions}
-Please address comments and questions concerning this book to the publisher:
+\section*{评论和问题}
+请把关于本书的评论和问题邮寄给出版商：
 
 O'Reilly \& Associates, Inc.\\
 1005 Gravenstein Highway North\\
@@ -170,21 +172,21 @@ Sebastopol, CA 95472\\
 (707) 829-0515 (international/local)\\
 (707) 829-0104 (fax)
 
-There is a web page for this book, which lists errata, examples, or any additional information. You can access this page at:
+本书有一个网页，上面罗列了勘误表、例子以及其他的一些信息。你可以访问该网页：
 
 \href{http://www.oreilly.com/catalog/begperlbio}{http://www.oreilly.com/catalog/begperlbio}
 
-To comment or ask technical questions about this book, send email to:
+要对本书进行评论或者询问技术性的问题，请发邮件至：
 
 \href{bookquestions@oreilly.com}{bookquestions@oreilly.com}
 
-For more information about books, conferences, Resource Centers, and the O'Reilly Network, see the O'Reilly web site at:
+关于书籍、会议、资源中心和O'Reilly网络的更多信息，请访问O'Reilly的网站：
 
 \href{http://www.oreilly.com}{http://www.oreilly.com}
 
-\section*{Acknowledgments}
-I would like to thank my editor, Lorrie LeJeune, and everyone at O'Reilly \& Associates for their skill, enthusiasm, support, and patience; and my technical reviewers Cynthia Gibas, Joel Greshock, Ian Korf, Andrew Martin, Jon Orwant, and Clay Shirky, for their helpful and detailed reviews. I also thank M. Immaculada Barrasa, Michael Caudy, Muhammad Muquit, and Nat Torkington for their excellent help with particular chapters.
+\section*{致谢}
+我想感谢我的编辑Lorrie LeJeune，以及O'Reilly \& Associates中的每一个人，感谢它们的技能、热情、支持和耐心；感谢我的技术审阅人Cynthia Gibas、Joel Greshock、Ian Korf、Andrew Martin、Jon Orwant和Clay Shirky，感谢它们的帮助和细节性的审阅。我还要感谢M. Immaculada Barrasa、Michael Caudy、Muhammad Muquit和Nat Torkington，感谢他们对特定章节给出的杰出的帮助。
 
-Thanks also to James Watson, whose classic book The Molecular Biology of the Gene first got me interested in biology; Larry Wall for inventing and developing Perl; and my colleagues at Bell Laboratories in Murray Hill, NJ, for teaching me computer science. Thanks to Beverly Emmanuel, David Searls, and the late Chris Overton, who started the Computational Biology and Informatics Laboratory in the Human Genome Project for Chromosome 22 at the University of Pennsylvania and Children's Hospital of Philadelphia. They gave me my first bioinformatics job. Thanks to Mitch Marcus of Bell Labs and the Department of Computer and Information Science at UPenn who insisted that I borrow his copy of Programming Perl and try it out. I'd also like to thank my colleagues at Mercator Genetics and The Fox Chase Cancer Center for supporting my work in bioinformatics.
+此外，还要感谢James Watson，是他的经典教材\textit{The Molecular Biology of the Gene}\footnote{译者注：《基因的分子生物学》。}首次让我对生物学产生了兴趣；感谢Larry Wall发明发展了Perl；感谢Murray Hill, NJ的贝尔实验室中的同事，是他们教授了我计算机科学。感谢Beverly Emmanuel、David Searls以及后来的Chris Overton，他们在宾夕法尼亚大学和费城儿童医院中创建了计算生物学和信息实验室，负责人类基因组计划中的第22号染色体，它们给我提供了我的第一份生物信息学工作。感谢贝尔实验室和Upenn的计算机与信息科学系的Mitch Marcus，他坚持让我借走它的\textit{Programming Perl}\footnote{译者注：《Perl语言编程》。}并进行尝试。我还要感谢墨卡托遗传学和福克斯$\textbullet$蔡斯癌症中心的同事，感谢他们对我生物信息学工作的支持。 
 
-Finally, I'd like to thank my friends for encouraging my writing; and especially my parents Edward and Geraldine, my siblings Judi, John, and Thom, my wife Elizabeth, and my children Rose, Eamon, and Joe. 
+最后，我要感谢支持我写作的朋友们，尤其是我的父母Edward和Geraldine，我的兄弟姐妹Judi、John和Thom，我的妻子Elizabeth，以及我的孩子们Rose、Eamon和Joe。
