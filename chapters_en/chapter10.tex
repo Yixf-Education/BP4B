@@ -20,14 +20,14 @@ Due to a certain flexibility in the content of some sections of a GenBank record
 
 Since Perl's data structures and its use of regular expressions make it a good tool for manipulating flat files, Perl is especially well-suited to deal with GenBank data. Using these features in Perl and building on the skills you've developed from previous chapters, you can write programs to access the accumulated genetic knowledge of the scientific community in GenBank.
 
-Since this is a beginning book that requires no programming experience, you should not expect to find the most finished, multipurpose software here. Instead you'll find a solid introduction to parsing and building fast lookup tables for GenBank files. If you've never done so, I strongly recommend you explore the National Center for Biotechnology Information (NCBI) at the National Institutes of Health (NIH) (\href{http://www.ncbi.nlm.nih.gov}{http://www.ncbi.nlm.nih.gov}). While you're at it, stop by the European Bioinformatics Institute (EBI) at \href{http://www.ebi.ac.uk}{http://www.ebi.ac.uk} and the bioinformatics arm of the European Molecular Biology Laboratory (EMBL) at \href{http://www.embl-heidelberg.de/}{http://www.embl-heidelberg.de/}. These are large, heavily funded governmental bioinformatics powerhouses, and they have (and distribute) a great deal of state-of-the-art bioinformatics software. 
+Since this is a beginning book that requires no programming experience, you should not expect to find the most finished, multipurpose software here. Instead you'll find a solid introduction to parsing and building fast lookup tables for GenBank files. If you've never done so, I strongly recommend you explore the National Center for Biotechnology Information (NCBI) at the National Institutes of Health (NIH) (\href{http://www.ncbi.nlm.nih.gov}{http://www.ncbi.nlm.nih.gov}). While you're at it, stop by the European Bioinformatics Institute (EBI) at \href{http://www.ebi.ac.uk}{http://www.ebi.ac.uk} and the bioinformatics arm of the European Molecular Biology Laboratory (EMBL) at \href{http://www.embl-heidelberg.de/}{http://www.embl-heidelberg.de/}. These are large, heavily funded governmental bioinformatics powerhouses, and they have (and distribute) a great deal of state-of-the-art bioinformatics software.
 
 \section{GenBank Files}
 The primary repositories for genetic information are the NCBI GenBank, EMBL in Europe, and the DNA Data Bank of Japan (DDBJ). All have almost identical information due to international cooperative agreements. Each entry or record in GenBank or its mirror sites may contain identifying, descriptive, and genetic information in ASCII-format files. Each record is written in a specific standard format, organized so that both humans and computer programs can extract the desired information with reasonable ease.
 
 Let's look at a relatively short GenBank record and at how the fields are defined, before writing any code. I'll save this information in a file called \textit{record.gb}, for use in later programs.
 
-\begin{lstlisting}
+\begin{lstlisting}[language={},basicstyle=\small\tt,breaklines=false]
 LOCUS       AB031069     2487 bp    mRNA            PRI       27-MAY-2000
 DEFINITION  Homo sapiens PCCX1 mRNA for protein containing CXXC domain 1,
             complete cds.
@@ -138,7 +138,7 @@ There's a lot of information packed into a typical GenBank entry, and it's impor
 
 The format specification of GenBank files and a great deal of other information about GenBank can be found in the GenBank release notes, \textit{gbrel.txt}, on the GenBank web site at \href{ftp://ncbi.nlm.nih.gov/genbank/gbrel.txt}{ftp://ncbi.nlm.nih.gov/genbank/gbrel.txt}.
 
-\textit{gbrel.txt} gives complete detail about the structure of GenBank files to help programmers, so you may want to refer to it as your searches become more complex. As a Perl programmer, you won't need all of the detail because you can parse data using regular expressions or the \textit{split} function. You need to get the data out and make it available to your programs. The code that accomplishes this task can be fairly simple, as you will see in this chapter. 
+\textit{gbrel.txt} gives complete detail about the structure of GenBank files to help programmers, so you may want to refer to it as your searches become more complex. As a Perl programmer, you won't need all of the detail because you can parse data using regular expressions or the \textit{split} function. You need to get the data out and make it available to your programs. The code that accomplishes this task can be fairly simple, as you will see in this chapter.
 
 \section{GenBank Libraries}
 GenBank is distributed as a set of libraries—flat files containing many records in succession.\footnote{The data is also distributed in the ASN.1 format.} As of GenBank release 125.0, August 2001, there are 243 files, most of which are over 200 MB in size. Altogether, GenBank contains 12,813516 loci and 13,543,364,296 bases from 12,813,516 reported sequences. The libraries are usually distributed compressed, which means you can download somewhat smaller files, but you need to uncompress them after you received them. Uncompressed, this amounts to about 50 GB of data. Since 1982, the number of sequences in GenBank has doubled about every 14 months.
@@ -169,7 +169,7 @@ Some divisions are very large: the largest, the EST, or expressed sequence tag d
 
 The public database servers such as Entrez or BLAST at \href{http://www.ncbi.nlm.nih.gov/}{http://www.ncbi.nlm.nih.gov/} give you access to well-maintained and updated sequence data and programs, but many researchers find that they need to write their own programs to manipulate and analyze the data. The problem is, there's so much data. For many purposes, you can download a selected set of records from NCBI or other locations, but sometimes you need the whole dataset.
 
-It's possible to set up a desktop workstation (Windows, Mac, Unix, or Linux) that contains all of GenBank; just be sure to buy a very large hard disk! Getting all that data onto your hard drive, however, is more difficult. A Perl program called \textit{mirror.pl} helps to address this need.  Downloading it, even with a university-standard, high-speed Internet connection can be time-consuming; downloading an entire dataset with a modem can be an exercise in frustration. The best solution is to download only the files you need, in compressed form. The EST data, for example, is about half the entire database; don't download it unless you really need to. If you need to download GenBank, I recommend contacting the help desk at NCBI. They'll help you get the most up-to-date information.
+It's possible to set up a desktop workstation (Windows, Mac, Unix, or Linux) that contains all of GenBank; just be sure to buy a very large hard disk! Getting all that data onto your hard drive, however, is more difficult. A Perl program called \textit{mirror.pl} helps to address this need. Downloading it, even with a university-standard, high-speed Internet connection can be time-consuming; downloading an entire dataset with a modem can be an exercise in frustration. The best solution is to download only the files you need, in compressed form. The EST data, for example, is about half the entire database; don't download it unless you really need to. If you need to download GenBank, I recommend contacting the help desk at NCBI. They'll help you get the most up-to-date information.
 
 Since you're learning to program, it makes more sense to practice on a tiny, five-record library file, but the programs you'll write will work just fine on the real files.
 
@@ -178,10 +178,10 @@ In previous chapters you saw how to examine the lines of a file using Perl's arr
 
 Let's look at two methods to extract the annotation and the DNA from a GenBank file. In the first method, you'll slurp the file into an array and look through the lines, as in previous programs. In the second, you'll put the whole GenBank record into a scalar variable and use regular expressions to parse the information. Is one approach better than the other? Not necessarily: it depends on the data. There are advantages and disadvantages to each, but both get the job done.
 
-I've put five GenBank records in a file called \textit{library.gb}. As before, you can download the file from this book's web site. You'll use this datafile and the file \textit{record.gb} in the next few examples. 
+I've put five GenBank records in a file called \textit{library.gb}. As before, you can download the file from this book's web site. You'll use this datafile and the file \textit{record.gb} in the next few examples.
 
 \subsection{Using Arrays}
-\autoref{exam:example10.1} shows the first method, which operates on an array containing the lines of the GenBank record. The main program is followed by a subroutine that does the real work. 
+\autoref{exam:example10.1} shows the first method, which operates on an array containing the lines of the GenBank record. The main program is followed by a subroutine that does the real work.
 
 \textbf{Example 10-1. Extract annotation and sequence from GenBank file}
 \lstinputlisting[label=exam:example10.1]{./scripts/example10-1.pl}
@@ -206,13 +206,13 @@ The \verb|foreach| loop in subroutine \verb|parse1| in \autoref{exam:example10.1
 
 \verb|ORIGIN|
 
-is found, after which sequence appears until the end-of-record line \verb|//| is reached. The loop uses a flag variable \verb|$in_sequence| to remember that it has found the \verb|ORIGIN| line and is now reading sequence lines. 
+is found, after which sequence appears until the end-of-record line \verb|//| is reached. The loop uses a flag variable \verb|$in_sequence| to remember that it has found the \verb|ORIGIN| line and is now reading sequence lines.
 
 The \verb|foreach| loop has a new feature: the Perl built-in function \verb|last|, which breaks out of the nearest enclosing loop. It's triggered by the end-of-record line \verb|//|, which is reached when the entire record has been seen.
 
-A regular expression is used to find the end-of-record line. To correctly match the end-of-record (forward) slashes, you must escape them by putting a backslash in front of each one, so that Perl doesn't interpret them as prematurely ending the pattern. The regular expression also ends with a newline \verb|\/\/\n|, which is then placed inside the usual delimiters: \verb|/\/\/\n/|. (When you have a lot of forward slashes in a regular expression, you can use another delimiter around the regular expression and precede it with an \verb|m|, thus avoiding having to backslash the forward slashes. It's done like so: \verb|m!//\n!|). 
+A regular expression is used to find the end-of-record line. To correctly match the end-of-record (forward) slashes, you must escape them by putting a backslash in front of each one, so that Perl doesn't interpret them as prematurely ending the pattern. The regular expression also ends with a newline \verb|\/\/\n|, which is then placed inside the usual delimiters: \verb|/\/\/\n/|. (When you have a lot of forward slashes in a regular expression, you can use another delimiter around the regular expression and precede it with an \verb|m|, thus avoiding having to backslash the forward slashes. It's done like so: \verb|m!//\n!|).
 
-An interesting point about subroutine \verb|parse1| is the order of the tests in the \verb|foreach| loop that goes through the lines of the GenBank record.  As you read through the lines of the record, you want to first gather the annotation lines, set a flag when the \verb|ORIGIN| start-of-sequence line is found, and then collect the lines until the end-of-record \verb|//| line is found.
+An interesting point about subroutine \verb|parse1| is the order of the tests in the \verb|foreach| loop that goes through the lines of the GenBank record. As you read through the lines of the record, you want to first gather the annotation lines, set a flag when the \verb|ORIGIN| start-of-sequence line is found, and then collect the lines until the end-of-record \verb|//| line is found.
 
 Notice that the order of the tests is exactly the opposite. First, you test for the end-of-record line, collect the sequence if the \verb|$in_sequence| flag is set, and then test for the start-of-sequence \verb|ORIGIN| line. Finally, you collect the annotation.
 
@@ -238,7 +238,6 @@ foreach my $line (@GenBankFile) {
 
 @annotation = @GenBankFile[0..($origin-1)];
 @sequence   = @GenBankFile[($origin+1)..($end-1)];
-</programlisting>
 \end{lstlisting}
 
 \subsection{Using Scalars}

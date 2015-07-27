@@ -2,32 +2,35 @@
 \label{chap:chapter10}
 \minitoc
 
-GenBank (Genetic Sequence Data Bank) is a rapidly growing international repository of known genetic sequences from a variety of organisms. Its use is central to modern biology and to bioinformatics.
+GenBank（Genetic Sequence Data Bank）是一个快速增长的国际性知识库，存储的是各种各样生物的已知遗传序列。它的使用对于现代生物学和生物信息学来说至关重要。
 
-This chapter shows you how to write Perl programs to extract information from GenBank files and libraries. Exercises include looking for patterns; creating special libraries; and parsing the flat-file format to extract the DNA, annotation, and features. You will learn how to make a DBM database to create your own rapid-access lookups on selected data in a GenBank library.
+本章将向你展示如何编写Perl程序来从GenBank文件和库中提取信息。练习题包括查找模式、创建特定的库，以及解析平面文件格式来提取DNA、注释和特征。你将学习如何制作一个DBM数据库，实现自己在GenBank库中对特定数据进行快速的访问与查找。
 
-Perl is a great tool for dealing with GenBank files. It enables you to extract and use any of the detailed data in the sequence and in the annotation, such as in the FEATURES table and elsewhere. When I first started using Perl, I wrote a program that searched GenBank for all sequence records annotated as being located on human chromosome 22. I found many genes where that information was so deeply buried within the annotation, that the major gene mapping database, Genome Database (GDB), hadn't included them in their chromosome map. I think you'll discover the same feeling of power over the information when you start applying Perl to GenBank files.
+Perl是处理GenBank文件的一个优秀的工具。它可以让你提取并使用序列以及FEATURES表和其他等注释中的任何细节性的数据。当我第一次使用Perl的时候，我编写了一个程序，检索GenBank中所有被注释为位于人类第22号染色体上的序列记录。我发现许多基因，它们的信息被深深地隐藏在了注释中，以至于GDB（Genome
+Database）这个主要的基因图谱数据库都没有把它们包含在自己的染色体图谱中。我相信，当你开始应用Perl处理GenBank文件的时候，你也会对其中的信息有与我同样强烈的感觉。
 
-Most biologists are familiar with GenBank. Researchers can perform a search, e.g., a BLAST search on some query sequence, and collect a set of GenBank files of related sequences as a result. Because the GenBank records are maintained by the individual scientists who discovered the sequences, if you find some new sequence of interest, you can publish it in GenBank.
+大多数生物学家对GenBank都非常熟悉。研究人员可以进行检索，比如对于某个查询序列的BLAST检索，也可以把相关序列的一系列GenBank文件作为结果收集起来。因为GenBank记录是由发现序列的特定科学家进行维护的，所以如果你发现了某个新的有趣的序列，你也可以把它发布到GenBank上。
 
-GenBank files have a great deal of information in them in addition to sequence data, including identifiers such as accession numbers and gene names, phylogenetic classification, and references to published literature. A GenBank file may also include a detailed FEATURES table that summarizes facts about the sequence, such as the location of the regulatory regions, the protein translation, and exons and introns.
+GenBank文件中除了序列数据以外，还有一大堆的信息，包括登录号和基因名这样的识别号、系谱分类和发表文献的参考信息等。一个GenBank文件可能还包含详细的FEATURES表，对序列的情况进行了总结，比如调控区域、蛋白质翻译以及外显子和内含子的定位区域。
 
-GenBank is sometimes referred to as a \textit{databank} or \textit{data store}, which is different from a \textit{database}. Databases typically have a relational structure imposed upon the data, including associated indices and links and a query language. GenBank in comparison is a \textit{flat file}, that is, an ASCII text file that is easily readable by humans.\footnote{GenBank is also distributed in ASN.1 format, for which you need specialized tools, provided by NCBI.}
+GenBank有时被看做是\textit{数据银行（databank）}或者\textit{数据商店（data store）}，这和\textit{数据库（database）}有一定的区别。数据库通常给数据强加一个关系型的结构，包括相关的指数、链接和查询语言。相比之下，GenBank就是一个\textit{平面文件（flat file）}，换言之，就是一个对于人类易读的ASCII码文本文件。\footnote{GenBank也有ASN.1格式的发布，你需要使用NCBI提供特定工具才能对其进行处理。} 
 
-From its humble beginnings GenBank has rapidly grown, and the flat-file format has seen signs of strain during the growth. With a quickly advancing body of knowledge, especially one that's growing as quickly as genetic data, it's difficult for the design of a databank to keep up. Several reworkings of GenBank have been done, but the flat-file format—in all its frustrating glory—still remains.
+从它毫不起眼的诞生之初，GenBank就开始了飞速增长，而在增长过程中平面文件则凸显了其不足之处。随着知识体的快速发展，尤其是像遗传数据这种知识的快速增长，要想让数据银行的这种设计与时俱进已经很难了。对GenBank进行重新整理设计的许多共组已经完成了，但是平面文件——顶着它逐渐褪色的皇冠——仍然存在着。
 
-Due to a certain flexibility in the content of some sections of a GenBank record, extracting the information you're looking for can be tricky. This flexibility is good, in that it allows you to put what you think is most important into the data's annotation. It's bad, because that same flexibility makes it harder to write programs that to find and extract the desired annotations. As a result, the trend has been towards more structure in the annotations.
+归咎于GenBank记录中某些小节内容的一定灵活性，从中提取要寻找的信息可能会比较复杂。这种灵活性有好的一面，它允许你把你认为是最重要的东西都放到数据的注释中；但同时它也有不好的一面，因为同样是灵活性，它会使编写程序来寻找并提取需要的注释信息变得更加困难。正因为如此，现在的趋势是让注释中的内容更具结构化。
 
-Since Perl's data structures and its use of regular expressions make it a good tool for manipulating flat files, Perl is especially well-suited to deal with GenBank data. Using these features in Perl and building on the skills you've developed from previous chapters, you can write programs to access the accumulated genetic knowledge of the scientific community in GenBank.
+Perl的数据结构和正则表达式的应用使得它成为处理平面文件的优秀工具，尤其适合用来处理GenBank数据。使用Perl的这些特性，基于前面章节训练的技能，你可以编写程序来访问GenBank中对于科学界来说日益积累的遗传知识。
 
-Since this is a beginning book that requires no programming experience, you should not expect to find the most finished, multipurpose software here. Instead you'll find a solid introduction to parsing and building fast lookup tables for GenBank files. If you've never done so, I strongly recommend you explore the National Center for Biotechnology Information (NCBI) at the National Institutes of Health (NIH) (\href{http://www.ncbi.nlm.nih.gov}{http://www.ncbi.nlm.nih.gov}). While you're at it, stop by the European Bioinformatics Institute (EBI) at \href{http://www.ebi.ac.uk}{http://www.ebi.ac.uk} and the bioinformatics arm of the European Molecular Biology Laboratory (EMBL) at \href{http://www.embl-heidelberg.de/}{http://www.embl-heidelberg.de/}. These are large, heavily funded governmental bioinformatics powerhouses, and they have (and distribute) a great deal of state-of-the-art bioinformatics software. 
+因为这是本不需要编程经验的初学者指南书籍，所以你不要指望从中找到完美无瑕、包治百病的软件。与之相反，你会找到对于对于GenBank文件进行解析和构建快速查找表的详尽介绍。如果你还从没有做过类似的事情，我强烈推荐你去探索一下NIH（National Institutes of Health）（\href{http://www.ncbi.nlm.nih.gov}{http://www.ncbi.nlm.nih.gov}）的NCBI（National Center for Biotechnology Information）。当你开始之后，停止在\href{http://www.ebi.ac.uk}{http://www.ebi.ac.uk}的EBI（European Bioinformatics Institute）和\href{http://www.embl-heidelberg.de/}{http://www.embl-heidelberg.de/}的生物信息学分支EMBL（European Molecular Biology Laboratory）即可。它们都是大型的、由重金赞助支持的政府性的生物信息学中心，并且它们都有（并且发布了）大量的顶尖的生物信息学软件。
 
-\section{GenBank Files}
-The primary repositories for genetic information are the NCBI GenBank, EMBL in Europe, and the DNA Data Bank of Japan (DDBJ). All have almost identical information due to international cooperative agreements. Each entry or record in GenBank or its mirror sites may contain identifying, descriptive, and genetic information in ASCII-format files. Each record is written in a specific standard format, organized so that both humans and computer programs can extract the desired information with reasonable ease.
+\section{GenBank文件}
+主要的遗传信息库就是NCBI GenBank、欧洲的EMBL和日本的DDBJ（DNA Data Bank
+of
+Japan）。因为有国际合作协定，它们都有几乎完全相同的信息。GenBank或者它的镜像站点中的每一个条目或者记录都包含确定的描述性的遗传信息，存储在ASCII格式的文件中。每一个记录都用特定的标准格式进行编写与组织，这样不管是人还是计算机程序都可以比较容易地从中提取需要的信息。
 
-Let's look at a relatively short GenBank record and at how the fields are defined, before writing any code. I'll save this information in a file called \textit{record.gb}, for use in later programs.
+让我们看一个相对较短的GenBank记录，在编写代码之前先看看字段是如何定义的。我会把这些信息保存在一个叫做\textit{record.gb}的文件中，便于后面程序的使用。
 
-\begin{lstlisting}
+\begin{lstlisting}[language={},basicstyle=\small\tt,breaklines=false]
 LOCUS       AB031069     2487 bp    mRNA            PRI       27-MAY-2000
 DEFINITION  Homo sapiens PCCX1 mRNA for protein containing CXXC domain 1,
             complete cds.
@@ -132,61 +135,62 @@ ORIGIN
 //
 \end{lstlisting}
 
-Even if you're used to seeing GenBank files, it's worth taking the time to look one over, while considering how you would write a program to extract various parts of the data. For instance, how would you extract the sequence data? What's the format of the FEATURES table and its various subfields?
+即使你已经习惯了看GenBank文件，当你考虑如何编写一个程序来提取数据的各个部分时，再花一些时间从头到尾看一下也是值得的。比如，你该如何提取序列数据呢？FEATURES表和它的各个子字段的格式是什么样子的？
 
-There's a lot of information packed into a typical GenBank entry, and it's important to be able to separate the different parts. For instance, if you can extract the sequence, you can search for motifs, calculate statistics on the sequence, look for similarity with other sequences, and so forth. Similarly, you'll want to separate out—or parse—the various parts of the data annotation. In GenBank, this includes ID numbers, gene names, genus and species, publications, etc. The FEATURES table part of the annotation can include specific information about the DNA, such as the locations of exons, regulatory regions, important mutations, and so on.
+在一个典型的GenBank条目中，压缩进了大量信息，能把这些不同的部分分隔开来是非常重要的。比如，如果你能提取出序列，你就可以查找基序、计算序列的统计信息、寻找它和其他序列的相似性，等等。类似的，你可能想把数据注释的各个部分分割开来或者进行解析。在GenBank中，这包括ID号、基因名、属种和发表文献等。注释中的FEATURES表部分包含了DNA的特定信息，像外显子、调控区域、重要突变的位置等。
 
-The format specification of GenBank files and a great deal of other information about GenBank can be found in the GenBank release notes, \textit{gbrel.txt}, on the GenBank web site at \href{ftp://ncbi.nlm.nih.gov/genbank/gbrel.txt}{ftp://ncbi.nlm.nih.gov/genbank/gbrel.txt}.
+GenBank文件的格式规范，以及关于GenBank的各种其他信息可以在GenBank的版本注释文件\textit{gbrel.txt}文件中找到，这个文件位与GenBank的网站\href{ftp://ncbi.nlm.nih.gov/genbank/gbrel.txt}{ftp://ncbi.nlm.nih.gov/genbank/gbrel.txt}上。
 
-\textit{gbrel.txt} gives complete detail about the structure of GenBank files to help programmers, so you may want to refer to it as your searches become more complex. As a Perl programmer, you won't need all of the detail because you can parse data using regular expressions or the \textit{split} function. You need to get the data out and make it available to your programs. The code that accomplishes this task can be fairly simple, as you will see in this chapter. 
+\textit{gbrel.txt}给出了GenBank文件结构的完整详细的信息，对于程序员有很大的帮助，所以当你的检索越来越复杂的时候，你可能会想去看一看它。作为一名Perl程序员，你并不需要所有的细节，因为你可以使用正则表达式或者\textit{split}函数来解析数据。你需要把数据提取出来，让你的程序可以使用它。就像你在本章中将要看到的，完成该任务的代码其实非常简单。
 
-\section{GenBank Libraries}
-GenBank is distributed as a set of libraries—flat files containing many records in succession.\footnote{The data is also distributed in the ASN.1 format.} As of GenBank release 125.0, August 2001, there are 243 files, most of which are over 200 MB in size. Altogether, GenBank contains 12,813516 loci and 13,543,364,296 bases from 12,813,516 reported sequences. The libraries are usually distributed compressed, which means you can download somewhat smaller files, but you need to uncompress them after you received them. Uncompressed, this amounts to about 50 GB of data. Since 1982, the number of sequences in GenBank has doubled about every 14 months.
+\section{GenBank库}
+GenBank以一系列的库进行发布，也就是包含连续的多个记录的平面文件。\footnote{数据也以ASN.1格式进行发布。}对于2001年8月份发布的GenBank的125.0版，一共有243个文件，大多数文件的大小都超过了200
+MB。总算起啦，GenBank包含了来自12,813,526条报道序列的12,813516个位点和13,543,364,296个碱基。GenBank库同样以压缩格式进行发布，这也就意味着你可以下载相对较小的文件，但是在你获取到它们后你需要对它们进行解压缩。解压缩后数据的总量大约有50 GB。从1982年开始，大约每14各月GenBank中序列的数目就会翻番。
 
-GenBank libraries are further organized into divisions by the classification of the sequences they contain, either phylogenetically or by sequencing technology. Here are the divisions: 
+根据它们包含的序列类型，或者是系统发育，或者是测序技术，GenBank库又进一步组织、分成不同的类。下面是这些类别：
 
 \begin{itemize}
-  \item PRI: primate sequences
-  \item ROD: rodent sequences
-  \item MAM: other mammalian sequences
-  \item VRT: other vertebrate sequences
-  \item INV: invertebrate sequences
-  \item PLN: plant, fungal, and algal sequences
-  \item BCT: bacterial sequences
-  \item VRL: viral sequences
-  \item PHG: bacteriophage sequences
-  \item SYN: synthetic and chimeric sequences
-  \item UNA: unannotated sequences
-  \item EST: EST sequences (expressed sequence tags)
-  \item PAT: patent sequences
-  \item STS: STS sequences (sequence tagged sites)
-  \item GSS: GSS sequences (genome survey sequences)
-  \item HTG: HTGS sequences (high throughput genomic sequencing data)
-  \item HTC: HTC sequences (high throughput cDNA sequencing data)
+  \item PRI（primate sequences）：灵长类动物序列
+  \item ROD（rodent sequences）：啮齿类动物序列
+  \item MAM（other mammalian sequences）：其他哺乳动物序列
+  \item VRT（other vertebrate sequences）：其他脊椎动物序列
+  \item INV（invertebrate sequences）：无脊椎动物序列
+  \item PLN（plant, fungal, and algal sequences）：植物、真菌和藻类序列
+  \item BCT（bacterial sequences）：细菌序列
+  \item VRL（viral sequences）：病毒序列
+  \item PHG（bacteriophage sequences）：噬菌体序列
+  \item SYN（synthetic and chimeric sequences）：合成和嵌合序列
+  \item UNA（unannotated sequences）：未注释序列
+  \item EST（EST（expressed sequence tags） sequences）：EST（表达序列标签）序列
+  \item PAT（patent sequences）：专利序列
+  \item STS（STS（sequence tagged sites） sequences）：STS（序列标签位点）序列
+  \item GSS（GSS（genome survey sequences） sequences）：GSS（基因组勘测序列）序列
+  \item HTG（HTGS（high throughput genomic sequencing data） sequences）：HTGS（高通量基因组测序数据）序列
+  \item HTC（HTC（high throughput cDNA sequencing data) sequences）：HTC（高通量cDNA测序数据）序列
 \end{itemize}
 
-Some divisions are very large: the largest, the EST, or expressed sequence tag division, is comprised of 123 library files! A portion of human DNA is stored in the PRI division, which contains (as of this writing) 13 library files, for a total of almost 3.5 GB of data. Human data is also stored in the STS, GSS, HTGS, and HTC divisions. Human data alone in GenBank makes up almost 5 million record entries with over 8 trillion bases of sequence.
+有些类别非常大：最大的就是EST（表达序列标签）类别，它由123个库文件构成！人类DNA的一部分存储在PRI类别中，它包含13个库文件（本书撰写期间），总共大约有3.5 GB的数据。人类的数据还存储在STS、GSS、HTGS和HTC类别中。单单是GenBank中人类的数据就有近5百万记录条目，序列的碱基数超过了8兆（万亿）。
 
-The public database servers such as Entrez or BLAST at \href{http://www.ncbi.nlm.nih.gov/}{http://www.ncbi.nlm.nih.gov/} give you access to well-maintained and updated sequence data and programs, but many researchers find that they need to write their own programs to manipulate and analyze the data. The problem is, there's so much data. For many purposes, you can download a selected set of records from NCBI or other locations, but sometimes you need the whole dataset.
+\href{http://www.ncbi.nlm.nih.gov/}{http://www.ncbi.nlm.nih.gov/}上的Entrez和BLAST等公共数据库服务器，可以让你访问进行良好维护和升级的序列数据和程序，但是许多研究人员发现它们需要编写自己的程序来处理和分析这些数据。问题在于，数据量实在太大了。对于大多数的研究目的，你只需要从NCBI或者其他地方下载选定的一部分记录，但有时候你需要全部的数据集。
 
-It's possible to set up a desktop workstation (Windows, Mac, Unix, or Linux) that contains all of GenBank; just be sure to buy a very large hard disk! Getting all that data onto your hard drive, however, is more difficult. A Perl program called \textit{mirror.pl} helps to address this need.  Downloading it, even with a university-standard, high-speed Internet connection can be time-consuming; downloading an entire dataset with a modem can be an exercise in frustration. The best solution is to download only the files you need, in compressed form. The EST data, for example, is about half the entire database; don't download it unless you really need to. If you need to download GenBank, I recommend contacting the help desk at NCBI. They'll help you get the most up-to-date information.
+可以构建一个（Windows、Mac、Unix或者Linux）桌面工作站，把所有的GenBank都包含在内，但是一定要确保购买了一个足够大的硬盘！然而，把所有的数据都下载到你的硬盘中是非常困难的。一个叫做\textit{mirror.pl}的程序可以帮你完成这个工作。即使是大学标准的高速因特网连接，下载这些数据也是一个非常耗时的工作；如果使用调制解调器下载全部的数据集一定会让你抓狂的。最好的解决方案是只下载你需要的文件，而且是压缩格式的文件。比如，EST数据，它大约是整个数据库的一半，除非你真的需要它，否则不要去下载它。如果你需要下载GenBank，我推荐你联系NCBI的服务台。它们会帮助你获取最新的信息。
 
-Since you're learning to program, it makes more sense to practice on a tiny, five-record library file, but the programs you'll write will work just fine on the real files.
+既然你在学习编程，那在一个小的、只有五条记录的库文件上练习就完全够了，当然，你编写的程序在真实的文件中也是完全可以工作的。
 
-\section{Separating Sequence and Annotation}
-In previous chapters you saw how to examine the lines of a file using Perl's array operations. Usually, you do this by saving the data in an array with each appearing as an element of the array.
+\section{分割序列和注释}
+在上一章中，你看到了如何使用Perl的数组操作来检查文件的行。通常，你会把数据保存到一个数组中，每一行都是数组的一个元素。
 
-Let's look at two methods to extract the annotation and the DNA from a GenBank file. In the first method, you'll slurp the file into an array and look through the lines, as in previous programs. In the second, you'll put the whole GenBank record into a scalar variable and use regular expressions to parse the information. Is one approach better than the other? Not necessarily: it depends on the data. There are advantages and disadvantages to each, but both get the job done.
+让我们看看从GenBank文件中提取注释和DNA的两种方法。在第一种方法中，你会把文件一股脑的都放进数组中，然后像上一章的程序一样逐行进行处理。在第二种方法中，你会把整个的GenBank记录放到一个标量变量中，然后使用正则表达式来解析信息。是不是某种方法比另一种更好一些？并不一定，这取决于你的数据。每一种方法都有自己的优缺点，但不管怎样，它们都可以完成任务。
 
-I've put five GenBank records in a file called \textit{library.gb}. As before, you can download the file from this book's web site. You'll use this datafile and the file \textit{record.gb} in the next few examples. 
+我已经把五条GenBank记录放在了一个叫做\textit{library.gb}的文件中。就像前面一样，你可以从本书的网站上下载这个文件。在接下来的几个例子中，你将使用这个数据文件和\textit{record.gb}这个文件。
 
-\subsection{Using Arrays}
-\autoref{exam:example10.1} shows the first method, which operates on an array containing the lines of the GenBank record. The main program is followed by a subroutine that does the real work. 
+\subsection{使用数组}
+\autoref{exam:example10.1}演示了第一种方法，它对包含GenBank记录行的数组进行操作。主程序后面跟着的是真正起作用的子程序。
 
-\textbf{Example 10-1. Extract annotation and sequence from GenBank file}
+\textbf{例10-1：从GenBank文件中提取注释和序列}
 \lstinputlisting[label=exam:example10.1]{./scripts/example10-1.pl}
 
-Here's the beginning and end of \autoref{exam:example10.1}'s output of the sequence data:
+下面是\autoref{exam:example10.1}输出的序列数据的开头和结尾部分：
 
 \begin{lstlisting}
 agatggcggcgctgaggggtcttgggggctctaggccggccacctactgg
@@ -202,23 +206,23 @@ gcctcctctccctgggttttgttaataaaattttgaagaaaccaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 \end{lstlisting}
 
-The \verb|foreach| loop in subroutine \verb|parse1| in \autoref{exam:example10.1} moves one by one through the lines from the GenBank file stored in the array \verb|@GenBankFile|. It takes advantage of the structure of a GenBank file, which begins with annotation and runs until the line:
+在\autoref{exam:example10.1}中，子程序\verb|parse1|中的\verb|foreach|循环把存储在数组\verb|@GenBankFile|中的GenBank文件的行进行逐行处理。它充分利用了GenBank文件的结构，其中的注释从开头开始一直到下面这一行结束：
 
 \verb|ORIGIN|
 
-is found, after which sequence appears until the end-of-record line \verb|//| is reached. The loop uses a flag variable \verb|$in_sequence| to remember that it has found the \verb|ORIGIN| line and is now reading sequence lines. 
+其后便是序列，一直到记录终止行\verb|//|为止。循环使用一个标识变量\verb|$in_sequence|来记住它已经找到了\verb|ORIGIN|行、现在正在读取序列行。
 
-The \verb|foreach| loop has a new feature: the Perl built-in function \verb|last|, which breaks out of the nearest enclosing loop. It's triggered by the end-of-record line \verb|//|, which is reached when the entire record has been seen.
+\verb|foreach|循环有一个新的特性：Perl的内置函数\verb|last|，它会跳出包裹在最内层的循环。这会由记录终止行\verb|//|触发，只有当整个记录都被处理后才会到达这一行。
 
-A regular expression is used to find the end-of-record line. To correctly match the end-of-record (forward) slashes, you must escape them by putting a backslash in front of each one, so that Perl doesn't interpret them as prematurely ending the pattern. The regular expression also ends with a newline \verb|\/\/\n|, which is then placed inside the usual delimiters: \verb|/\/\/\n/|. (When you have a lot of forward slashes in a regular expression, you can use another delimiter around the regular expression and precede it with an \verb|m|, thus avoiding having to backslash the forward slashes. It's done like so: \verb|m!//\n!|). 
+为了寻找记录终止行，使用了一个正则表达式。为了能够正确地匹配记录终止行中的（正）斜杠，你必须在每一个前面都放上反斜杠对它们进行转义，这样Perl就不会把它们解释成模式的提前终止了。正则表示式也以换行符结束\verb|\/\/\n|，所以把它放到匹配的定界符中间：\verb|/\/\/\n/|。（当你在一个正则表达式中有许多正斜杠时，你可以使用其他的定界符把正则表达式包裹起来，并在其前面使用\verb|m|，这样就可以避免在正斜杠前面使用反斜杠了。就像这样：\verb|m!//\n!|）。
 
-An interesting point about subroutine \verb|parse1| is the order of the tests in the \verb|foreach| loop that goes through the lines of the GenBank record.  As you read through the lines of the record, you want to first gather the annotation lines, set a flag when the \verb|ORIGIN| start-of-sequence line is found, and then collect the lines until the end-of-record \verb|//| line is found.
+对于子程序\verb|parse1|来说，比较有趣的一点是\verb|foreach|循环对GenBank记录进行逐行处理时的检测顺序。当你逐行阅读记录时，你会想首先收集注释行，当读到序列开始行\verb|ORIGIN|时设置一个标识，然后收集序列行，直到记录终止行\verb|//|为止。
 
-Notice that the order of the tests is exactly the opposite. First, you test for the end-of-record line, collect the sequence if the \verb|$in_sequence| flag is set, and then test for the start-of-sequence \verb|ORIGIN| line. Finally, you collect the annotation.
+注意检测的顺序是完全相反的。首先，你检测记录终止行，如果\verb|$in_sequence|标识被设置了就收集序列，然后检测序列开始行\verb|ORIGIN|。最后，你收集注释信息。
 
-The technique of reading lines one by one and using flag variables to mark what section of the file you're in, is a common programming technique. So, take a moment to think about how the loop would behave if you changed the order of the tests. If you collected sequence lines before testing for the end-of-record, you'd never get to the end-of-record test!
+逐行读取文件和使用标识变量来标记文件小节的技术，是一个很常见的编程技术。所以，花点时间来想一下，如果你改变了检测的顺序，循环的行为会有什么变化。如果你在检测记录终止行之前就收集序列行，那么你将永远也不会进行记录终止行的检测！
 
-Other methods of collecting annotation and sequence lines are possible, especially if you go through the lines of the array more than once. You can scan through the array, keeping track of the start-of-sequence and end-of-record line numbers, and then go back and extract the annotation and sequence using an array splice (which was described in the \verb|parseREBASE| subroutine in \autoref{exam:example9.2}). Here's an example:
+使用其他方法收集注释和序列行也是可以的，尤其是当你多次遍历数组的行时。你可以扫描整个数组，记住序列开始行和记录终止行的行号，然后返回去，使用数组切片（在\autoref{exam:example9.2}的子程序\verb|parseREBASE|中对其进行过介绍）提取注释和序列。下面是一个例子：
 
 \begin{lstlisting}
 # find line numbers of ORIGIN and // in the GenBank record
@@ -238,7 +242,6 @@ foreach my $line (@GenBankFile) {
 
 @annotation = @GenBankFile[0..($origin-1)];
 @sequence   = @GenBankFile[($origin+1)..($end-1)];
-</programlisting>
 \end{lstlisting}
 
 \subsection{Using Scalars}
