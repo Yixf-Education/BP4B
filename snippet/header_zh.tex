@@ -69,7 +69,7 @@
 \titleformat{\chapter}{\centering\LARGE\bfseries}{第 \thechapter 章}{1em}{}
 %\titlespacing*{\section}{0pt}{0.2\baselineskip}{0.2\baselineskip}
 
-\usepackage{xcolor}
+\usepackage[dvipsnames,tables]{xcolor}
 \usepackage{graphicx}
 \graphicspath{{figures/}}
 \usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
@@ -123,37 +123,68 @@
 
 %插入源代码
 \usepackage{listings}
+%\lstset{
+  %language=Perl,                  % 程序语言名称：TeX, Perl, R, sh, bash, Awk
+  %basicstyle=\normalsize\tt,      %\tt指monospace字体族，程序源代码使用此族字体表示更加美观
+  %%commentstyle=\color{red!50!green!50!blue!50}\tt,  %浅灰色的注释
+  %commentstyle=\color{gray}\tt,
+  %%keywordstyle=\color{blue!70}\bfseries\tt,         %代码关键字的颜色为蓝色，粗体
+  %keywordstyle=\color{cyan}\bfseries\tt,
+  %identifierstyle=\tt,
+  %stringstyle=\color{black}\tt,                % 代码字符串的特殊格式
+  %numbers=left,                   % 行号位置(左侧)
+  %numberstyle=\small,             % 行号字体的字号
+  %stepnumber=1,                   % 行号的显示步长
+  %numbersep=5pt,                  % 行号与代码间距
+  %backgroundcolor=\color{white},  % 背景色;需要 \usepackage{color}
+  %%rulesepcolor=\color{red!20!green!20!blue!20},     %代码块边框为淡青色
+  %rulesepcolor=\color{gray},
+  %rulecolor=\color{black},
+  %%frame=shadowbox,                % 把代码用带有阴影的框圈起来
+  %frame=lrtb,
+  %%frame=single,
+  %%aboveskip=1em,                  %代码块边框
+  %%xleftmargin=2em,
+  %%xrightmargin=2em,
+  %xleftmargin=\fboxsep,
+  %xrightmargin=-\fboxsep,
+  %captionpos=b,                   % 标题位置
+  %keepspaces=true,
+  %showspaces=false,               % 不显示空格
+  %showstringspaces=false,         % 不显示代码字符串中的空格标记
+  %showtabs=false,                 % 不显示 TAB
+  %tabsize=4,
+  %breaklines=true,                % 对过长的代码自动断行
+  %breakatwhitespace=false,        % 断行只在空格处
+  %breakautoindent=true,
+  %%breakindent=22pt,
+  %%breakindent=1em,
+  %extendedchars=false,            % 解决代码跨页时，章节标题，页眉等汉字不显示的问题
+  %flexiblecolumns=true,
+  %%escapeinside={\%*}{*},         % 跳脱字符，添加注释，暂时离开 listings 
+  %%escapeinside=``,
+%}
 \lstset{
-  language=Perl,                  % 程序语言名称：TeX, Perl, R, sh, bash, Awk
-  basicstyle=\normalsize\tt,      %\tt指monospace字体族，程序源代码使用此族字体表示更加美观
-  numbers=left,                   % 行号位置(左侧)
-  numberstyle=\small,             % 行号字体的字号
-  stepnumber=1,                   % 行号的显示步长
-  numbersep=5pt,                  % 行号与代码间距
-  backgroundcolor=\color{white},  % 背景色;需要 \usepackage{color}
-  showspaces=false,               % 不显示空格
-  showstringspaces=false,         % 不显示代码字符串中的空格标记
-  showtabs=false,                 % 不显示 TAB
-  tabsize=4, 
-  frame=shadowbox,                % 把代码用带有阴影的框圈起来
-  captionpos=b,                   % 标题位置
-  breaklines=true,                % 对过长的代码自动断行
-  breakatwhitespace=false,        % 断行只在空格处
-  extendedchars=false,            % 解决代码跨页时，章节标题，页眉等汉字不显示的问题
-  %escapeinside={\%*}{*},         % 跳脱字符，添加注释，暂时离开 listings 
-  %escapeinside=``,
-  commentstyle=\color{red!50!green!50!blue!50}\tt,  %浅灰色的注释
-  rulesepcolor=\color{red!20!green!20!blue!20},     %代码块边框为淡青色
-  keywordstyle=\color{blue!70}\bfseries\tt,         %代码关键字的颜色为蓝色，粗体
-  identifierstyle=\tt,
-  stringstyle=\tt,                % 代码字符串的特殊格式
-  keepspaces=true,
-  breakindent=22pt,
-  %breakindent=4em,
-  breakautoindent=true,
-  flexiblecolumns=true,
-  aboveskip=1em,                  %代码块边框
-  xleftmargin=2em,
-  xrightmargin=2em
+  language=Perl,
+  basicstyle=\normalsize\tt,
+  frame=lrtb,
+  numbers=left,
+  numberstyle=\footnotesize,
+  showstringspaces=false,
+  breaklines=true,
 }
 
+%\lstset{ %
+  %backgroundcolor=\color{white},   % choose the background color
+  %basicstyle=\footnotesize,        % size of fonts used for the code
+  %breaklines=true,                 % automatic line breaking only at whitespace
+  %captionpos=b,                    % sets the caption-position to bottom
+  %commentstyle=\color{OliveGreen},    % comment style
+  %keywordstyle=\color{BlueViolet},       % keyword style
+  %stringstyle=\color{black},     % string literal style
+  %language=Perl,             % Set your language (you can change the language for each code-block optionally)
+  %frame=lrtb, %
+  %xleftmargin=\fboxsep, %
+  %xrightmargin=-\fboxsep, %
+  %%moretexcs={lstset,color,colorlet, cellcolor, newcolumntype, columncolor, rowcolor, multirow, xspace, LaTeX, TeX},
+%}
