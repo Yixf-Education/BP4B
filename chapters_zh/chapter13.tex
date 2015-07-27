@@ -1,60 +1,59 @@
-\chapter{Further Topics}
+\chapter{进阶主题}
 \label{chap:chapter13}
 \minitoc
 
-This book's goal has been to help you learn basic Perl programming. In this chapter, I will point the way to further learning in Perl. 
+本书的初衷是帮助你学习基本的Perl语言编程。在本章中，我会介绍一些深入学习Perl涉及到的主题。
 
-\section{The Art of Program Design}
-My emphasis on the art of \textit{program design} has determined the way in which the programs were presented. They've generally progressed from a discussion of problems and ideas, to pseudocode, to small groups of small, cooperating subroutines, and finally to a close-up discussion of the code. At several points you've seen more than one way to do the same task. This is an important part of a programmer's mindset: the knowledge of, and willingness to try, alternatives.
+\section{程序涉及的艺术}
+我强调\textit{程序设计}的艺术，这也暗示了程序要以何种方式展示出来。通常的过程就是先讨论问题和想法，写出伪代码，然后编写一组小的、互相协作的子程序，最后搭建出完整的程序。在某些点上，你已经看到了，完成同一个任务有不止一种方法。这是程序员心态的一个重要部分：或者利用已掌握的知识，或者进行不断的尝试。
 
-The other recurrent theme has been to explain the \textit{problem-solving strategies} programmers rely on. These include knowing how to use such sources of information as searchable newsgroup archives, books, and language documentation; having a good working knowledge of debugging tools; and understanding basic algorithm and data structure design and analysis.
+另一个已经提过的主题也解释了使用\textit{问题解决策略}的程序员所依赖的东西。它们包括知道如何充分利用可检索的新闻组档案、书籍和语言文档等资源的信息，对于调试工具有足够的实践经验，理解基本的算法和数据结构设计和分析。
 
-As your skills improve, and your programs become more complex, you'll find that these strategies take on a much more important role. Designing and coding programs to solve complex problems or crunch lots of complex data requires advanced problem-solving strategies. So it's worth your while to learn to think like a computer scientist as well as a biologist. 
+随着技能的提升，你的程序会更加复杂，你会发现这些策略起的作用越来越重要。要设计、编程解决复杂的问题，或者处理大量的复杂数据，都需要更加高深的问题解决策略。所以，花一些精力学习像计算机科学和生物学家那样进行思考，是非常值得的。
 
-\section{Web Programming}
-The Internet is the most important source of bioinformatics data. From FTP sites to web-enabled programs, the Perl-literate bioinformatician needs to be able to access web resources. Just about every lab has to have its own web page these days, and many grants even require it.  You'll need to learn the basics about the HTML and XML markup languages that display web pages, about the difference between a web server and a web browser, and similar facts of life.
+\section{网页编程}
+  因特网是生物信息学数据最主要的来源。从FTP站点到使用网页的程序，学习Perl的生物信息学家需要有能力去访问这些网络资源。如今大概每一个实验室都必须要有一个自己的网页，并且许多经费也需要它。你需要学习关于HTML和XML标记语言\footnote{译者注：还有HTML5、XHTML、Markdown等。}的基础知识，这些标记语言被用来显示网页，要了解网络服务器和网页浏览器之间的区别，以及生活中类似的事情。
 
-The popular \textit{CGI.pm} module makes it fairly easy to create interactive web pages, and several other modules are available that make Internet programming tasks relatively painless. For instance, you can write code for your own web page that enables visitors to try out your latest sequence analyzer or search through your special-purpose database. You can also add code to your own programs to enable them to interact with other web sites, querying and retrieving data automatically.  Collaborators who are geographically diverse can use such web programming to work cooperatively on a project. 
+流行的\textit{CGI.pm}模块使得创建交互式的网页变得相当简单，以及其他的一些可用的模块使得因特网编程任务也不是那么痛苦了。比如，你可以为你自己的网页编写代码，让访问者尝试你最新的序列分析器或者检索你特定目的的数据库。你也可以向你自己的程序中添加代码，让它们可以和其他的网站进行交互，自动访问和获取数据。在地理上分散各地的合作者们可以在一个项目中利用这样的网页编程进行亲密无间的协作。
 
-\section{Algorithms and Sequence Alignment}
-You will want to spend some time exploring the standard results in algorithms, as found in the texts recommended in \autoref{chap:chapteraa}. A good place to start is the basic sequence alignment methods such as the Smith-Waterman algorithm. In terms of algorithms, the topics of parallelization, randomization, and approximation deserve at least a nodding acquaintance.
+\section{算法和序列比对}
+你会想花一些时间去探索一下算法中的表中结果，在\autoref{chap:chapteraa}中有相关的推荐资料。一个入门的好的切入点是最基本的序列比对方法，比如Smith-Waterman算法。在算法的术语中，并行、随机和近似的主题都值得你至少去混个眼熟。
 
-Sequence alignment is the subset of the family of algorithms called string matching algorithms that are used to find the extent of identity or similarity, or to find evidence of homology, between sequences. The Smith-Waterman algorithm, the treatment of gaps, the use of preprocessing, parallel techniques, the alignment of multiple sequences, and more are facets of this study. 
+序列比对是算法家族中的一个子集，这就是字符串匹配算法，用来寻找相同或相似的程度，或者寻找序列间同源的证据。Smith-Waterman算法、空位的处理、预处理和并行技术的使用以及多序列比对等等都是这个主题中的一部分。
 
-\section{Object-Oriented Programming}
-Object-oriented programming is a style of program design that provides a well-defined interface to data and subroutines (called methods in "OO-speak"). It's not hard to learn; it makes some things easy that would otherwise be hard (and vice versa, but you don't have to use it for everything!). A great deal of Perl code has been written in object-oriented style since the capability was added to the language a few years ago. 
+\section{面向对象编程}
+面向对象编程（object-oriented programming）是程序设计的一种风格，它为数据和子程序提供了一个明确定义的界面（在面向对象编程中叫做方法）。面向对象编程学起来并不难，它让某些本来很难的事情变得简单了（反之亦然，但你并没有必要用它来处理所有的事情！）。自从几年前这个特性被添加到Perl语言中以来，大量的Perl代码都开始用面向对象的风格进行编写。
 
-\section{Perl Modules}
-I've frequently mentioned modules and CPAN—the large collection of Perl code—has a huge number of modules you can use. Most are free, but do make a point of checking for copyright restrictions and see the discussion in the Perl FAQs about copyright issues. These days, most modules, including the bulk of the code available on CPAN, are written in an object-oriented style. You'll need to extend your Perl knowledge to encompass this style, but you won't need an in-depth view of object-oriented techniques to use most modules in your programs.  
+\section{Perl模块}
+我多次提到模块，而CPAN这个Per代码的大仓库中有大量的可以使用的模块。大部分都是免费的，但是最好检查一下版权限制，看看Perl FAQs中关于版权议题的讨论。最近的大多数模块，包括CPAN中的大量代码，都开始使用面向对象编程的风格进行编写。要想理解这种风格，你需要扩充你的Perl知识，但是你不需要对面向对象编程进行很深入的学习就可以在你的程序中使用大多数的模块。 
 
 \subsection{Bioperl}
-An important and steadily developing suite of Perl modules for bioinformatics is the Bioperl project, which you can find at the web site \href{http://www.bioperl.org}{http://www.bioperl.org}. These modules give you lots of capabilities, all ready to use. 
+生物信息学中一个重要的并且在稳步发展的Perl模块套件就是Bioperl项目，你可以在网站\href{http://www.bioperl.org}{http://www.bioperl.org}上找到它。这些模块赋予你很多的能力，都是可以直接使用的。
 
-\section{Complex Data Structures}
-Perl can handle complex data structures. This is useful in many programming situations; it's also necessary to learn in order to read a lot of existing Perl code that might come your way.
+\section{复杂的数据结构}
+Perl可以处理复杂的数据结构，在许多编程的情况下这是非常有用的。当然这也需要你去学习，这样才能读懂你可能会遇到的大量已有的Perl代码。
 
-For example, in this book, you've parsed a lot of data. To do so, you developed groups of subroutines, each fairly short, and each parsing different levels of the structure of the data. By using complex data structures, you can store your parse in a form that reflects the structure of the data. This, combined with object-oriented methods for accessing the parsed data, is a useful way to accomplish a parse.
+比如，在本书中，你已经解析了很多数据。为了完成这个任务，你编写了一组子程序，每一个都非常简短，每一个都用来解析数据不同层面的结构。通过使用复杂的数据结构，你可以用反映数据的结构的形式来存储你的解析过程。这和使用面向对象的方法访问已经解析的数据结合起来，是实现数据解析的一个非常有用的方法。
 
-Complex data structures depend on references, which I've touched on in discussions of call by reference and of \textit{File::Find}.
+复杂的数据结构依赖于指针，我在通过指针进行访问以及\textit{File::Find}的讨论中简单提过它。
 
-\section{Relational Databases}
-Relational databases are another area Perl programmers and bioinformaticians need to explore. There comes a time when flat files or DBM just won't do for managing the data of a medium- or large-sized project, and you must turn to relational databases. Although they take a bit more effort to set up and program, they offer a standard and reliable way to store data and ask questions about it. In this book, we briefly discussed relational databases and actually used a simple DBM database. In the course of your work, however, you're likely to encounter Oracle, MySQL, PostgreSQL, Sybase, and others.The Perl module DBI, which stands for Database Independence, makes it possible to write code for manipulating relational databases that doesn't depend (too much) on which database you're actually using.
+\section{关系数据库}
+关系数据库是Perl程序员和生物信息学家需要了解的另外一个领域。总有一天，你会发现使用使用平面文件或者DBM没法管理中型或大型项目的数据，这时就要考虑关系数据库了。尽管需要花点力气才能配置好并进行编程，但是它提供了一个标准且可靠的方法来存储数据，并且针对它可以询问各种问题。在本书中，我们简单讨论了以下关系数据库，但实际上使用了一个简单的DBM数据库。然而，在你工作的历程中，你很可能会遇到Oracle、MySQL、PostgreSQL、Sybase和其他的一些数据库。Perl模块DBI，它本身就表示Database Independence，使得在不（太）考虑实际使用的哪个数据库的前提下编写操作关系数据库的代码成为可能。
 
-The fact is, writing code to handle databases isn't hard to do. The hardest part is making sure that the database is installed with the proper libraries, that the proper Perl modules are in place, and that you know how to connect to the database from your program. Once you have those things in place, using the database is generally easy.  
+事实上，编写处理数据库的代码并不是很难。最困难的部分其实是要把正确的库存储到数据库中，确保有正确的Perl模块可以使用，以及你知道如何从你的程序中连接数据库。一旦你把这些都搞定了，使用数据库通常来说就非常容易了。
 
-That said, relational databases have their own lore, and there is a substantial body of knowledge about designing and managing good databases. Many programmers specialize in these issues, and that's true for plenty of bioinformaticians as well, since there are many interesting research questions related to designing better biological databases. 
+都知道，关系数据库有它们自己的知识，需要大量的知识来设计和操作好的数据库。许多程序员就专门研究这些议题，其实不少生物信息学家也专门做这个，因为对于设计更好的生物学数据库来说有很多有趣的研究问题。
 
-\section{Microarrays and XML}
-Microarrays (miniaturized chip-based "laboratories" for studying gene expression) and XML (Extensible Markup Language) are two modern developments that are coming together. Now that whole genomes are available, microarray techniques enable you to measure the relative levels of thousands of gene transcripts at a time, and with their help, we hope to unravel the many pathways and interactions between the thousands of genes and gene products in the cell. XML is, to be painfully brief, a kind of new and improved HTML that is emerging as a standard for storing and interchanging data. (This book was written making extensive use of XML.) XML is becoming an important interface to many new kinds of experimental data. 
+\section{芯片和XML}
+芯片（用于研究基因表达的小型化的基于芯片的“实验室”）和XML（Extensible Markup Language，可扩展标记语言）是两个结合在一起的现代发展领域。现在整个基因组都可以使用，芯片技术让你可以一次检测成千上万个基因转录本的相对水平，通过它们的帮助，我们希望理解细胞中成千上万个基因和基因产物之间的通路和相互作用。简单来说，XML是一个新的、改良版的HTML，它是作为存储和互换数据的标准而出现的。（本书就是通过广泛使用XML进行编写的。\footnote{译者注：本书是基于\LaTeX 进行排版的。}）XMl正在成为许多新的实验数据类型的重要的接口。
 
-\section{Graphics Programming}
-Good graphical representation of data is critical for making your results useful to your colleagues. Graphics programming language present data and results and interact with software applications via attractive and easy-to-navigate interfaces. Many bioinformatics programs deal with large amounts of data, and a graphical user interface (GUI) can mean the difference between an application that helps you do your work and one that wastes your time. GUIs such as those commonly found on web pages are important not only for the display of output but also for the collection of user input.
+\section{图形编程}
+用好的图形展示数据，对于让你的同事能够充分理解你的结果是至关重要的。图形编程语言展示数据和结果，并且通过绚丽且易于导航的界面和软件应用进行交互。许多生物信息学的程序都处理大量的数据，一个图形用户界面（GUI，graphical user interface）可以很容易把有助于你工作的应用和浪费你时间的应用区分开来。像常见于网页上的GUIs，不仅对于展示输出结果至关重要，对于用户数据的收集也是非常重要的。
 
-The point-and-click method of interacting with software applications is a basic standard. A good GUI makes an application or program much easier to use. One difficulty of GUIs and graphic data displays, however, is that they tend to be less portable than programs with simpler graphics.  You may want to explore the graphics capabilities of such Perl modules as Tk and GD, among others. 
+通过点击的方法与软件应用进行交互是最基本的标准。一个好的GUI可以让一个应用或者程序更加易用。然而，一个复杂的GUIs以及图形数据展示，与更加简单的图形相比，其可移植性要差一些。你可能要去摸索一下Tk、GD以及其他一些Perl模块的图形能力。
 
-\section{Modeling Networks}
-Networks of interacting biological systems, such as genes and gene products, can be modeled and investigated using graph algorithms.  Despite the similarity to the term "graphics," graph algorithms are a different entity based on the discrete mathematical field of graph theory. Algorithms on graphs and their many variants (such as Petri nets) can store and investigate the properties of biochemical pathways and intra- and intercellular signalling pathways, for example.
+\section{网络建模}
+生物学系统，比如基因和基因产物，相互作用的网络，可以进行建模，用图算法进行研究。尽管和“图形”这个名词非常相似，但图算法是完全不同的一个东西，它基于图论的离散数学领域。举个例子，利用图和其他许多变体（比如佩特里网（Petri net））的算法，可以存储并研究生化通路和细胞内以及细胞间信号通路的属性。
 
-\section{DNA Computers}
-For the forward-thinking scientist, it is interesting and instructive to learn about new trends in computing such as DNA computers, optical computing, and quantum computing. DNA computers are especially fun. They use standard molecular biology laboratory techniques as a model of a general-purpose computer. They can implement algorithms, store data, and in general behave like a "real" computer. They are impractical as of this writing, but they are really fun to think about, and someday, who knows? 
-
+\section{DNA计算机}
+对于有超前思维的科学家来说，了解研究计算方面的新动向既有趣也有启发性，比如DNA计算机、光计算和量子计算。DNA计算机尤其有趣。它们使用标准的分子生物学实验室中的技术作为通用计算机的模型。它们可以执行算法、存储数据，从常见的行为来看就行一台“真”的计算机一样。在本书编写时，它们还是不切实际的，但光想想就足够激动人心的了，也许某一天真的会实现，谁知道呢？\footnote{译者注：该领域已经取得了不错的进展，请参看\href{https://zh.wikipedia.org/wiki/DNA\%E9\%81\%8B\%E7\%AE\%97}{DNA运算（维基百科）}。}
