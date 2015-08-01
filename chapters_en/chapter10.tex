@@ -243,22 +243,22 @@ foreach my $line (@GenBankFile) {
 \subsection{Using Scalars}
 A second way to separate annotations from sequences in GenBank records is to read the entire record into a scalar variable and operate on it with regular expressions. For some kinds of data, this can be a more convenient way to parse the input (compared to scanning through an array, as in \autoref{exam:example10.1}).
 
-Usually string data is stored one line per scalar variable with its newlines, if any, at the end of the string. Sometimes, however, you store several lines concatenated together in one string that is, in turn, stored in a single scalar variable. These multiline strings aren't uncommon; you used them to gather the sequence from a FASTA file in Examples \autoref{exam:example6.2} and \autoref{exam:example6.3}. Regular expressions have pattern modifiers that can be used to make multiline strings with their embedded newlines easy to use. 
+Usually string data is stored one line per scalar variable with its newlines, if any, at the end of the string. Sometimes, however, you store several lines concatenated together in one string that is, in turn, stored in a single scalar variable. These multiline strings aren't uncommon; you used them to gather the sequence from a FASTA file in Examples \autoref{exam:example6.2} and \autoref{exam:example6.3}. Regular expressions have pattern modifiers that can be used to make multiline strings with their embedded newlines easy to use.
 
 \subsubsection{Pattern modifiers}
 The pattern modifiers we've used so far are \verb|/g|, for global matching, and \verb|/i|, for case-insensitive matching. Let's take a look at two more that affect the way regular expressions interact with the newlines in scalars.
 
-Recall that previous regular expressions have used the caret (\verb|^|), dot (\verb|.|), and dollar sign (\verb|$|) metacharacters. The \verb|^| anchors a regular expression to the beginning of a string, by default, so that \verb|/^THE BEGUINE/| matches a string that begins with "THE BEGUINE". Similarly, \verb|$| anchors an expression to the end of the string, and the dot (\verb|.|) matches any character except a newline.
+Recall that previous regular expressions have used the caret (\verb|^|), dot (\verb|.|), and dollar sign (\verb|$|) metacharacters. The \verb|^| anchors a regular expression to the beginning of a string, by default, so that \verb|/^THE BEGUINE/| matches a string that begins with ``THE BEGUINE". Similarly, \verb|$| anchors an expression to the end of the string, and the dot (\verb|.|) matches any character except a newline.
 
 The following pattern modifiers affect these three metacharacters:
 
 \begin{itemize}
-  \item The \verb|/s| modifier assumes you want to treat the whole string as a single line, even with embedded newlines, so it makes the dot metacharacter match any character \textit{including} newlines.  
+  \item The \verb|/s| modifier assumes you want to treat the whole string as a single line, even with embedded newlines, so it makes the dot metacharacter match any character \textit{including} newlines.
   \item The \verb|/m| modifier assumes you want to treat the whole string as a multiline, with embedded newlines, so it extends the \verb|^| and the \verb|$| to match after, or before, a newline, embedded in the string.
 \end{itemize}
 
 \subsubsection{Examples of pattern modifiers}
-Here's an example of the default behavior of caret (\verb|^|), dot (\verb|.|), and dollar sign (\verb|$|): 
+Here's an example of the default behavior of caret (\verb|^|), dot (\verb|.|), and dollar sign (\verb|$|):
 
 \begin{lstlisting}
 use warnings;
@@ -272,12 +272,11 @@ This demonstrates the default behavior without the \verb|/m| or \verb|/s| modifi
 Use of uninitialized value in print statement at line 3.
 \end{lstlisting}
 
-The \verb|print| statement tries to print \verb|$&|, a special variable that is always set to the last successful pattern match. This time, since the pattern doesn't match, the variable \verb|$&| isn't set, and you get a warning message for attempting to print an uninitialized value. 
+The \verb|print| statement tries to print \verb|$&|, a special variable that is always set to the last successful pattern match. This time, since the pattern doesn't match, the variable \verb|$&| isn't set, and you get a warning message for attempting to print an uninitialized value.
 
-Why doesn't the match succeed? First, let's examine the \verb|^.*$| pattern. It begins with a \verb|^|, which means it must match from the beginning of the string. It ends with a \verb|$|, which means it must also match at the end of the string (the end of the string may contain a single newline, but no other newlines are allowed). The \verb|.*| means it must match zero or more (\verb|*|) of any characters (\verb|.|) except the newline. So, in other words, the pattern \verb|^.*$| matches any string that doesn't contain a newline except for a possible single newline as the last character. But since the string in question, "\verb|ACC\nGTT|" does contain an embedded newline \verb|\n| that isn't the last character, the pattern match fails.
+Why doesn't the match succeed? First, let's examine the \verb|^.*$| pattern. It begins with a \verb|^|, which means it must match from the beginning of the string. It ends with a \verb|$|, which means it must also match at the end of the string (the end of the string may contain a single newline, but no other newlines are allowed). The \verb|.*| means it must match zero or more (\verb|*|) of any characters (\verb|.|) except the newline. So, in other words, the pattern \verb|^.*$| matches any string that doesn't contain a newline except for a possible single newline as the last character. But since the string in question, ``\verb|ACC\nGTT|" does contain an embedded newline \verb|\n| that isn't the last character, the pattern match fails.
 
-In the next examples, the pattern modifiers \verb|/m| and \verb|/s| change the default
-behaviors for the metacharacters \verb|^|, and \verb|$|, and the dot: 
+In the next examples, the pattern modifiers \verb|/m| and \verb|/s| change the default behaviors for the metacharacters \verb|^|, and \verb|$|, and the dot:
 
 \begin{lstlisting}
 "AAC\nGTT" =~ /^.*$/m;
@@ -286,7 +285,7 @@ print $&, "\n";
 
 This snippet prints out \verb|AAC| and demonstrates the \verb|/m| modifier. The \verb|/m| extends the meaning of the \verb|^| and the \verb|$| so they also match around embedded newlines. Here, the pattern matches from the beginning of the string up to the first embedded newline.
 
-The next snippet of code demonstrates the \verb|/s| modifier: 
+The next snippet of code demonstrates the \verb|/s| modifier:
 
 \begin{lstlisting}
 "AAC\nGTT" =~ /^.*$/s;
@@ -300,14 +299,14 @@ AAC
 GTT
 \end{lstlisting}
 
-The \verb|/s| modifier changes the meaning of the dot metacharacter so that it matches any character including newlines. With the \verb|/s| modifier, the pattern matches everything from the beginning of the string to the end of the string, including the newline. Notice when it prints, it prints the embedded newline. 
+The \verb|/s| modifier changes the meaning of the dot metacharacter so that it matches any character including newlines. With the \verb|/s| modifier, the pattern matches everything from the beginning of the string to the end of the string, including the newline. Notice when it prints, it prints the embedded newline.
 
 \subsubsection{Separating annotations from sequence}
 Now that you've met the pattern-matching modifiers and regular expressions that will be your main tools for parsing a GenBank file as a scalar, let's try separating the annotations from the sequence.
 
-The first step is to get the GenBank record stored as a scalar variable. Recall that a GenBank record starts with a line beginning with the word "LOCUS" and ends with the end-of-record separator: a line containing two forward slashes.
+The first step is to get the GenBank record stored as a scalar variable. Recall that a GenBank record starts with a line beginning with the word ``LOCUS" and ends with the end-of-record separator: a line containing two forward slashes.
 
-First you want to read a GenBank record and store it in a scalar variable. There's a device called an \textit{input record separator} denoted by the special variable \verb|$/| that lets you do exactly that. The input record separator is usually set to a newline, so each call to read a scalar from a filehandle gets one line. Set it to the GenBank end-of-record separator like so: 
+First you want to read a GenBank record and store it in a scalar variable. There's a device called an \textit{input record separator} denoted by the special variable \verb|$/| that lets you do exactly that. The input record separator is usually set to a newline, so each call to read a scalar from a filehandle gets one line. Set it to the GenBank end-of-record separator like so:
 
 \begin{lstlisting}
 $/ = "//\n";
@@ -322,13 +321,13 @@ After reading in the record, you'll parse it into the annotation and sequence pa
 
 The output from this program is the same as the GenBank file listed previously, minus the last line, which is the end-of-record separator \verb|//|.
 
-Let's focus on the regular expression that parses the annotation and sequence out of the \verb|$record| variable. This is the most complicated regular expression so far: 
+Let's focus on the regular expression that parses the annotation and sequence out of the \verb|$record| variable. This is the most complicated regular expression so far:
 
 \begin{lstlisting}
 $record = /^(LOCUS.*ORIGIN\s*\n)(.*)\/\/\n/s.
 \end{lstlisting}
 
-There are two pairs of parentheses in the regular expression: (\verb|LOCUS.*ORIGIN\s*\n|) and (\verb|.*|). The parentheses are metacharacters whose purpose is to remember the parts of the data that match the pattern within the parentheses, namely, the annotation and the sequence. Also note that the pattern match returns an array whose elements are the matched parenthetical patterns. After you match the annotation and the sequence within the pairs of parentheses in the regular expression, you simply assign the matched patterns to the two variables \verb|$annotation| and \verb|$dna|, like so: 
+There are two pairs of parentheses in the regular expression: \verb|(LOCUS.*ORIGIN\s*\n)| and \verb|(.*)|. The parentheses are metacharacters whose purpose is to remember the parts of the data that match the pattern within the parentheses, namely, the annotation and the sequence. Also note that the pattern match returns an array whose elements are the matched parenthetical patterns. After you match the annotation and the sequence within the pairs of parentheses in the regular expression, you simply assign the matched patterns to the two variables \verb|$annotation| and \verb|$dna|, like so:
 
 \begin{lstlisting}
 ($annotation, $dna) = ($record =~ /^(LOCUS.*ORIGIN\s*\n)(.*)\/\/\n/s);
@@ -352,15 +351,15 @@ Now, look at the second parentheses and the remainder:
 (.*)\/\/\n
 \end{lstlisting}
 
-This is easier. The \verb|.*| matches any character, including newlines because of the \verb|/s| pattern modifier at the end of the pattern match. The parentheses are followed by the end-of-record line, \verb|//|, including the newline at the end, with the slashes preceded by backslashes to show that you want to match them exactly. They're not delimiters of the pattern matching operator. The end result is the GenBank record with the annotation and the sequence separated into the variables \verb|$annotation| and \verb|$sequence|. Although the regular expression I used requires a bit of explanation, the attractive thing about this approach is that it took only one line of Perl code to extract both annotation and sequence. 
+This is easier. The \verb|.*| matches any character, including newlines because of the \verb|/s| pattern modifier at the end of the pattern match. The parentheses are followed by the end-of-record line, \verb|//|, including the newline at the end, with the slashes preceded by backslashes to show that you want to match them exactly. They're not delimiters of the pattern matching operator. The end result is the GenBank record with the annotation and the sequence separated into the variables \verb|$annotation| and \verb|$sequence|. Although the regular expression I used requires a bit of explanation, the attractive thing about this approach is that it took only one line of Perl code to extract both annotation and sequence.
 
 \section{Parsing Annotations}
 Now that you've successfully extracted the sequence, let's look at parsing the annotations of a GenBank file.
 
-Looking at a GenBank record, it's interesting to think about how to extract the useful information. The FEATURES table is certainly a key part of the story. It has considerable structure: what should be preserved, and what is unnecessary? For instance, sometimes you just want to see if a word such as "endonuclease" appears anywhere in the record. For this, you just need a subroutine that searches for any regular expression in the annotation. Sometimes this is enough, but when detailed surgery is necessary, Perl has the necessary tools to make the operation successful. 
+Looking at a GenBank record, it's interesting to think about how to extract the useful information. The FEATURES table is certainly a key part of the story. It has considerable structure: what should be preserved, and what is unnecessary? For instance, sometimes you just want to see if a word such as ``endonuclease" appears anywhere in the record. For this, you just need a subroutine that searches for any regular expression in the annotation. Sometimes this is enough, but when detailed surgery is necessary, Perl has the necessary tools to make the operation successful.
 
 \subsection{Using Arrays}
-\autoref{exam:example10.3} parses a few pieces of information from the annotations in a GenBank file. It does this using the data in the form of an array. 
+\autoref{exam:example10.3} parses a few pieces of information from the annotations in a GenBank file. It does this using the data in the form of an array.
   
 \textbf{Example 10-3. Parsing GenBank annotations using arrays}
 \lstinputlisting[label=exam:example10.3]{./scripts/example10-3.pl}
@@ -376,7 +375,7 @@ AB031069
 Homo sapiens
 \end{lstlisting}
 
-Now let's slightly extend that program to handle the DEFINITION field.  Notice that the DEFINITION field can extend over more than one line. To collect that field, use a trick you've already seen in \autoref{exam:example10.1}: set a flag when you're in the "state" of collecting a definition. The flag variable is called, unsurprisingly, \verb|$flag|. 
+Now let's slightly extend that program to handle the DEFINITION field. Notice that the DEFINITION field can extend over more than one line. To collect that field, use a trick you've already seen in \autoref{exam:example10.1}: set a flag when you're in the ``state" of collecting a definition. The flag variable is called, unsurprisingly, \verb|$flag|.
 
 \textbf{Example 10-4. Parsing GenBank annotations using arrays, take 2}
 \lstinputlisting[label=exam:example10.4]{./scripts/example10-4.pl}
@@ -395,7 +394,7 @@ AB031069
 Homo sapiens
 \end{lstlisting}
 
-This use of flags to remember which part of the file you're in, from one iteration of a loop to the next, is a common technique when extracting information from files that have multiline sections. As the files and their fields get more complex, the code must keep track of many flags at a time to remember which part of the file it's in and what information needs to be extracted. It works, but as the files become more complex, so does the code. It becomes hard to read and hard to modify. So let's look at regular expressions as a vehicle for parsing annotations. 
+This use of flags to remember which part of the file you're in, from one iteration of a loop to the next, is a common technique when extracting information from files that have multiline sections. As the files and their fields get more complex, the code must keep track of many flags at a time to remember which part of the file it's in and what information needs to be extracted. It works, but as the files become more complex, so does the code. It becomes hard to read and hard to modify. So let's look at regular expressions as a vehicle for parsing annotations.
 
 \subsection{When to Use Regular Expressions}
 We've used two methods to parse GenBank files: regular expressions and looping through arrays of lines and setting flags. We used both methods to separate the annotation from the sequence in a previous section of this chapter. Both methods were equally well suited, since in GenBank files, the annotation is followed by the sequence, clearly delimited by an \verb|ORIGIN| line: a simple structure. However, parsing the annotations seems a bit more complicated; therefore, let's try to use regular expressions to accomplish the task.
@@ -404,7 +403,7 @@ To begin, let's wrap the code we've been working on into some convenient subrout
 
 As mentioned previously, we'll use the file \textit{library.gb}, which you can download from this book's web site.
 
-Since dealing with annotation data is somewhat complex, let's take a minute to break our tasks into convenient subroutines. Here's the pseudocode: 
+Since dealing with annotation data is somewhat complex, let's take a minute to break our tasks into convenient subroutines. Here's the pseudocode:
 
 \begin{lstlisting}
 sub open_file
@@ -436,7 +435,7 @@ The idea is to make a subroutine for each important task you want to accomplish 
 
 You're designing these subroutines to work with library files, that is, files with multiple GenBank records. You pass the filehandle into the subroutines as an argument, so that your subroutines can access open library files as represented by the filehandles. Doing so enables you to have a \verb|get_next_record| function, which is handy in a loop. Using the Perl function \textit{tell} also allows you to save the byte offset of any record of interest, and then return later and extract the record at that byte offset very quickly. (A \textit{byte offset} is just the number of characters into the file where the information of interest lies.) The operating system supports Perl in letting you go immediately to any byte offset location in even huge files, thus bypassing the usual way of opening the file and reading from the beginning until you get where you want to be.  
 
-Using a byte offset is important when you're dealing with large files.  Perl gives you built-in functions such as \verb|seek| that allow you, on an open file, to go immediately to any location in the file. The idea is that when you find something in a file, you can save the byte offset using the Perl function \textit{tell}. Then, when you want to return to that point in the file, you can just call the Perl function \textit{seek} with the byte offset as an argument. You'll see this later in this chapter when you build a DBM file to look up records based on their accession numbers. But the main point is that with a 250-MB file, it takes too long to find something by searching from the beginning, and there are ways of getting around it.
+Using a byte offset is important when you're dealing with large files. Perl gives you built-in functions such as \verb|seek| that allow you, on an open file, to go immediately to any location in the file. The idea is that when you find something in a file, you can save the byte offset using the Perl function \textit{tell}. Then, when you want to return to that point in the file, you can just call the Perl function \textit{seek} with the byte offset as an argument. You'll see this later in this chapter when you build a DBM file to look up records based on their accession numbers. But the main point is that with a 250-MB file, it takes too long to find something by searching from the beginning, and there are ways of getting around it.
 
 The parsing of the data is done in three steps, according to the design: 
 
@@ -446,9 +445,9 @@ The parsing of the data is done in three steps, according to the design:
   \item Parse the features table.
 \end{enumerate}
 
-These steps seem natural, and, depending on what you want to do, allow you to parse to whatever depth is needed.  
+These steps seem natural, and, depending on what you want to do, allow you to parse to whatever depth is needed.
 
-Here's a main program in pseudocode that shows how to use those subroutines: 
+Here's a main program in pseudocode that shows how to use those subroutines:
 
 \begin{lstlisting}
 open_file 
@@ -469,10 +468,10 @@ while ( get_next_record  )
 return accession numbers of records meeting the criteria
 \end{lstlisting}
 
-This example shows how to use subroutines to answer a question such as: what are the genes on chromosome 22 that contain a given motif and have small exons? 
+This example shows how to use subroutines to answer a question such as: what are the genes on chromosome 22 that contain a given motif and have small exons?
   
 \subsection{Main Program}
-Let's test these subroutines with \autoref{exam:example10.5}, which has some subroutine definitions that will be added to the \textit{BeginPerlBioinfo.pm} module: 
+Let's test these subroutines with \autoref{exam:example10.5}, which has some subroutine definitions that will be added to the \textit{BeginPerlBioinfo.pm} module:
   
 \textbf{Example 10-5. GenBank library subroutines}
 \lstinputlisting[label=exam:example10.5]{./scripts/example10-5.pl}
@@ -503,7 +502,7 @@ If you look back at the complete GenBank record earlier in this chapter, you'll 
 
 But for now, let's just extract the top-level fields. You will need a regular expression that matches everything from a word at the beginning of a line to a newline that just precedes another word at the beginning of a line.
 
-Here's a regular expression that matches our definition of a field: 
+Here's a regular expression that matches our definition of a field:
 
 \begin{lstlisting}
 /^[A-Z].*\n(^\s.*\n)*/m
@@ -525,18 +524,18 @@ The second part of the regular expression:
 (^\s.*\n)*
 \end{lstlisting}
 
-matches a space or tab \verb|\s| at the beginning of a line, followed by any number of characters (except newlines), followed by a newline. This is surrounded by parentheses and followed by a *, which means 0 or more such lines. This matches succeeding lines in a field, lines that start with whitespace. A field may have no extra lines of this sort or several such lines.
+matches a space or tab \verb|\s| at the beginning of a line, followed by any number of characters (except newlines), followed by a newline. This is surrounded by parentheses and followed by a \verb|*|, which means 0 or more such lines. This matches succeeding lines in a field, lines that start with whitespace. A field may have no extra lines of this sort or several such lines.
 
 So, the two parts of the regular expression combined match the fields with their optional additional lines.
 
-\autoref{exam:example10.6} shows a subroutine that, given the annotations section of a GenBank record stored in a scalar variable, returns a hash with keys equal to the names of the top-level fields and values equal to the contents of those fields. 
+\autoref{exam:example10.6} shows a subroutine that, given the annotations section of a GenBank record stored in a scalar variable, returns a hash with keys equal to the names of the top-level fields and values equal to the contents of those fields.
 
-\textbf{Example 10-6. Parsing Genbank annotation}
+\textbf{Example 10-6. Parsing GenBank annotation}
 \lstinputlisting[label=exam:example10.6]{./scripts/example10-6.pl}
 
-In the subroutine \textit{parse\_annotation}, note how the variables \verb|$key| and \verb|$value| are scoped within the \verb|while| block. One benefit of this is that you don't have to reinitialize the variables each time through the loop.  Also note that the key is the name of the field, and the value is the whole field.
+In the subroutine \textit{parse\_annotation}, note how the variables \verb|$key| and \verb|$value| are scoped within the \verb|while| block. One benefit of this is that you don't have to reinitialize the variables each time through the loop. Also note that the key is the name of the field, and the value is the whole field.
 
-You should take the time to understand the regular expression that extracts the field name for the key: 
+You should take the time to understand the regular expression that extracts the field name for the key:
 
 \begin{lstlisting}
 (my $key = $value) =~ s/^([A-Z]+).*/$1/s;
@@ -544,9 +543,9 @@ You should take the time to understand the regular expression that extracts the 
 
 This first assigns \verb|$key| the value \verb|$value|. It then replaces everything in \verb|$key| (note the \verb|/s| modifier for embedded newlines) with \verb|$1|, which is a special variable pattern between the first pair of parentheses (\verb|[A-Z]+|).  This pattern is one or more capital letters (anchored to the beginning of the string, i.e., the field name), so it sets \verb|$key| to the value of the first word in the field name.
 
-You get the following output from \autoref{exam:example10.6} (the test just fetches the first record in the GenBank library): 
+You get the following output from \autoref{exam:example10.6} (the test just fetches the first record in the GenBank library):
 
-\begin{lstlisting}
+\begin{lstlisting}[language={},basicstyle=\small\tt,breaklines=false]
 ******** SOURCE *********
 SOURCE      Homo sapiens embryo male lung fibroblast cell_line:HuS-L12 cDNA to
             mRNA.
@@ -611,17 +610,17 @@ ORIGIN
 BASE COUNT      564 a    715 c    768 g    440 t
 \end{lstlisting}
 
-As you see, the method is working, and apart from the difficulty of reading the regular expressions (which will become easier with practice), the code is very straightforward, just a few short subroutines. 
+As you see, the method is working, and apart from the difficulty of reading the regular expressions (which will become easier with practice), the code is very straightforward, just a few short subroutines.
 
 \subsection{Parsing the FEATURES Table}
-Let's take this one step further and parse the features table to its next level, composed of the \verb|source|, \verb|gene|, and \verb|CDS| \textit{features keys}. (See later in this section for a more complete list of these features keys.) In the exercises at the end of the chapter, you'll be challenged to descend further into the FEATURES table.
+Let's take this one step further and parse the FEATURES table to its next level, composed of the \verb|source|, \verb|gene|, and \verb|CDS| \textit{features keys}. (See later in this section for a more complete list of these features keys.) In the exercises at the end of the chapter, you'll be challenged to descend further into the FEATURES table.
 
 To study the FEATURES table, you should first look over the NCBI \textit{gbrel.txt} document mentioned previously. Then you should study the most complete documentation for the FEATURES table, available at \href{http://www.ncbi.nlm.nih.gov/collab/FT/index.html}{http://www.ncbi.nlm.nih.gov/collab/FT/index.html}.
 
 \subsubsection{Features}
-Although our GenBank entry is fairly simple and includes only three features, there are actually quite a few of them. Notice that the parsing code will find all of them, because it's just looking at the structure of the document, not for specific features.  
+Although our GenBank entry is fairly simple and includes only three features, there are actually quite a few of them. Notice that the parsing code will find all of them, because it's just looking at the structure of the document, not for specific features.
 
-The following is a list of the features defined for GenBank records.  Although lengthy, I think it's important to read through it to get an idea of the range of information that may be present in a GenBank record. 
+The following is a list of the features defined for GenBank records. Although lengthy, I think it's important to read through it to get an idea of the range of information that may be present in a GenBank record.
 
 \textcolor{red}{\textit{allele}}
 \begin{adjustwidth}{1cm}{}
@@ -675,7 +674,7 @@ Region that codes for part of spliced mRNA
 
 \textcolor{red}{\textit{gene}}
 \begin{adjustwidth}{1cm}{}
-Region that defines a functional gene, possibly including upstream (promoter, enhancer, etc.) and downstream control elements, and for which a name has been assigned 
+Region that defines a functional gene, possibly including upstream (promoter, enhancer, etc.) and downstream control elements, and for which a name has been assigned
 \end{adjustwidth}
 
 \textcolor{red}{\textit{GC\_signal}}
@@ -720,7 +719,7 @@ Miscellaneous difference feature
 
 \textcolor{red}{\textit{misc\_feature}}
 \begin{adjustwidth}{1cm}{}
-Region of biological significance that can't be described by any other feature 
+Region of biological significance that can't be described by any other feature
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_recomb}}
@@ -860,7 +859,7 @@ Small nuclear RNA
 
 \textcolor{red}{\textit{source}}
 \begin{adjustwidth}{1cm}{}
-Biological source of the sequence data represented by a GenBank record; mandatory feature, one or more per record; for organisms that have been incorporated within the NCBI taxonomy database, an associated \verb|/db_xref="taxon:NNNN"| qualifier will be present (where \verb|NNNNN| is the numeric identifier assigned to the organism within the NCBI taxonomy database) 
+Biological source of the sequence data represented by a GenBank record; mandatory feature, one or more per record; for organisms that have been incorporated within the NCBI taxonomy database, an associated \verb|/db_xref="taxon:NNNN"| qualifier will be present (where \verb|NNNNN| is the numeric identifier assigned to the organism within the NCBI taxonomy database)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{stem\_loop}}
@@ -870,7 +869,7 @@ Hairpin loop structure in DNA or RNA
 
 \textcolor{red}{\textit{STS}}
 \begin{adjustwidth}{1cm}{}
-Sequence Tagged Site: operationally unique sequence that identifies the combination of primer spans used in a PCR assay 
+Sequence Tagged Site: operationally unique sequence that identifies the combination of primer spans used in a PCR assay
 \end{adjustwidth}
 
 \textcolor{red}{\textit{TATA\_signal}}
@@ -948,7 +947,7 @@ Pribnow box in prokaryotic promoters
 5' untranslated region (leader)
 \end{adjustwidth}
 
-These feature keys can have their own additional features, which you'll see here and in the exercises. 
+These feature keys can have their own additional features, which you'll see here and in the exercises.
 
 \subsubsection{Parsing}
 \autoref{exam:example10.7} finds whatever features are present and returns an array populated with them. It doesn't look for the complete list of features as presented in the last section; it finds just the features that are actually present in the GenBank record and returns them for further use.
@@ -995,7 +994,7 @@ It's often the case that there are multiple instances of the same feature in a r
                       AMTNRAGLLALMLHQTIQHDPLTTDLRSSADR
 \end{lstlisting}
 
-In subroutine \verb|parse_features| of \autoref{exam:example10.7}, the regular expression that extracts the features is much like the regular expression used in \autoref{exam:example10.6} to parse the top level of the annotations. Let's look at the essential parsing code of \autoref{exam:example10.7}: 
+In subroutine \verb|parse_features| of \autoref{exam:example10.7}, the regular expression that extracts the features is much like the regular expression used in \autoref{exam:example10.6} to parse the top level of the annotations. Let's look at the essential parsing code of \autoref{exam:example10.7}:
 
 \begin{lstlisting}
 while( $features =~ /^ {5}\S.*\n(^ {21}\S.*\n)*/gm ) {
@@ -1003,25 +1002,25 @@ while( $features =~ /^ {5}\S.*\n(^ {21}\S.*\n)*/gm ) {
 
 On the whole, and in brief, this regular expression finds features formatted with the first lines beginning with 5 spaces, and optional continuation lines beginning with 21 spaces.
 
-First, note that the pattern modifier \verb|/m| enables the \verb|^| metacharacter to match after embedded newlines. Also, the \verb|{5}| and \verb|{21}| are quantifiers that specify there should be exactly 5, or 21, of the preceding item, which in both cases is a space. 
+First, note that the pattern modifier \verb|/m| enables the \verb|^| metacharacter to match after embedded newlines. Also, the \verb|{5}| and \verb|{21}| are quantifiers that specify there should be exactly 5, or 21, of the preceding item, which in both cases is a space.
 
-The regular expression is in two parts, corresponding to the first line and optional continuation lines of the feature. The first part \verb|^ {5}\S.*\n| means that the beginning of a line (\verb|^|) has 5 spaces (\verb|{5}|), followed by a non-whitespace character (\verb|\S|) followed by any number of non-newlines (\verb|.*|) followed by a newline (\verb|\n|). The second part of the regular expression, \verb|(^ {21}\S.*\n)*| means the beginning of a line (\verb|^|) has 21 spaces (\verb|{21}|) followed by a non-whitespace character (\verb|\S|) followed by any number of non-newlines (\verb|.*|) followed by a newline (\verb|\n|); and there may be \verb|0| or more such lines, indicated by the \verb|()*| around the whole expression. 
+The regular expression is in two parts, corresponding to the first line and optional continuation lines of the feature. The first part \verb|^ {5}\S.*\n| means that the beginning of a line (\verb|^|) has 5 spaces (\verb|{5}|), followed by a non-whitespace character (\verb|\S|) followed by any number of non-newlines (\verb|.*|) followed by a newline (\verb|\n|). The second part of the regular expression, \verb|(^ {21}\S.*\n)*| means the beginning of a line (\verb|^|) has 21 spaces (\verb|{21}|) followed by a non-whitespace character (\verb|\S|) followed by any number of non-newlines (\verb|.*|) followed by a newline (\verb|\n|); and there may be \verb|0| or more such lines, indicated by the \verb|()*| around the whole expression.
 
 The main program has a short regular expression along similar lines to extract the feature name (also called the feature key) from the feature.
 
-So, again, success. The FEATURES table is now decomposed or "parsed" in some detail, down to the level of separating the individual features.  The next stage in parsing the FEATURES table is to extract the detailed information for each feature. This includes the location (given on the same line as the feature name, and possibly on additional lines); and the qualifiers indicated by a slash, a qualifier name, and if applicable, an equals sign and additional information of various kinds, possibly continued on additional lines.
+So, again, success. The FEATURES table is now decomposed or ``parsed" in some detail, down to the level of separating the individual features. The next stage in parsing the FEATURES table is to extract the detailed information for each feature. This includes the location (given on the same line as the feature name, and possibly on additional lines); and the qualifiers indicated by a slash, a qualifier name, and if applicable, an equals sign and additional information of various kinds, possibly continued on additional lines.
 
 I'll leave this final step for the exercises. It's a fairly straightforward extension of the approach we've been using to parse the features. You will want to consult the documentation from the NCBI web site for complete details about the structure of the FEATURES table before trying to parse the location and qualifiers from a feature.
 
-The method I've used to parse the FEATURES table maintains the structure of the information. However, sometimes you just want to see if some word such as "endonulease" appears anywhere in the record. For this, recall that you created a \verb|search_annotation| subroutine in \autoref{exam:example10.5} that searches for any regular expression in the entire annotation; very often, this is all you really need. As you've now seen, however, when you really need to dig into the FEATURES table, Perl has its own features that make the job possible and even fairly easy. 
+The method I've used to parse the FEATURES table maintains the structure of the information. However, sometimes you just want to see if some word such as ``endonulease" appears anywhere in the record. For this, recall that you created a \verb|search_annotation| subroutine in \autoref{exam:example10.5} that searches for any regular expression in the entire annotation; very often, this is all you really need. As you've now seen, however, when you really need to dig into the FEATURES table, Perl has its own features that make the job possible and even fairly easy.
 
 \section{Indexing GenBank with DBM}
-DBM stands for Database Management. Perl provides a set of built-in functions that give Perl programmers access to DBM files. 
+DBM stands for Database Management. Perl provides a set of built-in functions that give Perl programmers access to DBM files.
 
 \subsection{DBM Essentials}
-When you open a DBM file, you access it like a hash: you give it keys and it returns values, and you can add and delete key-value pairs.  What's useful about DBM is that it saves the key-value data in a permanent disk file on your computer. It can thus save information between the times you run your program; it can also serve as a way to share information between different programs that need the same data. A DBM file can get very big without killing the main memory on your computer and making your program—and everything else—slow to a crawl.
+When you open a DBM file, you access it like a hash: you give it keys and it returns values, and you can add and delete key-value pairs. What's useful about DBM is that it saves the key-value data in a permanent disk file on your computer. It can thus save information between the times you run your program; it can also serve as a way to share information between different programs that need the same data. A DBM file can get very big without killing the main memory on your computer and making your program—and everything else—slow to a crawl.
 
-There are two functions, \textit{dbmopen} and \textit{dbmclose}, that "tie" a hash to a DBM file; then you just use the hash. As you've seen, with a hash, lookups are easy, as are definitions. You can get a list of all the keys from a hash called \verb|%my_hash| by typing \verb|keys %my_hash|. You then can get a list of all values by typing \verb|values %my_hash|. For large DBM files, you may not want to do this; the Perl function \verb|each| allows you to read key-value pairs one at a time, thus saving the memory of your running program. There is also a \textit{delete} function to remove the definitions of keys: 
+There are two functions, \textit{dbmopen} and \textit{dbmclose}, that ``tie" a hash to a DBM file; then you just use the hash. As you've seen, with a hash, lookups are easy, as are definitions. You can get a list of all the keys from a hash called \verb|%my_hash| by typing \verb|keys %my_hash|. You then can get a list of all values by typing \verb|values %my_hash|. For large DBM files, you may not want to do this; the Perl function \verb|each| allows you to read key-value pairs one at a time, thus saving the memory of your running program. There is also a \textit{delete} function to remove the definitions of keys:
 
 \begin{lstlisting}
 delete $my_hash{'DNA'}
@@ -1031,7 +1030,7 @@ entirely removes that key from the hash.
 
 DBM files are a very simple database. They don't have the power of a relational database such as \textit{MySQL}, \textit{Oracle}, or \textit{PostgreSQL}; however, it's remarkable how often a simple database is all that a problem really needs. When you have a set of key-value data (or several such sets), consider using DBM. It's certainly easy to use with Perl.
 
-The main wrinkle to using DBM is that there are several, slightly different DBM implementations—NDBM, GDBM, SDBM, and Berkeley DB. The differences are small but real; but for most purposes, the implementations are interchangeable. Newer versions of Perl give you Berkeley DB by default, and it's easy to get it and install it for your Perl if you want. If you don't have really long keys or values, it's not a problem. Some older DBMs require you to add null bytes to keys and delete them from values: 
+The main wrinkle to using DBM is that there are several, slightly different DBM implementations—NDBM, GDBM, SDBM, and Berkeley DB. The differences are small but real; but for most purposes, the implementations are interchangeable. Newer versions of Perl give you Berkeley DB by default, and it's easy to get it and install it for your Perl if you want. If you don't have really long keys or values, it's not a problem. Some older DBMs require you to add null bytes to keys and delete them from values:
 
 \begin{lstlisting}
 $value = $my_hash{"$key\0"};
@@ -1047,20 +1046,19 @@ Now let's combine the three ideas and use DBM to build a database of information
 
 This general idea is extended in the exercises at the end of the chapter to a considerable extent; you may want to glance ahead at them now to get an idea of the potential power of the technique I'm about to present.
 
-With just the appropriate amount of further ado, here is a code fragment that opens (creating if necessary) a DBM file: 
+With just the appropriate amount of further ado, here is a code fragment that opens (creating if necessary) a DBM file:
 
 \begin{lstlisting}
 unless(dbmopen(%my_hash, 'DBNAME', 0644)) {
   
   print "Cannot open DBM file DBNAME with mode 0644\n";
   exit;
-
 }
 \end{lstlisting}
 
 \verb|%my_hash| is like any other hash in Perl, but it will be tied to the DBM file with this statement. \verb|DBNAME| is the basename of the actual DBM files that will be created. Some DBM versions create one file of exactly that name; others create two files with file extensions \textit{.dir} and \textit{.pag}.
 
-Another parameter is called the mode. Unix or Linux users will be familiar with file permissions in this form. Many possibilities exist; here are the most common ones: 
+Another parameter is called the \textit{mode}. Unix or Linux users will be familiar with file permissions in this form. Many possibilities exist; here are the most common ones:
 
 \textcolor{red}{\textit{0644}}
 \begin{adjustwidth}{1cm}{}
@@ -1089,7 +1087,7 @@ Only you can read (nobody else can do anything).
 
 The \textit{dbmopen} call fails if you try to open a file with a mode that assumes there are more permissions than were conferred on the DBM file when it was created. Usually, the mode 0644 is declared by the owner if only the owner should be allowed to write, and 0444 is declared by readers. Mode 0666 is declared by the owner and others if the file is meant to be read or written by anyone.
 
-That's pretty much it; DBM files are that simple. \autoref{exam:example10.8} displays a DBM file that stores key-value pairs of accession numbers of GenBank records for keys, and byte offsets of the records as values. 
+That's pretty much it; DBM files are that simple. \autoref{exam:example10.8} displays a DBM file that stores key-value pairs of accession numbers of GenBank records for keys, and byte offsets of the records as values.
 
 \textbf{Example 10-8. A DBM index of a GenBank library}
 \lstinputlisting[label=exam:example10.8]{./scripts/example10-8.pl}
@@ -1115,7 +1113,7 @@ Enter accession number (or quit): q
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 10.1}}
 \begin{adjustwidth}{1cm}{}
-Go to the NCBI, EMBL, and EBI web sites and become familiar with their use. 
+Go to the NCBI, EMBL, and EBI web sites and become familiar with their use.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.2}}
@@ -1125,41 +1123,41 @@ Read the GenBank format documentation, \textit{gbrel.txt}.
 
 \textcolor{red}{\textit{Exercise 10.3}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that passes a hash by value. Now rewrite it to pass the hash by reference. 
+Write a subroutine that passes a hash by value. Now rewrite it to pass the hash by reference.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.4}}
 \begin{adjustwidth}{1cm}{}
-Design a module of subroutines to handle the following kinds of data: a flat file containing records consisting of gene names on a line and extra information of any sort on succeeding lines, followed by a blank line. Your subroutines should be able to read in the data and then do a fast lookup on the information associated with a gene name. You should also be able to add new records to the flat file. Now reuse this module to build an address book program. 
+Design a module of subroutines to handle the following kinds of data: a flat file containing records consisting of gene names on a line and extra information of any sort on succeeding lines, followed by a blank line. Your subroutines should be able to read in the data and then do a fast lookup on the information associated with a gene name. You should also be able to add new records to the flat file. Now reuse this module to build an address book program.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.5}}
 \begin{adjustwidth}{1cm}{}
-Descend further into the FEATURES table. Parse the features in the table into their next level by parsing the feature names, locations, and qualifiers. Check the document \textit{gbrel.txt} for definitions of the structures of the fields. 
+Descend further into the FEATURES table. Parse the features in the table into their next level by parsing the feature names, locations, and qualifiers. Check the document \textit{gbrel.txt} for definitions of the structures of the fields.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.6}}
 \begin{adjustwidth}{1cm}{}
-Write a program that takes a long DNA sequence as input and outputs the counts of all four-base subsequences (256 of them in all), sorted by frequency. A four-base subsequence starts at each location 1, 2, 3, and so on. (This kind of word-frequency analysis is common to many fields of study, including linguistics, computer science, and music.) 
+Write a program that takes a long DNA sequence as input and outputs the counts of all four-base subsequences (256 of them in all), sorted by frequency. A four-base subsequence starts at each location 1, 2, 3, and so on. (This kind of word-frequency analysis is common to many fields of study, including linguistics, computer science, and music.)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.7}}
 \begin{adjustwidth}{1cm}{}
-Extend the program in Exercise 10.6 to count all the sequences in a GenBank library. 
+Extend the program in Exercise 10.6 to count all the sequences in a GenBank library.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.8}}
 \begin{adjustwidth}{1cm}{}
-Given an amino acid, find the frequency of occurrence of the adjacent amino acids coded in a DNA sequence; or in a GenBank library. 
+Given an amino acid, find the frequency of occurrence of the adjacent amino acids coded in a DNA sequence; or in a GenBank library.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.9}}
 \begin{adjustwidth}{1cm}{}
-Extract all the words (excluding words like "the" or other unnecessary words) from the annotation of a library of GenBank records. For each word found, add the offset of the GenBank record in the library to a DBM file that has keys equal to the words, and values that are strings with offsets separated by spaces. In other words, one key can have a space-separated list of offsets for a value. Then you can quickly find all records containing a word like "fibroblast" with a simple lookup, followed by extracting the offsets and seeking into the library with those offsets. How big is your DBM file compared to the GenBank library?  What might be involved in constructing a search engine for the annotations in all of GenBank? For human DNA only? 
+Extract all the words (excluding words like ``the" or other unnecessary words) from the annotation of a library of GenBank records. For each word found, add the offset of the GenBank record in the library to a DBM file that has keys equal to the words, and values that are strings with offsets separated by spaces. In other words, one key can have a space-separated list of offsets for a value. Then you can quickly find all records containing a word like ``fibroblast" with a simple lookup, followed by extracting the offsets and \textit{seek}ing into the library with those offsets. How big is your DBM file compared to the GenBank library? What might be involved in constructing a search engine for the annotations in all of GenBank? For human DNA only?
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.10}}
 \begin{adjustwidth}{1cm}{}
-Write a program to make a custom library of oncogenes from the GBPRI division of GenBank. 
+Write a program to make a custom library of oncogenes from the GBPRI division of GenBank.
 \end{adjustwidth}
 

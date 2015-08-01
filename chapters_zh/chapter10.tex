@@ -244,25 +244,26 @@ foreach my $line (@GenBankFile) {
 @sequence   = @GenBankFile[($origin+1)..($end-1)];
 \end{lstlisting}
 
-\subsection{Using Scalars}
-A second way to separate annotations from sequences in GenBank records is to read the entire record into a scalar variable and operate on it with regular expressions. For some kinds of data, this can be a more convenient way to parse the input (compared to scanning through an array, as in \autoref{exam:example10.1}).
+\subsection{使用标量}
+第二种把GenBank记录中的注释和序列分开的方法是，把整个记录读取到一个标量变量中，然后用正则表达式操作它。对于某些类型的数据来说，（和\autoref{exam:example10.1}中的遍历数组相比，）这种方法可能是解析输入更加方便的一种方法。
 
-Usually string data is stored one line per scalar variable with its newlines, if any, at the end of the string. Sometimes, however, you store several lines concatenated together in one string that is, in turn, stored in a single scalar variable. These multiline strings aren't uncommon; you used them to gather the sequence from a FASTA file in Examples \autoref{exam:example6.2} and \autoref{exam:example6.3}. Regular expressions have pattern modifiers that can be used to make multiline strings with their embedded newlines easy to use. 
+通常对于字符串数据来说，都是把一行存储到单个的标量变量中，如果字符串末尾还有换行符，也会把换行符包含在内。然而，有时你也可以把多行串联在一起，把串联起来的单个字符串保存到一个单独的标量变量中。这种多行组成的字符串并不常见。还记得吗，在\autoref{exam:example6.2}和\autoref{exam:example6.3}中你曾经使用它们来从FASTA文件中收集序列。正则表达式有专门的模式修饰符，让你可以轻松处理含有换行符的多行字符串。
 
-\subsubsection{Pattern modifiers}
-The pattern modifiers we've used so far are \verb|/g|, for global matching, and \verb|/i|, for case-insensitive matching. Let's take a look at two more that affect the way regular expressions interact with the newlines in scalars.
+\subsubsection{模式修饰符}
+到现在为止，我们使用过的模式修饰符包括用于全局匹配的\verb|/g|和不去分大小写进行匹配的\verb|/i|。让我们看一下另外两个模式修饰符，它们可以影响正则表达式处理含有换行符的标量的行为。
 
-Recall that previous regular expressions have used the caret (\verb|^|), dot (\verb|.|), and dollar sign (\verb|$|) metacharacters. The \verb|^| anchors a regular expression to the beginning of a string, by default, so that \verb|/^THE BEGUINE/| matches a string that begins with "THE BEGUINE". Similarly, \verb|$| anchors an expression to the end of the string, and the dot (\verb|.|) matches any character except a newline.
+回顾一下，前面的正则表达式已经使用过脱字符号（\verb|^|）、点号（\verb|.|）和美元符号（\verb|$|）这三个元字符。\verb|^|默认会把一个正则表达式锚定到字符串的开头，所以\verb|/^THE BEGUINE/|匹配以“THE BEGUINE”起始的字符串。与之类似，\verb|$|把一个正则表达式锚定到字符串的末尾，点号（\verb|.|）会匹配除换行符以外的任意一个字符。
 
-The following pattern modifiers affect these three metacharacters:
+下面的这些模式修饰符会影响这三个元字符的行为：
 
 \begin{itemize}
-  \item The \verb|/s| modifier assumes you want to treat the whole string as a single line, even with embedded newlines, so it makes the dot metacharacter match any character \textit{including} newlines.  
-  \item The \verb|/m| modifier assumes you want to treat the whole string as a multiline, with embedded newlines, so it extends the \verb|^| and the \verb|$| to match after, or before, a newline, embedded in the string.
+  \item \verb|/s|修饰符假设你想把真个字符串作为单独的一行，即使其中有换行符也是一样，所以它使得点号元字符可以匹配\textit{包括}换行符在内的任意一个字符。
+  \item
+    \verb|/m|修饰符假设你像把整个字符串作为含有换行符的当行进行处理，所以它使得\verb|^|和\verb|$|可以匹配字符串内部换行符的后面和前面。
 \end{itemize}
 
-\subsubsection{Examples of pattern modifiers}
-Here's an example of the default behavior of caret (\verb|^|), dot (\verb|.|), and dollar sign (\verb|$|): 
+\subsubsection{模式修饰符实例}
+下面是展示脱字符号（\verb|^|）、点号（\verb|.|）和美元符号（\verb|$|）默认行为的例子：
 
 \begin{lstlisting}
 use warnings;
@@ -270,106 +271,105 @@ use warnings;
 print $&, "\n";
 \end{lstlisting}
 
-This demonstrates the default behavior without the \verb|/m| or \verb|/s| modifiers and prints the warning:
+它演示的是在没有使用\verb|/m|和\verb|/s|修饰符的情况下的默认行为，它会输出警告信息：
 
 \begin{lstlisting}
 Use of uninitialized value in print statement at line 3.
 \end{lstlisting}
 
-The \verb|print| statement tries to print \verb|$&|, a special variable that is always set to the last successful pattern match. This time, since the pattern doesn't match, the variable \verb|$&| isn't set, and you get a warning message for attempting to print an uninitialized value. 
+\verb|print|语句试图输出\verb|$&|，这是一个特殊变量，它总是会被赋值为上一个成功匹配的模式。在这个例子中，无法匹配模式，变量\verb|$&|并没有被赋值，所以在尝试输出一个未初始化的值的时候你会得到警告信息。
 
-Why doesn't the match succeed? First, let's examine the \verb|^.*$| pattern. It begins with a \verb|^|, which means it must match from the beginning of the string. It ends with a \verb|$|, which means it must also match at the end of the string (the end of the string may contain a single newline, but no other newlines are allowed). The \verb|.*| means it must match zero or more (\verb|*|) of any characters (\verb|.|) except the newline. So, in other words, the pattern \verb|^.*$| matches any string that doesn't contain a newline except for a possible single newline as the last character. But since the string in question, "\verb|ACC\nGTT|" does contain an embedded newline \verb|\n| that isn't the last character, the pattern match fails.
+为什么匹配不能够成功呢？首先，让我们检查一下\verb|^.*$|这个模式。它以\verb|^|起始，表示必须从字符串的开头进行匹配。它以\verb|$|结尾，表示必须同时对字符串的末尾（字符串的末尾可能会包含一个换行符，但不允许有更多的换行符存在）进行匹配。\verb|.*|表示它必须匹配除换行符以外的任意一个字符（\verb|.|）零次或者多次（\verb|*|）。所以，换言之，模式\verb|^.*$|匹配不包含换行符在内的任意一个字符串，除非可能存在的单个换行符是最后的字符。但是上面这个例子中的字符串“\verb|ACC\nGTT|”，却包含一个不是最后字符的内部的换行符，所以模式匹配失败。
 
-In the next examples, the pattern modifiers \verb|/m| and \verb|/s| change the default
-behaviors for the metacharacters \verb|^|, and \verb|$|, and the dot: 
+在下面两个例子中，模式修饰符\verb|/m|和\verb|/s|会改变元字符\verb|^|、\verb|$|和点号的默认行为：
 
 \begin{lstlisting}
 "AAC\nGTT" =~ /^.*$/m;
 print $&, "\n";
 \end{lstlisting}
 
-This snippet prints out \verb|AAC| and demonstrates the \verb|/m| modifier. The \verb|/m| extends the meaning of the \verb|^| and the \verb|$| so they also match around embedded newlines. Here, the pattern matches from the beginning of the string up to the first embedded newline.
+这个代码片段会输出\verb|AAC|，演示了\verb|/m|修饰符的作用。\verb|/m|会扩展\verb|^|和\verb|$|的含义，这样它们也会对包含在内部的换行符的周边进行匹配了。此处，模式会从字符串的开头一直匹配到第一个内部换行符为止。
 
-The next snippet of code demonstrates the \verb|/s| modifier: 
+接下来的这个代码片段演示了\verb|/s|修饰符的作用：
 
 \begin{lstlisting}
 "AAC\nGTT" =~ /^.*$/s;
 print $&, "\n";
 \end{lstlisting}
 
-which produces the output:
+这会输出：
 
 \begin{lstlisting}
 AAC
 GTT
 \end{lstlisting}
 
-The \verb|/s| modifier changes the meaning of the dot metacharacter so that it matches any character including newlines. With the \verb|/s| modifier, the pattern matches everything from the beginning of the string to the end of the string, including the newline. Notice when it prints, it prints the embedded newline. 
+\verb|/s|修饰符会改变点号元字符的含义，这样它就能够匹配包含换行符在内的的任意一个字符了。通过使用\verb|/s|修饰符，模式会从字符串的开头开始一直匹配到字符串的结尾，包括换行符在内的所有东西。注意当它输出时，它把内部的换行符也输出出来了。
 
-\subsubsection{Separating annotations from sequence}
-Now that you've met the pattern-matching modifiers and regular expressions that will be your main tools for parsing a GenBank file as a scalar, let's try separating the annotations from the sequence.
+\subsubsection{把注释和序列分割开来}
+既然你已经学习了模式匹配修饰符，那么接下来正则表达式将是你把GenBank文件作为一个标量进行解析的主要工具，让我们试着把注释和序列分割开来吧。
 
-The first step is to get the GenBank record stored as a scalar variable. Recall that a GenBank record starts with a line beginning with the word "LOCUS" and ends with the end-of-record separator: a line containing two forward slashes.
+第一步是把GenBank记录存储到一个标量变量中。回顾一下，GenBank记录开始于以“LOCUS”起始的一行，终止于记录终止分隔符，也就是包含两个正斜杠的行。
 
-First you want to read a GenBank record and store it in a scalar variable. There's a device called an \textit{input record separator} denoted by the special variable \verb|$/| that lets you do exactly that. The input record separator is usually set to a newline, so each call to read a scalar from a filehandle gets one line. Set it to the GenBank end-of-record separator like so: 
+首先，你想把GenBank记录读取进来，并存储到一个标量变量中。有一个叫做\textit{输入记录分隔符}的设备，它用特殊变量\verb|$/|表示，可以让你指定输入记录的分隔符。输入记录分隔符通常设定为换行符，所以当从一个文件句柄中获取记录保存到标量时得到的是一行。可以像下面这样把它设置成GenBank的记录终止分隔符：
 
 \begin{lstlisting}
 $/ = "//\n";
 \end{lstlisting}
 
-A call to read a scalar from a filehandle takes all the data up to the GenBank end-of-record separator. So the line \verb|$record = <GBFILE>| in \autoref{exam:example10.2} stores the multiline GenBank record into the scalar variable \verb|$record|. Later, you'll see that you can keep repeating this call in order to read in successive GenBank records from a GenBank library file.
+这样，当从文件句柄读取一个标量时，会把到GenBank记录终止分隔符的所有数据都读进来。所以\autoref{exam:example10.2}中的\verb|$record = <GBFILE>|这行语句会把多行的GenBank记录存储到标量变量\verb|$record|中。稍后你会看到，可以持续进行调用，把GenBank库文件中连续的多个GenBank记录读取进来。
 
-After reading in the record, you'll parse it into the annotation and sequence parts making use of \verb|/s| and \verb|/m| pattern modifiers. Extracting the annotation and sequence is the easy part; parsing the annotation will occupy most of the remainder of the chapter.
+在读取完记录后，你要使用\verb|/s|和\verb|/m|模式修饰符，把它解析成注释和序列两个部分。提取注释和序列是比较容易的，而解析注释则将占据本章剩余的大部分内容。
 
-\textbf{Example 10-2. Extract annotation and sequence from Genbank record}
+\textbf{例10-2：从GenBank记录中提取注释和序列}
 \lstinputlisting[label=exam:example10.2]{./scripts/example10-2.pl}
 
-The output from this program is the same as the GenBank file listed previously, minus the last line, which is the end-of-record separator \verb|//|.
+该程序的输出和前面展示的GenBank文件的内容是完全一样的，但是没有最后一行，也就是没有记录终止分隔符\verb|//|。
 
-Let's focus on the regular expression that parses the annotation and sequence out of the \verb|$record| variable. This is the most complicated regular expression so far: 
+让我们把焦点放在从\verb|$record|变量中解析注释和序列的正则表达式上。这是到现在为止最复杂的一个正则表达式：
 
 \begin{lstlisting}
 $record = /^(LOCUS.*ORIGIN\s*\n)(.*)\/\/\n/s.
 \end{lstlisting}
 
-There are two pairs of parentheses in the regular expression: (\verb|LOCUS.*ORIGIN\s*\n|) and (\verb|.*|). The parentheses are metacharacters whose purpose is to remember the parts of the data that match the pattern within the parentheses, namely, the annotation and the sequence. Also note that the pattern match returns an array whose elements are the matched parenthetical patterns. After you match the annotation and the sequence within the pairs of parentheses in the regular expression, you simply assign the matched patterns to the two variables \verb|$annotation| and \verb|$dna|, like so: 
+在正则表达式中有两对括号：\verb|(LOCUS.*ORIGIN\s*\n)|和\verb|(.*)|。小括号是元字符，它的目的是捕获数据中匹配小括号内模式的部分，换言之，就是此处的注释和序列。还要注意，模式匹配返回的是一个数组，这个数组的元素就是匹配的被小括号括起来的模式。在你用正则表达式中成对的小括号对注释和序列进行匹配之后，就可以简单地把匹配到的模式赋值给\verb|$annotation|和\verb|$dna|这两个变量了，就像这样：
 
 \begin{lstlisting}
 ($annotation, $dna) = ($record =~ /^(LOCUS.*ORIGIN\s*\n)(.*)\/\/\n/s);
 \end{lstlisting}
 
-Notice that at the end of the pattern, we've added the \verb|/s| pattern matching modifier, which, as you've seen earlier, allows a dot to match any character including an embedded newline. (Of course, since we've got a whole GenBank record in the \verb|$record| scalar, there are a lot of embedded newlines.)
+注意，在模式的最后，我们加上了\verb|/s|这个模式匹配修饰符，就像你在前面看到的那样，它允许点号去匹配包括内部换行符在内的任意一个字符。（当然，因为我们把整个的GenBank记录都放到了\verb|$record|变量中，所以其中有很多个嵌入的内部换行符。）
 
-Next, look at the first pair of parentheses:
+接下来，先看一下第一对小括号：
 
 \begin{lstlisting}
 (LOCUS.*ORIGIN\s*\n)
 \end{lstlisting}
 
-This whole expression is anchored at the beginning of the string by preceding it with a \verb|^| metacharacter. (\verb|/s| doesn't change the meaning of the \verb|^| character in a regular expression.)
+因为前面有一个\verb|^|元字符，所以整个表达式都被锚定在了字符串的开头。（\verb|/s|并不改变正则表达式中\verb|^|字符的含义。） 
 
-Inside the parentheses, you match from where the string \verb|LOCUS| appears at the beginning of the GenBank record, followed by any number of characters including newlines with \verb|.*|, followed by the string \verb|ORIGIN|, followed by possibly some whitespace with \verb|\s*|, followed by a newline \verb|\n|. This matches the annotation part of the GenBank record.
+在小括号内部，你从GenBank记录开头的\verb|LOCUS|字符串出现的地方开始匹配，接着是使用\verb|.*|表示的任意数目的包括换行符在内的任意字符，然后是\verb|ORIGIN|字符串，用\verb|\s*|表示其后可能有一些空白，最后是一个换行符\verb|\n|。它匹配的其实就是GenBank记录中的注释部分。
 
-Now, look at the second parentheses and the remainder:
+接下来，让我们再看一下第二个小括号和剩余的部分：
 
 \begin{lstlisting}
 (.*)\/\/\n
 \end{lstlisting}
 
-This is easier. The \verb|.*| matches any character, including newlines because of the \verb|/s| pattern modifier at the end of the pattern match. The parentheses are followed by the end-of-record line, \verb|//|, including the newline at the end, with the slashes preceded by backslashes to show that you want to match them exactly. They're not delimiters of the pattern matching operator. The end result is the GenBank record with the annotation and the sequence separated into the variables \verb|$annotation| and \verb|$sequence|. Although the regular expression I used requires a bit of explanation, the attractive thing about this approach is that it took only one line of Perl code to extract both annotation and sequence. 
+这个相对简单一些。\verb|.*|匹配的是包括换行符在内的任意一个字符，因为在模式匹配的后面使用了\verb|/s|模式修饰符。小括号后面紧跟着的是记录终止行\verb|//|，以及最后的换行符。反斜杠前面的正斜杠表明你是想要匹配它们本身。它们并不是模式匹配操作符的分隔符。最后的结果就是，GenBank记录中的注释和序列被分开，分别保存到了变量\verb|$annotation|和变量\verb|$sequence|中。尽管我使用的正则表达式需要一定的解释，但它吸引人的地方在于只需要一行Perl代码就可以同时把注释和序列提取出来。
 
-\section{Parsing Annotations}
-Now that you've successfully extracted the sequence, let's look at parsing the annotations of a GenBank file.
+\section{解析注释}
+既然现在你已经成功把序列提取出来了，那么接下来就让我们解析GenBank文件的注释吧。
 
-Looking at a GenBank record, it's interesting to think about how to extract the useful information. The FEATURES table is certainly a key part of the story. It has considerable structure: what should be preserved, and what is unnecessary? For instance, sometimes you just want to see if a word such as "endonuclease" appears anywhere in the record. For this, you just need a subroutine that searches for any regular expression in the annotation. Sometimes this is enough, but when detailed surgery is necessary, Perl has the necessary tools to make the operation successful. 
+看看GenBank记录，你会发现思考如何把有用的信息提取出来还是比较有趣的。FEATURES表肯定是我们此处的重中之重。它的结构比较繁杂，哪些是需要保留的，哪些是不需要的呢？比如，有时你只想看看像“endonuclease”这个的一个单词是否在记录的某个地方出现了。像这种情况，你只需要一个可以在注释中查找任意正则表达式的子程序即可。有时这就足够了，但当需要更详尽的调研时，Perl有你需要的工具来保证任务顺利完成。
 
-\subsection{Using Arrays}
-\autoref{exam:example10.3} parses a few pieces of information from the annotations in a GenBank file. It does this using the data in the form of an array. 
+\subsection{使用数组}
+\autoref{exam:example10.3}解析了GenBank文件中注释的一部分信息。它通过把数据保存到数组中完成了该任务。
   
-\textbf{Example 10-3. Parsing GenBank annotations using arrays}
+\textbf{例10-3：使用数组解析GenBank的注释}
 \lstinputlisting[label=exam:example10.3]{./scripts/example10-3.pl}
 
-Here's the output from \autoref{exam:example10.3}:
+下面是\autoref{exam:example10.3}的输出：
 
 \begin{lstlisting}
 *** LOCUS ***
@@ -380,12 +380,12 @@ AB031069
 Homo sapiens
 \end{lstlisting}
 
-Now let's slightly extend that program to handle the DEFINITION field.  Notice that the DEFINITION field can extend over more than one line. To collect that field, use a trick you've already seen in \autoref{exam:example10.1}: set a flag when you're in the "state" of collecting a definition. The flag variable is called, unsurprisingly, \verb|$flag|. 
+现在，我们来稍微扩充一下程序，让它可以处理DEFINITION字段。注意，DEFINITION字段的内容可能不止一行。要收集该字段，使用在\autoref{exam:example10.1}中学到的技巧：当你在收集定义的“状态”时就设置一个标识。毋庸置疑，标识变量还是叫做\verb|$flag|。
 
-\textbf{Example 10-4. Parsing GenBank annotations using arrays, take 2}
+\textbf{例10-4：使用数组解析GenBank注释，第二次尝试}
 \lstinputlisting[label=exam:example10.4]{./scripts/example10-4.pl}
 
-\autoref{exam:example10.4} outputs:
+\autoref{exam:example10.4}的输出：
 
 \begin{lstlisting}
 *** LOCUS ***
@@ -399,16 +399,16 @@ AB031069
 Homo sapiens
 \end{lstlisting}
 
-This use of flags to remember which part of the file you're in, from one iteration of a loop to the next, is a common technique when extracting information from files that have multiline sections. As the files and their fields get more complex, the code must keep track of many flags at a time to remember which part of the file it's in and what information needs to be extracted. It works, but as the files become more complex, so does the code. It becomes hard to read and hard to modify. So let's look at regular expressions as a vehicle for parsing annotations. 
+当从含有多行小节的文件中提取信息时，从循环的一次跌倒到下一次迭代，使用标识去记住你现在在文件的哪一部分，这是一种非常常见的技术。随着文件和其字段越来越复杂，在代码中需要一次使用多个标识，记住是处于文件的哪一部分，需要从中提取什么信息。这是完全可行的，但随着文件越来越复杂，代码也会越来越复杂，要阅读和修改它就变得困难起来了。所以，让我们看看如何使用正则表达式这个媒介来解析注释吧。
 
-\subsection{When to Use Regular Expressions}
-We've used two methods to parse GenBank files: regular expressions and looping through arrays of lines and setting flags. We used both methods to separate the annotation from the sequence in a previous section of this chapter. Both methods were equally well suited, since in GenBank files, the annotation is followed by the sequence, clearly delimited by an \verb|ORIGIN| line: a simple structure. However, parsing the annotations seems a bit more complicated; therefore, let's try to use regular expressions to accomplish the task.
+\subsection{何时使用正则表达式}
+我们已经使用了两种方法来解析GenBank文件：使用正则表达式和循环处理存储行的数组并设置标识。本章前面的小节中，在分割注释和序列的时候，这两种方法我们都使用过。两种方法没有优劣之分，都完全适用，因为在GenBank文件中，注释后面紧跟着的就是序列，两者被\verb|ORIGIN|行明确分割开来，这是一个比较简单的结构。然而，要解析注释看起来就要复杂一些了，因此，让我尝试使用正则表达式来完成这个任务吧。
 
-To begin, let's wrap the code we've been working on into some convenient subroutines to focus on parsing the annotations. You'll want to fetch GenBank records one at a time from a library (a file containing one or more GenBank records), extract the annotations and the sequence, and then if desired parse the annotations. This would be useful if, say, you were looking for some motif in a GenBank library. Then you can search for the motif, and, if found, you can parse the annotations to look for additional information about the sequence.
+作为开始，我们先把先前的代码整理一下，把它们整理进一些便捷的子程序，这样我们就可以把精力集中在注释的解析上了。你可能会想从库（一个库文件包含一条或多条GenBank记录）中一次只获取一条GenBank记录，提取出注释和序列，然后如果需要的话就解析注释。这样是非常有用的，比如当你在GenBank库中寻找一些基序的时候。然后你就可以查找基序，如果找到了，你再解析注释来找到和序列相关的其他信息。
 
-As mentioned previously, we'll use the file \textit{library.gb}, which you can download from this book's web site.
+前面已经提到了，我们将使用文件\textit{library.gb}，你可以从本书的网站上下载到它。
 
-Since dealing with annotation data is somewhat complex, let's take a minute to break our tasks into convenient subroutines. Here's the pseudocode: 
+既然处理注释数据有些复杂，就让我们花一分钟来把我们的任务分割成几个比较容易处理的子程序吧。下面是伪代码：
 
 \begin{lstlisting}
 sub open_file
@@ -436,23 +436,23 @@ sub parse_features
     given the features field, separate out the components
 \end{lstlisting}
 
-The idea is to make a subroutine for each important task you want to accomplish and then combine them into useful programs. Some of these can be combined into other subroutines: for instance, perhaps you want to open a file and get the record from it, all in one subroutine call.
+思路就是让每一个子程序都只完成一个重要的任务，然后把它们组合成最后有用的程序。其中的某些也可以组合进其他的子程序里，比如，你可能想要打开一个文件并从中获得记录，只需要一个子程序调用就可以了。
 
-You're designing these subroutines to work with library files, that is, files with multiple GenBank records. You pass the filehandle into the subroutines as an argument, so that your subroutines can access open library files as represented by the filehandles. Doing so enables you to have a \verb|get_next_record| function, which is handy in a loop. Using the Perl function \textit{tell} also allows you to save the byte offset of any record of interest, and then return later and extract the record at that byte offset very quickly. (A \textit{byte offset} is just the number of characters into the file where the information of interest lies.) The operating system supports Perl in letting you go immediately to any byte offset location in even huge files, thus bypassing the usual way of opening the file and reading from the beginning until you get where you want to be.  
+你设计这些子程序来处理库文件，也就是含有多个GenBank记录的文件。你把文件句柄作为一个参数传递给子程序，这样你的子程序就可以访问打开的用文件句柄代表的库文件了。这样做，你就要有一个\verb|get_next_record|函数，便于在循环中使用。使用Perl函数\textit{tell}可以让你保存任何感兴趣的记录的字节偏移量，稍后再回来，快速地从这个字节偏移量处提取记录。（所谓\textit{byte offset（字节偏移量）}就是到达文件中感兴趣的信息所在地所要经过的字符数。）操作系统对Perl的支持，可以让你立即跳转到任意字节偏移量的地方，就算是巨大的文件也没问题，这样就不需要像通常那样，打开文件后从头开始读取直到到达你要去的那个地方。
 
-Using a byte offset is important when you're dealing with large files.  Perl gives you built-in functions such as \verb|seek| that allow you, on an open file, to go immediately to any location in the file. The idea is that when you find something in a file, you can save the byte offset using the Perl function \textit{tell}. Then, when you want to return to that point in the file, you can just call the Perl function \textit{seek} with the byte offset as an argument. You'll see this later in this chapter when you build a DBM file to look up records based on their accession numbers. But the main point is that with a 250-MB file, it takes too long to find something by searching from the beginning, and there are ways of getting around it.
+当你处理大文件使，使用字节偏移量是非常重要的。Perl有内置的变量，像是\verb|seek|可以让你立即跳转到已打开文件的任意一个地方。思路就是，当你在一个文件中寻找某些东西的时候，你可以使用Perl函数\textit{tell}把字节偏移量保存下来。然后，当你想返回到文件中的那个地方的时候，你可以直接使用字节偏移量作为参数调用Perl函数\verb|seek|。在本章的后面，当你创建DBM文件，基于它们的索引号来查找记录的时候，你会看到这样的用法。要点在于，对于一个250-MB的文件，要从头开始查找某些东西会花费很唱得时间，有一些办法可以避免这一点。
 
-The parsing of the data is done in three steps, according to the design: 
+根据设计，通过三步来完成对数据的解析：
 
 \begin{enumerate}
-  \item You'll separate out the annotation and the sequence (which you'll clean up by removing whitespace, etc., and making it a simple string of sequence). Even at this step, you can search for motifs in the sequence, as well as look for text in the annotation.
-  \item Extract out the fields.
-  \item Parse the features table.
+  \item 首先，你把注释和序列（此处，你要清洁数据，进行删除空白之类的工作，这样就可以得到一个简单的序列字符串了）分隔开来。就算在这一步，你也可以在序列中查找基序，在注释中寻找文本。
+  \item 然后，提取出各个字段。
+  \item 最后，解析特征表。
 \end{enumerate}
 
-These steps seem natural, and, depending on what you want to do, allow you to parse to whatever depth is needed.  
+这三步看起来一气呵成。依据目的的不同，你可以在任意深度上对数据进行解析。
 
-Here's a main program in pseudocode that shows how to use those subroutines: 
+下面使用伪代码描述的主程序，它演示了如何使用这些子程序：
 
 \begin{lstlisting}
 open_file 
@@ -473,15 +473,15 @@ while ( get_next_record  )
 return accession numbers of records meeting the criteria
 \end{lstlisting}
 
-This example shows how to use subroutines to answer a question such as: what are the genes on chromosome 22 that contain a given motif and have small exons? 
+这个例子演示了如何使用这些子程序来回答一个问题，比如：在22号染色体上有哪些基因包含特定的基序，并且有小的外显子？
   
-\subsection{Main Program}
-Let's test these subroutines with \autoref{exam:example10.5}, which has some subroutine definitions that will be added to the \textit{BeginPerlBioinfo.pm} module: 
+\subsection{主程序}
+让我们使用\autoref{exam:example10.5}来测试一下这些子程序吧，其中的一些子程序定义将会添加到\textit{BeginPerlBioinfo.pm}模块里面：
   
-\textbf{Example 10-5. GenBank library subroutines}
+\textbf{例10-5：GenBank库的子程序}
 \lstinputlisting[label=exam:example10.5]{./scripts/example10-5.pl}
 
-\autoref{exam:example10.5} generates the following output on our little GenBank library:
+对于我们小巧的GenBank库，\autoref{exam:example10.5}会生成以下输出：
 
 \begin{lstlisting}
 Sequence found in record at offset 0
@@ -496,61 +496,62 @@ Sequence found in record at offset 22340
 Annotation found in record at offset 22340
 \end{lstlisting}
 
-The \textit{tell} function reports the byte offset of the file up to the point where it's been read; so you want to first call \textit{tell} and then read the record to get the proper offset associated with the beginning of the record. 
+\textit{tell}函数会报告到达文件当前读取位置的字节偏移量，所以你需要首先调用\textit{tell}一次，然后读取记录得到从记录开头开始的正确的偏移量。
 
-\subsection{Parsing Annotations at the Top Level}
-Now let's parse the annotations.
+\subsection{在顶层解析注释}
+现在，让我们来解析注释。
 
-There is a document from NCBI we mentioned earlier that gives the details of the structure of a GenBank record. This file is \textit{gbrel.txt} and is part of the GenBank release, available at the NCBI web site and their FTP site. It's updated with every release (every two months at present), and it includes notices of changes to the format. If you program with GenBank records, you should read this document and keep a copy around for reference use, and check periodically for announced changes in the GenBank record format.
+前面已经提到过，NCBI上有一个文档，对GenBank记录结构的细节进行了描述。这个文件就是\textit{gbrel.txt}，它是GenBank发布的一部分，可以从NCBI网站或者它们的FTP站点上找到这个文件。每次发布的时候（现在是每两个月发布一个新版本），它都会更新，其中会注明格式发生的变化。如果你编程处理GenBank记录，你应该读读这个文档，并且在手边保留一份拷贝供参考用，还要定期去查看一下宣告的Genbank记录格式的变化。
 
-If you look back at the complete GenBank record earlier in this chapter, you'll see that the annotations have a certain structure. You have some fields, such as LOCUS, DEFINITION, ACCESSION, VERSION, KEYWORDS, SOURCE, REFERENCE, FEATURES, and BASE COUNT that start at the beginning of a line. Some of these fields have subfields, especially the FEATURES field, which has a fairly complex structure.
+如果你回头去看看本章前面部分那个完整的GenBank记录，你会发现注释部分有特定的结构。其中有一些字段，像是LOCUS、DEFINITION、ACCESSION、VERSION、KEYWORDS、SOURCE、REFERENCE、FEATURES和BASE COUNT等，这些字段都起始于一行的开头。有些字段还有子字段，尤其是FEATURE字段，它的结构异常复杂。
 
-But for now, let's just extract the top-level fields. You will need a regular expression that matches everything from a word at the beginning of a line to a newline that just precedes another word at the beginning of a line.
+但是现在，我们只提取顶层的字段。你需要使用一个正则表达式，来匹配从一行开头的单词到另一行开头的别的单词之前的换行符之间的所有内容。
 
-Here's a regular expression that matches our definition of a field: 
+下面是匹配一个我们定义的字段的正则表达式：
 
 \begin{lstlisting}
 /^[A-Z].*\n(^\s.*\n)*/m
 \end{lstlisting}
 
-What does this regular expression say? First of all, it has the \verb|/m| pattern matching modifier, which means the caret \verb|^| and the dollar sign \verb|$| also match around embedded newlines (not just at the beginning and end of the entire string, which is the default behavior).
+这个正则表达式什么含义？首先，它有\verb|/m|模式匹配修饰符，表示脱字符\verb|^|和美元符号\verb|$|也可以匹配包含在内部的换行符附近的位置（并不仅仅匹配整个字符串的开头和结尾，这是它的默认行为）。
 
-The first part of the regular expression:
+正则表达式的第一部分：
   
 \begin{lstlisting}
 ^[A-Z].*\n
 \end{lstlisting}
 
-matches a capital letter at the beginning of a line, followed by any number of characters (except newlines), followed by a newline. That's a good description of the first lines of the fields you're trying to match.
+匹配一行开头的大写字母，紧跟着任意数目的字符（换行符除外），最后是一个换行符。它对你试图匹配的字段的第一行进行了很好的描述。
 
-The second part of the regular expression:
+正则表达式的第二部分：
   
 \begin{lstlisting}
 (^\s.*\n)*
 \end{lstlisting}
 
-matches a space or tab \verb|\s| at the beginning of a line, followed by any number of characters (except newlines), followed by a newline. This is surrounded by parentheses and followed by a *, which means 0 or more such lines. This matches succeeding lines in a field, lines that start with whitespace. A field may have no extra lines of this sort or several such lines.
+匹配一行开头的空格或制表符\verb|\s|，紧跟着任意数目的字符（换行符除外），最后是一个换行符。它用小括号括了起来，后面紧跟着使用了\verb|*|，这表示可以有0个或者多个这样的行。它匹配一个字段中的后续行，就是那些以空白开头的行。一个字段可能没有额外的这样的行，也有可能有多个这样的后续行。
 
-So, the two parts of the regular expression combined match the fields with their optional additional lines.
+所以，正则表达式的这两部分组合起来，匹配字段及其后面可选的附加行。
 
-\autoref{exam:example10.6} shows a subroutine that, given the annotations section of a GenBank record stored in a scalar variable, returns a hash with keys equal to the names of the top-level fields and values equal to the contents of those fields. 
+\autoref{exam:example10.6}演示了一个子程序，对于给定的存储在标量变量中的GenBank记录的注释部分，它会返回一个散列，散列的键就是顶层的字段名，散列的值就是这些字段的具体内容。
 
-\textbf{Example 10-6. Parsing Genbank annotation}
+\textbf{例10-6：解析GenBank注释}
 \lstinputlisting[label=exam:example10.6]{./scripts/example10-6.pl}
 
-In the subroutine \textit{parse\_annotation}, note how the variables \verb|$key| and \verb|$value| are scoped within the \verb|while| block. One benefit of this is that you don't have to reinitialize the variables each time through the loop.  Also note that the key is the name of the field, and the value is the whole field.
+在子程序\textit{parse\_annotation}中，注意变量\verb|$key|和\verb|$value|是如何限制在\verb|while|代码块作用范围内的。这种做法的一个好处就是，你不需要在每次进行循环的时候都对变量进行重新初始化。此外还要注意，散列的键是字段名，而散列的值则是整个字段的内容。
 
-You should take the time to understand the regular expression that extracts the field name for the key: 
+你可能需要花些时间来理解为键提取字段名的整个正则表达式：
 
 \begin{lstlisting}
 (my $key = $value) =~ s/^([A-Z]+).*/$1/s;
 \end{lstlisting}
 
-This first assigns \verb|$key| the value \verb|$value|. It then replaces everything in \verb|$key| (note the \verb|/s| modifier for embedded newlines) with \verb|$1|, which is a special variable pattern between the first pair of parentheses (\verb|[A-Z]+|).  This pattern is one or more capital letters (anchored to the beginning of the string, i.e., the field name), so it sets \verb|$key| to the value of the first word in the field name.
+它首先把\verb|$value|的值赋给了\verb|$key|。然后，它把\verb|$key|中的所有内容（注意针对嵌入换行符的\verb|/s|修饰符）都替换成了\verb|$1|，它是一个特殊变量，保存的是第一对小括号之间的模式（\verb|[A-Z]+|）。这个模式是一个或多个大写字母（锚定在字符串的开头，也就是字段名），所以它把\verb|$key|的值设置成了字段名中的第一个单词。
 
-You get the following output from \autoref{exam:example10.6} (the test just fetches the first record in the GenBank library): 
 
-\begin{lstlisting}
+对于\autoref{exam:example10.6}，你会得到下面的输出（这次尝试仅仅获取了GenBank库的第一条记录）：
+
+\begin{lstlisting}[language={},basicstyle=\small\tt,breaklines=false]
 ******** SOURCE *********
 SOURCE      Homo sapiens embryo male lung fibroblast cell_line:HuS-L12 cDNA to
             mRNA.
@@ -615,356 +616,358 @@ ORIGIN
 BASE COUNT      564 a    715 c    768 g    440 t
 \end{lstlisting}
 
-As you see, the method is working, and apart from the difficulty of reading the regular expressions (which will become easier with practice), the code is very straightforward, just a few short subroutines. 
+如你所见，这种方法完全可行，除了阅读正则表达式比较困难以外（随着练习的增多这也会越来越容易），整个代码都简单明了，就是几个简短的子程序而已。
 
-\subsection{Parsing the FEATURES Table}
-Let's take this one step further and parse the features table to its next level, composed of the \verb|source|, \verb|gene|, and \verb|CDS| \textit{features keys}. (See later in this section for a more complete list of these features keys.) In the exercises at the end of the chapter, you'll be challenged to descend further into the FEATURES table.
+\subsection{解析FEATURES表}
+让我们更进一步，解析一下下一个层面的FEATURES表，它由\verb|source|、\verb|gene|和\verb|CDS|这几个\textit{特征键（features
+keys）}组成。（参看本节后面的更加全面的特征键列表。）在本章末尾的练习题中，你将会看到进一步深入FEATURES表的挑战。
 
-To study the FEATURES table, you should first look over the NCBI \textit{gbrel.txt} document mentioned previously. Then you should study the most complete documentation for the FEATURES table, available at \href{http://www.ncbi.nlm.nih.gov/collab/FT/index.html}{http://www.ncbi.nlm.nih.gov/collab/FT/index.html}.
+要研究FEATURES表，你应该首先去看一下前面提到的NCBI中的\textit{gbrel.txt}文档。然后你要再好好研究一下FEATURES表的更加详尽的文档，在\href{http://www.ncbi.nlm.nih.gov/collab/FT/index.html}{http://www.ncbi.nlm.nih.gov/collab/FT/index.html}上可以找到它。
 
-\subsubsection{Features}
-Although our GenBank entry is fairly simple and includes only three features, there are actually quite a few of them. Notice that the parsing code will find all of them, because it's just looking at the structure of the document, not for specific features.  
+\subsubsection{特征}
+尽管我们的GenBank条目非常简单，只包含三个特征，实际上特征非常多。注意解析代码会把它们全部找到，因为代码只是处理文档的结构，并不针对特定的特征。
 
-The following is a list of the features defined for GenBank records.  Although lengthy, I think it's important to read through it to get an idea of the range of information that may be present in a GenBank record. 
+下面是GenBank记录中定义的特征的一个列表。尽管非常长，但我认为最好还是通读一下，对可能会出现在GenBank记录中的信息有一个大体的了解。
 
 \textcolor{red}{\textit{allele}}
 \begin{adjustwidth}{1cm}{}
-Obsolete; see \verb|variation| feature key
+等位基因，废弃；参看变异（\verb|variation|）特征键
 \end{adjustwidth}
 
 \textcolor{red}{\textit{attenuator}}
 \begin{adjustwidth}{1cm}{}
-Sequence related to transcription termination
+弱化子，和转录终止相关的序列
 \end{adjustwidth}
 
 \textcolor{red}{\textit{C\_region}}
 \begin{adjustwidth}{1cm}{}
-Span of the C immunological feature
+C-免疫特征区
 \end{adjustwidth}
 
 \textcolor{red}{\textit{CAAT\_signal}}
 \begin{adjustwidth}{1cm}{}
+真核生物启动子区的CAAT盒
 CAAT box in eukaryotic promoters
 \end{adjustwidth}
 
 \textcolor{red}{\textit{CDS}}
 \begin{adjustwidth}{1cm}{}
-Sequence coding for amino acids in protein (includes stop codon)
+编码蛋白质中氨基酸的序列（包括终止密码子）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{conflict}}
 \begin{adjustwidth}{1cm}{}
-Independent sequence determinations differ
+不同测定结果所得差异序列
 \end{adjustwidth}
 
 \textcolor{red}{\textit{D-loop}}
 \begin{adjustwidth}{1cm}{}
-Displacement loop
+置换环\footnote{译者注：指DNA双链的局部，由具有互补性单链DNA与之结合所产生的环状结构。}
 \end{adjustwidth}
 
 \textcolor{red}{\textit{D\_segment}}
 \begin{adjustwidth}{1cm}{}
-Span of the D immunological feature
+D-免疫特征区\footnote{译者注：免疫功能中免疫球蛋白重链的多变区}
 \end{adjustwidth}
 
 \textcolor{red}{\textit{enhancer}}
 \begin{adjustwidth}{1cm}{}
-Cis-acting enhancer of promoter function
+增强启动子功能的顺式作用增强子
 \end{adjustwidth}
 
 \textcolor{red}{\textit{exon}}
 \begin{adjustwidth}{1cm}{}
-Region that codes for part of spliced mRNA
+外显子，编码剪接mRNA部分的区域
 \end{adjustwidth}
 
 \textcolor{red}{\textit{gene}}
 \begin{adjustwidth}{1cm}{}
-Region that defines a functional gene, possibly including upstream (promoter, enhancer, etc.) and downstream control elements, and for which a name has been assigned 
+基因，确定一个功能性基因的区域，可能包括上游（启动子、增强子，等）和下游的调控元件，每一个都有特定的名字
 \end{adjustwidth}
 
 \textcolor{red}{\textit{GC\_signal}}
 \begin{adjustwidth}{1cm}{}
-GC box in eukaryotic promoters
+真核生物启动子中的GC盒
 \end{adjustwidth}
 
 \textcolor{red}{\textit{iDNA}}
 \begin{adjustwidth}{1cm}{}
-Intervening DNA eliminated by recombination
+重组引入的插入DNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{intron}}
 \begin{adjustwidth}{1cm}{}
-Transcribed region excised by mRNA splicing
+内含子，被mRNA剪接切除的转录区域
 \end{adjustwidth}
 
 \textcolor{red}{\textit{J\_region}}
 \begin{adjustwidth}{1cm}{}
-Span of the J immunological feature
+J-免疫特征区\footnote{译者注：免疫功能中的连接区，位于免疫球蛋白等分子的V区与C区之间。}
 \end{adjustwidth}
 
 \textcolor{red}{\textit{LTR}}
 \begin{adjustwidth}{1cm}{}
-Long terminal repeat
+长末端重复序列（Long terminal repeat）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{mat\_peptide}}
 \begin{adjustwidth}{1cm}{}
-Mature peptide coding region (doesn't include stop codon)
+成熟肽编码区域（不包括终止密码子）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_binding}}
 \begin{adjustwidth}{1cm}{}
-Miscellaneous binding site
+其他结合位点
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_difference}}
 \begin{adjustwidth}{1cm}{}
-Miscellaneous difference feature
+其他特征区
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_feature}}
 \begin{adjustwidth}{1cm}{}
-Region of biological significance that can't be described by any other feature 
+无法用任何其他特征描述的重要生物功能区
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_recomb}}
 \begin{adjustwidth}{1cm}{}
-Miscellaneous recombination feature
+其他重组特征区
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_RNA}}
 \begin{adjustwidth}{1cm}{}
-Miscellaneous transcript feature not defined by other RNA keys
+不能用其他RNA名字定义的转录特征区
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_signal}}
 \begin{adjustwidth}{1cm}{}
-Miscellaneous signal
+其他信号区
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_structure}}
 \begin{adjustwidth}{1cm}{}
-Miscellaneous DNA or RNA structure
+其他DNA或RNA结构
 \end{adjustwidth}
 
 \textcolor{red}{\textit{modified\_base}}
 \begin{adjustwidth}{1cm}{}
-The indicated base is a modified nucleotide
+被修饰的核苷酸碱基
 \end{adjustwidth}
 
 \textcolor{red}{\textit{mRNA}}
 \begin{adjustwidth}{1cm}{}
-Messenger RNA
+信使RNA（Messenger RNA）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{mutation}}
 \begin{adjustwidth}{1cm}{}
-Obsolete: see \verb|variation| feature key
+突变，废弃；参看变异（\verb|variation|）特征键
 \end{adjustwidth}
 
 \textcolor{red}{\textit{N\_region}}
 \begin{adjustwidth}{1cm}{}
-Span of the N immunological feature
+N-免疫特征区
 \end{adjustwidth}
 
 \textcolor{red}{\textit{old\_sequence}}
 \begin{adjustwidth}{1cm}{}
-Presented sequence revises a previous version
+修订自旧版本的序列
 \end{adjustwidth}
 
 \textcolor{red}{\textit{polyA\_signal}}
 \begin{adjustwidth}{1cm}{}
-Signal for cleavage and polyadenylation
+polyA信号，剪切的多聚腺苷酸信号
 \end{adjustwidth}
 
 \textcolor{red}{\textit{polyA\_site}}
 \begin{adjustwidth}{1cm}{}
-Site at which polyadenine is added to mRNA
+polyA位点，mRNA的多聚腺苷酸添加位点
 \end{adjustwidth}
 
 \textcolor{red}{\textit{precursor\_RNA}}
 \begin{adjustwidth}{1cm}{}
-Any RNA species that isn't yet the mature RNA product
+还不是成熟RNA产物的前体RNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{prim\_transcript}}
 \begin{adjustwidth}{1cm}{}
-Primary (unprocessed) transcript
+初始（未加工的）转录本
 \end{adjustwidth}
 
 \textcolor{red}{\textit{primer}}
 \begin{adjustwidth}{1cm}{}
-Primer binding region used with PCR
+PCR中使用的引物结合区域
 \end{adjustwidth}
 
 \textcolor{red}{\textit{primer\_bind}}
 \begin{adjustwidth}{1cm}{}
-Noncovalent primer binding site
+非共价引物结合位点
 \end{adjustwidth}
 
 \textcolor{red}{\textit{promoter}}
 \begin{adjustwidth}{1cm}{}
-A region involved in transcription initiation
+启动子，转录起始的区域
 \end{adjustwidth}
 
 \textcolor{red}{\textit{protein\_bind}}
 \begin{adjustwidth}{1cm}{}
-Noncovalent protein binding site on DNA or RNA
+蛋白质结合在DNA或RNA上的非共价结合位点
 \end{adjustwidth}
 
 \textcolor{red}{\textit{RBS}}
 \begin{adjustwidth}{1cm}{}
-Ribosome binding site
+核糖体结合位点
 \end{adjustwidth}
 
 \textcolor{red}{\textit{rep\_origin}}
 \begin{adjustwidth}{1cm}{}
-Replication origin for duplex DNA
+双链DNA的复制起始区
 \end{adjustwidth}
 
 \textcolor{red}{\textit{repeat\_region}}
 \begin{adjustwidth}{1cm}{}
-Sequence containing repeated subsequences
+包含重复的子序列的重复序列
 \end{adjustwidth}
 
 \textcolor{red}{\textit{repeat\_unit}}
 \begin{adjustwidth}{1cm}{}
-One repeated unit of a repeat\_region
+重复序列区域的单个重复单元
 \end{adjustwidth}
 
 \textcolor{red}{\textit{rRNA}}
 \begin{adjustwidth}{1cm}{}
-Ribosomal RNA
+核糖体RNA（Ribosomal RNA）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{S\_region}}
 \begin{adjustwidth}{1cm}{}
-Span of the S immunological feature
+S-免疫特征区
 \end{adjustwidth}
 
 \textcolor{red}{\textit{satellite}}
 \begin{adjustwidth}{1cm}{}
-Satellite repeated sequence
+卫星DNA重复序列
 \end{adjustwidth}
 
 \textcolor{red}{\textit{scRNA}}
 \begin{adjustwidth}{1cm}{}
-Small cytoplasmic RNA
+小胞浆RNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{sig\_peptide}}
 \begin{adjustwidth}{1cm}{}
-Signal peptide coding region
+信号肽编码区域
 \end{adjustwidth}
 
 \textcolor{red}{\textit{snRNA}}
 \begin{adjustwidth}{1cm}{}
-Small nuclear RNA
+小核RNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{source}}
 \begin{adjustwidth}{1cm}{}
-Biological source of the sequence data represented by a GenBank record; mandatory feature, one or more per record; for organisms that have been incorporated within the NCBI taxonomy database, an associated \verb|/db_xref="taxon:NNNN"| qualifier will be present (where \verb|NNNNN| is the numeric identifier assigned to the organism within the NCBI taxonomy database) 
+一个GenBank记录代表的序列数据的生物学来源；每个记录都有一个或多个必须的特征；对于那些已经被收录进NCBI分类学数据库的生物，会有一个与之相关的\verb|/db_xref="taxon:NNNN"|分类号（其中的\verb|NNNNN|就是NCBI分类学数据库中为该生物分配的数字识别号）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{stem\_loop}}
 \begin{adjustwidth}{1cm}{}
-Hairpin loop structure in DNA or RNA
+DNA或RNA中的发卡环结构
 \end{adjustwidth}
 
 \textcolor{red}{\textit{STS}}
 \begin{adjustwidth}{1cm}{}
-Sequence Tagged Site: operationally unique sequence that identifies the combination of primer spans used in a PCR assay 
+序列标签位点（Sequence Tagged Site）：操作上和PCR实验中使用的引物结合的唯一序列
 \end{adjustwidth}
 
 \textcolor{red}{\textit{TATA\_signal}}
 \begin{adjustwidth}{1cm}{}
-TATA box in eukaryotic promoters
+真核生物启动子中的TATA盒
 \end{adjustwidth}
 
 \textcolor{red}{\textit{terminator}}
 \begin{adjustwidth}{1cm}{}
-Sequence causing transcription termination
+终止子，导致转录终止的序列
 \end{adjustwidth}
 
 \textcolor{red}{\textit{transit\_peptide}}
 \begin{adjustwidth}{1cm}{}
-Transit peptide coding region
+转运肽编码区域
 \end{adjustwidth}
 
 \textcolor{red}{\textit{transposon}}
 \begin{adjustwidth}{1cm}{}
-Transposable element (TN)
+转座子元件（Transposable element，TN）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{tRNA}}
 \begin{adjustwidth}{1cm}{}
-Transfer RNA
+转运（Transfer RNA）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{unsure}}
 \begin{adjustwidth}{1cm}{}
-Authors are unsure about the sequence in this region
+作者不确定该区域中的序列
 \end{adjustwidth}
 
 \textcolor{red}{\textit{V\_region}}
 \begin{adjustwidth}{1cm}{}
-Span of the V immunological feature
+V-免疫特征区
 \end{adjustwidth}
 
 \textcolor{red}{\textit{variation}}
 \begin{adjustwidth}{1cm}{}
-A related population contains stable mutation
+变异，一个相关的群体包含稳定的突变
 \end{adjustwidth}
 
 \textcolor{red}{\textit{-}}
 \begin{adjustwidth}{1cm}{}
-Placeholder (hyphen)
+占位符（连字符）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{-10\_signal}}
 \begin{adjustwidth}{1cm}{}
-Pribnow box in prokaryotic promoters
+原核生物启动子中的Pribnow盒
 \end{adjustwidth}
 
 \textcolor{red}{\textit{-35\_signal}}
 \begin{adjustwidth}{1cm}{}
--35 box in prokaryotic promoters
+原核生物启动子中的-35盒
 \end{adjustwidth}
 
 \textcolor{red}{\textit{3'clip}}
 \begin{adjustwidth}{1cm}{}
-3'-most region of a precursor transcript removed in processing
+转录本前体在加工过程中被切除的3'端区域
 \end{adjustwidth}
 
 \textcolor{red}{\textit{3'UTR}}
 \begin{adjustwidth}{1cm}{}
-3' untranslated region (trailer)
+3'端非翻译区（untranslated region）（后缀）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{5'clip}}
 \begin{adjustwidth}{1cm}{}
-5'-most region of a precursor transcript removed in processing
+转录本前体在加工过程中被切除的5'端区域
 \end{adjustwidth}
 
 \textcolor{red}{\textit{5'UTR}}
 \begin{adjustwidth}{1cm}{}
-5' untranslated region (leader)
+5'端非翻译区（untranslated region）（先导）
 \end{adjustwidth}
 
-These feature keys can have their own additional features, which you'll see here and in the exercises. 
+这些特征键都可以有它们自己的附加特征，在这里以及后面的联系中你会看到的。
 
-\subsubsection{Parsing}
-\autoref{exam:example10.7} finds whatever features are present and returns an array populated with them. It doesn't look for the complete list of features as presented in the last section; it finds just the features that are actually present in the GenBank record and returns them for further use.
+\subsubsection{解析}
+\autoref{exam:example10.7}寻找出现的特征，并返回用它们填充的数组。它并不会去寻找上一小节中列出的全部特征，它只寻找GenBank记录中出现的那些特征，返回它们已备后续之用。
 
-It's often the case that there are multiple instances of the same feature in a record. For instance, there may be several exons specified in the FEATURES table of a GenBank record. For this reason we'll store the features as elements in an array, rather than in a hash keyed on the feature name (as this allows you to store, for instance, only one instance of an exon).
+比较常见的一种情况是，在一个记录中有多个同样的特征。比如，在一个GenBank记录的FEATURES表中可能会有好几个外显子。正因为如此，我们把特征作为元素存储到一个数组中，而不是以特征名作为键存储到一个散列中（它只允许你存储一个，比如，仅仅一个外显子而已）。
 
-\textbf{Example 10-7. Testing subroutine parse\_features}
+\textbf{例10-7：测试解析特征的子程序}
 \lstinputlisting[label=exam:example10.7]{./scripts/example10-7.pl}
 
-\autoref{exam:example10.7} gives the output:
+\autoref{exam:example10.7}会给出下面的输出：
 
-\begin{lstlisting}
+\begin{lstlisting}[language={},basicstyle=\small\tt,breaklines=false]
 ******** source *********
       source          1..2487
                       /organism="Homo sapiens"
@@ -999,106 +1002,106 @@ It's often the case that there are multiple instances of the same feature in a r
                       AMTNRAGLLALMLHQTIQHDPLTTDLRSSADR
 \end{lstlisting}
 
-In subroutine \verb|parse_features| of \autoref{exam:example10.7}, the regular expression that extracts the features is much like the regular expression used in \autoref{exam:example10.6} to parse the top level of the annotations. Let's look at the essential parsing code of \autoref{exam:example10.7}: 
+在\autoref{exam:example10.7}的子程序\verb|parse_features|中，提取特征的正则表达式，和\autoref{exam:example10.6}中使用的解析顶层注释所使用的正则表达式非常相似。让我看一下\autoref{exam:example10.7}中最基本的解析代码：
 
 \begin{lstlisting}
 while( $features =~ /^ {5}\S.*\n(^ {21}\S.*\n)*/gm ) {
 \end{lstlisting}
 
-On the whole, and in brief, this regular expression finds features formatted with the first lines beginning with 5 spaces, and optional continuation lines beginning with 21 spaces.
+从整体上看，简单来说，这个正则表达式寻找特定格式的特征，第一行以5个空白起始，后面是可有可无的以21个空白起始的行。
 
-First, note that the pattern modifier \verb|/m| enables the \verb|^| metacharacter to match after embedded newlines. Also, the \verb|{5}| and \verb|{21}| are quantifiers that specify there should be exactly 5, or 21, of the preceding item, which in both cases is a space. 
+首先，注意模式修饰符\verb|/m|使得\verb|^|元字符可以匹配嵌入换行符后面的位置。此外\verb|{5}|和\verb|{21}|是量词，指定前面的项目必须出现正好5次和21次，在这两个例子中前面的项目都是一个空白。
 
-The regular expression is in two parts, corresponding to the first line and optional continuation lines of the feature. The first part \verb|^ {5}\S.*\n| means that the beginning of a line (\verb|^|) has 5 spaces (\verb|{5}|), followed by a non-whitespace character (\verb|\S|) followed by any number of non-newlines (\verb|.*|) followed by a newline (\verb|\n|). The second part of the regular expression, \verb|(^ {21}\S.*\n)*| means the beginning of a line (\verb|^|) has 21 spaces (\verb|{21}|) followed by a non-whitespace character (\verb|\S|) followed by any number of non-newlines (\verb|.*|) followed by a newline (\verb|\n|); and there may be \verb|0| or more such lines, indicated by the \verb|()*| around the whole expression. 
+根据特征的第一行和可选的后续行，正则表达式分为两部分。第一部分\verb|^ {5}\S.*\n|表示一行的开头（\verb|^|）有5个（\verb|{5}|）空白，后面紧跟着的是一个非空白字符（\verb|\S|），之后是任意数目的非换行符字符（\verb|.*|），最后是一个换行符\verb|\n|）。正则表达式的第二部分\verb|(^ {21}\S.*\n)*|，表示一行的开头（\verb|^|）有21个（\verb|{21}）空白，后面紧跟着的是一个非空白字符（\verb|\S|），之后是任意数目的非换行符字符（\verb|.*|），最后是一个换行符（\verb|\n|）；并且这样的行可以有\verb|0|个或者多个，这是用包裹住整个表达式的\verb|()*|来表明的。
 
-The main program has a short regular expression along similar lines to extract the feature name (also called the feature key) from the feature.
+主程序中也有一个简短的正则表达式处理类似的行，来从特征中提取出特征名（也叫做特征键）。
 
-So, again, success. The FEATURES table is now decomposed or "parsed" in some detail, down to the level of separating the individual features.  The next stage in parsing the FEATURES table is to extract the detailed information for each feature. This includes the location (given on the same line as the feature name, and possibly on additional lines); and the qualifiers indicated by a slash, a qualifier name, and if applicable, an equals sign and additional information of various kinds, possibly continued on additional lines.
+所以，又一次成功了。FEATURES表现在被详细地分解或说“解析”了，一直到了能把各个特征分割开的水平。解析FEATURES表的下一步就是从每一个特征中提取出具体的信息了。这包括定位（和特征名在同一行上，也可能在其他行上）；用正斜杠表明的限定词，包括一个限定词名称，如何合适的话，还有一个等号和各种各样的附加信息，附加信息可能持续多行。
 
-I'll leave this final step for the exercises. It's a fairly straightforward extension of the approach we've been using to parse the features. You will want to consult the documentation from the NCBI web site for complete details about the structure of the FEATURES table before trying to parse the location and qualifiers from a feature.
+我会把这最后的一步作为练习。这是对我们用来解析特征的方法的一个理所当然的扩充。在尝试从一个特征中解析定位和限定词之前，你可能想去参考一下NCBI网站上关于FEATURES表结构的完整细节的文档。
 
-The method I've used to parse the FEATURES table maintains the structure of the information. However, sometimes you just want to see if some word such as "endonulease" appears anywhere in the record. For this, recall that you created a \verb|search_annotation| subroutine in \autoref{exam:example10.5} that searches for any regular expression in the entire annotation; very often, this is all you really need. As you've now seen, however, when you really need to dig into the FEATURES table, Perl has its own features that make the job possible and even fairly easy. 
+我用来解析FEATURES表的方法保留了信息的结构。然后，有时，你可能只想看看像是“endonulease”这样的某些单词是否在记录中的某个地方出现了。如果是这样，回忆一下你在\autoref{exam:example10.5}中创建的\verb|search_annotation|子程序，它在整个注释中查找正则表达式。在多数情况下，这就是你真正需要的。然而，就想你刚刚看到的那样，当你真的需要对FEATURES表进行深入解析的时候，Perl有它独特的特性，可以让这个工作变得可行甚至非常简单。
 
-\section{Indexing GenBank with DBM}
-DBM stands for Database Management. Perl provides a set of built-in functions that give Perl programmers access to DBM files. 
+\section{使用DBM对GenBank进行索引}
+DBM表示数据库管理（Database
+Management）。Perl提供了内置函数，让Perl程序员可以访问DBM文件。
 
-\subsection{DBM Essentials}
-When you open a DBM file, you access it like a hash: you give it keys and it returns values, and you can add and delete key-value pairs.  What's useful about DBM is that it saves the key-value data in a permanent disk file on your computer. It can thus save information between the times you run your program; it can also serve as a way to share information between different programs that need the same data. A DBM file can get very big without killing the main memory on your computer and making your program—and everything else—slow to a crawl.
+\subsection{DBM基础}
+当你打开一个DBM文件时，你就像使用一个散列那样访问它：你给它键，它返回值，并且你可以添加和删除键-值对。DBM之所以有用，是因为它把键-值数据保存在了你计算机中的永久硬盘上。它可以在你运行程序的间歇保存信息，也可以作为在需要同样数据的不同程序间共享信息的一种方法。在吃尽计算机内容之前，一个DBM文件可能会变得非常大，这样它会使你的程序以及其他所有东西慢的像乌龟爬一样。
 
-There are two functions, \textit{dbmopen} and \textit{dbmclose}, that "tie" a hash to a DBM file; then you just use the hash. As you've seen, with a hash, lookups are easy, as are definitions. You can get a list of all the keys from a hash called \verb|%my_hash| by typing \verb|keys %my_hash|. You then can get a list of all values by typing \verb|values %my_hash|. For large DBM files, you may not want to do this; the Perl function \verb|each| allows you to read key-value pairs one at a time, thus saving the memory of your running program. There is also a \textit{delete} function to remove the definitions of keys: 
+有两个函数把一个散列“绑定”到一个DBM文件上，它们就是\textit{dbmopen}和\textit{dbmclose}，绑定之后你就使用散列就行了。正如你已经看到的那样，使用散列的话，就像它的定义那样，查找会非常容易。对一个叫做\verb|%my_hash|的散列，你键入\verb|keys %my_hash|就可以得到这个散列的所有键了。之后，你键入\verb|values %%my_hash|就可以得到所有的只。对于大的DBM文件来说，你可能不会想这么做。Perl函数\verb|each|允许你一次读取一个键-值对，这样就能节省你运行程序 的内存了。也有一个\textit{delete}函数可以删除键的定义：
 
 \begin{lstlisting}
 delete $my_hash{'DNA'}
 \end{lstlisting}
 
-entirely removes that key from the hash.
+它会把键从散列中完全删除掉。
 
-DBM files are a very simple database. They don't have the power of a relational database such as \textit{MySQL}, \textit{Oracle}, or \textit{PostgreSQL}; however, it's remarkable how often a simple database is all that a problem really needs. When you have a set of key-value data (or several such sets), consider using DBM. It's certainly easy to use with Perl.
+DBM文件是一个非常简单的数据库。它们没有\textit{MySQL}、\textit{Oracle}或者\textit{PostgreSQL}这些关系数据库强大，然而，通常对于一个问题来说，它就是我们真正需要的，而这样简单的数据库表现也异常出色。当你有一个键-值数据集（或者多个这样的数据集）时，考虑使用DBM吧。对于Perl来说，它真的非常容易使用。
 
-The main wrinkle to using DBM is that there are several, slightly different DBM implementations—NDBM, GDBM, SDBM, and Berkeley DB. The differences are small but real; but for most purposes, the implementations are interchangeable. Newer versions of Perl give you Berkeley DB by default, and it's easy to get it and install it for your Perl if you want. If you don't have really long keys or values, it's not a problem. Some older DBMs require you to add null bytes to keys and delete them from values: 
+使用DBM主要的问题在于，有多种稍有不同的DBM实现——NDBM、GDBM、SDBM和Berkeley DB。它们之间的区别很小，但确实存在。但对于绝大多数的目的来说，这些实现是完全通用的。新版本的Perl默认使用Berkeley DB，如果你想的话，对于你的Perl来说它非常容易获得并安装上。如果你真的不需要长的键或者值，这并不是一个问题。一些老的DBMs需要你给键添加空字节（null bytes）并且从值中删除它们。
 
 \begin{lstlisting}
 $value = $my_hash{"$key\0"};
 chop $value;
 \end{lstlisting}
 
-Chances are good that you won't have to do that. Berkeley DB handles long strings well (some of the other DBM implementations have limits), and because you have some potentially long strings in biology, I recommend installing Berkeley DB if you don't have it.
+如果你不需要这样做，那就再好不过了。Berkeley DB可以很好得处理长字符串（其他的一些DBM实现有一定的限制）。因为在生物学中，你可能会有一些长的字符串，所以如果你没有Berkeley DB的话，我推荐你安装上。
 
-\subsection{A DBM Database for GenBank}
-You've seen how to extract information from a GenBank record or from a library of GenBank records. You've just seen how DBM files can save your hash data on your hard disk between program runs. You've also seen the use of \verb|tell| and \verb|seek| to quickly access a location in a file.
+\subsection{一个用于GenBank的DBM数据库}
+你已经看到了，如何从一个GenBank记录或者GenBank记录库中提取信息。你刚刚看到了在程序运行时DBM文件是如何把你的散列数据保存到你的硬盘上的。你也看过了使用\verb|tell|和\verb|seek|来快速访问一个文件中的某个位置。
 
-Now let's combine the three ideas and use DBM to build a database of information about a GenBank library. It'll be something simple: you'll extract the accession numbers for the keys and store the byte offsets in the GenBank library of records for the values. You'll add some code that, given a library and an offset, returns the record at that offset, and write a main program that allows the user to interactively request GenBank records by accession number. When complete, your program should very quickly return a GenBank record if given its accession number.
+现在，我们把这三个想法组合起来，使用DBM来构建一个关于GenBank库信息的数据库。在一定程度上这非常简单：你提取出索引号作为键，把GenBank库中记录的字节偏移量存储为值。你要添加一些代码，对于给定的一个库和某个偏移量，返回在那个偏移量处的记录，并且编写主程序，允许用户使用索引号交互式得获取GenBank记录。当完成后，如果给它一个索引号，你的程序应该会非常快得返回一个GenBank记录。
 
-This general idea is extended in the exercises at the end of the chapter to a considerable extent; you may want to glance ahead at them now to get an idea of the potential power of the technique I'm about to present.
+此处基本的想法会在本章末尾的练习题中进行扩展，扩展到一个相当大的程度。你现在可能会想先去看一下，这样你对我现在介绍的这种技术的强大就有一定的了解了。
 
-With just the appropriate amount of further ado, here is a code fragment that opens (creating if necessary) a DBM file: 
+为了避免后面过度的杂乱，现在先给出打开（如果需要会先创建）一个DBM文件的代码片段：
 
 \begin{lstlisting}
 unless(dbmopen(%my_hash, 'DBNAME', 0644)) {
   
   print "Cannot open DBM file DBNAME with mode 0644\n";
   exit;
-
 }
 \end{lstlisting}
 
-\verb|%my_hash| is like any other hash in Perl, but it will be tied to the DBM file with this statement. \verb|DBNAME| is the basename of the actual DBM files that will be created. Some DBM versions create one file of exactly that name; others create two files with file extensions \textit{.dir} and \textit{.pag}.
+\verb|%my_hash|就像Perl的其他散列一样，但是通过这个语句，它会被绑定到DBM文件上。\verb|DBNAME|是将要实际创建的DBM文件的基名。某些DBM版本会创建一个完全叫做这个名字的文件，其他的则会创建使用文件扩展名\textit{.dir}和\textit{.pag}的两个文件。
 
-Another parameter is called the mode. Unix or Linux users will be familiar with file permissions in this form. Many possibilities exist; here are the most common ones: 
+另一个参数叫做\textit{模式（mode）}。Unix或者Linux用户对于使用这种形式的文件权限会非常熟悉。有多种可能存在，下面是最常见的几个：
 
 \textcolor{red}{\textit{0644}}
 \begin{adjustwidth}{1cm}{}
-You can read and write; others can just read.
+你可以读取并写入，其他人只能读取。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{0600}}
 \begin{adjustwidth}{1cm}{}
-Only you can read or write.
+你有你自己可以读取或写入。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{0666}}
 \begin{adjustwidth}{1cm}{}
-Anyone can read or write.
+任何人都可以读取或写入。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{0444}}
 \begin{adjustwidth}{1cm}{}
-Anyone can read (nobody can write).
+任何人都可以读取（但是没人能够写入）。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{0400}}
 \begin{adjustwidth}{1cm}{}
-Only you can read (nobody else can do anything).
+只有你可以读取（其他人都不能对它进行任何操作）。
 \end{adjustwidth}
 
-The \textit{dbmopen} call fails if you try to open a file with a mode that assumes there are more permissions than were conferred on the DBM file when it was created. Usually, the mode 0644 is declared by the owner if only the owner should be allowed to write, and 0444 is declared by readers. Mode 0666 is declared by the owner and others if the file is meant to be read or written by anyone.
+当DBM文件创建的时候它会被授予一定的权限，如果你尝试使用更多的权限去打开它，\textit{dbmopen}函数的调用会失败。通常，如果只有所有者被允许写入的话，所有者会对文件使用0644模式，而读取者则会使用0444模式。如果想要让任何人都可以读取或者写入文件，所有者会赋予它0666模式。
 
-That's pretty much it; DBM files are that simple. \autoref{exam:example10.8} displays a DBM file that stores key-value pairs of accession numbers of GenBank records for keys, and byte offsets of the records as values. 
+基本上就这些，DBM文件就是这么简单。\autoref{exam:example10.8}演示了一个DBM文件，它存储的键-值对中，键是GenBank记录的索引号，值是记录的字节偏移量。
 
-\textbf{Example 10-8. A DBM index of a GenBank library}
+\textbf{例10-8：一个GenBank库的DBM索引}
 \lstinputlisting[label=exam:example10.8]{./scripts/example10-8.pl}
 
-Here's the truncated output of \autoref{exam:example10.8}:
+下面是\autoref{exam:example10.8}截断的输出：
 
 \begin{lstlisting}
 Here are the available accession numbers:
@@ -1116,54 +1119,54 @@ DEFINITION  Homo sapiens zinc finger protein 148 (pHZ-52) (ZNF148), mRNA.
 Enter accession number (or quit): q
 \end{lstlisting}
 
-\section{Exercises}
-\textcolor{red}{\textit{Exercise 10.1}}
+\section{练习题}
+\textcolor{red}{\textit{习题10.1}}
 \begin{adjustwidth}{1cm}{}
-Go to the NCBI, EMBL, and EBI web sites and become familiar with their use. 
+去逛逛NCBI、EMBL和EBI的网站，熟悉一下它们的使用。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 10.2}}
+\textcolor{red}{\textit{习题10.2}}
 \begin{adjustwidth}{1cm}{}
-Read the GenBank format documentation, \textit{gbrel.txt}.
+阅读GenBank格式的文档\textit{gbrel.txt}。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 10.3}}
+\textcolor{red}{\textit{习题10.3}}
 \begin{adjustwidth}{1cm}{}
-Write a subroutine that passes a hash by value. Now rewrite it to pass the hash by reference. 
+编写一个子程序，通过值传递一个散列。现在重写它，通过指针传递散列。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 10.4}}
+\textcolor{red}{\textit{习题 10.4}}
 \begin{adjustwidth}{1cm}{}
-Design a module of subroutines to handle the following kinds of data: a flat file containing records consisting of gene names on a line and extra information of any sort on succeeding lines, followed by a blank line. Your subroutines should be able to read in the data and then do a fast lookup on the information associated with a gene name. You should also be able to add new records to the flat file. Now reuse this module to build an address book program. 
+设计由几个子程序构成的模块，来处理下面这些类型的数据：一个包含记录的平面文件，记录由位于一行的基因名和位于后续行的各种附加信息组成，最后是一个空白行。你的子程序应该能够读取数据，之后对和一个基因名相关的信息进行快速查询。你还应该能够添加新的记录到这个平面文件中。现在重用这些模块，来构建一个地址簿程序。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 10.5}}
+\textcolor{red}{\textit{习题10.5}}
 \begin{adjustwidth}{1cm}{}
-Descend further into the FEATURES table. Parse the features in the table into their next level by parsing the feature names, locations, and qualifiers. Check the document \textit{gbrel.txt} for definitions of the structures of the fields. 
+进一步深入FEATURES表。解析表中特征的下一层信息，主要是特征名、定位和限定词这几个特征。对于字段结构的定义，可以查阅文档\textit{gbrel.txt}。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 10.6}}
+\textcolor{red}{\textit{习题10.6}}
 \begin{adjustwidth}{1cm}{}
-Write a program that takes a long DNA sequence as input and outputs the counts of all four-base subsequences (256 of them in all), sorted by frequency. A four-base subsequence starts at each location 1, 2, 3, and so on. (This kind of word-frequency analysis is common to many fields of study, including linguistics, computer science, and music.) 
+编写一个程序，以一个长的DNA序列作为输入，输出以频率进行排序的所有四碱基子序列（一共有256个）的计数。一个四碱基子序列可以起始于1、2、3等各个位置。（这种类型的词频分析在许多研究领域都非常常见，包括语言学、计算机科学和音乐学。）
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 10.7}}
+\textcolor{red}{\textit{习题10.7}}
 \begin{adjustwidth}{1cm}{}
-Extend the program in Exercise 10.6 to count all the sequences in a GenBank library. 
+扩展习题10.6中的程序，让它可以对一个GenBank库中的所有序列进行计数。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 10.8}}
+\textcolor{red}{\textit{习题10.8}}
 \begin{adjustwidth}{1cm}{}
-Given an amino acid, find the frequency of occurrence of the adjacent amino acids coded in a DNA sequence; or in a GenBank library. 
+对于给定的一个氨基酸，找到一个DNA序列或者一个GenBank库中它临近氨基酸的出现频率。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 10.9}}
+\textcolor{red}{\textit{习题10.9}}
 \begin{adjustwidth}{1cm}{}
-Extract all the words (excluding words like "the" or other unnecessary words) from the annotation of a library of GenBank records. For each word found, add the offset of the GenBank record in the library to a DBM file that has keys equal to the words, and values that are strings with offsets separated by spaces. In other words, one key can have a space-separated list of offsets for a value. Then you can quickly find all records containing a word like "fibroblast" with a simple lookup, followed by extracting the offsets and seeking into the library with those offsets. How big is your DBM file compared to the GenBank library?  What might be involved in constructing a search engine for the annotations in all of GenBank? For human DNA only? 
+  从GenBank记录库的注释中提取出所有的单词（除了“the”或者其他无用的类似单词以外）。对于找到的每一个单词，都把库中GenBank记录的偏移量添加到DBM文件中，DBM文件的键就是单词，值使用空格分隔开的偏移量字符串。换言之，一个键对应的值可以是用空格分隔开的偏移量列表。然后，通过一个简单的查找，你就可以露艾苏找到含有像“fibroblast”这样的单词的所有记录了，之后，提取出这些偏移量，使用它们在库中进行进行找寻（\textit{seek}）。与GenBank库先比，你的DBM文件有多大？如果要针对所有GenBank中的注释构建一个搜索引擎，又该如何呢？如果是仅仅针对人类的DNA呢？
 \end{adjustwidth}
 
-\textcolor{red}{\textit{Exercise 10.10}}
+\textcolor{red}{\textit{习题10.10}}
 \begin{adjustwidth}{1cm}{}
-Write a program to make a custom library of oncogenes from the GBPRI division of GenBank. 
+编写一个程序，从GenBank的GBPRI分类中构建一个个性化的肿瘤基因库。
 \end{adjustwidth}
 
