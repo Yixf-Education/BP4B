@@ -6,7 +6,7 @@ The success of the Human Genome Project in decoding the DNA sequence of human ge
 
 Recent and expected advances in technology promise an accelerating pace of protein structure determination. The storehouse for all of this data is the \textit{Protein Data Bank} (PDB). The PDB may be found on the web at \href{http://www.rcsb.org/pdb/}{http://www.rcsb.org/pdb/}.
 
-Finding the amino acid or primary sequence is just the beginning of studying a protein. Proteins fold locally into secondary structures such as alpha helices, beta-strands, and turns. Two or three adjacent secondary structures might combine into common local folds called "motifs" or "supersecondary" structures such as beta sheets or alpha-alpha units. These building blocks then fold into the 3D or tertiary structure of a protein. Finally, one or more tertiary structures may be combined as subunits into a quaternary structure such as an enzyme or a virus.
+Finding the amino acid or primary sequence is just the beginning of studying a protein. Proteins fold locally into secondary structures such as alpha helices, beta-strands, and turns. Two or three adjacent secondary structures might combine into common local folds called ``motifs" or ``supersecondary" structures such as beta sheets or alpha-alpha units. These building blocks then fold into the 3D or tertiary structure of a protein. Finally, one or more tertiary structures may be combined as subunits into a quaternary structure such as an enzyme or a virus.
 
 Without knowing how a protein folds into a 3D structure, you are less likely to know what the protein does or how it does it. Even if you know that the protein is implicated in a disease, knowledge of its tertiary structure is usually needed to find a possible treatment. Knowing the tertiary conformation of the \textit{active site} of a protein (which may involve amino acids that are far apart in terms of the primary sequence but which are brought together by the folding of the protein) is critical to guide the selection of targets for new drugs.
 
@@ -17,13 +17,13 @@ In fact, one of the great questions of modern biology is how the primary amino a
 In this chapter, you'll learn the basics of PDB files and how to parse out selected information form them. You'll also explore interesting Perl techniques for finding and iterating over lots of files, as well as controlling other bioinformatics programs from a Perl program. The exercises at the end of the chapter challenge you to extend the introductory material presented here to gain access to more of the PDB data.
 
 \section{Overview of PDB}
-The main source for information about 3D structures of macromolecules (including proteins, peptides, viruses, protein/nucleic acid complexes, nucleic acids, and carbohydrates) is PDB, and its format is the de facto standard for the exchange of structural information. Most of these structures are determined experimentally by means of X-ray diffraction or nuclear magnetic resonance (NMR) studies.
+The main source for information about 3D structures of macromolecules (including proteins, peptides, viruses, protein/nucleic acid complexes, nucleic acids, and carbohydrates) is PDB, and its format is the \texti{de facto} standard for the exchange of structural information. Most of these structures are determined experimentally by means of X-ray diffraction or nuclear magnetic resonance (NMR) studies.
 
 PDB started in 1971 with seven proteins; it will soon grow to 20,000 structures. With the international effort in structural genomics increasing, the PDB is certain to continue its rapid growth. Within a few short years the number of known structures will approach 100,000.  
 
-PDB files are like GenBank records, in that they are human-readable ASCII flat files. The text conforms to a specific format, so computer programs may be written to extract the information. PDB is organized with one structure per file, unlike Genbank, which is distributed with many records in each "library" file.
+PDB files are like GenBank records, in that they are human-readable ASCII flat files. The text conforms to a specific format, so computer programs may be written to extract the information. PDB is organized with one structure per file, unlike GenBank, which is distributed with many records in each ``library" file.
 
-Bioinformaticians who work extensively with PDB files report that there are serious problems with the consistency of the PDB format. For instance, as the field has advanced and the data format has evolved to meet new knowledge requirements, some of the older files have become out of date, and efforts are underway to address the uniformity of PDB data.  Until these efforts are complete and a new data format is developed, inconsistencies in the current data format are a challenge programmers have to face. If you do a lot of programming with PDB files, you'll find many inconsistencies and errors in the data, especially in the older files. Plus, many parsing tools that work well on newer files perform poorly on older files.
+Bioinformaticians who work extensively with PDB files report that there are serious problems with the consistency of the PDB format. For instance, as the field has advanced and the data format has evolved to meet new knowledge requirements, some of the older files have become out of date, and efforts are underway to address the uniformity of PDB data. Until these efforts are complete and a new data format is developed, inconsistencies in the current data format are a challenge programmers have to face. If you do a lot of programming with PDB files, you'll find many inconsistencies and errors in the data, especially in the older files. Plus, many parsing tools that work well on newer files perform poorly on older files.
 
 As you become a more experienced programmer, these and other issues the PDB faces become more important. For instance, as PDB evolves, the code you write to interact with it must also evolve; you must always maintain your code with an eye on how the rest of the world is changing. As links between databases become better supported, your code will take advantage of the new opportunities the links provide. With new standards of data storage becoming established, your code will have to evolve to include them.
 
@@ -34,12 +34,12 @@ The PDB is distributed as files within directories. Each protein structure occup
 
 You'll frequently find a need to write programs that manipulate large numbers of files. For example: perhaps you keep all your sequencing runs in a directory, organized into subdirectories labeled by the dates of the sequencing runs and containing whatever the sequencer produced on those days. After a few years, you could have quite a number of files.
 
-Then, one day you discover a new sequence of DNA that seems to be implicated in cell division. You do a BLAST search (see Chapter 12) but find no significant hits for your new DNA. At that point you want to know whether you've seen this DNA before in any previous sequencing runs.\footnote{You may do a comparison by keeping copies of all your sequencing runs in one large BLAST library; building such a BLAST library can be done using the techniques shown in this section.} What you need to do is run a comparison subroutine on each of the hundreds or thousands of files in all your various sequencing run subdirectories. But that's going to take several days of repetitive, boring work sitting at the computer screen.
+Then, one day you discover a new sequence of DNA that seems to be implicated in cell division. You do a BLAST search (see \autoref{chap:cahpter12}) but find no significant hits for your new DNA. At that point you want to know whether you've seen this DNA before in any previous sequencing runs.\footnote{You may do a comparison by keeping copies of all your sequencing runs in one large BLAST library; building such a BLAST library can be done using the techniques shown in this section.} What you need to do is run a comparison subroutine on each of the hundreds or thousands of files in all your various sequencing run subdirectories. But that's going to take several days of repetitive, boring work sitting at the computer screen.
 
 You can write a program in much less time than that! Then all you have to do is sit back and examine the results of any significant matches your program finds. To write the program, however, you have to know how to manipulate all the files and folders in Perl. The following sections show you how to do it. 
 
 \subsection{Opening Directories}
-A filesystem is organized in a \textit{tree} structure. The metaphor is apt.  Starting from anyplace on the tree, you can proceed up the branches and get to any leaves that stem from your starting place. If you start from the root of the tree, you can reach all the leaves. Similarly, in a filesystem, if you start at a certain directory, you can reach all the files in all the subdirectories that stem from your starting place, and if you start at the root (which, strangely enough, is also called the "top") of the filesystem, you can reach all the files.
+A filesystem is organized in a \textit{tree} structure. The metaphor is apt. Starting from anyplace on the tree, you can proceed up the branches and get to any leaves that stem from your starting place. If you start from the root of the tree, you can reach all the leaves. Similarly, in a filesystem, if you start at a certain directory, you can reach all the files in all the subdirectories that stem from your starting place, and if you start at the root (which, strangely enough, is also called the ``top") of the filesystem, you can reach all the files.
 
 You've already had plenty of practice opening, reading from, writing to, and closing files. I will show a simple method with which you can open a folder (also called a directory) and get the filenames of all the files in that folder. Following that, you'll see how to get the names of all files from all directories and subdirectories from a certain starting point.
 
@@ -68,13 +68,13 @@ Since you're running this program on a folder that contains PDB files, this is w
 pdb1a4o.ent
 \end{lstlisting}
 
-If you want to list the files in the current directory, you can give the directory name the special name "." for the current directory, like so:
+If you want to list the files in the current directory, you can give the directory name the special name ``." for the current directory, like so:
 
 \begin{lstlisting}
 my $folder = '.';
 \end{lstlisting}
 
-On Unix or Linux systems, the special files "." and ".." refer to the current directory and the parent directory, respectively. These aren't "really" files, at least not files you'd want to read; you can avoid listing them with the wonderful and amazing \textit{grep} function. \textit{grep} allows you to select elements from an array based on a test, such as a regular expression. Here's how to filter out the array entries "." and "..": 
+On Unix or Linux systems, the special files ``." and ``.." refer to the current directory and the parent directory, respectively. These aren't ``really" files, at least not files you'd want to read; you can avoid listing them with the wonderful and amazing \textit{grep} function.  \textit{grep} allows you to select elements from an array based on a test, such as a regular expression. Here's how to filter out the array entries ``." and ``..": 
 
 \begin{lstlisting}
 @files = grep( !/^\.\.?$/, @files );
@@ -219,7 +219,7 @@ pdb/3c/pdb43ca.ent
 As a final example of processing files with Perl, here's the same functionality as the preceding programs, with a one-line program, issued at the command line: 
 
 \begin{lstlisting}
-  perl -e 'use File::Find;find sub{-f and (print $File::Find::name,"\n")},("pdb")'
+perl -e 'use File::Find;find sub{-f and (print $File::Find::name,"\n")},("pdb")'
 \end{lstlisting}
 
 Pretty cool, for those who admire terseness, although it doesn't really eschew obfuscation. Also note that for those on Unix systems, \verb|ls -R pdb| and \verb|find pdb -print| do the same thing with even less typing.
@@ -435,7 +435,7 @@ In the following sections, you'll extract information from these files. Since th
 \subsection{PDB File Format}
 Let's take a look at a PDB file and the documentation that tells how the information is formatted in a PDB file. Based on that information, you'll parse the file to extract information of interest.
 
-PDB files are composed of lines of 80 columns that begin with one of several predefined record names and end with a newline. ("Column" means position on a line: the first character is in the first column, and so forth.) Blank columns are padded with spaces. A \textit{record type} is one or more lines with the same record name. Different record types have different types of fields defined within the lines. They are also grouped according to function.
+PDB files are composed of lines of 80 columns that begin with one of several predefined record names and end with a newline. (``Column" means position on a line: the first character is in the first column, and so forth.) Blank columns are padded with spaces. A \textit{record type} is one or more lines with the same record name. Different record types have different types of fields defined within the lines. They are also grouped according to function.
 
 The SEQRES record type is one of four record types in the Primary Structure Section, which presents the primary structure of the peptide or nucleotide sequence: 
 
@@ -664,8 +664,8 @@ First, \autoref{exam:example11.5} shows the main program and three subroutines t
 It's important to note that the main program, which calls the subroutine \verb|get_file_data| to read in the PDB file, has included a warning about the potentially large size of any given PDB file. (For instance, the PDB file \textit{1gav} weighs in at 3.45 MB.) Plus, the main program follows the reading in of the entire file, with the subroutine \verb|parsePDBrecordtypes| that makes copies of all lines in the input file, separated by record type. At this point, the running program is using twice the amount of memory as the size of the file. This design has the advantage of clarity and modularity, but it can cause problems if main memory is in short supply. The use of memory can be lessened by not saving the results of reading in the file, but instead passing the file data directly to the \verb|parsePDBrecordtypes| subroutine, like so: 
 
 \begin{lstlisting}
-  # Get the file data and parse the record types of the PDB file
-  %recordtypes = parsePDBrecordtypes(get_file_data('pdb/c1/pdb1c1f.ent'));
+# Get the file data and parse the record types of the PDB file
+%recordtypes = parsePDBrecordtypes(get_file_data('pdb/c1/pdb1c1f.ent'));
 \end{lstlisting}
 
 Further savings of memory are possible. For instance, you can rewrite the program to just read the file one line at a time while parsing the data into the record types. I point out these considerations to give you an idea of the kinds of choices that are practically important in processing large files. However, let's stick with this design for now. It may be expensive in terms of memory, but it's very clear in terms of overall program structure.
@@ -689,22 +689,22 @@ To extend this to capture all record types, see the exercises at the end of the 
 
 For PDB files, each line starts with a keyword that explicitly states to which record type that line belongs. You will find in the documentation that each record type has all its lines adjacent to each other in a group. In this case, it seems that simply iterating through the lines and collecting the record types would be the simplest programming approach.
 
-\autoref{exam:example11.5} contains a subroutine \textit{parsePDBrecordtypes} that parses the PDB record types from an array containing the lines of the PDB record.  This is a short, clean subroutine that accomplishes what is needed. The comments describe what's happening pretty well, which, as you know, is a critical factor in writing good code. Basically, each line is examined for its record type and is then added to the value of a hash entry with the record type as the key. The hash is returned from the subroutine. 
+\autoref{exam:example11.5} contains a subroutine \textit{parsePDBrecordtypes} that parses the PDB record types from an array containing the lines of the PDB record. This is a short, clean subroutine that accomplishes what is needed. The comments describe what's happening pretty well, which, as you know, is a critical factor in writing good code. Basically, each line is examined for its record type and is then added to the value of a hash entry with the record type as the key. The hash is returned from the subroutine. 
 
 \subsection{Extracting Primary Sequence}
 Let's examine the subroutine \textit{extractSEQRES}, now that the record types have been parsed out, and extract the primary amino acid sequence.
 
 You need to extract each chain separately and return an array of one or more strings of sequence corresponding to those chains, instead of just one sequence.
 
-The previous parse, in \autoref{exam:example11.4}, left the required SEQRES record type, which stretches over several lines, in a scalar string that is the value of the key '\verb|SEQRES|' in a hash. Our success with the previous \textit{parsePDBrecordtypes} subroutine that used iteration over lines (as opposed to regular expressions over multiline strings) leads to the same approach here. The \textit{split} Perl function enables you to turn a multiline string into an array.
+The previous parse, in \autoref{exam:example11.4}, left the required SEQRES record type, which stretches over several lines, in a scalar string that is the value of the key `\verb|SEQRES|' in a hash. Our success with the previous \textit{parsePDBrecordtypes} subroutine that used iteration over lines (as opposed to regular expressions over multiline strings) leads to the same approach here. The \textit{split} Perl function enables you to turn a multiline string into an array.
 
-As you iterate through the lines of the SEQRES record type, notice when a new chain is starting, save the previous chain in \verb|@results|, reset the \verb|$sequence| array, and reset the \verb|$lastchain| flag to the new chain. Also, when done with all the lines, make sure to save the last sequence chain in the \verb|@results| array.
+As you iterate through the lines of the SEQRES record type, notice when a new chain is starting, save the previous chain in \verb|@results|, reset the \verb|$sequence| variable, and reset the \verb|$lastchain| flag to the new chain. Also, when done with all the lines, make sure to save the last sequence chain in the \verb|@results| array.
 
 Also notice (and verify by exploring the Perl documentation for the function) that \textit{split}, with the arguments you gave it, does what you want.
 
 The third and final subroutine of \autoref{exam:example11.5} is called \textit{iub3to1}. Since in PDB the sequence information is in three-character codes, you need this subroutine to change those sequences into one-character codes. It uses a straightforward hash lookup to perform the translation.
 
-We've now decomposed the problem into a few complementary subroutines.  It's always interesting as to how to best divide a problem into cooperating subroutines. You can put the call to \textit{iub3to1} inside the \textit{extractSEQRES} subroutine; that might be a cleaner way to package these subroutines together, since, outside the PDB file format, you won't have use for the strings of amino acids in three-character codes.
+We've now decomposed the problem into a few complementary subroutines. It's always interesting as to how to best divide a problem into cooperating subroutines. You can put the call to \textit{iub3to1} inside the \textit{extractSEQRES} subroutine; that might be a cleaner way to package these subroutines together, since, outside the PDB file format, you won't have use for the strings of amino acids in three-character codes.
 
 The important observation at this juncture is to point out that a few short subroutines, tied together with a very short main program, were sufficient to do a great deal of parsing of PDB files. 
 

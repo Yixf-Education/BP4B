@@ -1,49 +1,50 @@
-\chapter{:Protein Data Bank}
+\chapter{PDB}
 \label{chap:chapter11}
 \minitoc
 
-The success of the Human Genome Project in decoding the DNA sequence of human genes has captured the public imagination, but another project has been quietly gaining momentum, and it promises equally revolutionary results. This project is an international effort to determine the 3D structure of a comprehensive range of proteins on a genome-wide level using high-throughput analytical technologies. This international effort is the foundation of the new field of structural genomics.
+人类基因组计划（Human Genome
+Project）在解码人类基因DNA序列上的成功，已经俘获了公众的想象力，但另一个项目却没有获得如此的关注度，它也会得到同样具有变革性的结果。这个项目是进行国际性的合作努力，使用高通量分析技术，在基因组范围水平上确定大量蛋白质的3D结构。国际性的合作是结构基因组学这个新兴领域的基础。
 
-Recent and expected advances in technology promise an accelerating pace of protein structure determination. The storehouse for all of this data is the \textit{Protein Data Bank} (PDB). The PDB may be found on the web at \href{http://www.rcsb.org/pdb/}{http://www.rcsb.org/pdb/}.
+最近技术上的突破，促进了确定蛋白质结构这场竞赛的加速。存储所有这些数据的商店就是\textit{PDB（Protein Data Bank）}，可以在网站\href{http://www.rcsb.org/pdb/}{http://www.rcsb.org/pdb/}上找到它。
 
-Finding the amino acid or primary sequence is just the beginning of studying a protein. Proteins fold locally into secondary structures such as alpha helices, beta-strands, and turns. Two or three adjacent secondary structures might combine into common local folds called "motifs" or "supersecondary" structures such as beta sheets or alpha-alpha units. These building blocks then fold into the 3D or tertiary structure of a protein. Finally, one or more tertiary structures may be combined as subunits into a quaternary structure such as an enzyme or a virus.
+找到氨基酸序列也就是一级序列，仅仅是蛋白质研究的开始。蛋白质会进行局部折叠，折叠成$\alpha$-螺旋、$\beta$-折叠和$\beta$-转角之类的二级结构。两个或三个临近的二级结构可能会组合成叫做“基元”或者“超二级结构”的常见折叠花式，比如$\beta$-片层或者$\alpha$-$\alpha$螺旋组合单元。这些建筑模块会进一步折叠成蛋白质的3D或者三级结构。最后，一个或者多个三级结构可能作为亚单元组合成酶或者病毒的四级结构。
 
-Without knowing how a protein folds into a 3D structure, you are less likely to know what the protein does or how it does it. Even if you know that the protein is implicated in a disease, knowledge of its tertiary structure is usually needed to find a possible treatment. Knowing the tertiary conformation of the \textit{active site} of a protein (which may involve amino acids that are far apart in terms of the primary sequence but which are brought together by the folding of the protein) is critical to guide the selection of targets for new drugs.
+在不知道一个蛋白质是如何折叠成一个3D结构之前，你很难直到这个蛋白质到底有什么功能，以及它是如何发挥功能的。即使你知道这个蛋白质在疾病中发挥作用，要想找到一个可能的治疗方案，通常还是需要知道它的三级结构。了解蛋白质的三级结构和它的\textit{活性位点}（它可能会包含那些在一级结构上相距甚远、但是在蛋白质折叠后却紧邻在一起的氨基酸），对于对于筛选新的药物靶点是至关重要的。
 
-Now that the basic genetic information of a number of organisms, including humans, has been decoded, a primary challenge facing biologists is to learn as much as possible about the proteins those genes produce and how they interact.
+现在，包括人类在内的不少生物的基本遗传信息已经被解码了，接下来生物学家面临的主要挑战就是尽可能多的去了解这些基因编码的蛋白质，以及它们之间的相互作用。
 
-In fact, one of the great questions of modern biology is how the primary amino acid sequence of a protein determines its ultimate 3D shape. If a computational method can be found to reliably predict the fold of a protein from its amino acid sequence, the effect on biology and medicine would be profound.
+事实上，现代生物学主要的问题之一就是蛋白质的一级氨基酸序列是如何决定它最终的3D结构的。如果能够找到一种计算方法，可以从蛋白质的氨基酸序列可靠地预测出它的折叠，那么生物学和医学的作用将是意义深远的。
 
-In this chapter, you'll learn the basics of PDB files and how to parse out selected information form them. You'll also explore interesting Perl techniques for finding and iterating over lots of files, as well as controlling other bioinformatics programs from a Perl program. The exercises at the end of the chapter challenge you to extend the introductory material presented here to gain access to more of the PDB data.
+在本章中，你将学习PDB文件的基础，以及如何从中解析出需要的信息。你将会探索更加有趣的Perl技术，寻找大量的文件并进行循环处理，以及在Perl程序中控制其他的生物信息学程序。本章末尾的练习题，在此处介绍的基本知识的基础上，让你挑战获取PDB数据的更多信息。
 
-\section{Overview of PDB}
-The main source for information about 3D structures of macromolecules (including proteins, peptides, viruses, protein/nucleic acid complexes, nucleic acids, and carbohydrates) is PDB, and its format is the de facto standard for the exchange of structural information. Most of these structures are determined experimentally by means of X-ray diffraction or nuclear magnetic resonance (NMR) studies.
+\section{PDB概述}
+大分子（包括蛋白质、肽、病毒、蛋白质和核酸的复合物、核酸、以及碳水化合物）3D结构信息的主要资源就是PDB。并且，它的格式实际上就是交换结构信息的标准格式。PDB中的大多数结构都是通过X射线衍射（X-ray ）diffraction和核磁共振（NMR，nuclear magnetic resonance）实验确定的。
 
-PDB started in 1971 with seven proteins; it will soon grow to 20,000 structures. With the international effort in structural genomics increasing, the PDB is certain to continue its rapid growth. Within a few short years the number of known structures will approach 100,000.  
+1971年PDB诞生之初，只有七个蛋白质，随后迅速增长到了20,000个结构。随着结构基因组学中国际性合作的增加，PDB仍然在延续它快速增长的态势。在短短几年的时间内，已知结构的数目将会接近100,000。
 
-PDB files are like GenBank records, in that they are human-readable ASCII flat files. The text conforms to a specific format, so computer programs may be written to extract the information. PDB is organized with one structure per file, unlike Genbank, which is distributed with many records in each "library" file.
+PDB文件和GenBank记录相似，都是人类可读的ASCII平面文件。文件中的文本符合特定的格式，所以可以编写计算机程序从中提取信息。和GenBank在一个“库”文件中保存许多记录不一样，PDB对于每一个结构都用一个文件来存储。
 
-Bioinformaticians who work extensively with PDB files report that there are serious problems with the consistency of the PDB format. For instance, as the field has advanced and the data format has evolved to meet new knowledge requirements, some of the older files have become out of date, and efforts are underway to address the uniformity of PDB data.  Until these efforts are complete and a new data format is developed, inconsistencies in the current data format are a challenge programmers have to face. If you do a lot of programming with PDB files, you'll find many inconsistencies and errors in the data, especially in the older files. Plus, many parsing tools that work well on newer files perform poorly on older files.
+经常处理PDB文件的生物信息学家，会抱怨PDB格式在一致性上存在着严重的问题。比如，为了满足新知识的需要，随着字段和数据格式的不断变革，有些旧的文件就过时了。现在保持PDB数据一致性的工作正在进行中，直到这些工作完成、开发出一个新的数据格式之前，现有数据格式的不一致性仍然是程序员必须面对的一项挑战。如果你对PDB文件进行大量的编程，你会发现数据中有许多的不一致甚至错误，尤其是那些老的文件中。另外，许多能够成功解析新文件的工具，在老的文件上就不一定好用了。
 
-As you become a more experienced programmer, these and other issues the PDB faces become more important. For instance, as PDB evolves, the code you write to interact with it must also evolve; you must always maintain your code with an eye on how the rest of the world is changing. As links between databases become better supported, your code will take advantage of the new opportunities the links provide. With new standards of data storage becoming established, your code will have to evolve to include them.
+随着你逐渐称为一个经验更加丰富的程序员，你面对的PDB这样那样的问题就显得更加重要的。比如，随着PDB的发展，你编写的和它进行交互的代码也要不断改进。你必须要时刻关注世界的变化，注意维护你的代码，让它与时俱进。随着数据库间链接得到了更好的支持，你的代码应该充分利用这些链接提供的新的机遇。数据存储的新标准正在建立中，你的代码也要更新把它们包含进去。
 
-The PDB web site contains a wealth of information on how to download all the files. They are also conveniently distributed—and at no cost—on a set of CDs, which is a real advantage for those lacking high-throughput Internet connections. 
+PDB网站上包含了大量关于如果下载搜有文件的信息。它们也以便于获取的免费的CD集进行发布，这对于那些没有高速网路连接的人来说是一个巨大的便利。
 
-\section{Files and Folders}
-The PDB is distributed as files within directories. Each protein structure occupies its own file. PDB contains a huge amount of data, and it can be a challenge to deal with it. So in this section, you'll learn to deal with large numbers of files organized in directories and subdirectories.
+\section{文件和文件夹}
+PDB以目录中的文件形式进行发布。每一个蛋白质结构都有自己单独的文件。PDB包含大量的数据，所以要处理它是一种挑战。在本节中，你将学习处理组织在目录和子目录中的大量文件。
 
-You'll frequently find a need to write programs that manipulate large numbers of files. For example: perhaps you keep all your sequencing runs in a directory, organized into subdirectories labeled by the dates of the sequencing runs and containing whatever the sequencer produced on those days. After a few years, you could have quite a number of files.
+你会发现，常常需要编写程序来操作大量的文件。比如，你可能会把多次的测序放在一个目录中，根据测序上机的日期分成子目录，把测序仪产生的数据放在对应日期的子目录中。在短短几年之后，你可能就会有相当数量的文件。
 
-Then, one day you discover a new sequence of DNA that seems to be implicated in cell division. You do a BLAST search (see Chapter 12) but find no significant hits for your new DNA. At that point you want to know whether you've seen this DNA before in any previous sequencing runs.\footnote{You may do a comparison by keeping copies of all your sequencing runs in one large BLAST library; building such a BLAST library can be done using the techniques shown in this section.} What you need to do is run a comparison subroutine on each of the hundreds or thousands of files in all your various sequencing run subdirectories. But that's going to take several days of repetitive, boring work sitting at the computer screen.
+然后，有一天，你发现了一个新的DNA序列，看起来参与细胞分裂。你进行了一个BLAST搜索（参看\autoref{chap:chapter12}），但是没有找到对于新DNA的显著结果。这个时候，你想直到在以前的测序中是不是看到过这个DNA。\footnote{你可能会把所有的测序结构保存为一个大的BLAST库进行比较；可以使用本节介绍的技术构建这样的一个BLAST库。}你需要做的就是，针对多种多样的测序子目录中的成百上千的文件，运行比对的子程序。但这可能会重复耗费好几天，对于坐在计算机屏幕前的你来说这绝对是无聊透顶的工作。
 
-You can write a program in much less time than that! Then all you have to do is sit back and examine the results of any significant matches your program finds. To write the program, however, you have to know how to manipulate all the files and folders in Perl. The following sections show you how to do it. 
+你可以编写一个程序，在很短时间内完成这个工作！然后你需要做的就是回到座位上，检查一下结果中你的程序有没有找到显著的匹配。然而要编写这样的程序，你需要知道如何在Perl中操作所有的文件和文件夹。接下来的小节将向你演示如何去做。
 
-\subsection{Opening Directories}
-A filesystem is organized in a \textit{tree} structure. The metaphor is apt.  Starting from anyplace on the tree, you can proceed up the branches and get to any leaves that stem from your starting place. If you start from the root of the tree, you can reach all the leaves. Similarly, in a filesystem, if you start at a certain directory, you can reach all the files in all the subdirectories that stem from your starting place, and if you start at the root (which, strangely enough, is also called the "top") of the filesystem, you can reach all the files.
+\subsection{打开目录}
+文件系统以\textit{树状}结构进行组织。这个比喻是非常贴切的。从树的任何地方开始，你可以沿着树干，得到源于从你开始之处的任何树叶。如果你从树根开始，你可以得到所有的树叶。类似的，在文件系统中，如果你从一个特定的目录开始，你可以得到源于你开始之处的子目录中的所有文件。如果你从文件系统的根（非常奇怪，它也被叫做“顶”）开始，你可以得到所有的文件。
 
-You've already had plenty of practice opening, reading from, writing to, and closing files. I will show a simple method with which you can open a folder (also called a directory) and get the filenames of all the files in that folder. Following that, you'll see how to get the names of all files from all directories and subdirectories from a certain starting point.
+在打开、读取、写入和关闭文件方面，你已经练习了很多。我将演示一个简单的方法，让你可以打开一个文件夹（也叫做目录），获取这个文件夹中所有文件的文件名。在那之后，你将看到如何从一个特定的地方开始，获取所有目录和子目录中的所有文件的名字。
 
-Let's look at the Perlish way to list all the files in a folder, beginning with some pseudocode: 
+从一些伪代码开始，让我们看一下列出文件夹中所有文件的Perl的方式：
 
 \begin{lstlisting}
 open folder
@@ -53,12 +54,12 @@ read contents of folder (files and subfolders)
 print their names
 \end{lstlisting}
 
-\autoref{exam:example11.1} shows the actual Perl code.
+\autoref{exam:example11.1}演示了真实的Perl代码。
 
-\textbf{Example 11-1. Listing the contents of a folder (or directory)}
+\textbf{例11-1：列出文件夹（或目录）的内容}
 \lstinputlisting[label=exam:example11.1]{./scripts/example11-1.pl}
 
-Since you're running this program on a folder that contains PDB files, this is what you'll see: 
+因为你在一个包含PDB文件的文件夹中运行这个程序，所以你将会看到：
 
 \begin{lstlisting}
 .
@@ -68,27 +69,27 @@ Since you're running this program on a folder that contains PDB files, this is w
 pdb1a4o.ent
 \end{lstlisting}
 
-If you want to list the files in the current directory, you can give the directory name the special name "." for the current directory, like so:
+如果你想列出当前目录中的文件，你可以把代表当前目录的“.”这个特殊名字赋值给目录名，就像这样：
 
 \begin{lstlisting}
 my $folder = '.';
 \end{lstlisting}
 
-On Unix or Linux systems, the special files "." and ".." refer to the current directory and the parent directory, respectively. These aren't "really" files, at least not files you'd want to read; you can avoid listing them with the wonderful and amazing \textit{grep} function. \textit{grep} allows you to select elements from an array based on a test, such as a regular expression. Here's how to filter out the array entries "." and "..": 
+在Unix或者Linux系统中，特殊文件“.”和“..”分别代表当前目录和父目录。它们并不是“真实”的文件，至少不是你想读取的文件。使用优秀的、了不起的\textit{grep}函数，你可以避免把它们罗列出来。\textit{grep}允许你根据测试选择数组中的元素，比如一个正则表达式。下面演示的是如何把数组中的“.”和“.”过滤掉：
 
 \begin{lstlisting}
 @files = grep( !/^\.\.?$/, @files );
 \end{lstlisting}
 
-\textit{grep} selects all lines that don't match the regular expression, due to the negation operator written as the exclamation mark. The regular expression \verb|/^\.\.?$/| is looking for a line that begins with (the beginning of a line is indicated with the \verb|^| metacharacter) a period \verb|\.| (escaped with a backslash since a period is a metacharacter) followed by 0 or 1 periods \verb|\.?| (the \verb|?| matches 0 or 1 of the preceding items), and nothing more (indicated by the \verb|$| end-of-string metacharacter).
+因为感叹号这个取反操作符，\textit{grep}选择了不匹配正则表达式的所有行。正则表达式\verb|/^\.\.?$/|寻找这样的行，它以点号\verb|.|（因为点号是一个元字符，所以用反斜杠进行了转义）起始（一行的开头用\verb|^|元字符表示），后面跟着0个或者1个点号\verb|\.?|（\verb|?|匹配前面的元素0次或者1次），再后面就没有其他任何东西了（\verb|$|元字符表示字符串的结尾）。
 
-In fact, this is so often used when reading a directory that it's usually combined into one step: 
+实际上，当读取一个目录的时候，这非常常用，所以通常把它们组合到一步中：
 
 \begin{lstlisting}
 @files = grep (!/^\.\.?$/, readdir(FOLDER));
 \end{lstlisting}
 
-Okay, now all the files are listed. But wait: what if some of these files aren't files at all but are subfolders? You can use the handy file test operators to test each filename and then even open each subfolder and list the files in them. First, some pseudocode: 
+好了，现在所有的文件都罗列出来了。但是稍等：如果这些文件不是常规文件而是子文件夹呢？你可以使用便捷的文件测试操作符来检测每一个文件名，这样就可以打开每一个子文件夹把其中的文件罗列出来了。首先是一些伪代码：
 
 \begin{lstlisting}
 open folder
@@ -105,12 +106,12 @@ for each item in the folder
 }
 \end{lstlisting}
 
-\autoref{exam:example11.2} shows the program.
+\autoref{exam:example11.2}演示了这个程序。
 
-\textbf{Example 11-2. List contents of a folder and its subfolders}
+\textbf{例11-2：列出文件夹及其子文件夹的内容}
 \lstinputlisting[label=exam:example11.2]{./scripts/example11-2.pl}
 
-Here's the output of \autoref{exam:example11.2}:
+下面是\autoref{exam:example11.2}的输出：
 
 \begin{lstlisting}
 pdb/3c/pdb43c9.ent
@@ -124,14 +125,14 @@ pdb/44/pdb444d.ent
 pdb/pdb1a4o.ent
 \end{lstlisting}
 
-Notice how variable names such as \verb|$file| and \verb|@files| have been reused in this code, using lexical scoping in the inner blocks with \verb|my|. If the overall structure of the program wasn't so short and simple, this could get really hard to read. When the program says \verb|$file|, does it mean this \verb|$file| or that \verb|$file|? This code is an example of how to get into trouble. It works, but it's hard to read, despite its brevity.
+注意，代码中\verb|$file|和\verb|@files|这样的变量名是如何被重用的，方法就是在内层的代码块中使用\verb|my|限定词汇作用域。如果程序的整体结构不是这么简短，这样阅读起来就会相当困难。当程序中出现\verb|$file|的时候，它是表示此处的\verb|$file|还是彼处的\verb|$file|？这个代码就是一个引起麻烦的反面例子。它确实可以工作，但尽管它很简短，任然非常难于阅读。
 
-In fact, there's a deeper problem with \autoref{exam:example11.2}. It's not well designed. By extending \autoref{exam:example11.1}, it can now list subdirectories. But what if there are further levels of subdirectories? 
+事实上，\autoref{exam:example11.2}存在一个深层次的问题，它的设计并不好。通过对\autoref{exam:example11.1}进行扩充，它现在可以罗列出子目录了。但是如果还有更深层次的子目录呢？
 
-\subsection{Recursion}
-If you have a subroutine that lists the contents of directories and recursively calls itself to list the contents of any subdirectories it finds, you can call it on the top-level directory, and it eventually lists all the files.
+\subsection{递归}
+如果你有一个子程序，可以罗列出目录的内容，并且可以通过递归调用自己来罗列出它找到的任何子目录的内容，那么你就可以在顶层目录调用它，而它最终则会罗列出所有的文件。
 
-Let's write another program that does just that. A \textit{recursive} subroutine is defined simply as a subroutine that calls itself. Here is the pseudocode and the code (\autoref{exam:example11.3}) followed by a discussion of how recursion works: 
+让我们编写另一个程序来完成这个工作吧。一个\textit{递归}子程序被简单的定义为可以调用自己的子程序。下面是伪代码和代码（\autoref{exam:example11.3}，之后是对递归工作原理的讨论：
 
 \begin{lstlisting}
 subroutine list_recursively
@@ -149,10 +150,10 @@ subroutine list_recursively
 }
 \end{lstlisting}
 
-\textbf{Example 11-3. A recursive subroutine to list a filesystem}
+\textbf{例11-3：一个罗列文件系统的递归子程序}
 \lstinputlisting[label=exam:example11.3]{./scripts/example11-3.pl}
 
-Here's the output of \autoref{exam:example11.3} (notice that it's the same as the output of \autoref{exam:example11.2}): 
+下面是\autoref{exam:example11.3}的输出（注意它和\autoref{exam:example11.2}的输出是完全一样的）：
 
 \begin{lstlisting}
 pdb/3c/pdb43c9.ent
@@ -166,43 +167,45 @@ pdb/44/pdb444d.ent
 pdb/pdb1a4o.ent
 \end{lstlisting}
 
-Look over the code for \autoref{exam:example11.3} and compare it to \autoref{exam:example11.2}. As you can see, the programs are largely identical. \autoref{exam:example11.2} is all one main program; \autoref{exam:example11.3} has almost identical code but has packaged it up as a subroutine that is called by a short main program. The main program of \autoref{exam:example11.3} simply calls a recursive function, giving it a directory name (for a directory that exists on my computer; you may need to change the directory name when you attempt to run this program on your own computer). Here is the call:
+看一下\autoref{exam:example11.3}的代码，把它和\autoref{exam:example11.2}比较以下。如你所见，程序大体上是一样的。\autoref{exam:example11.2}整体就是一个主程序；而\autoref{exam:example11.3}拥有和它几乎完全一样的代码，只不过这些代码被打包成了一个子程序，然后在一个简短的主程序中调用这个子程序。\autoref{exam:example11.3}的主程序只是简单的调用了一个递归函数，给它一个目录名（我计算机中存在的一个目录；当你尝试在自己的计算机中运行这个程序的时候，你可能需要修改目录名）即可。下面就是这个调用
 
 \begin{lstlisting}
 list_recursively('pdb');
 \end{lstlisting}
 
-I don't know if you feel let down, but I do. This looks just like any other subroutine call. Clearly, the recursion must be defined within the subroutine. It's not until the very end of the \textit{list\_recursively} subroutine, where the program finds (using the \verb|-d| file test operator) that one of the contents of the directory that it's listing is itself a directory, that there's a significant difference in the code as compared with \autoref{exam:example11.2}. At that point, \autoref{exam:example11.2} has code to once again look for regular files or for directories. But this subroutine in \autoref{exam:example11.3} simply calls a subroutine, which happens to be itself, namely, \textit{list\_recursively}: 
+我对此有些失望，不知道你是不是也有这种感觉。这看上去和其他的子程序调用并没有什么区别。显然，递归必须在子程序内部进行定义。这出现在\textit{list\_recursively}子程序的最末尾，当程序发现（使用\verb|-d|文件测试操作符）目录列出的一个内容本身就是一个目录时，就会进行递归处理，和\autoref{exam:example11.2}中的代码相比这有着显著的不同。在这一点上，\autoref{exam:example11.2}有再一次寻找常规文件和目录的代码，
+而\autoref{exam:example11.3}中的这个子程序通过简单的调用一个子程序就实现了这一点，这里的这个子程序就是它本身，叫做\textit{list\_recursively}的子程序：
 
 \begin{lstlisting}
 list_recursively("$directory/$file");
 \end{lstlisting}
 
-That's recursion.
+这就是递归。
 
-As you've seen here, there are times when the data—for instance, the hierarchical structure of a filesystem—is well matched by the capabilities of recursive programs. The fact that the recursive call happens at the end of the subroutine means that it's a special type of recursion called \textit{tail recursion}. Although recursion can be slow, due to all the subroutine calls it can create, the good news about tail recursion is that many compilers can optimize the code to make it run much faster. Using recursion can result in clean, short, easy-to-understand programs. (Although Perl doesn't yet optimize it, current plans for Perl 6 include support for optimizing tail recursion.) 
+正如你在此处所见，有很多时候，数据——比如文件系统的层次结构——正好能够匹配递归程序的这种能力。在子程序的末尾进行递归调用，这意味着它是一个特殊类型的递归，叫做\textit{尾递归（tail
+recursion）}。尽管递归会很慢，归因于它创建的所有子程序调用，关于尾递归的好消息就是许多编译器会对代码进行优化，让它运行更快一些。使用递归可以得到简洁、易于理解的程序。（尽管Perl并不对它进行优化，现在Perl6的计划中包含对尾递归进行优化的支持。）
 
-\subsection{Processing Many Files}
-Perl has modules for a variety of tasks. Some come standard with Perl; more can be installed after obtaining them from CPAN or elsewhere: \href{http://www.CPAN.org/}{http://www.CPAN.org/}.
+\subsection{处理大量文件}
+Perl有可以处理各种任务的模块。有些模块是作为标准和Perl一块发布的，更多的则可以从CPAN（\href{http://www.CPAN.org/}{http://www.CPAN.org/}）或者其他地方下载安装。
 
-\autoref{exam:example11.3} in the previous section showed how to locate all files and directories under a given directory. There's a module that is standard in any recent version of Perl called \textit{File::Find}. You can find it in your manual pages: on Unix or Linux, for instance, you issue the command \verb|perldoc File::Find|. This module makes it easy—and efficient—to process all files under a given directory, performing whatever operations you specify.
+上一小节的\autoref{exam:example11.3}演示了如何定位一个给定目录中的所有文件和目录。在所有近期版本的Perl中都有一个叫做\textit{File::Find}的标准模块。你可以在你的手册页中找到它：比如，在Unix或者Linux上，你可以使用命令\verb|perldoc File::Find|。这个模块让处理一个给定目录的所有文件变得简单且高效，它可以进行你指定的各种操作。
 
-\autoref{exam:example11.4} uses \textit{File::Find}. Consult the documentation for more examples of this useful module. The example shows the same functionality as \autoref{exam:example11.3} but now uses \textit{File::Find}. It simply lists the files and directories. Notice how much less code you have to write if you find a good module, ready to use! 
+\autoref{exam:example11.4}使用了\textit{File::Find}。对于这个有用的模块的更多例子，可以参考它的文档。这个实例演示的功能和\autoref{exam:example11.3}是完全一样的，只不过现在使用了\textit{File::Find}。它只是简单的把文件和目录罗列出来。注意，你会发现，如果你找到一个好的模块，你只需要编写很少的代码即可，所以开始使用模块吧！
 
-\textbf{Example 11-4. Demonstrate File::Find}
+\textbf{例11-4：演示File::Find}
 \lstinputlisting[label=exam:example11.4]{./scripts/example11-4.pl}
 
-Notice that a reference is passed to the \textit{my\_sub} subroutine by prefacing it with the backslash character. You also need to preface the name with the ampersand character, as mentioned in \autoref{chap:chapter6}.
+注意，通过在\textit{my\_sub}子程序前面使用反斜杠字符，把指针传递给了它。就像在\autoref{chap:chapter6}中提到的那样，你还需要在它名字的前面加上\verb|&|字符。
 
-The call to \textit{find} can also be done like this:
+\textit{find}的调用也可以这样实现：
 
 \begin{lstlisting}
 find sub { -f and (print $File\dotsFind\dotsname, "\n")  }, ('pdb');
 \end{lstlisting}
 
-This puts an anonymous subroutine in place of the reference to the \textit{my\_sub} subroutine, and it's a convenience for these types of short subroutines. 
+它把一个匿名子程序放在了\textit{my\_sub}子程序指针出现的地方，对于这种简短的子程序来说，这也是一种比较简洁的写法。
 
-Here's the output:
+下面是它的输出：
 
 \begin{lstlisting}
 pdb/pdb1a4o.ent
@@ -216,18 +219,18 @@ pdb/3c/pdb43c9.ent
 pdb/3c/pdb43ca.ent
 \end{lstlisting}
 
-As a final example of processing files with Perl, here's the same functionality as the preceding programs, with a one-line program, issued at the command line: 
+作为使用Perl处理文件的最后一个例子，下面是一个在命令行中使用的单行程序，它的作用和上面这个程序是完全一样的：
 
 \begin{lstlisting}
-  perl -e 'use File::Find;find sub{-f and (print $File::Find::name,"\n")},("pdb")'
+perl -e 'use File::Find;find sub{-f and (print $File::Find::name,"\n")},("pdb")'
 \end{lstlisting}
 
-Pretty cool, for those who admire terseness, although it doesn't really eschew obfuscation. Also note that for those on Unix systems, \verb|ls -R pdb| and \verb|find pdb -print| do the same thing with even less typing.
+尽管它不可避免的让人困惑，但对于那些崇尚简洁的人来说，这简直太酷了！此外还要注意，对于Unix操作系统的用户来说，\verb|ls -R pdb|和\verb|find pdb -print|也可以完成同样的工作，而且键入的字符更少。
 
-The reason for using a subroutine that you define is that it enables you to perform any arbitrary tests on the files you find and then take any actions with those files. It's another case of modularization: the \textit{File::Find} module makes it easy to recurse over all the files and directories in a file structure and lets you do as you wish with the files and directories you find. 
+之所以使用你定义的一个子程序，是因为它可以让你对找到的文件进行任意的测试，然后对这些文件进行任意的处理。模块化则是另外一个例子：\textit{File::Find}模块可以轻而易举地对一个文件结构中的所有文件和目录进行递归，让你随意处理找到的文件和目录。
 
-\section{PDB Files}
-Here's a section of an actual PDB file:
+\section{PDB文件}
+下面是一个真实PDB文件的一部分：
 
 \begin{lstlisting}
 HEADER    SUGAR BINDING PROTEIN                   03-MAR-99   1C1F              
@@ -426,55 +429,55 @@ MASTER      240    0    0    1   11    0    0    6 1163    1    0   11
 END                                                                  
 \end{lstlisting}
 
-PDB files are long, mostly due to the need for information about each atom in the molecule; this relatively short one, when complete, is extensive—28 formatted pages. I cut it here to a little over three pages, showing just enough of the principal sections to give you the overall idea.
+PDB文件非常长，主要是因为需要存储分子中每个原子的信息。这还算是一个相对简短的例子，如果全部列出来，它会非常长——有28页纸之多。此处，我把它截取了一下，缩减到了三页纸多点，把主要的部分全部都展示了出来，让你能有一个大体上的了解。
 
-The PDB web site has the basic documents you need to read and program with PDB files. The Protein Data Bank Contents Guide (\href{http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2\_frame.html}{http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2\_frame.html}) is the best reference, and there are also FAQs and additional documents available.
+PDB网站上有基本的文档，当你阅读PDB文件并且编程处理它们的时候，你会需要这个文档的。PDB内容指南（Protein Data Bank Contents Guide，\href{http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2\_frame.html}{http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2\_frame.html}）可以说是最好的参考资料，里面有FAQs和一些额外的文档。 
 
-In the following sections, you'll extract information from these files. Since the information in these files describes the 3D structure of macromolecules, the files are frequently used by graphical programs that display a spatial representation of the molecules. The scope of this book does not include graphics; however, you will see how to get spatial coordinates out of the files. The largest part of PDB files are the ATOM record type lines containing the coordinates of the atoms. Because of this level of detail, PDB files are typically longer than GenBank records. (Note the inconsistent terminology—a unit of PDB is the file, which contains one structure; a unit of GenBank is the record, which contains one entry.) 
+在接下来的小节里，我会从这些文件中提取信息。因为这些文件描述的主要是大分子3D结构的信息，所以这些文件通常被图形程序所使用，来展示分子的空间结构。本书所讨论的范围并不包括图形，尽管如此，你还是将会看到如何从这些文件中提取出空间坐标。PDB文件中最大的一部分是包含原子坐标的ATOM记录类型行。因为这样详细的程度，PDB文件通常都比GenBank记录要长。（注意术语上的不一致——PDB的基本单元就是文件，它包含了一个结构；而GenBank的基本单元是记录，它包含了一个条目。）
 
-\subsection{PDB File Format}
-Let's take a look at a PDB file and the documentation that tells how the information is formatted in a PDB file. Based on that information, you'll parse the file to extract information of interest.
+\subsection{PDB文件格式}
+让我们看一个PDB文件，文档告诉了我们PDB文件中的信息是如何组织的。基于这些信息，你可以解析文件，从中提取出你感兴趣的信息。
 
-PDB files are composed of lines of 80 columns that begin with one of several predefined record names and end with a newline. ("Column" means position on a line: the first character is in the first column, and so forth.) Blank columns are padded with spaces. A \textit{record type} is one or more lines with the same record name. Different record types have different types of fields defined within the lines. They are also grouped according to function.
+PDB文件有含有80列的多行组成，每一行都以某个预定义的记录名起始，以换行符终止。（“列“表示一行中的位置：第一个字符在第一列上，以此类推。）空列用空白填充。一个\textit{记录类型}是有相同记录名的一行或多行。不同的记录类型有在行中定义的不同类型字段。它们也据功能进行分组。
 
-The SEQRES record type is one of four record types in the Primary Structure Section, which presents the primary structure of the peptide or nucleotide sequence: 
+SEQRES记录类型是一级结构部分（Primary Structure Section）中的四大记录类型之一，它描述了肽或核苷酸序列的一级结构：
 
 \textcolor{red}{\textit{DBREF}}
 \begin{adjustwidth}{1cm}{}
-Reference to the entry in the sequence database(s)
+指向序列数据库中的记录
 \end{adjustwidth}
 
 \textcolor{red}{\textit{SEQADV}}
 \begin{adjustwidth}{1cm}{}
-Identification of conflicts between PDB and the named sequence database 
+记录PDB与其他序列数据库的冲突
 \end{adjustwidth}
 
 \textcolor{red}{\textit{SEQRES}}
 \begin{adjustwidth}{1cm}{}
-Primary sequence of backbone residues 
+骨干残基的一级序列
 \end{adjustwidth}
 
 \textcolor{red}{\textit{MODRES}}
 \begin{adjustwidth}{1cm}{}
-Identification of modifications to standard residues 
+记录标准残基上的修饰
 \end{adjustwidth}
 
-The DBREF and SEQADV record types in the example PDB entry from the previous section give reference information and details on conflicts between the PDB and the original database. (The example doesn't include a MODRES record type.) Here are those record types from the entry: 
+上一节的PDB记录例子中的DBREF和SEQADV记录类型，给出了参考信息，以及PDB和原始数据库之间的冲突细节。（例子中不包含MODRES记录类型。）下面是这个记录中的这些记录类型：
 
 \begin{lstlisting}
 DBREF  1C1F A    1   136  SWS    P26788   LEG_CONMY        1    135             
 SEQADV 1C1F LEU A  135  SWS  P26788              SEE REMARK 999 
 \end{lstlisting}
 
-Briefly, the DBREF line states there's a PDB file called \textit{1C1F} (from a file named \textit{pdb1c1f.ent}), the residues in chain A are numbered from 1 to 136 in the original Swiss-Prot (SWS) database, the ID number P26788 and the name LEG\_CONMY are assigned in that database (in many databases these are identical), and the residues are numbered 1 to 135 in PDB. The discrepancy in the numbering between the original database and PDB is explained in the SEQADV record type, which refers you to a REMARK 999 line (not shown here) where you discover that the PDB entry disagrees with the Swiss-Prot sequence concerning a leucine at position 135 (perhaps two different groups determined the structure, and they disagree at this point).\footnote{The cross-referencing to different databases is problematic in older PDB files: it may be missing, or buried somewhere in a REMARK 999 line.} 
+简单来说，DBREF行声明有一个叫做\textit{1C1F}的PDB文件（来自于叫做\textit{pdb1c1f.ent}的文件），在原始的Swiss-Prot（SWS）数据库中A链的残基从1开始编号一直到136，在那个数据中它的ID号为P26788，名字为LEG\_CONMY（在许多数据库中这些都是一样的），在PDB数据库中残基从1开始编号到135。原始数据库和PDB编号上的差异在SEQADV记录类型中进行了解释，它让你参考REMARK的999行（此处未显示），在那里你会发现PDB记录对于Swiss-Prot序列上第135位的亮氨酸有歧义（也许这是两个不同小组测定的结构，它们在这个位点上有分歧）。\footnote{在老的PDB文件中，不同数据库的交叉引用是一个问题：它可能缺失，或者隐藏在REMARK的999行的某个地方。} 
 
-You can see that to parse the information in those two lines by a program requires several steps, such as following links to other lines in the PDB entry that further explain discrepancies and identifying other databases.
+你可以看到，要通过程序解析这两行的信息，需要好几步，比如跟随到达PDB记录其他行的链接，它会进一步解释重复，并且识别其他的数据库。
 
-Links between databases are important in bioinformatics. \autoref{tab:table11.1} displays the databases that are referred to in PDB files. As you already know, there are many biological databases; those shown here have a good deal of protein or structural data. 
+在生物信息学中，数据库之间的链接是非常重要的。\autoref{tab:table11.1}展示了PDB文件中参考的数据库。如你所知，有许多的生物学数据库，这儿展示的主要是和蛋白质或者结构数据相关的数据库。
 
 \begin{table}[!htbp]
   \begin{center}
-  \caption{Databases referenced in PDB files}
+  \caption{PDB文件中参考的数据库}
   \label{tab:table11.1}
   \begin{tabu} to 0.6\linewidth {X[3,l]X[1,l]}
   \toprule
@@ -497,13 +500,13 @@ Links between databases are important in bioinformatics. \autoref{tab:table11.1}
 \end{table}
 
 \subsection{SEQRES}
-For starters, let's try a fairly easy task in Perl: extracting the amino acid sequence data. To extract the amino acid primary sequence information, you need to parse the record type SEQRES. Here is a SEQRES line from the PDB file listed earlier: 
+刚刚起步，我们先用Perl来尝试一个相对简单的任务：提取氨基酸序列数据。要提取氨基酸的一级序列信息，你需要解析SEQRES记录类型。下面是先前那个PDB文件中的SEQRES行：
 
 \begin{lstlisting}
 SEQRES   1 A  136  SER GLY GLY LEU GLN VAL LYS ASN PHE ASP PHE THR VAL
 \end{lstlisting}
 
-The following code shows the SEQRES record type as defined in the Protein Data Bank Contents Guide. This section on SEQRES, which is a fairly simple record type, is shown in its entirely to help familiarize you with this kind of documentation. 
+下面展示了PDB内容指南中定义的SEQRES记录类型。SEQRES部分，是一个相对简单的记录类型，它的定义被全部展示了出来，帮助你熟悉一下这种文档。
 
 \begin{lstlisting}
 SEQRES 
@@ -651,62 +654,63 @@ records. These residues are identified with the same residue name (i.e., A,
 C, G, T, U). 
 \end{lstlisting}
 
-The structure of the line containing the SEQRES record type is fairly straightforward, with fields assigned to specific locations or columns in the line. You'll see later how to use these locations to parse the information. Note that the documentation includes many details that arise when handling such complex experimental data.
+这行的结构包括显而易见的SEQRES记录类型，以及指定给航中特定位置或者列的字段。稍后你会看到如何利用这些位置来解析信息。注意，文档中包含了大量的细节，当你处理这样复杂的实验数据时可能会需要。
 
-Apart from the fairly standard problem of accumulating the sequence, there is the added complication of multiple strands. By reading the documentation just shown, you'll see that the SEQRES identifier is followed by a number representing the line number for that chain, and the chain is given in the next field (although in older records it was optional and may be blank). Following those fields comes a number that gives the total number of residues in the chain. Finally, after that, come residues represented as three-letter codes. What is needed, and what can be ignored to meet our programming goals? 
+除了序列不断积累这个还算标准的问题外，多链会让它更加复杂。通过阅读刚才展示的文档，你会看到在SEQRES这个识别符后面，还有一个表示这条链的行数的数字，接下来的字段就是链信息（尽管在老的记录中，它是可选的，并且很可能会空着）。在这些字段后是表示链中残基总数的一个数字。最后，在这些内容之后，使用三字母代码表示的残基。为了实现我们的编程目的，哪些信息是需要的，哪些又可以被忽略掉呢？
 
-\section{Parsing PDB Files}
-First, \autoref{exam:example11.5} shows the main program and three subroutines that will be discussed in this section. 
+\section{解析PDB文件}
+首先，\autoref{exam:example11.5}演示了主程序和三个子程序，在本节将会对它们进行讨论。
 
-\textbf{Example 11-5. Extract sequence chains from PDB file}
+\textbf{例11-5：从PDB文件中提取序列链}
 \lstinputlisting[label=exam:example11.5]{./scripts/example11-5.pl}
 
-It's important to note that the main program, which calls the subroutine \verb|get_file_data| to read in the PDB file, has included a warning about the potentially large size of any given PDB file. (For instance, the PDB file \textit{1gav} weighs in at 3.45 MB.) Plus, the main program follows the reading in of the entire file, with the subroutine \verb|parsePDBrecordtypes| that makes copies of all lines in the input file, separated by record type. At this point, the running program is using twice the amount of memory as the size of the file. This design has the advantage of clarity and modularity, but it can cause problems if main memory is in short supply. The use of memory can be lessened by not saving the results of reading in the file, but instead passing the file data directly to the \verb|parsePDBrecordtypes| subroutine, like so: 
+一定要注意这一点，调用读取PDB文件的子程序\verb|get_file_data|的主程序中，包含了一个对于大的PDB文件的警告。（比如，PDB文件\textit{1gav}就有3.45
+MB之大。）另外，主程序中，把整个文件读取进来之后，子程序\verb|parsePDBrecordtypes|把输入文件中的所有行都进行了拷贝，用记录类型分隔开。在这一点上，程序运行时会占用文件大小两倍大的内存空间。这种设计的有点在于它的清晰化和模块化，但主内存不够用的时候它也会导致问题。如果不保存从文件中读取进来的结果，而是直接把文件数据传递给\verb|parsePDBrecordtypes|子程序，这样占用的内存会小一些，就想这样：
 
 \begin{lstlisting}
-  # Get the file data and parse the record types of the PDB file
-  %recordtypes = parsePDBrecordtypes(get_file_data('pdb/c1/pdb1c1f.ent'));
+# Get the file data and parse the record types of the PDB file
+%recordtypes = parsePDBrecordtypes(get_file_data('pdb/c1/pdb1c1f.ent'));
 \end{lstlisting}
 
-Further savings of memory are possible. For instance, you can rewrite the program to just read the file one line at a time while parsing the data into the record types. I point out these considerations to give you an idea of the kinds of choices that are practically important in processing large files. However, let's stick with this design for now. It may be expensive in terms of memory, but it's very clear in terms of overall program structure.
+进一步节省内存也是可能的。比如，你可以重写程序，让它在把数据解析成记录类型的时候一次只读入文件的一行。我之所以指出这一点，是让你明白在处理大文件的时候，有许多种选择，这在实践中是非常重要的。尽管如此，现在我们还是坚持刚才的设计。这样可能比较耗费内存，但却让整个程序结构更加清晰明了。
 
-In \autoref{chap:chapter10}, I demonstrated two ways to parse GenBank files into sequence and annotation and then how to parse the annotation into finer and finer levels of detail.
+在\autoref{chap:chapter10}中，我演示了两种方法，把GenBank文件解析成序列和注释，之后又把注释一层层得解析出来。
 
-The first method involved iterating through an array of the lines of the record. Recall that due to the structure of multiline fields, it was necessary to set flags while iterating to keep track of which field the input line was in.\footnote{In GenBank, the multiline information sets were called fields; in PDB, they're called record types. Just as in biology different researchers may use their own terminology for some structures or concepts, so too in computer science there can be a certain creativity in terminology. This is one of the interesting difficulties in integrating biological data sources.}
+第一种方法是循环处理存储着记录行的数据。回忆一下，因为多行字段的结构，当循环的时候我们需要设置一个标识来记录输入行处于那个字段中。\footnote{在GenBank中，多行信息集叫做字段；在PDB中，它们叫做记录类型。就像在生物学中，不同的研究人员可能会使用他们自己的术语来描述结构或者概念一样，在计算机科学中，大家对术语也有一定的创造性。这也是整合生物学数据资源时存在的比较有趣的困难之一。}
 
-The other method, which worked better for GenBank files, involved regular expressions. Which method will work best for PDB files? (Or should you settle on a third approach?)
+另外一种方法，更加适用于GenBank文件，使用的正则表达式。哪种方法对于PDB文件最适合呢？（又或者你探索一下第三种方法？）
 
-There are several ways to extract this information. PDB makes it easy to collect record types, since they all start with the same keyword at the beginning of the line. The technique in the last chapter that used regular expressions parsed the top-level fields of the file; this would be somewhat unwieldy for PDB files. (See the exercises at the end of the chapter.) For instance, a regular expression such as the following matches all adjacent SEQRES lines into a scalar string: 
+有好多方法可以提取出这个信息。PDB使得收集记录类型比较容易，因为它们在行首都起始于同样的关键字。在上一章中，使用的正则表达式这种技术来解析文件顶层的字段，这种方法对于PDB文件来说略显笨重。（参看本章末尾的练习题。）比如，下面的这个匹配所有临近SEQRES行的正则表达式可以它们整合进一个标量字符串中：
 
 \begin{lstlisting}
 $record =~ /SEQRES.*\n(SEQRES.*\n)*/;
 $seqres = $&;
 \end{lstlisting}
 
-The regular expression matches a single SEQRES line with \verb|SEQRES.*\n| and then matches zero or more additional lines with \verb|(SEQRES.*\n)*|. Notice how the final \verb|*| indicates zero or more of the preceding item, namely, the parenthesized expression \verb|(SEQRES.*\n)|. Also note that the \verb|.*| matches zero or more nonnewline characters. Finally, the second line captures the pattern matched, denoted by \verb|$&|, into the variable \verb|$seqres|.
+正则表达式使用\verb|SEQRES.*\n|匹配单独的SEQRES行，然后使用\verb|(SEQRES.*\n)*|匹配零行或者多行附加行。注意最后的\verb|*|表明匹配前面的项目零次或者多次，也就是用小括号括起来的表达式\verb|(SEQRES.*\n)|。此外，还要注意\verb|.*|匹配另个或者多个非换行符字符。最后，第二行把用\verb|$&|表示的匹配到的模式捕获起来，保存到了变量\verb|$seqres|中。
 
-To extend this to capture all record types, see the exercises at the end of the chapter.
+要扩充它来捕获所有的记录类型，可以参看本章末尾的练习题。
 
-For PDB files, each line starts with a keyword that explicitly states to which record type that line belongs. You will find in the documentation that each record type has all its lines adjacent to each other in a group. In this case, it seems that simply iterating through the lines and collecting the record types would be the simplest programming approach.
+对于PDB文件来说，每一行都起始于一个关键字，明确表明了该行属于哪种记录类型。在文档中，你会发现，在每一组中，每一种记录类型的行都彼此相邻。在这种情况下，简单的对所有行进行重复收集记录类型，这看起来是最简单的编程策略了。
 
-\autoref{exam:example11.5} contains a subroutine \textit{parsePDBrecordtypes} that parses the PDB record types from an array containing the lines of the PDB record.  This is a short, clean subroutine that accomplishes what is needed. The comments describe what's happening pretty well, which, as you know, is a critical factor in writing good code. Basically, each line is examined for its record type and is then added to the value of a hash entry with the record type as the key. The hash is returned from the subroutine. 
+\autoref{exam:example11.5}包含一个叫做\textit{parsePDBrecordtypes}的子程序，它从包含PDB记录行的数组中解析PDB记录类型。这是一个简洁的程序，它可以完成它需要完成的工作。注释对发生的事情进行了很好地描述，如你所知，对于编写好的代码来说注释是至关重要的一个因素。简单来说，对每一行的记录类型进行检查，然后把它添加到散列的值里面去，散列的键是记录类型。最后，散列从子程序中返回出来。
 
-\subsection{Extracting Primary Sequence}
-Let's examine the subroutine \textit{extractSEQRES}, now that the record types have been parsed out, and extract the primary amino acid sequence.
+\subsection{提取一级序列}
+既然记录类型已经被解析出来了，就让我们看看子程序\textit{extractSEQRES}是如何提取一级氨基酸序列的。
 
-You need to extract each chain separately and return an array of one or more strings of sequence corresponding to those chains, instead of just one sequence.
+你需要把每条链单独提取出来，返回对应这些链的一个或多个序列字符串的一个数组，而不是仅仅一条序列。
 
-The previous parse, in \autoref{exam:example11.4}, left the required SEQRES record type, which stretches over several lines, in a scalar string that is the value of the key '\verb|SEQRES|' in a hash. Our success with the previous \textit{parsePDBrecordtypes} subroutine that used iteration over lines (as opposed to regular expressions over multiline strings) leads to the same approach here. The \textit{split} Perl function enables you to turn a multiline string into an array.
+\autoref{exam:example11.4}中前面的解析，只把需要的SEQRES记录类型保留了下来，它包含多行内容，以单个标量字符串的形式存储为散列的值，其对应的键为`\verb|SEQRES|'。先前对行进行循环处理（与对多行字符串使用正则表达式不同）的\textit{parsePDBrecordtypes}子程序的成功导致了此处同样的方法。Perl函数\textit{split}可以让你把一个多行的字符串转换成一个数组。
 
-As you iterate through the lines of the SEQRES record type, notice when a new chain is starting, save the previous chain in \verb|@results|, reset the \verb|$sequence| array, and reset the \verb|$lastchain| flag to the new chain. Also, when done with all the lines, make sure to save the last sequence chain in the \verb|@results| array.
+在对SEQRES记录类型中的行进行循环处理的时候，注意，当一个新的链开始时，会把先前的链保存到数组\verb|@results|中，重置变量\verb|$sequence|，同时也把\verb|$lastchain|标识重置为新的链。此外，当处理完所有的行后，要确保把最后的序列链保存进\verb|@results|数组。
 
-Also notice (and verify by exploring the Perl documentation for the function) that \textit{split}, with the arguments you gave it, does what you want.
+还要注意（查阅这个函数的Perl文档进行确认），根据你给它的参数，\textit{split}会完成你所期望的工作。
 
-The third and final subroutine of \autoref{exam:example11.5} is called \textit{iub3to1}. Since in PDB the sequence information is in three-character codes, you need this subroutine to change those sequences into one-character codes. It uses a straightforward hash lookup to perform the translation.
+\autoref{exam:example11.5}中的第三个也是最后一个子程序叫做\textit{iub3to1}。因为PDB中的序列信息使用三字母进行编码的，所以你需要这个子程序来把这些序列转变成单字母编码的形式。它直截了当的使用了一个散列查找来完成这个转换。
 
-We've now decomposed the problem into a few complementary subroutines.  It's always interesting as to how to best divide a problem into cooperating subroutines. You can put the call to \textit{iub3to1} inside the \textit{extractSEQRES} subroutine; that might be a cleaner way to package these subroutines together, since, outside the PDB file format, you won't have use for the strings of amino acids in three-character codes.
+我们现在已经把问题分解成了几个互相协作的子程序。如何最优得把一个问题分解成协作的子程序，这总是非常有趣。你可以把\textit{iub3to1}的调用放在\textit{extractSEQRES}子程序里面，这可能是把这些子程序组合在一起的一个比较简洁明了的方法，毕竟，除了PDB文件格式，你很可能不会用到三字母编码的氨基酸字符串。
 
-The important observation at this juncture is to point out that a few short subroutines, tied together with a very short main program, were sufficient to do a great deal of parsing of PDB files. 
+在这个关口，最重要的一个论点就是需要指出，在一个简短的主程序中把几个简短的子程序组合起来，足够来完成解析PDB文件这样复杂的任务了。
 
 \subsection{Finding Atomic Coordinates}
 So far, I've tried not to give more than a very brief overview of protein structure. However, in parsing PDB files, you will be faced with a great deal of detailed information about the structures and the experimental conditions under which they were determined. I will now present a short program that extracts the coordinates of atoms in a PDB file. I don't cover the whole story: for that, you will want to read the PDB documentation in detail and consult texts on protein structure, X-ray crystallography, and NMR techniques.
