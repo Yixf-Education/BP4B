@@ -821,7 +821,7 @@ For instance, you don't want the first six characters, so you specify them as \v
 
 Frankly, I think that the use of \verb|substr| is clearer for this purpose, but I wanted to show you an alternative way using regular expressions as well.
 
-We've already seen the use of the \verb|printf| function to format output with more options then with the \verb|print| function.
+We've already seen the use of the \verb|printf| function to format output with more options than with the \verb|print| function.
 
 This program has another important shortcut. It doesn't specify the file to open and read from. In Perl, you can give the input filename on the command line (or drag and drop it onto a Mac droplet), and the program takes its input from that file. Just use the angle brackets as shown in the first line of the program to read from the file. For short, fast programs, such as the one demonstrated here, this is a great convenience. You can leave out all the calls and tests for success of the \verb|open| function and just use the angle brackets. You would call it from the command line like so, assuming you saved the program in a file called \textit{get\_two\_atoms}: 
 
@@ -846,9 +846,9 @@ and use \verb|<STDIN>| instead of \verb|<>| in your program to read the data.
 \section{Controlling Other Programs}
 Perl makes it easy to start other programs and collect their output, all from within your Perl program. This is an extremely useful capability; for most programs, Perl makes it fairly simple to accomplish.
 
-You may need to run some particular program many times, for instance over every file in PDB to extract secondary structure information. The program itself may not have a way to tell it "run yourself over all these files." Also, the output of the program may have all sorts of extraneous information. What you need is a much simpler report that just presents the information that interests you—perhaps in a format that could then be input to another program! With Perl you can write a program to do exactly this.
+You may need to run some particular program many times, for instance over every file in PDB to extract secondary structure information. The program itself may not have a way to tell it ``run yourself over all these files." Also, the output of the program may have all sorts of extraneous information. What you need is a much simpler report that just presents the information that interests you—perhaps in a format that could then be input to another program! With Perl you can write a program to do exactly this.
 
-An important kind of program to automate is a web site that provides some useful program or data online. Using the appropriate Perl modules, you can connect to the web site, send it your input, collect the output, and then parse and reformat as you wish. It's actually not hard to do!  O'Reilly's \textit{Perl Cookbook}, a companion volume to \textit{Programming Perl}, is an excellent source of short programs and helpful descriptions to get you started.
+An important kind of program to automate is a web site that provides some useful program or data online. Using the appropriate Perl modules, you can connect to the web site, send it your input, collect the output, and then parse and reformat as you wish. It's actually not hard to do! O'Reilly's \textit{Perl Cookbook}, a companion volume to \textit{Programming Perl}, is an excellent source of short programs and helpful descriptions to get you started.
 
 Perl is a great way to automate other programs. The next section shows an example of a Perl program that starts another program and collects, parses, reformats, and outputs the results. This program will control another program on the same computer. The example will be from a Unix or Linux environment; consult your Perl documentation on how to get the same functionality from your Windows or Macintosh platform. 
 
@@ -862,11 +862,11 @@ We will use an external program to calculate the secondary structure from the 3D
 
 As you can see in the subroutine \textit{call\_stride}, variables have been made for the program name (\verb|$stride|) and for the options you may want to pass (\verb|$options|). Since these are parts of the program you may want to change, put them as variables near the top of the code, to make them easy to find and alter. The argument to the subroutine is the PDB filename (\verb|$filename|). (Of course, if you expect the options to change frequently, you can make them another argument to the subroutine.)
 
-Since you're dealing with a program that takes a file, do a little error checking to see if a file by that name actually exists. Use the \verb|-e| file test operator. Or you can omit this and let the \textit{stride} program figure it out, and capture its error output. But that requires parsing the stride output for its error output, which involves figuring out how \textit{stride} reports errors. This can get complicated, so I'd stick with using the \verb|-e| file test operator.
+Since you're dealing with a program that takes a file, do a little error checking to see if a file by that name actually exists. Use the \verb|-e| file test operator. Or you can omit this and let the \textit{stride} program figure it out, and capture its error output. But that requires parsing the \textit{stride} output for its error output, which involves figuring out how \textit{stride} reports errors. This can get complicated, so I'd stick with using the \verb|-e| file test operator.
 
 The actual running of the program and collecting its output happens in just one line. The program to be run is enclosed in backticks, which run the program (first expanding variables) and return the output as an array of lines.
 
-There are other ways to run a program. One common way is the system function call. It behaves differently from the backticks: it doesn't return the output of the command it calls (it just returns the exit status, an integer indicating success or failure of the command). Other methods include \textit{qx}, the \textit{open} system call, and the \textit{fork} and \textit{exec} functions. 
+There are other ways to run a program. One common way is the \textit{system} function call. It behaves differently from the backticks: it doesn't return the output of the command it calls (it just returns the exit status, an integer indicating success or failure of the command). Other methods include \textit{qx}, the \textit{open} system call, and the \textit{fork} and \textit{exec} functions. 
 
 \subsection{Parsing Stride Output}
 I don't go into too much detail here about parsing the output of \textit{stride}. Let's just exhibit some code that extracts the primary sequence and the secondary structure prediction. See the exercises at the end of the chapter for a challenge to extract the secondary structure information from a PDB file's HELIX, SHEET, and TURN record types and output the information in a similar format as \textit{stride} does here.
@@ -914,7 +914,7 @@ Using the \verb|substr| function, the two \verb|for| loops alter each line of th
 
 Now let's examine the subroutine \textit{parse\_stride} in \autoref{exam:example11.7} that takes \textit{stride} output and returns an array of two strings, the primary sequence and the structure prediction.
 
-This is a very "Perlish" subroutine that uses some features that manipulate text. What's interesting is the brevity of the program, which some of Perl's built-in functions make possible.
+This is a very ``Perlish" subroutine that uses some features that manipulate text. What's interesting is the brevity of the program, which some of Perl's built-in functions make possible.
 
 First, you receive the output of the \textit{stride} program in the subroutine argument \verb|@_|. Next, use the \textit{grep} function to extract those lines of interest, which are easy to identify in this output, as they begin with clear identifiers \verb|SEQ| and \verb|STR|.  
 
@@ -930,18 +930,6 @@ GGLQVKNFDFTVGKFLTVGGFINNSPQRFSVNVGESMNSLSLHLDHRFNYGADQNTIVMNSTLKGDNGWETEQRSTNFTL
 \end{lstlisting}
 
 The first line shows the amino acids, and the second line shows the prediction of the secondary structure. Check the next section for a subroutine that will improve that output. 
-
-
-\textcolor{red}{\textit{}}
-\begin{adjustwidth}{1cm}{}
-
-\end{adjustwidth}
-
-
-\textbf{}
-\lstinputlisting[label=exam:example11.1]{./scripts/example11-1.pl}
-
-
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 11.1}}
