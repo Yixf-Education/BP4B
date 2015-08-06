@@ -13,16 +13,16 @@ This chapter also gives you a brief introduction to Bioperl, which is a collecti
 \section{Obtaining BLAST}
 There are a several implementations of BLAST. The most popular is probably the one offered free of charge by the National Center for Biotechnology Information (NCBI): \href{http://www.ncbi.nlm.nih.gov/BLAST/}{http://www.ncbi.nlm.nih.gov/BLAST/}. The NCBI web site features a publicly available BLAST server, a comprehensive set of databases, and a well-organized collection of documents and tutorials, in addition to the BLAST software available for downloading.
 
-Also popular is the WU-BLAST implementation from Washington University. The main web site, including a list of other WU-BLAST servers, can be found at \href{http://blast.wustl.edu}{http://blast.wustl.edu}. Older versions of WU-BLAST are available at no charge. Newer versions are free if you qualify as a research or nonprofit organization and agree to the licensing arrangements from Washington University where the program is developed and maintained. If you work at a major research organization, you may already have a site license for the WU-BLAST program. If you are a for-profit company, there is a rather hefty charge for the newer WU-BLAST program (older versions are freely available if you want to run BLAST on your own computer). Pennsylvania State University also develops some BLAST programs, available at \href{http://bio.cse.psu.edu/}{http://bio.cse.psu.edu/}. In addition to NCBI and WU-BLAST, many other BLAST server web sites are available. A Google search (\href{http://www.google.com}{http://www.google.com}) on "BLAST server" will bring up many hits.
+Also popular is the WU-BLAST implementation from Washington University. The main web site, including a list of other WU-BLAST servers, can be found at \href{http://blast.wustl.edu}{http://blast.wustl.edu}. Older versions of WU-BLAST are available at no charge. Newer versions are free if you qualify as a research or nonprofit organization and agree to the licensing arrangements from Washington University where the program is developed and maintained. If you work at a major research organization, you may already have a site license for the WU-BLAST program. If you are a for-profit company, there is a rather hefty charge for the newer WU-BLAST program (older versions are freely available if you want to run BLAST on your own computer). Pennsylvania State University also develops some BLAST programs, available at \href{http://bio.cse.psu.edu/}{http://bio.cse.psu.edu/}. In addition to NCBI and WU-BLAST, many other BLAST server web sites are available. A Google search (\href{http://www.google.com}{http://www.google.com}) on ``BLAST server" will bring up many hits.
 
 A big question that faces researchers when they use BLAST is whether to use a public BLAST server or to run it locally. There are significant advantages to using a public server, the largest being that the databases (such as GenBank) used by the BLAST server are always up to date. To keep your own up-to-date copy of these databases requires a significant amount of hard-disk space, a computer with a fairly high-end processor and a lot of memory (to run the BLAST engine), a high-capacity network link, and a lot of time setting up and overseeing the software that updates the databases. On the other hand, perhaps you have your own library of sequences that you want to use in BLAST searches, you do frequent or large searches, or you have other reasons to run your own in-house BLAST engine. If that's the case, it makes sense to invest in the hardware and run it locally.
 
-The online documentation for BLAST is fairly extensive and includes details on the statistical methods the program uses to calculate similarity. In the next section, I touch briefly on some of those points, but you should refer to the BLAST home page and to the excellent material at the NCBI web site for the whole story and detailed references. Our interest here is not the theory, but rather to parse the output of the program. 
+The online documentation for BLAST is fairly extensive and includes details on the statistical methods the program uses to calculate similarity. In the next section, I touch briefly on some of those points, but you should refer to the BLAST home page and to the excellent material at the NCBI web site for the whole story and detailed references. Our interest here is not the theory, but rather to parse the output of the program.
 
 \section{String Matching and Homology}
 \textit{String matching} is the computer-science term for algorithms that find one string embedded in another. It has a fairly long and fruitful history, and many string-matching algorithms have been developed using a variety of techniques and for different cases. (See the Gusfield book in \autoref{chap:chapteraa} for an excellent treatment with a biological emphasis.) We've already done a fair amount of string matching, using the binding operator to search for motifs and other text with regular expressions.
 
-BLAST is basically a string-matching program. Details of the string-matching algorithms, and of the algorithms used in BLAST in particular, are beyond the scope of this book. But first I want to define some terms that are frequently confused or used interchangeably.  I also briefly introduce the BLAST statistics.
+BLAST is basically a string-matching program. Details of the string-matching algorithms, and of the algorithms used in BLAST in particular, are beyond the scope of this book. But first I want to define some terms that are frequently confused or used interchangeably. I also briefly introduce the BLAST statistics.
 
 Biological string matching looks for similarity as an indication of homology. \textit{Similarity} between the query and the sequences in the database may be measured by the \textit{percent identity}, or the number of bases in the query that exactly match a corresponding region of a sequence from the database. It may also be measured by the degree of \textit{conservation}, which finds matches between equivalent (redundant) codons or between amino acid residues with similar properties that don't alter the function of a protein (see \autoref{chap:chapter8}). \textit{Homology} between sequences means the sequences are related evolutionarily. Two sequences are or are not homologous; there's no degree of homology.
 
@@ -31,7 +31,7 @@ At the risk of oversimplifying a complex topic, I'll summarize a few facts about
 Now that you have the basics, let's write code to parse BLAST output. First, you separate the hits, then extract the sequence, and finally, you find the annotation showing the E value statistic. 
 
 \section{BLAST Output Files}
-The following is part of a BLAST output file. I created it by entering a few lines of the \textit{sample.dna} file from \autoref{chap:chapter8} into the BLAST program at the NCBI web site, without changing any of the default parameters. I then saved the output as text in the file \textit{blst.txt}, which is available from this book's web site. I've used it repeatedly in the parsing routines throughout this chapter. Because the output is several pages long, I've truncated it here to show the beginning, the middle, and the end of the file. 
+The following is part of a BLAST output file. I created it by entering a few lines of the \textit{sample.dna} file from \autoref{chap:chapter8} into the BLAST program at the NCBI web site, without changing any of the default parameters. I then saved the output as text in the file \textit{blast.txt}, which is available from this book's web site. I've used it repeatedly in the parsing routines throughout this chapter. Because the output is several pages long, I've truncated it here to show the beginning, the middle, and the end of the file. 
 
 \begin{lstlisting}
 BLASTN 2.1.3 [Apr-11-2001]
@@ -110,8 +110,8 @@ Sbjct: 361 aactgcaatgagtggttccatggggactgcatccggatca 400
 
 >ref|NM_014593.1| Homo sapiens CpG binding protein (CGBP), mRNA
 
- ... (file truncated here)
 
+ ... (file truncated here)
 
 
 >dbj|AK010337.1|AK010337 Mus musculus ES cells cDNA, RIKEN full-length
@@ -177,10 +177,8 @@ Sbjct: 235 gcggaagtagttgcgggcgcctttgc 260
 >gb|AC009750.7|AC009750 Drosophila melanogaster, chromosome 2L, region 23F-24A,
 BAC clone
 
- ... 
 
-(file truncated here)
-
+ ... (file truncated here)
 
 
 >emb|AL353748.13|AL353748 Human DNA sequence from clone RP11-317B17 on

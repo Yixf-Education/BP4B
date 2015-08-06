@@ -2,36 +2,36 @@
 \label{chap:chapter12}
 \minitoc
 
-In biological research, the search for sequence similarity is very important. For instance, a researcher who has discovered a potentially important DNA or protein sequence wants to know if it's already been identified and characterized by another researcher. If it hasn't, the researcher wants to know if it resembles any known sequence from any organism. This information can provide vital clues as to the role of the sequence in the organism.
+在生物学研究中，查找序列的相似性是非常重要的。比如，一个研究人员发现了一个可能非常重要的DNA或者蛋白质序列，他想知道这条序列是否已经被别的研究人员发现并且研究表征过了。如果没有的话，这个研究人员想知道这条序列是否和某个物种中的某条序列比较类似。这些信息对于物种中这条序列的功能会提供非常重要的线索。
 
-The Basic Local Alignment Search Tool (BLAST) is one of the most popular software tools in biological research. It tests a query sequence against a library of known sequences in order to find similarity. BLAST is actually a collection of programs with versions for query-to-database pairs such as nucleotide-nucleotide, protein-nucleotide, protein-protein, nucleotide-protein, and more.
+BLAST（Basic Local Alignment Search Tool）是在生物学研究中最流行的软件工具之一。对于一条查询序列，它会在一个已知序列库中进行测试，来查找相似性。BLAST实际上是一个程序集，根据查询-数据库对的不同有不同的版本，比如核酸-核酸、蛋白质-核酸、蛋白质-蛋白质、核酸-蛋白质等等。
 
-This chapter examines the output from the nucleotide-nucleotide version of the program, \textit{BLASTN}. For simplicity's sake, I'll simply refer to it here as BLAST. The main goal of this chapter is to show how to write code to parse a BLAST output file using regular expressions. The code is simple and basic, but it does the job. Once you understand the basics, you can build more features into your parser or obtain one of the fancier BLAST output parsers that's available via the Web. In either case, you'll know enough about output parsers to use or extend them.
+本章将解析这个程序的核酸-核酸版本的输出，也就是\textit{BLASTN}的输出。简便起见，此处我会简单地用BLAST来指代它。本章的主要目标就是来演示如何编写代码使用正则表达式来解析一个BLAST输出文件。代码非常简单而是很基本，但是它确实可以完成这个工作。一旦你理解了基本知识，你就可以向你的解析器中添加更多的特性，或者从网上找一个更加精致的BLAST输出解析器。不管哪种情况，你都需要对输出解析器有足够的了解，才能去使用或者扩展它们。
 
-This chapter also gives you a brief introduction to Bioperl, which is a collection of Perl bioinformatics modules. The Bioperl project is an example of an open source project that you, the Perl bioinformatics programmer, can put to good use. The Perl programming language is itself an open source project. The program and its source code are available for use and modification with only very reasonable restrictions and at no cost.
+本章还会对Bioperl进行简要的介绍，它是一个用于生物信息学的Perl模块集。Bioperl项目是一个开源项目的实例，作为使用Perl的生物信息学程序员，你可以好好地利用它。Perl编程语言本身就是一个开源项目。程序以及它的源代码都可以随意使用和修改，只有几个非常合理的限制，并且是免费的奥。
 
-\section{Obtaining BLAST}
-There are a several implementations of BLAST. The most popular is probably the one offered free of charge by the National Center for Biotechnology Information (NCBI): \href{http://www.ncbi.nlm.nih.gov/BLAST/}{http://www.ncbi.nlm.nih.gov/BLAST/}. The NCBI web site features a publicly available BLAST server, a comprehensive set of databases, and a well-organized collection of documents and tutorials, in addition to the BLAST software available for downloading.
+\section{获取BLAST}
+有许多不同的BLAST实现，最流行的可能是NCBI（National Center for Biotechnology Information）免费提供的版本：\href{http://www.ncbi.nlm.nih.gov/BLAST/}{http://www.ncbi.nlm.nih.gov/BLAST/}。NCBI网站提供了一个可以公开使用的BALST服务器、全面的数据库集和组织良好的文档和指南文集，还有可供下载的BLAST软件。
 
-Also popular is the WU-BLAST implementation from Washington University. The main web site, including a list of other WU-BLAST servers, can be found at \href{http://blast.wustl.edu}{http://blast.wustl.edu}. Older versions of WU-BLAST are available at no charge. Newer versions are free if you qualify as a research or nonprofit organization and agree to the licensing arrangements from Washington University where the program is developed and maintained. If you work at a major research organization, you may already have a site license for the WU-BLAST program. If you are a for-profit company, there is a rather hefty charge for the newer WU-BLAST program (older versions are freely available if you want to run BLAST on your own computer). Pennsylvania State University also develops some BLAST programs, available at \href{http://bio.cse.psu.edu/}{http://bio.cse.psu.edu/}. In addition to NCBI and WU-BLAST, many other BLAST server web sites are available. A Google search (\href{http://www.google.com}{http://www.google.com}) on "BLAST server" will bring up many hits.
+另外一个比较流行的实现是华盛顿大学的WU-BLAST。包含其他WU-BLAST服务器列表的主网站可以在\href{http://blast.wustl.edu}{http://blast.wustl.edu}找到\footnote{译者注：最新版本是2009-10-30发布的AB-BLAST（\href{http://blast.advbiocomp.com/}{http://blast.advbiocomp.com/}）。}。旧版本的WU-BLAST可以免费获取。如果你是一个研究人员或者非盈利的组织，并且同意开发和维护这个程序的华盛顿大学的许可协议，那么新版的WU-BALST也可以免费获得。如果你在一个大型的研究机构工作，你可能已经有了一个WU-BLAST程序的站点许可证了。如果你是一个营利性的公司，那么就需要为新版本的WU-BLAST程序支付一笔非常昂贵的费用了（如果你想在自己的计算机上运行BLAST，旧版本的程序仍然是免费的）。宾夕法尼亚州立大学也开发了一些BLAST程序，可以在\href{http://bio.cse.psu.edu/}{http://bio.cse.psu.edu/}找到\footnote{译者注：最新版本是2010-01-12发布的LASTZ（\href{http://www.bx.psu.edu/miller\_lab}{http://www.bx.psu.edu/miller\_lab}）。}。除了NCBI和WU-BLAST，还有许多其他可以使用的BLAST服务器网站。在谷歌（Google，\href{http://www.google.com}{http://www.google.com}）中搜索“BLAST server”就能得到很多结果。
 
-A big question that faces researchers when they use BLAST is whether to use a public BLAST server or to run it locally. There are significant advantages to using a public server, the largest being that the databases (such as GenBank) used by the BLAST server are always up to date. To keep your own up-to-date copy of these databases requires a significant amount of hard-disk space, a computer with a fairly high-end processor and a lot of memory (to run the BLAST engine), a high-capacity network link, and a lot of time setting up and overseeing the software that updates the databases. On the other hand, perhaps you have your own library of sequences that you want to use in BLAST searches, you do frequent or large searches, or you have other reasons to run your own in-house BLAST engine. If that's the case, it makes sense to invest in the hardware and run it locally.
+当研究人员使用BLAST的时候，它们面临的一个大问题就是是在公用的BLAST服务器上运行呢，还是在本地运行呢。使用公用的服务器，有一些显著的优势，最大的优势在于BLAST服务器使用的数据库（比如GenBank）总是最新的。要让你自己的这些数据库时刻保持最新，需要大量的硬盘空间，以及拥有高端处理器、大量内存和高速网络连接的计算机，还需要花费大量的时间来设置并监视更新数据库的软件。另一方面，可能你有自己的序列库，想用它来进行BLAST搜索，你需要经常搜索或者进行大量的搜索，又或者你有一些原因不得不使用内部自己的BLAST引擎。这种情况下，对硬件进行投资、在本地运行它就是比较明智的了。
 
-The online documentation for BLAST is fairly extensive and includes details on the statistical methods the program uses to calculate similarity. In the next section, I touch briefly on some of those points, but you should refer to the BLAST home page and to the excellent material at the NCBI web site for the whole story and detailed references. Our interest here is not the theory, but rather to parse the output of the program. 
+BLAST的在线文档非常详尽，包括了程序用来计算相似度的统计方法的细节内容。在接下来的小节中，我会对这些进行简单的介绍，但是你应该到BLAST的主页上以及NCBI的网站上找到这些优秀的材料，从头到尾把整个内容通读一下，详读需要查阅的内容。此处我们的兴趣并不在于理论知识，而是解析程序的输出。
 
-\section{String Matching and Homology}
-\textit{String matching} is the computer-science term for algorithms that find one string embedded in another. It has a fairly long and fruitful history, and many string-matching algorithms have been developed using a variety of techniques and for different cases. (See the Gusfield book in \autoref{chap:chapteraa} for an excellent treatment with a biological emphasis.) We've already done a fair amount of string matching, using the binding operator to search for motifs and other text with regular expressions.
+\section{字符串匹配和同源}
+\textit{字符串匹配}是计算机科学中的术语，指在另一个字符串中找到某个嵌入在内的字符串的算法。它有一个悠久且成果卓著的历史，使用不同的技术，开发出了许多字符串匹配算法，用于各种不同的情况。（参看\autoref{chap:chapteraa}中Gusfield的书对其进行了精彩的讲解，且侧重点在于生物学领域。）我们已经进行了不少的字符串匹配，使用绑定操作符用正则表达式来查找基序和其他的文本。
 
-BLAST is basically a string-matching program. Details of the string-matching algorithms, and of the algorithms used in BLAST in particular, are beyond the scope of this book. But first I want to define some terms that are frequently confused or used interchangeably.  I also briefly introduce the BLAST statistics.
+BLAST是一个基本的字符串匹配程序。字符串匹配算法的细节，以及BLAST中使用的算法，已经超出了本书的范畴。但是首先我想来定义几个常常被混淆或者混用的术语。此外，我还会对BLAST涉及的统计进行一个简要的介绍。
 
-Biological string matching looks for similarity as an indication of homology. \textit{Similarity} between the query and the sequences in the database may be measured by the \textit{percent identity}, or the number of bases in the query that exactly match a corresponding region of a sequence from the database. It may also be measured by the degree of \textit{conservation}, which finds matches between equivalent (redundant) codons or between amino acid residues with similar properties that don't alter the function of a protein (see \autoref{chap:chapter8}). \textit{Homology} between sequences means the sequences are related evolutionarily. Two sequences are or are not homologous; there's no degree of homology.
+生物学的字符串匹配用来查找相似，它是同源的一个指标。查询序列和数据库中序列的\textit{相似度（similarity）}可以用\textit{百分同一性（percent identity）}来衡量，或者是查询序列和数据库中一个序列对应区域完全匹配的碱基数目。它也可以用\textit{保守（conservation）}的程度来衡量，它会找到等价（冗余）密码子或者不改变蛋白质功能的具有相似属性的氨基酸残基之间的匹配。（参看\autoref{chap:chapter8}）。序列之间\textit{同源（homology）}表示序列在进化上是相关的。两个序列要么同源，要么不同源，没有同源度这种说法。\footnote{译者注：相似不一定同源。}
 
-At the risk of oversimplifying a complex topic, I'll summarize a few facts about BLAST statistics. (See the BLAST documentation for a complete picture.) The output of a BLAST search reports a set of scores and statistics on the matches it has found based on the raw score S, various parameters of the scoring algorithm, and properties of the query and database. The \textit{raw score S} is a measure of similarity and the size of the match. The BLAST output lists the hits ranked by their E value. The \textit{E (expect) value} of a match measures, roughly, the chances that the string matching (allowing for gaps) occurs in a randomly generated database of the same size and composition. The closer to 0 the E value is, the less likely it occurred by chance. In other words, the lower the E value, the better the match. As a general rule of thumb for BLASTN, an E value less than 1 may be a solid hit, and an E value of less than 10 may be worth looking at, but this is not a hard and fast rule. (Of course, proteins can be homologous with even a very small percent identity; the percent similarity is typically higher for homologous DNA.)
+冒着把一个复杂主题过度简化的风险，我要对BLAST的统计中的一些方面进行总结。（完整的细节可以参看BLAST的文档。）BLAST搜索的输出中会报告它找到的匹配的一些值和统计信息，主要基于原始值S、打分算法的参数，以及查询和数据库的属性。\textit{原始值S（raw score S）}是对相似性和匹配大小的一种度量。BLAST的输出罗列了按照E值排序的击中（hit）。粗略来说，一个匹配的\textit{E值/期望值（E value，expect value）}衡量的是在一个随机生成的具有同样大小和组成的数据库中字符串匹配（允许空位）的几率。E值越接近0，这个匹配越不可能随机发生。换言之，E值越小，匹配越好。作为BLASTN的一个经验准则，E值小于1的可能是一个比较可靠的击中，E值小于10的可能还需要看看，但这并不是一个硬性规定。（当然，对于蛋白质来说，即使只有很小的百分同一性，也可能是同源的；它的相似度百分比通常比同源DNA要高。）
 
-Now that you have the basics, let's write code to parse BLAST output. First, you separate the hits, then extract the sequence, and finally, you find the annotation showing the E value statistic. 
+现在，既然你已经找我的基础知识，就让我们编写代码来解析BLAST的输出吧。首先，你需要把击中分隔开，然后提取出序列，最后找到注释把E值这个统计量显示出来。
 
-\section{BLAST Output Files}
-The following is part of a BLAST output file. I created it by entering a few lines of the \textit{sample.dna} file from \autoref{chap:chapter8} into the BLAST program at the NCBI web site, without changing any of the default parameters. I then saved the output as text in the file \textit{blst.txt}, which is available from this book's web site. I've used it repeatedly in the parsing routines throughout this chapter. Because the output is several pages long, I've truncated it here to show the beginning, the middle, and the end of the file. 
+\section{BLAST输出文件}
+  下面是BLAST输出文件的一部分。通过把\autoref{chap:chapter8}中\textit{sample.dna}这个文件的几行输入到NCBI网站的BLAST程序中，在使用默认参数的情况下得到了这个文件。然后我把输出以文本形式保存到\textit{blast.txt}文件中，在本书的网站上可以找到它。在贯穿本章的解析工作中，我会重复使用它。因为输出有数页之长，此处我把它截断了，只显示文件的开头、中间和结尾部分。
 
 \begin{lstlisting}
 BLASTN 2.1.3 [Apr-11-2001]
@@ -110,8 +110,8 @@ Sbjct: 361 aactgcaatgagtggttccatggggactgcatccggatca 400
 
 >ref|NM_014593.1| Homo sapiens CpG binding protein (CGBP), mRNA
 
- ... (file truncated here)
 
+ ... (file truncated here)
 
 
 >dbj|AK010337.1|AK010337 Mus musculus ES cells cDNA, RIKEN full-length
@@ -177,10 +177,8 @@ Sbjct: 235 gcggaagtagttgcgggcgcctttgc 260
 >gb|AC009750.7|AC009750 Drosophila melanogaster, chromosome 2L, region 23F-24A,
 BAC clone
 
- ... 
 
-(file truncated here)
-
+ ... (file truncated here)
 
 
 >emb|AL353748.13|AL353748 Human DNA sequence from clone RP11-317B17 on
@@ -230,15 +228,15 @@ S1: 12 (24.3 bits)
 S2: 19 (38.2 bits)
 \end{lstlisting}
 
-As you can see, the file consists of three parts: some header information at the beginning followed by a summary of the alignments, the alignments, and then some additional summary parameters and statistics at the end. 
+如你所见，文件包含了三大部分：在开头的是一些头信息，之后是对比对的总结和详细的比对信息，末尾是附加的一些参数和统计信息总结。
 
-\section{Parsing BLAST Output}
-So why parse BLAST output? One reason is to see if your DNA has any new matches against the DNA stored in the constantly growing databases. You can write a program to automatically perform a daily BLAST search and compare its results with those of the previous day by parsing the summary list of hits and comparing it with the previous day's summary list. You can then have the program email you if something new has turned up. 
+\section{解析BLAST输出}
+那么为什么要解析BLAST的输出呢？一个原因是看看你的DNA在持续增长的数据库中是否有新的匹配。你可以编写一个程序来自动执行，每天进行一次BLAST查找，然后通过解析击中的总结列表来和前一天的总结列表进行比较，对比它的结果和前一天的结果。如果有新的结果出现，你也可以让程序发送邮件给你。
 
-\subsection{Extracting Annotation and Alignments}
-\autoref{exam:example12.1} consists of a main program and two new subroutines. The subroutines—\textit{parse\_blast} and \textit{parse\_blast\_alignment}—use regular expressions to extract the various bits of data from a scalar string. I chose this method because the data, although structured, does not clearly identify each line with its function. (See the discussion in \autoref{chap:chapter10} and \autoref{chap:chapter11}.) 
+\subsection{提取注释和比对}
+\autoref{exam:example12.1}由一个主程序和两个新的子程序组成。\textit{parse\_blast}和\textit{parse\_blast\_alignment}这两个子程序使用正则表达式来从标量字符串中提取大量的数据位。我之所以选取这种方法，是因为数据本身，数据虽然是结构化的，但是每一行并没有明确指定的功能。（参看\autoref{chap:chapter10}和\autoref{chap:chapter11}中的讨论。）
 
-\textbf{Example 12-1. Extract annotation and alignments from BLAST output file}
+\textbf{例：12-1：从BLAST输出文件中提取注释和比对}
 \lstinputlisting[label=exam:example12.1]{./scripts/example12-1.pl}
 
 The main program does little more than call the parsing subroutine and print the results. The arguments, initialized as empty, are passed by reference (see \autoref{chap:chapter6}).  
