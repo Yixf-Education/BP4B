@@ -241,13 +241,12 @@ So why parse BLAST output? One reason is to see if your DNA has any new matches 
 
 The main program does little more than call the parsing subroutine and print the results. The arguments, initialized as empty, are passed by reference (see \autoref{chap:chapter6}).  
 
-The subroutine \textit{parse\_blast} does the top-level parsing job of separating the three sections of a BLAST output file: the annotation at the beginning, the alignments in the middle, and the annotation at the end.  It then calls the \textit{parse\_blast\_alignment} subroutine to extract the individual alignments from that middle alignment section. The data is first read in from the named file with our old friend the \textit{get\_file\_data} subroutine from \autoref{chap:chapter8}. Use the \textit{join} function to store the array of file data into a scalar string.
+The subroutine \textit{parse\_blast} does the top-level parsing job of separating the three sections of a BLAST output file: the annotation at the beginning, the alignments in the middle, and the annotation at the end. It then calls the \textit{parse\_blast\_alignment} subroutine to extract the individual alignments from that middle alignment section. The data is first read in from the named file with our old friend the \textit{get\_file\_data} subroutine from \autoref{chap:chapter8}. Use the \textit{join} function to store the array of file data into a scalar string.
 
-The three sections of the BLAST output file are separated by the following statement: 
+The three sections of the BLAST output file are separated by the following statement:
 
 \begin{lstlisting}
 ($$beginning_annotation, $alignment_section, $$ending_annotation)
-
   = ($blast_output_file =~ /(.*^ALIGNMENTS\n)(.*)(^  Database:.*)/ms);
 \end{lstlisting}
 
@@ -279,9 +278,9 @@ parse_blast(\$beginning_annotation, \$ending_annotation, \%alignments, $filename
 
 You've seen references to variables before, starting in \autoref{chap:chapter6}. Let's review them briefly. Within the \textit{parse\_blast} subroutine, those variables with only one \verb|$| are references to the scalar variables. They need an additional \verb|$| to represent actual scalar variables. This is how references work; they need an additional special character to indicate what kinds of variables they are references to. So a reference to a scalar variable needs to start with \verb|$$|, a reference to an array variable needs to start with \verb|@$|, and a reference to a hash variable needs to start with \verb|%$|. 
 
-The regular expression in the previous code snippet matches everything up to the word \verb|ALIGNMENTS| at the end of a line \verb|(.*^ALIGNMENTS\n)|; then everything for a while \verb|(.*)|; then a line that begins with two spaces and the word \verb|Database|: followed by the rest of the file \verb|(^ Database:.*)|. These three expressions in parentheses correspond to the three desired parts of the BLAST output file; the beginning annotation, the alignment section, and the ending annotation.
+The regular expression in the previous code snippet matches everything up to the word \verb|ALIGNMENTS| at the end of a line \verb|(.*^ALIGNMENTS\n)|; then everything for a while \verb|(.*)|; then a line that begins with two spaces and the word \verb|Database|, followed by the rest of the file \verb|(^  Database:.*)|. These three expressions in parentheses correspond to the three desired parts of the BLAST output file; the beginning annotation, the alignment section, and the ending annotation.
 
-The alignments saved in \verb|$alignment_section| are separated out by the subroutine \textit{parse\_blast\_alignment}. This subroutine has one important loop: 
+The alignments saved in \verb|$alignment_section| are separated out by the subroutine \textit{parse\_blast\_alignment}. This subroutine has one important loop:
 
 \begin{lstlisting}
 while($alignment_section =~ /^>.*\n(^(?!>).*\n)+/gm) {
@@ -312,7 +311,7 @@ Query: 192   ggcgggggtcgtgagggagtgcg 214
 Sbjct: 48258 ggcgtgggtcgtgagggagtgcg 48280
 \end{lstlisting}
 
-This text starts with a line beginning with a \verb|>| character. In the complete BLAST output, sections like these follow one another. What you want to do is start matching from a line beginning with \verb|>| and include all following adjacent lines that don't start with a \verb|>| character. You also want to extract the identifier, which appears between the first and second vertical bar \verb=|= characters on the first line (e.g., \verb|AL353748.13| in this alignment). 
+This text starts with a line beginning with a \verb|>| character. In the complete BLAST output, sections like these follow one another. What you want to do is start matching from a line beginning with \verb|>| and include all following adjacent lines that don't start with a \verb|>| character. You also want to extract the identifier, which appears between the first and second vertical bar \verb=|= characters on the first line (e.g., \verb|AL353748.13| in this alignment).
 
 Let's dissect the regular expression:
 
@@ -340,16 +339,15 @@ After the \verb|^| which matches the beginning of the line, you'll see a \textit
 
 Now that you've matched the entire alignment, you want to extract the key and populate the hash with your key and value. Within the \verb|while| loop, the alignment that you just matched is automatically set by Perl as the value of the special variable \verb|$&| and saved in the variable \verb|$value|. Now you need to extract your key from the alignment. It can be found on the first line of the alignment stored in \verb|$value|, between the first and second \verb=|= symbols.
 
-Extracting this identifying key is done using the \verb|split| function, which
-breaks the string into an array. The call to \verb|split|: 
+Extracting this identifying key is done using the \verb|split| function, which breaks the string into an array. The call to \verb|split|:
 
 \begin{lstlisting}
 split(/\|/, $value)
 \end{lstlisting}
 
-splits \verb|$value| into pieces delimited by \verb=|= characters. That is, the \verb=|= symbol is used to determine where one list element ends and the next one begins. (Remember that the vertical bar \verb=|= is a metacharacter and must be escaped as \verb=\|=.) By surrounding the call to split with parentheses and adding an array offset (\verb|[1]|), you can isolate the key and save it into \verb|$key|.
+splits \verb|$value| into pieces delimited by \verb=|= characters. That is, the \verb=|= symbol is used to determine where one list element ends and the next one begins. (Remember that the vertical bar \verb=|= is a metacharacter and must be escaped as \verb=\|=.) By surrounding the call to \textit{split} with parentheses and adding an array offset (\verb|[1]|), you can isolate the key and save it into \verb|$key|.
 
-Let's step back now and look at \autoref{exam:example12.1} in its entirety. Notice that it's very short—barely more than two pages, including comments.  Although it's not an easy program, due to the complexity of the regular expressions involved, you can make sense of it if you put a little effort into examining the BLAST output files and the regular expressions that parse it.
+Let's step back now and look at \autoref{exam:example12.1} in its entirety. Notice that it's very short—barely more than two pages, including comments. Although it's not an easy program, due to the complexity of the regular expressions involved, you can make sense of it if you put a little effort into examining the BLAST output files and the regular expressions that parse it.
 
 Regular expressions have lots of complex features, but as a result, they can do lots of useful things. As a Perl programmer, the effort you put into learning them is well worth it and can have significant payoffs down the road. 
 
@@ -391,7 +389,7 @@ To parse these alignments, we have to parse out each of the matched strings, whi
 
 Each HSP also contains some annotation, and then the HSP itself. Let's parse each HSP into annotation, query string, and subject string, together with the starting and ending positions of the strings. More parsing is possible; you can extract specific features of the annotation, as well as the locations of identical and nonidentical bases in the HSP, for instance.
 
-\autoref{exam:example12.2} includes a pair of subroutines; one to parse the alignments into their HSPs, and the second to extract the sequences and their end positions. The main program extends \autoref{exam:example12.1} using these new subroutines. 
+\autoref{exam:example12.2} includes a pair of subroutines: one to parse the alignments into their HSPs, and the second to extract the sequences and their end positions. The main program extends \autoref{exam:example12.1} using these new subroutines. 
 
 \textbf{Example 12-2. Parse alignments from BLAST output file}
 \lstinputlisting[label=exam:example12.2]{./scripts/example12-2.pl}
@@ -401,26 +399,24 @@ Each HSP also contains some annotation, and then the HSP itself. Let's parse eac
 \begin{lstlisting}
 -> Expect value:   5e-52
 
--> Query string:
-ggagatggttcagacccagagcctccagatgccggggaggacagcaagtccgagaatggg
+-> Query string:   ggagatggttcagacccagagcctccagatgccggggaggacagcaagtccgagaatggg
 gagaatgcgcccatctactgcatctgccgcaaaccggacatcaactgcttcatgatcgggtgtgacaactgcaatgagt
 ggttccatggggactgcatccggatca
 
 -> Query range:    235..400
 
--> Subject String:
-ctggagatggctcagacctggaacctccggatgccggggacgacagcaagtctgagaatg
-ggctgagaacgctcccatctactgcatctgtcgcaaaccggacatcaattgcttcatgattggacttgtgacaactgca
-acgagtggttccatggagactgcatccggatca
+-> Subject String: ggagatggctcagacctggaacctccggatgccggggacgacagcaagtctgagaatggg
+gagaacgctcccatctactgcatctgtcgcaaaccggacatcaattgcttcatgattggatgtgacaactgcaacgagt
+ggttccatggagactgcatccggatca 
 
 -> Subject range:  1048..1213
 \end{lstlisting}
 
-Let's discuss the new features of \autoref{exam:example12.2} and its subroutines.  First notice that the two new subroutines from \autoref{exam:example12.1} have been placed into the \textit{BeginPerlBioinfo.pm} module, so they aren't printed again here.
+Let's discuss the new features of \autoref{exam:example12.2} and its subroutines. First notice that the two new subroutines from \autoref{exam:example12.1} have been placed into the \textit{BeginPerlBioinfo.pm} module, so they aren't printed again here.
 
 The main program, \autoref{exam:example12.2}, starts the same as \autoref{exam:example12.1}; it calls the \textit{parse\_blast} subroutine to separate the annotation from the alignments in the BLAST output file.
 
-The next line fetches one of the alignments from the \verb|%alignments| hash, which is then used as the argument to the \textit{parse\_blast\_alignment\_HSP} subroutine, which then returns an array of annotation (as the first element) and HSPs in \verb|@HSPs|. Here you see that not only can a subroutine return an array on a scalar value; it can also return a hash.
+The next line fetches one of the alignments from the \verb|%alignments| hash, which is then used as the argument to the \textit{parse\_blast\_alignment\_HSP} subroutine, which then returns an array of annotation (as the first element) and HSPs in \verb|@HSPs|.
 
 Finally, \autoref{exam:example12.2} does the lower-level parsing of an individual HSP by calling the \textit{extract\_HSP\_information} subroutine, and the extracted parts of one of the HSPs are printed.
 
@@ -438,7 +434,7 @@ The first regular expression parses out the annotation and the section containin
 = ($alignment =~ /(.*?)(^ Score =.*)/ms);
 \end{lstlisting}
 
-The first parentheses in the regular expression is \verb|(.*?)| This is the nongreedy or minimal matching mentioned in \autoref{chap:chapter9}. Here it gobbles up everything before the first line that begins \verb|Score =| (without the \verb|?| after the \verb|*|, it would gobble everything until the final line that begins \verb|Score =|). This is the exact dividing line between the beginning annotation and the HSP string matches.
+The first parentheses in the regular expression is \verb|(.*?)|. This is the nongreedy or minimal matching mentioned in \autoref{chap:chapter9}; it matches the shortest string possible. By default, \verb|*| is greedy, matching the longest string possible. Here it gobbles up everything before the first line that begins \verb|Score =| (without the \verb|?| after the \verb|*|, it would gobble everything until the final line that begins \verb|Score =|). This is the exact dividing line between the beginning annotation and the HSP string matches.
 
 The next loop and regular expression separates the individual HSP string matches: 
 
@@ -450,10 +446,7 @@ while($HSP_section =~ /(^ Score =.*\n)(^(?! Score =).*\n)+/gm) {
 }
 \end{lstlisting}
 
-This is the same kind of global string match in a \verb|while| loop you've seen
-before; it keeps iterating as long as the match can be found. The other
-modifier \verb|/m| is the multiline modifier, which enables the metacharacters
-\verb|$| and \verb|^| to match before and after embedded newlines.
+This is the same kind of global string match in a \verb|while| loop you've seen before; it keeps iterating as long as the match can be found. The other modifier \verb|/m| is the multiline modifier, which enables the metacharacters \verb|$| and \verb|^| to match before and after embedded newlines.
 
 The expression within the first pair of parentheses—\verb|(^ Score =.*\n)|—matches a line that begins \verb|Score =|, which is the kind of line that begins an HSP string match section.
 
@@ -492,9 +485,9 @@ The arguments to the \textit{printf} function consist of a format string, follow
 
 The directives consist of a percent sign followed by a required conversion specifier, which in the example includes \verb|f| for floating point, \verb|d| for integer, and \verb|s| for string. The conversion specifier indicates what kind of data is in the variable to be printed. Between the \verb|%| and the conversion specifier, there may be 0 or more flags, an optional minimum field width, an optional precision, and an optional length modifier. The list of values following the format string must contain data that matches the types of directives, in order.
 
-There are many possible options for these flags and specifiers (some are listed in \autoref{chap:chapterab}). Here's what is in \autoref{exam:example12.3}. First, the directive \verb|%6.4f| specifies to print a floating point (that is, a decimal) number, with a minimum width of six characters overall (padded with spaces if necessary), and at most four positions for the decimal part.  You see in the output that, although the \verb|$f| floating-point number gives the value of pi to eight decimal places, the example specifies a precision of four decimal places, which are all that is printed out.  
+There are many possible options for these flags and specifiers (some are listed in \autoref{chap:chapterab}). Here's what is in \autoref{exam:example12.3}. First, the directive \verb|%6.4f| specifies to print a floating point (that is, a decimal) number, with a minimum width of six characters overall (padded with spaces if necessary), and at most four positions for the decimal part. You see in the output that, although the \verb|$f| floating-point number gives the value of $\pi$ to eight decimal places, the example specifies a precision of four decimal places, which are all that is printed out.  
 
-The \verb|%-5d| directive specifies an integer to be printed in a field of width 5; the - flag causes the number to be left-justified in the field.  Finally, the \verb|%s| directive prints a string.  
+The \verb|%-5d| directive specifies an integer to be printed in a field of width 5; the \verb|-| flag causes the number to be left-justified in the field. Finally, the \verb|%s| directive prints a string.
 
 \subsection{here Documents}
 Now we'll briefly examine \verb|here| documents. These are convenient ways to specify multiline text for output with perhaps some variables to be interpolated, in a way that looks pretty much the same in your code as it will in the output—that is, without a lot of \verb|print| statements or embedded newline \verb|\n| characters. We'll follow \autoref{exam:example12.3} and its output with a discussion. 
@@ -512,7 +505,7 @@ On iteration 1 of the loop!
 AAACCCCCCGGGGGGGGTTTTTT
 \end{lstlisting}
 
-In \autoref{exam:example12.3}, a \verb|here| document was put in a \textit{for} loop, so that you can see the \verb|$i| variable changing in the printout. The variables are interpolated into a \verb|here| document in the same way they are interpolated into a double-quoted string. Every time they go through the loop, the contents of the \verb|here| document are subject to variable interpolation and are printed out. The terminating string used in this example, HEREDOC, can be any string you specify. (There are several options for dealing with things like indentation and so forth; I won't discuss them here and refer you to the Perl documentation.) Here documents are handy for some tasks, such as when you have a long, multiline document with just a few changes applied each time you print it. A business form letter, with only the addressee changed, is a typical example. Using a \verb|here| document preserves the look of the final output in the code, while allowing variable interpolation.
+In \autoref{exam:example12.3}, a \verb|here| document was put in a \textit{for} loop, so that you can see the \verb|$i| variable changing in the printout. The variables are interpolated into a \verb|here| document in the same way they are interpolated into a double-quoted string. Every time they go through the loop, the contents of the \verb|here| document are subject to variable interpolation and are printed out. The terminating string used in this example, \verb|HEREDOC|, can be any string you specify. (There are several options for dealing with things like indentation and so forth; I won't discuss them here and refer you to the Perl documentation.) \verb|Here| documents are handy for some tasks, such as when you have a long, multiline document with just a few changes applied each time you print it. A business form letter, with only the addressee changed, is a typical example. Using a \verb|here| document preserves the look of the final output in the code, while allowing variable interpolation.
 
 \subsection{format and write}
 Finally, let's take a look at the \textit{format} and \textit{write} functions. \verb|format| is designed to generate reports and can handle page numbers, headers, and various layout options such as centering and left and right justification. It's modelled on the FORTRAN programming-language conventions for formatting and so is particularly handy for producing reports based on that style, such as the PDB file format, in which fields are specified as occupying certain columns on the line.
@@ -585,7 +578,7 @@ Like many open source projects, Bioperl has suffered from fragmentation and unev
 
 Some difficulties still remain. Most of the code has been developed on Unix or Linux systems. Not all of it works on Macs or Windows operating systems, but most will. There are some documents available at the Bioperl web site that discuss using Bioperl on non-Unix computers, but the bottom line is that you might find that some things don't work.
 
-If you're going to give Bioperl a try (and I strongly recommend you do), you should make sure you have a fairly recent version of Perl installed.  You'll need at least Version 5.004; it would be much better to install the latest stable release from the Perl web site \href{http://www.perl.com}{http://www.perl.com}. 
+If you're going to give Bioperl a try (and I strongly recommend you do), you should make sure you have a fairly recent version of Perl installed. You'll need at least Version 5.004; it would be much better to install the latest stable release from the Perl web site \href{http://www.perl.com}{http://www.perl.com}. 
 
 \subsection{Sample Modules}
 To give you an idea of what tasks Bioperl can make easier for you, \autoref{tab:table12.1} displays a representative sample of some of the most useful modules available. 
@@ -621,7 +614,7 @@ To give you an idea of what tasks Bioperl can make easier for you, \autoref{tab:
   Bio::SeqFeature::Gene::TranscriptI & Interface for a feature representing a transcript of exons, promoter, UTR, and a poly-adenylation site\\
   Bio::Tools::Blast & Bioperl BLAST sequence analysis object\\
   Bio::Tools::BPbl2seq & Lightweight BLAST parser for pair-wise sequence alignment using the BLAST algorithm\\
-  Bio::Tools::BPlite &  Lightweight BLAST parser\\
+  Bio::Tools::BPlite & Lightweight BLAST parser\\
   Bio::Tools::BPpsilite & Lightweight BLAST parser for PSIBLAST reports\\
   Bio::Tools::CodonTable & Bioperl codon table object\\
   Bio::Tools::Fasta & Bioperl FASTA utility object\\
@@ -632,7 +625,7 @@ To give you an idea of what tasks Bioperl can make easier for you, \autoref{tab:
   Bio::Tools::SeqWords & Object holding n-mer statistics for one sequence\\
   Bio::Tools::Blast::HSP & Bioperl BLAST high-scoring segment pair object\\
   Bio::Tools::Blast::HTML & Bioperl utility module for HTML-formatting BLAST reports\\
-  Bio::Tools::Blast::Sbjct & Bioperl BLAST "hit" object\\
+  Bio::Tools::Blast::Sbjct & Bioperl BLAST ``hit" object\\
   Bio::Tools::Blast::Run::LocalBlast & Bioperl module for running BLAST analyses locally\\
   Bio::Tools::Blast::Run::Webblast & Bioperl module for running BLAST analyses using an HTTP interface\\
   Bio::Tools::Prediction::Exon & Predicted exon feature\\
@@ -780,7 +773,7 @@ Well, that was less informative as an output, but it seems you can infer that th
 
 The documentation suggests running the \textit{bptutorial.pl} script under the Perl debugger to watch what happens step by step. I concur with that suggestion but won't include the output here. Try it yourself!
 
-Since that last example wasn't much fun, let's try one more: here's the sequence manipulation tutorial: 
+Since that last example wasn't much fun, let's try one more. Here's the sequence manipulation tutorial: 
 
 \begin{lstlisting}
 % perl bptutorial.pl 4
@@ -836,22 +829,22 @@ Translating with all codon tables using method defaults:
 
 That was more fun, because this part of Bioperl is doing several things we've done in this book.
 
-I hope this brief look at Bioperl has whetted your appetite for more.  It's a good idea to explore this set of modules. A Perl module for parsing BLAST output called \textit{BPLite.pm} may also be of interest: it's now part of the Bioperl project. 
+I hope this brief look at Bioperl has whetted your appetite for more. It's a good idea to explore this set of modules. A Perl module for parsing BLAST output called \textit{BPLite.pm} may also be of interest: it's now part of the Bioperl project. 
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 12.1}}
 \begin{adjustwidth}{1cm}{}
-  \textit{Basic string matching}. Write a program that looks for a query string in a target string. For instance, if the query string is "gone", it finds a match at position 22 of the target string "goof through the way-gone-osphere." Don't use regular expressions or any of Perl's built-in string-matching abilities; instead, examine individual positions in the strings, compare characters, and invent your own algorithm. 
+\textit{Basic string matching}. Write a program that looks for a query string in a target string. For instance, if the query string is ``gone", it finds a match at position 22 of the target string ``goof through the way-gone-osphere." Don't use regular expressions or any of Perl's built-in string-matching abilities; instead, examine individual positions in the strings, compare characters, and invent your own algorithm. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 12.2}}
 \begin{adjustwidth}{1cm}{}
-  Explore the NCBI BLAST web pages at \href{http://www.ncbi.nlm.nih.gov/BLAST}{http://www.ncbi.nlm.nih.gov/BLAST}. Familiarize yourself with the purpose and use of the various component programs and read the tutorial information on the meaning of the statistics. 
+Explore the NCBI BLAST web pages at \href{http://www.ncbi.nlm.nih.gov/BLAST}{http://www.ncbi.nlm.nih.gov/BLAST}. Familiarize yourself with the purpose and use of the various component programs and read the tutorial information on the meaning of the statistics. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 12.3}}
 \begin{adjustwidth}{1cm}{}
-  Explore the Bioperl web pages at \href{http://www.bioperl.org}{http://www.bioperl.org}. Download the code and install it on your computer. 
+Explore the Bioperl web pages at \href{http://www.bioperl.org}{http://www.bioperl.org}. Download the code and install it on your computer. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 12.4}}
