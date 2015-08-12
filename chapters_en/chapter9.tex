@@ -66,7 +66,7 @@ Computing restriction maps is a common and practical bioinformatics calculation 
 We'll now write a program that does something useful in the lab: it will look for restriction enzymes in a sequence of DNA and report back with a restriction map of exactly where in the DNA the restriction enzymes appear. 
 
 \subsection{Planning the Program}
-Back in \autoref{chap:chpater5}, you saw how to look for regular expressions in text. So you've an idea of how to find motifs in sequences with Perl. Now let's think about how to use those techniques to create restriction maps. Here are some questions to ask:
+Back in \autoref{chap:chapter5}, you saw how to look for regular expressions in text. So you've an idea of how to find motifs in sequences with Perl. Now let's think about how to use those techniques to create restriction maps. Here are some questions to ask:
 
 \textcolor{red}{\textit{Where do I find restriction enzyme data?}}
 \begin{adjustwidth}{1cm}{}
@@ -419,9 +419,10 @@ What we have here is admittedly bare bones, but it does work. See the exercises 
 \section{Perl Operations}
 We've made it pretty far in this introductory programming book without talking about basic arithmetic operations, because you haven't really needed much more than addition to increment counters.
 
-However, an important part of any programming language, Perl included, is the ability to do mathematical calculations. Look at \autoref{chap:chpaterab}, which shows the basic operations available in Perl. 
+However, an important part of any programming language, Perl included, is the ability to do mathematical calculations. Look at \autoref{chap:chapterab}, which shows the basic operations available in Perl. 
 
 \subsection{Precedence of Operations and Parentheses}
+\label{sect:section9.3.1}
 Operations have rules of precedence. These enable the language to decide which operations should be done first when there are a few of them in a row. The order of operations can change the result, as the following example demonstrates.
 
 Say you have the code \verb|8 + 4 / 2|. If you did the division first, you'd get \verb|8 + 2|, or \verb|10|. However, if you did the addition first, you'd get \verb|12 / 2|, or \verb|6|.
@@ -435,6 +436,7 @@ There is a solution, and it's called \textit{using parentheses}. For \autoref{ex
 Remember to use parentheses in complicated expressions to specify the order of operations. Among other things, it will save you some long debugging sessions! 
 
 \section{Exercises}
+\label{sect:section9.4}
 \textcolor{red}{\textit{Exercise 9.1}}
 \begin{adjustwidth}{1cm}{}
 Modify \autoref{exam:example9.3} to accept DNA from the command line; if it's not specified there, prompt the user for a FASTA filename and read in the DNA sequence data. 

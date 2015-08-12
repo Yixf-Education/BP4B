@@ -1,4 +1,5 @@
 \documentclass[11pt,a4paper,twoside]{book}
+%\documentclass[10.5pt,a4paper,twoside]{book}
 
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
@@ -26,6 +27,7 @@
 \setlength{\parindent}{2em}
 
 \linespread{1.2}
+%\linespread{1}
 
 \usepackage[a4paper,top=2.5cm,bottom=1.5cm,left=3cm,right=1.5cm,marginparwidth=4.7cm,marginparsep=0.3cm]{geometry}
 
@@ -33,6 +35,13 @@
 \usepackage{minitoc}
 \setcounter{minitocdepth}{1}
 \renewcommand{\mtctitle}{目录}
+
+%修改目录中的章节格式
+\usepackage{titletoc}
+%\titlecontents{chapter}[0pt]{\vspace{0.1\baselineskip}\bfseries}{第 \thecontentslabel 章\quad}{}{\hspace{.5em}\titlerule*[8pt]{$\cdot$}\contentspage}
+\titlecontents{chapter}[0pt]{\vspace{0.3\baselineskip}\bfseries}{第 \thecontentslabel 章\quad}{}{\hfill\contentspage}
+\titlecontents{section}[2em]{\vspace{0.05\baselineskip}}{\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*[8pt]{$\cdot$}\contentspage}
+\titlecontents{subsection}[4em]{\vspace{0.02\baselineskip}}{\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*[8pt]{$\cdot$}\contentspage}
 
 %整段缩进
 \usepackage{changepage}
@@ -69,12 +78,17 @@
 \titleformat{\chapter}{\centering\LARGE\bfseries}{第 \thechapter 章}{1em}{}
 %\titlespacing*{\section}{0pt}{0.2\baselineskip}{0.2\baselineskip}
 
+%附录
+\usepackage{appendix}
+
 \usepackage[dvipsnames,tables]{xcolor}
 \usepackage{graphicx}
 \graphicspath{{figures/}}
-\usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+%\usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks]{hyperref}
 \def\chapterautorefname~#1\null{第{#1}章\null}
 \def\sectionautorefname~#1\null{第{#1}节\null}
+\def\subsectionautorefname~#1\null{第{#1}小节\null}
 \def\subsubsectionautorefname~#1\null{第{#1}小节\null}
 \def\tableautorefname{表}
 \def\lstlistingautorefname{例}
@@ -86,7 +100,7 @@
 \renewcommand{\listtablename}{表格目录}
 \renewcommand{\figurename}{图}
 \renewcommand{\tablename}{表}
-\renewcommand{\appendixname}{附录}
+%\renewcommand{\appendixname}{附录}
 \renewcommand{\indexname}{索引}
 %\renewcommand{\chaptername}{第 \CJKnumber{\thechapter} 章}
 %\renewcommand{\chaptername}{第 \thechapter 章}
@@ -191,3 +205,22 @@
   %xrightmargin=-\fboxsep, %
   %%moretexcs={lstset,color,colorlet, cellcolor, newcolumntype, columncolor, rowcolor, multirow, xspace, LaTeX, TeX},
 %}
+
+%添加水印
+%\usepackage[final]{draftwatermark}
+%\usepackage{draftwatermark}
+%\SetWatermarkText{译文初稿}%设置水印文字
+%\SetWatermarkText{Manuscript}%设置水印文字
+%\SetWatermarkLightness{0.9}%设置水印亮度
+%\SetWatermarkScale{0.9}%设置水印大小
+%\makeatletter
+%\let\originalsc@watermark\sc@watermark
+%\newcommand{\draftwatermarkon}{%
+  %\let\sc@watermark\originalsc@watermark
+%}
+%\newcommand{\draftwatermarkoff}{%
+  %\let\sc@watermark\@empty
+%}
+%\makeatother
+%\usepackage[printwatermark]{xwatermark}
+%\newwatermark[allpages,color=gray!15,angle=45,scale=5,xpos=-10,ypos=-20]{译文初稿}

@@ -33,17 +33,17 @@ if( $dna =~ /CT[CGT]ACG/ ) {
 
 \textcolor{red}{\textit{重复（或闭包）}}
 \begin{adjustwidth}{1cm}{}
-星号（*），也叫做克莱尼闭包或克莱尼星号，表示前面的字符重复0次或多次。比如，\verb|abc*|匹配所有这些字符串：\verb|ab|，\verb|abc|，\verb|abcc|，\verb|abccc|，\verb|abcccc|等等。这个正则表达式匹配无穷多个字符串。
+\hspace*{2em}星号（*），也叫做克莱尼闭包或克莱尼星号，表示前面的字符重复0次或多次。比如，\verb|abc*|匹配所有这些字符串：\verb|ab|，\verb|abc|，\verb|abcc|，\verb|abccc|，\verb|abcccc|等等。这个正则表达式匹配无穷多个字符串。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{择一}}
 \begin{adjustwidth}{1cm}{}
-在Perl中，模式\verb=(a|b)=（读作：\verb|a or b|）匹配字符串\verb|a|或者字符串\verb|b|。
+\hspace*{2em}在Perl中，模式\verb=(a|b)=（读作：\verb|a or b|）匹配字符串\verb|a|或者字符串\verb|b|。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{串联}}
 \begin{adjustwidth}{1cm}{}
-这是显而易见的一点。在Perl中，字符串\verb|ab|表示字符\verb|a|后面跟着（与之相串联）字符\verb|b|。
+\hspace*{2em}这是显而易见的一点。在Perl中，字符串\verb|ab|表示字符\verb|a|后面跟着（与之相串联）字符\verb|b|。
 \end{adjustwidth}
 
 使用小括号进行分组是非常重要的：它们也是元字符。所以，举个例子，字符串\verb|(abc|def)z*x|匹配\verb|abcx|、\verb|abczx|、\verb|abczzx|、\verb|defx|、\verb|defzx|、\verb|defzzzzzx|等等这样的字符串。用白话来说，它匹配的是\verb|abc|或者\verb|def|后面跟着零个或多个\verb|z|，并且最后是一个\verb|x|。这个例子把分组、择一、闭包和串联的理念整合在了一起。通过把这三个基础的理念整合起来，就可以真正看出正则表达式的强大之处来了。
@@ -52,7 +52,7 @@ Perl有许多正则表达式的特性。它们基本上都是我们刚刚提到�
 
 在Perl中，正则表达式通常被用作模式匹配界定符的正斜线包裹在中间。查看\verb|m//|的文档（或者是\autoref{chap:chapterab}），其中包括影响正则表达式行为的一些选项。就像你将看到的那样，正则表达式也被用在许多Perl的内置命令中。
 
-Perl文档是最基本的：从\href{http://www.perldoc.com/perl5.6/pod/perlre.html\#top}{http://www.perldoc.com/perl5.6/pod/perlre.html\#top}上的Perl手册中的\textit{perlre}小节开始吧。
+Perl文档是最基本的：从 \href{http://www.perldoc.com/perl5.6/pod/perlre.html\#top}{http://www.perldoc.com/perl5.6/pod/perlre.html\#top} 上的Perl手册中的\textit{perlre}小节开始吧。
 
 \section{限制酶切图谱和限制性内切酶}
 分子生物学的重大发现之一就是限制性内切酶的发现，它为生物学研究的当今黄金时代铺平了道路。为了非生物学家，同时也为后面准备好编程材料，这里先对其进行一个概述。
@@ -62,36 +62,36 @@ Perl文档是最基本的：从\href{http://www.perldoc.com/perl5.6/pod/perlre.h
 
 如果你查看限制性内切酶EcoRI的反向互补链，你会看到同样的序列\verb|GAATTC|。这是一种生物学的回文，也就是说正反读都一样。许多限制性位点都是回文结构。
 
-在实验室中，计算限制酶图谱是一个常见且实用的生物信息学工作。通过计算限制酶图谱，可以对实验进行规划，找到切割DNA并插入基因的最佳方法，进行特定位点的突变，或者是其他重组DNA技术的各种应用。通过初步的计算，实验室科学家就可以不用实验台上不断的进行试错性的实验了。在\href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html}上可以查阅更多关于限制性内切酶的相关内容。
+在实验室中，计算限制酶图谱是一个常见且实用的生物信息学工作。通过计算限制酶图谱，可以对实验进行规划，找到切割DNA并插入基因的最佳方法，进行特定位点的突变，或者是其他重组DNA技术的各种应用。通过初步的计算，实验室科学家就可以不用实验台上不断的进行试错性的实验了。在 \href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html} 上可以查阅更多关于限制性内切酶的相关内容。
 
 现在我们要编写一个在实验室中非常有用的程序：它会在DNA序列中查找限制性内切酶，并报告限制酶切图谱以及这个限制性内切酶出现在DNA上的精确位点。
 
 \subsection{程序规划}
-在前面的\autoref{chap:chpater5}中，你已经看到如何在文本中查找正则表达式了。所以你也知道如何使用Perl来查找序列中的基序。现在让我们想想，该如何利用这些技术来生成限制酶切图谱。下面是需要询问的一些问题：
+在前面的\autoref{chap:chapter5}中，你已经看到如何在文本中查找正则表达式了。所以你也知道如何使用Perl来查找序列中的基序。现在让我们想想，该如何利用这些技术来生成限制酶切图谱。下面是需要询问的一些问题：
 
 \textcolor{red}{\textit{我在哪里可以找到限制性内切酶的数据？}}
 \begin{adjustwidth}{1cm}{}
-限制性内切酶的数据可以在限制性酶切酶数据库（REBASE，Restriction Enzyme Database）中找到，它的网址是\href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html}。
+\hspace*{2em}限制性内切酶的数据可以在限制性酶切酶数据库（REBASE，Restriction Enzyme Database）中找到，它的网址是 \href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html}。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{我该如何使用正则表达式表征限制性内切酶？}}
 \begin{adjustwidth}{1cm}{}
-浏览那个网站，你会看到限制性内切酶用它们自己的语言进行了表征。我们会尝试把这种语言翻译成正则表达式的语言。
+\hspace*{2em}浏览那个网站，你会看到限制性内切酶用它们自己的语言进行了表征。我们会尝试把这种语言翻译成正则表达式的语言。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{我该如何存储限制性内切酶的数据？}}
 \begin{adjustwidth}{1cm}{}
-大约有1,000种有名字和定义的限制性内切酶。这使得可以使用散列提供的快速的键-值查找对它们进行处理。当你编写一个真正的应用程序时，比如应用于网站，最好是创建一个DBM文件来存储这些信息，当程序需要就行查找时立马就可以使用它。我会在\autoref{chap:chapter10}中对DBM文件进行介绍。此处，我们仅仅是指出这种方式而已。我们将只在程序中保存几个限制性内切酶的定义。
+\hspace*{2em}大约有1,000种有名字和定义的限制性内切酶。这使得可以使用散列提供的快速的键-值查找对它们进行处理。当你编写一个真正的应用程序时，比如应用于网站，最好是创建一个DBM文件来存储这些信息，当程序需要就行查找时立马就可以使用它。我会在\autoref{chap:chapter10}中对DBM文件进行介绍。此处，我们仅仅是指出这种方式而已。我们将只在程序中保存几个限制性内切酶的定义。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{我该如何接受用户的查询？}}
 \begin{adjustwidth}{1cm}{}
-你可以询问一个限制性内切酶的名字，或者可以让用户直接键入一个正则表达式。我们将采用第一种方法。此外，你想要让用户指定使用的序列。再重复一次，为了简化问题，你将只从一个DNA样本文件中读入数据。
+\hspace*{2em}你可以询问一个限制性内切酶的名字，或者可以让用户直接键入一个正则表达式。我们将采用第一种方法。此外，你想要让用户指定使用的序列。再重复一次，为了简化问题，你将只从一个DNA样本文件中读入数据。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{我该如何向用户报告返回限制酶切图谱呢？}}
 \begin{adjustwidth}{1cm}{}
-这是一个非常重要的问题。最简单的方式就是生成一个位置以及在此处找到的限制性内切酶的名字的列表。因为它呈现的信息非常简单，所以对于进一步的处理非常有用。
+\hspace*{2em}这是一个非常重要的问题。最简单的方式就是生成一个位置以及在此处找到的限制性内切酶的名字的列表。因为它呈现的信息非常简单，所以对于进一步的处理非常有用。
 
 但是如果你不想进行进一步的处理，只想把限制酶切图谱展示给用户呢？这时，进行一个图形化展示就会更加有用，可能是打印出序列，并在其上用一条线来标明限制性内切酶存在的位置。
 
@@ -421,9 +421,10 @@ Search for what restriction enzyme (or quit)?: quit
 \section{Perl的操作}
 在这本指南性的编程书籍中，我们没有讨论基本的算术运算，就已经做的很好的，因为实际上你并不需要比增加计数器的加法更多的内容。
 
-然而，包括Perl在内的编程语言的一个重要部分，就是进行数学计算的能力。参看\autoref{chap:chpaterab}，它展示了Perl中的基本运算。
+然而，包括Perl在内的编程语言的一个重要部分，就是进行数学计算的能力。参看\autoref{chap:chapterab}，它展示了Perl中的基本运算。
 
 \subsection{运算和括号的优先级}
+\label{sect:section9.3.1}
 运算有一套优先级规则。这使得语言可以在一行中有多个运算时决定先进行哪个运算。运算的顺序会改变运算的结果，就像下面的例子演示的那样。
 
 假设你有\verb|8 + 4 / 2|这样的代码。如果你先进行除法预算，你会得到\verb|8 + 2|，或者是\verb|10|。然而，如果你先进行加法运算，你就会得到\verb|12 / 2|，或者是\verb|6|.
@@ -437,6 +438,7 @@ Search for what restriction enzyme (or quit)?: quit
 记住，在复杂的表达式中使用括号来指明运算的顺序。另外，它会让你避免大量的程序调试！
 
 \section{练习题}
+\label{sect:section9.4}
 \textcolor{red}{\textit{习题9.1}}
 \begin{adjustwidth}{1cm}{}
 修改\autoref{exam:example9.3}，让它可以从命令行接收DNA；如果它没有被指定，提示用户键入FASTA文件名并读入DNA序列数据。

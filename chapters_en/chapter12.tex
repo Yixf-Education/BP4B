@@ -31,6 +31,7 @@ At the risk of oversimplifying a complex topic, I'll summarize a few facts about
 Now that you have the basics, let's write code to parse BLAST output. First, you separate the hits, then extract the sequence, and finally, you find the annotation showing the E value statistic. 
 
 \section{BLAST Output Files}
+\label{sect:section12.3}
 The following is part of a BLAST output file. I created it by entering a few lines of the \textit{sample.dna} file from \autoref{chap:chapter8} into the BLAST program at the NCBI web site, without changing any of the default parameters. I then saved the output as text in the file \textit{blast.txt}, which is available from this book's web site. I've used it repeatedly in the parsing routines throughout this chapter. Because the output is several pages long, I've truncated it here to show the beginning, the middle, and the end of the file. 
 
 \begin{lstlisting}
@@ -659,7 +660,7 @@ which creates the source directory \textit{/usr/local/src/bioperl-0.7.0}. After 
 
 Change to the source directory and type \verb|perl bptutorial.pl|. Here's the result (I've shown the head of the tutorial to give the author and copyright information): 
 
-\begin{lstlisting}
+\begin{lstlisting}[language=]
 % head bptutorial.pl 
 # $Id: ch12,v 1.44 2001/10/10 20:37:42 troutman Exp mam $
 
@@ -715,7 +716,7 @@ or to list all the methods available for object Bio::Tools::SeqStats -
 
 Now let's try option 9, the BLAST parser, and option 1, \verb|access_remote_db|. So here goes, starting with the BLAST parser: 
 
-\begin{lstlisting}
+\begin{lstlisting}[language=]
 % perl bptutorial.pl 9
 
 Beginning blast.pm parser example... 
@@ -760,7 +761,7 @@ Sequence identities for hsp of hit 1 are 66-68 70 73 76 79 80 87-89 114 117
 
 This is an interesting way to parse BLAST output! Now let's look at the access of the remote DB: 
 
-\begin{lstlisting}
+\begin{lstlisting}[language=]
 % perl bptutorial.pl 1
 Beginning remote database access example... 
 seq1 display id is MUSIGHBA1 
@@ -775,7 +776,7 @@ The documentation suggests running the \textit{bptutorial.pl} script under the P
 
 Since that last example wasn't much fun, let's try one more. Here's the sequence manipulation tutorial: 
 
-\begin{lstlisting}
+\begin{lstlisting}[language=]
 % perl bptutorial.pl 4
 
 Beginning sequence_manipulations and SeqIO example... 

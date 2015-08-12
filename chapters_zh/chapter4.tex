@@ -70,7 +70,7 @@
   \caption{标准的氨基酸代码}
   \label{tab:table4.2}
   %\begin{tabu}{X[1,c]X[2,l]}
-  \begin{tabu} to 1.05\linewidth {X[1,c]X[2,c]X[1,c]}
+  \begin{tabu} to \linewidth {X[1,c]X[2,c]X[1,c]}
   \toprule
   单字母代码 & 氨基酸 & 三字母代码\\
   \midrule
@@ -102,9 +102,7 @@
   \end{center}
 \end{table}
 
-对于\autoref{tab:table4.1}和\autoref{tab:table4.2}中的代码来说，计算机科学中的术语和生物学中的术语还是有一定差别的。从计算机科学的角度来看，这两个表定义了两个按字母顺序排列的有限的符号集合，使用它们可以来构建字符串。字符串指的就是符号序列。比如，这句话本身就是一个字符串（this
-sentence is a
-string）。语言就是一个（有限或无限）字符串的集合。在本书中，语言主要就是DNA和蛋白质的序列数据。和在序列数据中的具有生物学含义的表征不同，生物信息学家常常会把真正的DNA或蛋白质序列称作“字符串”。两个不同学科中的术语会交叉使用，这就是一个例子。
+对于\autoref{tab:table4.1}和\autoref{tab:table4.2}中的代码来说，计算机科学中的术语和生物学中的术语还是有一定差别的。从计算机科学的角度来看，这两个表定义了两个按字母顺序排列的有限的符号集合，使用它们可以来构建字符串。字符串指的就是符号序列。比如，这句话本身就是一个字符串（this sentence is a string）。语言就是一个（有限或无限）字符串的集合。在本书中，语言主要就是DNA和蛋白质的序列数据。和在序列数据中的具有生物学含义的表征不同，生物信息学家常常会把真正的DNA或蛋白质序列称作“字符串”。两个不同学科中的术语会交叉使用，这就是一个例子。
 
 如同你在表格中看到的那样，我们会使用简单的字母来表征数据，这和在纸张上手写时使用的方式是一样的。计算机实际上会用另外的代码来表征简单的字母，但你不用担心这些，只要记住在使用文本编辑器时将它们保存为ASCII或者纯文本即可。
 
@@ -120,11 +118,15 @@ ASCII是计算机在内存中存储文本（和控制信息）数据的一种方
 
 接下来就是运行程序了。运行程序的具体步骤取决于你使用的计算机（参看\autoref{chap:chapter2}）。我们假定程序是你计算机中一个叫做\textit{example4-1}的文件。回顾\autoref{chap:chapter2}中相关的知识，如果你想在Unix或者Linux中运行这个程序，需要在shell窗口中键入：
 
-\verb|perl example4-1 |
+\begin{lstlisting}[language=bash]
+perl example4-1
+\end{lstlisting}
 
 在Mac中，使用MacPerl应用程序打开这个文件，并把它保存为droplet，然后双击该droplet即可。在Windows中，在MS-DOS命令窗口中键入：
 
-\verb|perl example4-1|
+\begin{lstlisting}[language=bash]
+perl example4-1
+\end{lstlisting}
 
 如果你成功运行了该程序，在你的计算机屏幕上你将看到相应的输出。
 
@@ -148,6 +150,7 @@ $DNA = 'ACGGGAGGACGGGAAAATTACTACGGCATTAGC'; print $DNA; exit;
 了解注释的重要性是非常必要的。在大多数高校的计算机科学课程的课堂作业中，没有注释的程序通常会得到很低的分数甚至不及格；而在工作中不对代码进行注释的程序员，他的职业生涯将是短暂而失败的。
 
 \subsection{命令解释}
+\label{sec:section4.2.3}
 程序的第一行以\#起始，这使得它看上去像是一行注释，但又不像是有什么信息含量的注释：
 
 \begin{lstlisting}
@@ -304,8 +307,9 @@ $DNA3 = $DNA1 . $DNA2;
 \begin{adjustwidth}{2cm}{2cm}
   \parpic[l]{
   \includegraphics[width=1cm]{note.png}
-  }
-  在计算机语言中，一个操作符需要一些参数——在这个例子中，就是\verb|$DNA1|和\verb|$DNA2|字符串——并对它们进行操作，然后返回一个值——在这个例子中，就是串联后保存在\verb|$DNA3|变量中的字符串。算术中最为常见的操作符加减乘除都是需要两个数字作为参数、并返回一个数字作为返回值的操作符。
+}
+\noindent
+在计算机语言中，一个操作符需要一些参数——在这个例子中，就是\verb|$DNA1|和\verb|$DNA2|字符串——并对它们进行操作，然后返回一个值——在这个例子中，就是串联后保存在\verb|$DNA3|变量中的字符串。算术中最为常见的操作符加减乘除都是需要两个数字作为参数、并返回一个数字作为返回值的操作符。
 \end{adjustwidth}
 
 最后，来练习一下Perl的另外一种方法，仅仅使用\verb|print|语句就可以完成同样的串联任务：
@@ -390,7 +394,7 @@ $RNA =~ s/T/U/g;
 \section{使用Perl文档}
 对于Perl程序员来说，最重要的资源便是Perl的文档。它应该已经安装在了你的电脑上，另外通过因特网在Perl网站上也可以找到它。对于不同的计算机系统来说，Perl文档的格式可能有少许的差别，但网络版对任何一个人来说都是一样的，这也正式我在本书中参考的版本。参看\autoref{chap:chapteraa}中的参考资料，你会找到对于Perl文档不同资源的讨论。
 
-来试一下，让我们找找\textit{print}操作符的文档吧。首先，打开你的网页浏览器，进入\href{http://www.perl.com}{http://www.perl.com}网站，然后点击文档链接，依次选择“Perl的内置函数”（"Perl's Builtin Functions"）和“按字母顺序罗列的Perl函数”（"Alphabetical Listing of Perl's Functions"）。你会看到一个把Perl函数按字母顺序进行排列的一个冗长的列表。一旦你找到这个页面，你可能需要把它收藏到浏览器的书签中，因为你会频繁地访问该页面。现在点击Print来查看\verb|print|操作符的文档吧。
+来试一下，让我们找找\textit{print}操作符的文档吧。首先，打开你的网页浏览器，进入 \href{http://www.perl.com}{http://www.perl.com} 网站，然后点击文档链接，依次选择“Perl的内置函数”（"Perl's Builtin Functions"）和“按字母顺序罗列的Perl函数”（"Alphabetical Listing of Perl's Functions"）。你会看到一个把Perl函数按字母顺序进行排列的一个冗长的列表。一旦你找到这个页面，你可能需要把它收藏到浏览器的书签中，因为你会频繁地访问该页面。现在点击Print来查看\verb|print|操作符的文档吧。
 
 看一下文档中的例子，看看Perl语言的特性是如何被运用的。这往往是你找到所需内容的最快方法。
 
@@ -469,11 +473,11 @@ This time it worked!
 
 让我们看看如何从文件中读取蛋白质序列数据吧。首先，在你的计算机上创建一个文件（使用文本编辑器），并在其中存储一些蛋白质序列数据。给这个文件起名为\textit{NM\_021964fragment.pep}（你可以在书籍网站上下载到该文件）。你将使用下列数据（人类锌指蛋白NM\_021964的一部分）：
 
-\begin{verbatim}
+\begin{lstlisting}[language=]
 MNIDDKLEGLFLKCGGIDEMQSSRTMVVMGGVSGQSTVSGELQD
 SVLQDRSMPHQEILAADEVLQESEMRQQDMISHDELMVHEETVKNDEEQMETHERLPQ
 GLQYALNVPISVKQEITFTDVSEQLMRDKKQIR
-\end{verbatim}
+\end{lstlisting}
 
 你可以给它起任意一个名字，只要和文件夹中已有的文件不重名即可。
 

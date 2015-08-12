@@ -13,7 +13,7 @@ BLAST（Basic Local Alignment Search Tool）是在生物学研究中最流行的
 \section{获取BLAST}
 有许多不同的BLAST实现，最流行的可能是NCBI（National Center for Biotechnology Information）免费提供的版本：\href{http://www.ncbi.nlm.nih.gov/BLAST/}{http://www.ncbi.nlm.nih.gov/BLAST/}。NCBI网站提供了一个可以公开使用的BALST服务器、全面的数据库集和组织良好的文档和指南文集，还有可供下载的BLAST软件。
 
-另外一个比较流行的实现是华盛顿大学的WU-BLAST。包含其他WU-BLAST服务器列表的主网站可以在\href{http://blast.wustl.edu}{http://blast.wustl.edu}找到\footnote{译者注：最新版本是2009-10-30发布的AB-BLAST（\href{http://blast.advbiocomp.com/}{http://blast.advbiocomp.com/}）。}。旧版本的WU-BLAST可以免费获取。如果你是一个研究人员或者非盈利的组织，并且同意开发和维护这个程序的华盛顿大学的许可协议，那么新版的WU-BALST也可以免费获得。如果你在一个大型的研究机构工作，你可能已经有了一个WU-BLAST程序的站点许可证了。如果你是一个营利性的公司，那么就需要为新版本的WU-BLAST程序支付一笔非常昂贵的费用了（如果你想在自己的计算机上运行BLAST，旧版本的程序仍然是免费的）。宾夕法尼亚州立大学也开发了一些BLAST程序，可以在\href{http://bio.cse.psu.edu/}{http://bio.cse.psu.edu/}找到\footnote{译者注：最新版本是2010-01-12发布的LASTZ（\href{http://www.bx.psu.edu/miller\_lab}{http://www.bx.psu.edu/miller\_lab}）。}。除了NCBI和WU-BLAST，还有许多其他可以使用的BLAST服务器网站。在谷歌（Google，\href{http://www.google.com}{http://www.google.com}）中搜索“BLAST server”就能得到很多结果。
+另外一个比较流行的实现是华盛顿大学的WU-BLAST。包含其他WU-BLAST服务器列表的主网站可以在 \href{http://blast.wustl.edu}{http://blast.wustl.edu} 找到\footnote{译者注：最新版本是2009-10-30发布的AB-BLAST（\href{http://blast.advbiocomp.com/}{http://blast.advbiocomp.com/}）。}。旧版本的WU-BLAST可以免费获取。如果你是一个研究人员或者非盈利的组织，并且同意开发和维护这个程序的华盛顿大学的许可协议，那么新版的WU-BALST也可以免费获得。如果你在一个大型的研究机构工作，你可能已经有了一个WU-BLAST程序的站点许可证了。如果你是一个营利性的公司，那么就需要为新版本的WU-BLAST程序支付一笔非常昂贵的费用了（如果你想在自己的计算机上运行BLAST，旧版本的程序仍然是免费的）。宾夕法尼亚州立大学也开发了一些BLAST程序，可以在 \href{http://bio.cse.psu.edu/}{http://bio.cse.psu.edu/} 找到\footnote{译者注：最新版本是2010-01-12发布的LASTZ（\href{http://www.bx.psu.edu/miller\_lab}{http://www.bx.psu.edu/miller\_lab}）。}。除了NCBI和WU-BLAST，还有许多其他可以使用的BLAST服务器网站。在谷歌（Google，\href{http://www.google.com}{http://www.google.com}）中搜索“BLAST server”就能得到很多结果。
 
 当研究人员使用BLAST的时候，它们面临的一个大问题就是是在公用的BLAST服务器上运行呢，还是在本地运行呢。使用公用的服务器，有一些显著的优势，最大的优势在于BLAST服务器使用的数据库（比如GenBank）总是最新的。要让你自己的这些数据库时刻保持最新，需要大量的硬盘空间，以及拥有高端处理器、大量内存和高速网络连接的计算机，还需要花费大量的时间来设置并监视更新数据库的软件。另一方面，可能你有自己的序列库，想用它来进行BLAST搜索，你需要经常搜索或者进行大量的搜索，又或者你有一些原因不得不使用内部自己的BLAST引擎。这种情况下，对硬件进行投资、在本地运行它就是比较明智的了。
 
@@ -31,7 +31,8 @@ BLAST是一个基本的字符串匹配程序。字符串匹配算法的细节，
 现在，既然你已经找我的基础知识，就让我们编写代码来解析BLAST的输出吧。首先，你需要把击中分隔开，然后提取出序列，最后找到注释把E值这个统计量显示出来。
 
 \section{BLAST输出文件}
-  下面是BLAST输出文件的一部分。通过把\autoref{chap:chapter8}中\textit{sample.dna}这个文件的几行输入到NCBI网站的BLAST程序中，在使用默认参数的情况下得到了这个文件。然后我把输出以文本形式保存到\textit{blast.txt}文件中，在本书的网站上可以找到它。在贯穿本章的解析工作中，我会重复使用它。因为输出有数页之长，此处我把它截断了，只显示文件的开头、中间和结尾部分。
+\label{sect:section12.3}
+下面是BLAST输出文件的一部分。通过把\autoref{chap:chapter8}中\textit{sample.dna}这个文件的几行输入到NCBI网站的BLAST程序中，在使用默认参数的情况下得到了这个文件。然后我把输出以文本形式保存到\textit{blast.txt}文件中，在本书的网站上可以找到它。在贯穿本章的解析工作中，我会重复使用它。因为输出有数页之长，此处我把它截断了，只显示文件的开头、中间和结尾部分。
 
 \begin{lstlisting}
 BLASTN 2.1.3 [Apr-11-2001]
@@ -570,7 +571,7 @@ $DNA
 
 Bioperl模块的主要关注点是进行序列处理，提供对各种生物学数据库（包括本地和基于网络的数据库）的访问，以及解析各种程序的输出。
 
-在\href{http://www.bioperl.org/}{http://www.bioperl.org/}上可以找到Bioperl。它的一些特性依赖于已经安装的额外的Perl模块——可以从CPAN（\href{http://www.cpan.org/}{http://www.cpan.org/}）上进行获取。这种情形非常常见，随着你进行更多的Perl编程，你会对从CPAN上获取安装模块越来越熟悉的。Bioperl指南包括在三大主流操作系统——Unix或Linux、Mac和Windows——上安装Bioperl和其他模块的介绍。
+在 \href{http://www.bioperl.org/}{http://www.bioperl.org/} 上可以找到Bioperl。它的一些特性依赖于已经安装的额外的Perl模块——可以从CPAN（\href{http://www.cpan.org/}{http://www.cpan.org/}）上进行获取。这种情形非常常见，随着你进行更多的Perl编程，你会对从CPAN上获取安装模块越来越熟悉的。Bioperl指南包括在三大主流操作系统——Unix或Linux、Mac和Windows——上安装Bioperl和其他模块的介绍。
 
 Bioperl并不提供完整的程序，而是提供一个巨大——还在持续增长——的模块集，可以用来完成常见的任务，包括你在本书中已经看到过的一些任务。你需要自己编写代码，来让这些模块进行协作。通过提供这些准备妥当并且（通常）易用的模块，Bioperl使得用Perl来开发生物信息学应用更加快捷、简便。对于大多数模块都有示例性的程序，你可以从查看并修改它们起步。
 
@@ -578,7 +579,7 @@ Bioperl并不提供完整的程序，而是提供一个巨大——还在持续�
 
 有些困难仍然存在。大部分代码都是在Unix或者Linux系统上开发的。并不是所有的都可以在Macs或者Windows操作系统上工作，但大部分还是可以的。在Bioperl网站上还有一些文档讨论在非Unix计算机上使用Bioperl，但底线是你可能会发现有些事情并不能正常工作。
 
-如果你打算尝试一下Bioperl（我也强烈推荐你去尝试一下），你需要确保已经安装了最新版本的Perl。你至少需要版本5.004，如果从Perl网站\href{http://www.perl.com}{http://www.perl.com}上下载安装最新的稳定版本会更好一些。
+如果你打算尝试一下Bioperl（我也强烈推荐你去尝试一下），你需要确保已经安装了最新版本的Perl。你至少需要版本5.004，如果从Perl网站 \href{http://www.perl.com}{http://www.perl.com} 上下载安装最新的稳定版本会更好一些。
 
 \subsection{示例模块}
 为了让你对Bioperl可以让哪些任务变得更加简单有一个了解，\autoref{tab:table12.1}展示了一个最有用的模块中的代表性模块。
@@ -659,7 +660,7 @@ tar xvzf bioperl-0.7.0.tar.gz
 
 切换到源目录中，键入\verb|perl bptutorial.pl|。下面是运行结果（我也把给出作者和版权信息的指南的头信息显示出来了）：
 
-\begin{lstlisting}
+\begin{lstlisting}[language=]
 % head bptutorial.pl 
 # $Id: ch12,v 1.44 2001/10/10 20:37:42 troutman Exp mam $
 
@@ -715,7 +716,7 @@ or to list all the methods available for object Bio::Tools::SeqStats -
 
 现在，让我们来试一下选项9——BLAST解析器和选项1——\verb|access_remote_db|。所以下面先从BLAST解析器开始：
 
-\begin{lstlisting}
+\begin{lstlisting}[language=]
 % perl bptutorial.pl 9
 
 Beginning blast.pm parser example... 
@@ -760,7 +761,7 @@ Sequence identities for hsp of hit 1 are 66-68 70 73 76 79 80 87-89 114 117
 
 这是解析BLAST输出的一种有趣的方式！现在，让我们再看一下访问远程数据库：
 
-\begin{lstlisting}
+\begin{lstlisting}[language=]
 % perl bptutorial.pl 1
 Beginning remote database access example... 
 seq1 display id is MUSIGHBA1 
@@ -775,7 +776,7 @@ Display id of first sequence in stream is AF041456
 
 既然上一个例子并不是那么有趣，就让我们再尝试一个吧。下面是序列操作的指南：
 
-\begin{lstlisting}
+\begin{lstlisting}[language=]
 % perl bptutorial.pl 4
 
 Beginning sequence_manipulations and SeqIO example... 
@@ -839,12 +840,12 @@ Translating with all codon tables using method defaults:
 
 \textcolor{red}{\textit{习题12.2}}
 \begin{adjustwidth}{1cm}{}
-探索\href{http://www.ncbi.nlm.nih.gov/BLAST}{http://www.ncbi.nlm.nih.gov/BLAST}上的NCBI BLAST网页。熟悉BLAST各个组成程序的目的和使用，阅读指南信息理解统计结果的含义。
+探索 \href{http://www.ncbi.nlm.nih.gov/BLAST}{http://www.ncbi.nlm.nih.gov/BLAST} 上的NCBI BLAST网页。熟悉BLAST各个组成程序的目的和使用，阅读指南信息理解统计结果的含义。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题12.3}}
 \begin{adjustwidth}{1cm}{}
-探索\href{http://www.bioperl.org}{http://www.bioperl.org}上的Bioperl网页。下载代码，并在你的计算机上安装它。
+探索 \href{http://www.bioperl.org}{http://www.bioperl.org} 上的Bioperl网页。下载代码，并在你的计算机上安装它。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题12.4}}

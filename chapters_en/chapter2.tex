@@ -24,9 +24,9 @@ Let's get a few elementary definitions out of the way:
 \begin{adjustwidth}{1cm}{}
 It's a set of instructions written in a particular programming language that can be read by the computer. A program can be as simple as the following Perl language program to print some DNA sequence data onto the computer screen:
 
-%\begin{lstlisting}
-\verb|print 'ACCTGGTAACCCGGAGATTCCAGCT';|
-%\end{lstlisting}
+\begin{lstlisting}
+print 'ACCTGGTAACCCGGAGATTCCAGCT';
+\end{lstlisting}
 
 The Perl language programs are written and saved in files, which are ways of saving any kind of data (not only programs) on a computer. Files are organized hierarchically in groups called folders on Macintosh or Windows systems or directories in Unix or Linux systems. The terms folder and directory will be used interchangeably.
 \end{adjustwidth}
@@ -82,11 +82,13 @@ The following sections provide pointers for installing Perl on the most common t
 \subsection{Perl May Already Be Installed!}
 Many computers—especially Unix and Linux computers—come with Perl already installed. (Note that Unix and Linux are essentially the same kind of operating system; Linux is a clone, or functional copy, of a Unix system.) So first check to see if Perl is already there. On Unix and Linux, type the following at a command prompt:
 
-\verb|$ perl -v|
+\begin{lstlisting}
+$ perl -v
+\end{lstlisting}
 
 If Perl is already installed, you'll see a message like the one I get on my Linux machine:
 
-\begin{verbatim}
+\begin{lstlisting}[language=]
 This is perl, v5.6.1 built for i686-linux
 
 Copyright 1987-2001, Larry Wall
@@ -97,13 +99,13 @@ GNU General Public License, which may be found in the Perl 5 source kit.
 Complete documentation for Perl, including FAQ lists, should be found on
 this system using 'man perl' or 'perldoc perl'.  If you have access to the
 Internet, point your browser at http://www.perl.com/, the Perl Home Page.
-\end{verbatim}
+\end{lstlisting}
 
 If Perl isn't installed, you'll get a message like this:
 
-\begin{verbatim}
+\begin{lstlisting}[language=]
 perl: command not found
-\end{verbatim}
+\end{lstlisting}
 
 If you get this message, and you're on a shared Unix system at a university or business, be sure to check with the system administrator, because Perl may indeed be installed, but your environment may not be set to find it. (Or, the system administrator may say, "You need Perl? Okay, I'll install it for you.")
 
@@ -143,7 +145,9 @@ The next sections provide specific installation instructions for specific platfo
 \subsubsection{Unix and Linux}
 If Perl isn't installed on your Unix or Linux machine, first try to find a binary to install. At the Downloads page of \href{http://www.perl.com}{http://www.perl.com}, you'll see the subheading Binary Distributions. Select Unix or Linux, and then see if your particular flavor of operating system has a binary available.  Several versions are available, and the web-site instructions should be enough to get Perl installed once you've downloaded the binary. Most versions of Linux maintain up-to-date Perl binaries on their web sites.  For instance, if you have a Red Hat Linux system, you need to identify which version of the system you have (by typing \verb|uname -a|) and then get the appropriate rpm file to download and install. Red Hat has an rpm for Perl that Red Hat Linux users can install by typing: 
 
-\verb|rpm -Uvh perl.rpm|
+\begin{lstlisting}[language=bash]
+rpm -Uvh perl.rpm
+\end{lstlisting}
 
 (the actual name of the perl.rpm file varies).
 
@@ -169,27 +173,37 @@ The details of how to run Perl vary depending on your operating system. The inst
 \subsection{Unix or Linux}
 On Unix or Linux, you usually run Perl programs from the command line.  If you're in the same directory as the program, you can run a Perl program in a file called \textit{this\_program} by typing \verb|perl this_program|. If you're not in the same directory, you may have to give the pathname of the program, for example:
 
-\verb|perl /usr/local/bin/this_program|
+\begin{lstlisting}[language=]
+perl /usr/local/bin/this_program
+\end{lstlisting}
 
 Usually, you set the first line of \textit{this\_program} to have the correct pathname for Perl on your system, because different machines may have installed Perl in different directories. On my computer, I use the following as the first line of my Perl programs:
 
-\verb|#!/usr/bin/perl|
+\begin{lstlisting}
+#!/usr/bin/perl
+\end{lstlisting}
 
 You can type \verb|which perl| to find the pathname where Perl is installed on your system.
 
 You can make the program executable using the \textit{chmod} program: for instance, you can type:
 
-\verb|chmod 755 this_program|
+\begin{lstlisting}[language=bash]
+chmod 755 this_program
+\end{lstlisting}
 
 If you've set the first line correctly and used \textit{chmod}, you can just type the name of the Perl program to run it. So, if you're in the same directory as the program, you can type \verb|./this_program|. If the program is in a directory that's included in your \verb|$PATH| or \verb|$path| variable, you can type \verb|this_program|.\footnote{\verb|$PATH| is the variable used for the sh, bash, and ksh shells; \verb|$path| is used for csh and tcsh.}
 
 If your Perl program doesn't run, the error messages you get from the shell in the command window may be confusing. For instance, the bash shell on my Linux system gives the error message:
 
-\verb|bash: ./my_program: No such file or directory|
+\begin{lstlisting}[language=bash]
+bash: ./my_program: No such file or directory
+\end{lstlisting}
 
 in two cases: if there really is no program called \textit{my\_program} in the current directory or if the first line of \textit{my\_program} has incorrectly given the location of Perl. Watch for that, especially when running programs from CPAN (see \autoref{chap:chapteraa}), which may have different pathnames for Perl embedded in their first lines. Also, if you type \verb|my_program|, you may get this error message:
 
-\verb|bash: my_program: command not found|
+\begin{lstlisting}[language=]
+bash: my_program: command not found
+\end{lstlisting}
 
 which means that the operating system can't find the program. But it's
 there in your current directory! The problem is probably that your

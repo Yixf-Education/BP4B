@@ -18,6 +18,17 @@
 \usepackage{minitoc}
 \setcounter{minitocdepth}{1}
 
+%修改目录中的章节格式
+\usepackage{titletoc}
+%\usepackage{tocloft}
+%\titlecontents{chapter}[0pt]{\vspace{0.1\baselineskip}\bfseries}{第 \thecontentslabel 章\quad}{}{\hspace{.5em}\titlerule*[8pt]{$\cdot$}\contentspage}
+%\titlecontents{chapter}[0pt]{\vspace{0.3\baselineskip}\bfseries}{Chapter \thecontentslabel\quad}{}{\hfill\contentspage}
+%\titlecontents{section}[2em]{\vspace{0.05\baselineskip}}{\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*{\cftdot}\contentspage}
+%\titlecontents{subsection}[4em]{\vspace{0.02\baselineskip}}{\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*{\cftdot}\contentspage}
+
+%附录
+\usepackage[title,titletoc]{appendix}
+
 %整段缩进
 \usepackage{changepage}
 
@@ -50,7 +61,8 @@
 \usepackage{xcolor}
 \usepackage{graphicx}
 \graphicspath{{figures/}}
-\usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+%\usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks]{hyperref}
 %\def\sectionautorefname{Section}
 \def\chapterautorefname{Chapter}
 \def\sectionautorefname{Section}
@@ -134,7 +146,7 @@
   numbers=left,
   numberstyle=\footnotesize,
   showstringspaces=false,
-  breaklines=ture,
+  %breaklines=ture,
   breakatwhitespace=false,
 }
 %\renewcommand\lstlistingname{Example}
@@ -145,3 +157,5 @@
 
 \usepackage{textcomp}
 %\usepackage[toc,page]{appendix}
+
+%\usepackage{wallpaper}

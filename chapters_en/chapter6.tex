@@ -301,6 +301,7 @@ my($num_of_Gs) = countG ( $dna );
 When you start parsing GenBank, PDB, and BLAST files in later chapters, you'll need more complicated arguments to your subroutines to hold the several fields of data you'll parse out of the records. These next sections explain the way it's done in Perl. You can skim this section and return for a closer read when you get to \autoref{chap:chapter10}. 
 
 \subsection{Subroutines: Pass by Value}
+\label{sect:section6.4.1}
 So far, all our subroutines have had fairly simple arguments. The values of these arguments are copied and passed to the subroutines, and whatever happens to those values in the subroutine doesn't affect the values of the arguments in the main program. This is called \textit{pass by value} or \textit{call by value}. For example: 
 
 \begin{lstlisting}

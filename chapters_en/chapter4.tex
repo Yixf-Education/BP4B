@@ -118,11 +118,15 @@ Using what you've already learned about text editors and running Perl programs i
 
 The second step is to run the program. The details of how to run a program depend on the type of computer you have (see \autoref{chap:chapter2}). Let's say the program is on your computer in a file called \textit{example4-1}. As you recall from \autoref{chap:chapter2}, if you are running this program on Unix or Linux, you type the following in a shell window:
 
-\verb|perl example4-1 |
+\begin{lstlisting}[language=bash]
+perl example4-1
+\end{lstlisting}
 
 On a Mac, open the file with the MacPerl application and save it as a droplet, then just double-click on the droplet. On Windows, type the following in an MS-DOS command window: 
 
-\verb|perl example4-1|
+\begin{lstlisting}[language=bash]
+perl example4-1
+\end{lstlisting}
 
 If you've successfully run the program, you'll see the output printed on your computer screen. 
 
@@ -146,6 +150,7 @@ In \autoref{exam:example4.1}, I've made liberal use of comments. Comments at the
 It's tempting to belabor the point about the importance of comments. Suffice it to say that in most university-level, computer-science class assignments, the program without comments typically gets a low or failing grade; also, the programmer on the job who doesn't comment code is liable to have a short and unsuccessful career.
 
 \subsection{Command Interpretation}
+\label{sec:section4.2.3}
 Because it starts with a \# sign, the first line of the program looks like a comment, but it doesn't seem like a very informative comment:
 
 \begin{lstlisting}
@@ -198,6 +203,7 @@ In \autoref{exam:example4.1}, the scalar variable \verb|$DNA| is holding some DN
 \end{lstlisting}
 
 \subsubsection{Assignment}
+\label{sect:section4.2.4.3}
 In Perl, to set a variable to a certain value, you use the = sign. The = sign is called the \textit{assignment operator}. In \autoref{exam:example4.1}, the value: 
 
 \begin{lstlisting}
@@ -305,8 +311,8 @@ illustrates the use of this operator.
 \begin{adjustwidth}{2cm}{2cm}
   \parpic[l]{
   \includegraphics[width=1cm]{note.png}
-  }
-  An operator in a computer language takes some arguments—in this case, the strings \verb|$DNA1| and \verb|$DNA2|—and does something to them, returning a value—in this case, the concatenated string placed in the variable \verb|$DNA3|. The most familiar operators from arithmetic—plus, minus, multiply, and divide—are all operators that take two numbers as arguments and return a number as a value. 
+}
+An operator in a computer language takes some arguments—in this case, the strings \verb|$DNA1| and \verb|$DNA2|—and does something to them, returning a value—in this case, the concatenated string placed in the variable \verb|$DNA3|. The most familiar operators from arithmetic—plus, minus, multiply, and divide—are all operators that take two numbers as arguments and return a number as a value. 
 \end{adjustwidth}
 
 Finally, just to exercise the different parts of the language, let's accomplish the same concatenation using only the \verb|print| statement:
@@ -471,11 +477,11 @@ Programs interact with files on a computer disk. These files can be on hard disk
 
 Let's take a look at how to read protein sequence data from a file. First, create a file on your computer (use your text editor) and put some protein sequence data into it. Call the file \textit{NM\_021964fragment.pep} (you can download it from this book's web site). You will be using the following data (part of the human zinc finger protein NM\_021964):
 
-\begin{verbatim}
+\begin{lstlisting}[language=]
 MNIDDKLEGLFLKCGGIDEMQSSRTMVVMGGVSGQSTVSGELQD
 SVLQDRSMPHQEILAADEVLQESEMRQQDMISHDELMVHEETVKNDEEQMETHERLPQ
 GLQYALNVPISVKQEITFTDVSEQLMRDKKQIR
-\end{verbatim}
+\end{lstlisting}
 
 You can use any name, except one that's already in use in the same folder.
 

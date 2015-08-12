@@ -135,8 +135,8 @@ my($dna) = @_;
   \parpic[l]{
   \includegraphics[width=1cm]{warning.png}
   }
-  \noindent
-  当心这个常见的错误，在子程序中为参数命名时忘记使用\verb|@_|数组，换言之，使用语句：
+\noindent
+当心这个常见的错误，在子程序中为参数命名时忘记使用\verb|@_|数组，换言之，使用语句：
   \begin{lstlisting}
 my($dna);
   \end{lstlisting}
@@ -183,9 +183,9 @@ my($x) = @_;
 \begin{adjustwidth}{2cm}{2cm}
   \parpic[l]{
   \includegraphics[width=1cm]{warning.png}
-  }
-  \noindent
-  在子程序中，永远使用\verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。
+}
+\noindent
+在子程序中，永远使用\verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。
 \end{adjustwidth}
 
 为什么使用作用域呢？\autoref{exam:example6.2}演示了不使用作用域带来的麻烦。回忆一下，子程序的优势之一就是，对于那些有用的代码只需写一次，就可以在需要的时候重复使用了。\autoref{exam:example6.2}这个程序，在主程序中的一个变量和它调用的子程序中的一个变量重名了。在你编写完主程序一段时候后（比如说半年后）再编写子程序时，或者调用别人写的子程序时，这种情况非常容易发生。
@@ -304,6 +304,7 @@ my($num_of_Gs) = countG ( $dna );
 在后续章节中，当开始解析GenBank、PDB和BLAST文件时，你将需要向子程序传递更加复杂的参数，来从记录数据中解析出多个字段。接下来的几个小节将演示在Perl是如何实现这一点的。你可以跳过这一小节，等学习到\autoref{chap:chapter10}的时候再回来仔细阅读。
 
 \subsection{子程序：通过值传递}
+\label{sect:section6.4.1}
 到目前为止，我们所有的子程序的参数都非常简单。这些参数的值被复制并传递给子程序，而且子程序中这些值的变化不会影响到主程序中相应参数的值。这叫做\textit{通过值传递}或者\textit{通过值调用}。举个例子：
 
 \begin{lstlisting}
@@ -566,8 +567,8 @@ use strict;
   \parpic[l]{
   \includegraphics[width=1cm]{note.png}
   }
-  \noindent
-当编写Perl代码时，最后永远同时使用\verb|use strict;|和\verb|use warnings;|。
+\noindent
+当编写Perl代码时，最好永远同时使用\verb|use strict;|和\verb|use warnings;|。
 \end{adjustwidth}
 
 \subsection{使用注释和Print语句修复Bugs}

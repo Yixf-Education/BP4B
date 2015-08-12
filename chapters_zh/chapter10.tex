@@ -21,7 +21,7 @@ GenBank有时被看做是\textit{数据银行（databank）}或者\textit{数据
 
 Perl的数据结构和正则表达式的应用使得它成为处理平面文件的优秀工具，尤其适合用来处理GenBank数据。使用Perl的这些特性，基于前面章节训练的技能，你可以编写程序来访问GenBank中对于科学界来说日益积累的遗传知识。
 
-因为这是本不需要编程经验的初学者指南书籍，所以你不要指望从中找到完美无瑕、包治百病的软件。与之相反，你会找到对于对于GenBank文件进行解析和构建快速查找表的详尽介绍。如果你还从没有做过类似的事情，我强烈推荐你去探索一下NIH（National Institutes of Health）（\href{http://www.ncbi.nlm.nih.gov}{http://www.ncbi.nlm.nih.gov}）的NCBI（National Center for Biotechnology Information）。当你开始之后，停止在\href{http://www.ebi.ac.uk}{http://www.ebi.ac.uk}的EBI（European Bioinformatics Institute）和\href{http://www.embl-heidelberg.de/}{http://www.embl-heidelberg.de/}的生物信息学分支EMBL（European Molecular Biology Laboratory）即可。它们都是大型的、由重金赞助支持的政府性的生物信息学中心，并且它们都有（并且发布了）大量的顶尖的生物信息学软件。
+因为这是本不需要编程经验的初学者指南书籍，所以你不要指望从中找到完美无瑕、包治百病的软件。与之相反，你会找到对于对于GenBank文件进行解析和构建快速查找表的详尽介绍。如果你还从没有做过类似的事情，我强烈推荐你去探索一下NIH（National Institutes of Health）（\href{http://www.ncbi.nlm.nih.gov}{http://www.ncbi.nlm.nih.gov}）的NCBI（National Center for Biotechnology Information）。当你开始之后，停止在 \href{http://www.ebi.ac.uk}{http://www.ebi.ac.uk} 的EBI（European Bioinformatics Institute）和 \href{http://www.embl-heidelberg.de/}{http://www.embl-heidelberg.de/} 的生物信息学分支EMBL（European Molecular Biology Laboratory）即可。它们都是大型的、由重金赞助支持的政府性的生物信息学中心，并且它们都有（并且发布了）大量的顶尖的生物信息学软件。
 
 \section{GenBank文件}
 主要的遗传信息库就是NCBI GenBank、欧洲的EMBL和日本的DDBJ（DNA Data Bank
@@ -139,7 +139,7 @@ ORIGIN
 
 在一个典型的GenBank条目中，压缩进了大量信息，能把这些不同的部分分隔开来是非常重要的。比如，如果你能提取出序列，你就可以查找基序、计算序列的统计信息、寻找它和其他序列的相似性，等等。类似的，你可能想把数据注释的各个部分分割开来或者进行解析。在GenBank中，这包括ID号、基因名、属种和发表文献等。注释中的FEATURES表部分包含了DNA的特定信息，像外显子、调控区域、重要突变的位置等。
 
-GenBank文件的格式规范，以及关于GenBank的各种其他信息可以在GenBank的版本注释文件\textit{gbrel.txt}文件中找到，这个文件位与GenBank的网站\href{ftp://ncbi.nlm.nih.gov/genbank/gbrel.txt}{ftp://ncbi.nlm.nih.gov/genbank/gbrel.txt}上。
+GenBank文件的格式规范，以及关于GenBank的各种其他信息可以在GenBank的版本注释文件\textit{gbrel.txt}文件中找到，这个文件位与GenBank的网站 \href{ftp://ncbi.nlm.nih.gov/genbank/gbrel.txt}{ftp://ncbi.nlm.nih.gov/genbank/gbrel.txt} 上。
 
 \textit{gbrel.txt}给出了GenBank文件结构的完整详细的信息，对于程序员有很大的帮助，所以当你的检索越来越复杂的时候，你可能会想去看一看它。作为一名Perl程序员，你并不需要所有的细节，因为你可以使用正则表达式或者\textit{split}函数来解析数据。你需要把数据提取出来，让你的程序可以使用它。就像你在本章中将要看到的，完成该任务的代码其实非常简单。
 
@@ -171,7 +171,7 @@ MB。总算起啦，GenBank包含了来自12,813,526条报道序列的12,813516�
 
 有些类别非常大：最大的就是EST（表达序列标签）类别，它由123个库文件构成！人类DNA的一部分存储在PRI类别中，它包含13个库文件（本书撰写期间），总共大约有3.5 GB的数据。人类的数据还存储在STS、GSS、HTGS和HTC类别中。单单是GenBank中人类的数据就有近5百万记录条目，序列的碱基数超过了8兆（万亿）。
 
-\href{http://www.ncbi.nlm.nih.gov/}{http://www.ncbi.nlm.nih.gov/}上的Entrez和BLAST等公共数据库服务器，可以让你访问进行良好维护和升级的序列数据和程序，但是许多研究人员发现它们需要编写自己的程序来处理和分析这些数据。问题在于，数据量实在太大了。对于大多数的研究目的，你只需要从NCBI或者其他地方下载选定的一部分记录，但有时候你需要全部的数据集。
+\href{http://www.ncbi.nlm.nih.gov/}{http://www.ncbi.nlm.nih.gov/} 上的Entrez和BLAST等公共数据库服务器，可以让你访问进行良好维护和升级的序列数据和程序，但是许多研究人员发现它们需要编写自己的程序来处理和分析这些数据。问题在于，数据量实在太大了。对于大多数的研究目的，你只需要从NCBI或者其他地方下载选定的一部分记录，但有时候你需要全部的数据集。
 
 可以构建一个（Windows、Mac、Unix或者Linux）桌面工作站，把所有的GenBank都包含在内，但是一定要确保购买了一个足够大的硬盘！然而，把所有的数据都下载到你的硬盘中是非常困难的。一个叫做\textit{mirror.pl}的程序可以帮你完成这个工作。即使是大学标准的高速因特网连接，下载这些数据也是一个非常耗时的工作；如果使用调制解调器下载全部的数据集一定会让你抓狂的。最好的解决方案是只下载你需要的文件，而且是压缩格式的文件。比如，EST数据，它大约是整个数据库的一半，除非你真的需要它，否则不要去下载它。如果你需要下载GenBank，我推荐你联系NCBI的服务台。它们会帮助你获取最新的信息。
 
@@ -619,10 +619,9 @@ BASE COUNT      564 a    715 c    768 g    440 t
 如你所见，这种方法完全可行，除了阅读正则表达式比较困难以外（随着练习的增多这也会越来越容易），整个代码都简单明了，就是几个简短的子程序而已。
 
 \subsection{解析FEATURES表}
-让我们更进一步，解析一下下一个层面的FEATURES表，它由\verb|source|、\verb|gene|和\verb|CDS|这几个\textit{特征键（features
-keys）}组成。（参看本节后面的更加全面的特征键列表。）在本章末尾的练习题中，你将会看到进一步深入FEATURES表的挑战。
+让我们更进一步，解析一下下一个层面的FEATURES表，它由\verb|source|、\verb|gene|和\verb|CDS|这几个\textit{特征键（features keys）}组成。（参看本节后面的更加全面的特征键列表。）在本章末尾的练习题中，你将会看到进一步深入FEATURES表的挑战。
 
-要研究FEATURES表，你应该首先去看一下前面提到的NCBI中的\textit{gbrel.txt}文档。然后你要再好好研究一下FEATURES表的更加详尽的文档，在\href{http://www.ncbi.nlm.nih.gov/collab/FT/index.html}{http://www.ncbi.nlm.nih.gov/collab/FT/index.html}上可以找到它。
+要研究FEATURES表，你应该首先去看一下前面提到的NCBI中的\textit{gbrel.txt}文档。然后你要再好好研究一下FEATURES表的更加详尽的文档，在 \href{http://www.ncbi.nlm.nih.gov/collab/FT/index.html}{http://www.ncbi.nlm.nih.gov/collab/FT/index.html} 上可以找到它。
 
 \subsubsection{特征}
 尽管我们的GenBank条目非常简单，只包含三个特征，实际上特征非常多。注意解析代码会把它们全部找到，因为代码只是处理文档的结构，并不针对特定的特征。
