@@ -467,8 +467,8 @@ sub codon2aa {
 \section{把DNA翻译成蛋白质}
 \autoref{exam:example8.1}展示了新的\textit{codon2aa}子程序如何把一整个DNA序列翻译成蛋白质。
 
-\textbf{例8-1：把DNA翻译成蛋白质}
-\lstinputlisting[label=exam:example8.1]{./scripts/example8-1.pl}
+%\textbf{例8-1：把DNA翻译成蛋白质}
+\lstinputlisting[label=exam:example8.1,caption={例8-1：把DNA翻译成蛋白质}]{./scripts/example8-1.pl}
 
 就像在\autoref{chap:chapter6}中讨论的那样，要使它能正常工作，你需要把提供子程序的\textit{BeginPerlBioinfo.pm}模块放到一个程序可以找到的单独的文件中。你还需要把\textit{codon2aa}子程序添加到这个文件中。还有一种办法，你可以直接把子程序\textit{condon2aa}的代码添加到\autoref{exam:example8.1}中的程序中，然后移除对\textit{BeginPerlBioinfo.pm}模块的引用。
 
@@ -579,32 +579,32 @@ use BeginPerlBioinfo;
 有许多这样的格式，仅仅针对DNA的常用格式可能就有20种之多。当你在实验室中分析序列时，格式的这种多样化会让人头疼不已：因为对于你用来分析序列的各种程序，都需要把一种格式转换成另一种格式。下面是几个最流行的格式：
 
 \textcolor{red}{\textit{FASTA}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 FASTA和基本局部相似性比对搜索技术（BLAST\footnote{译者注：BLAST是Basic Local Alignment Search Tool的缩写。}，Basic Local Alignment Search Technique）程序非常流行，它们都使用FASTA格式。因为它的简洁性，FASTA格式可能是所有格式中除GenBank格式以外使用最为广泛的一种格式。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Genetic Sequence Data Bank (GenBank\footnote{译者注：GenBank指的是Genetic Sequence Database。})}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 GenBank收集了所有公开发表的遗传数据。除了DNA序列，它还包括了许多相关的信息。它非常重要，所以我们将在\autoref{chap:chapter10}中对GenBank文件进行深入探讨。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{欧洲分子生物学实验室（EMBL，European Molecular Biology Laboratory）}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 EMBL数据库大体上和GenBank、DDBJ（日本DNA数据库，DNA Data Bank of Japan）存储有相同的数据，但格式稍有不同。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{简单数据，或美国应用生物系统公司（ABI，Applied Biosystems）测序仪的输出}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 这是没有进行任何格式化的DNA序列数据，仅仅是代表碱基的字符而已。ABI的测序机器和其他机器以及程序把它直接输出到文件中。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{蛋白质识别资源（PIR，Protein Identification Resource）}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 PIR是一个良好组织的蛋白质序列数据集合。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{遗传学电脑集团（GCG，Genetics Computer Group）}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 Accelrys的GCG程序（亦称GCG Wisconsin
 package）在许多大型研究机构中使用。要想被它们的程序使用，数据必须以GCG格式进行存储。
 \end{adjustwidth}
@@ -828,8 +828,8 @@ sub print_sequence {
 
 代码依赖于\textit{substr}的行为，它会在字符串后面输出部分子字符串，即使其长度小于要求的长度。你可以看到在\textit{BeginPerlBioinfo.pm}模块（参看\autoref{chap:chapter6}）中出现了新的\textit{print\_sequence}子程序。记住，一定要把语句\verb|1;|作为模块的最后一行。\autoref{exam:example8.2}演示的是主程序。
 
-\textbf{例8-2：读取FASTA文件并提取序列数据}
-\lstinputlisting[label=exam:example8.2]{./scripts/example8-2.pl}
+%\textbf{例8-2：读取FASTA文件并提取序列数据}
+\lstinputlisting[label=exam:example8.2,caption={例8-2：读取FASTA文件并提取序列数据}]{./scripts/example8-2.pl}
 
 下面是\autoref{exam:example8.2}的输出：
 
@@ -883,8 +883,8 @@ accta
 \subsection{读入DNA输出蛋白质的主程序}
 现在，这是本小节的最后一个程序。我们向上面的程序中添加从DNA到蛋白质的翻译过程，最后输出蛋白质而不是DNA。注意\autoref{exam:example8.3}是多么的精炼！随着你不断向我们的模块中积累有用的子程序，编写程序会越来越容易。
 
-\textbf{例8-3：读取DNA的FASTA文件，翻译成蛋白质，并格式化输出}
-\lstinputlisting[label=exam:example8.3]{./scripts/example8-3.pl}
+%\textbf{例8-3：读取DNA的FASTA文件，翻译成蛋白质，并格式化输出}
+\lstinputlisting[label=exam:example8.3,caption={例8-3：读取DNA的FASTA文件，翻译成蛋白质，并格式化输出}]{./scripts/example8-3.pl}
 
 下面是\autoref{exam:example8.3}的输出：
 
@@ -973,7 +973,7 @@ subroutine translate_frame ( DNA, start, end )
 处理类似这样的索引要非常小心，否则代码可能无法正常工作。对于许多程序来说，这是数学最讨人烦的地方。
 
 
-\begin{adjustwidth}{2cm}{2cm}
+\begin{adjustwidth}{4em}{4em}
   \parpic[l]{
   \includegraphics[width=1cm]{warning.png}
 }
@@ -1030,8 +1030,8 @@ sub translate_frame {
 
 \autoref{exam:example8.4}从六个阅读框上翻译DNA。
 
-\textbf{例8-4：从六个阅读框上翻译DNA序列}
-\lstinputlisting[label=exam:example8.4]{./scripts/example8-4.pl}
+%\textbf{例8-4：从六个阅读框上翻译DNA序列}
+\lstinputlisting[label=exam:example8.4,caption={例8-4：从六个阅读框上翻译DNA序列}]{./scripts/example8-4.pl}
 
 下面是\autoref{exam:example8.4}的输出：
 
@@ -1098,59 +1098,59 @@ PPRPLSAAI
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题8.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，在未排序的数组中通过基因名查找一个基因。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题8.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，在一个排序的数组中通过基因名查找一个基因。使用Perl的\textit{sort}函数来对数组进行排序。额外的得分：编写一个折半查找的子程序进行搜索。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题8.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个子程序，把一个元素插入到一个排序的数组中。提示：就像在\autoref{chap:chapter4}中演示的那样，使用Perl的\textit{splice}函数插入元素。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题8.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，在散列中通过基因名查找一个基因。从你自己的工作中获取基因，或者尝试从 \href{www.ncbi.nlm.nih.gov}{www.ncbi.nlm.nih.gov} 或\autoref{chap:chapteraa}中的一个网站上下载一个物种的全部基因列表。为所有的基因制作一个散列（键是基因名，值是基因ID或者基因序列）。提示：你可能需要编写一个简短的Perl程序，来重新格式化你手头的基因列表，这样就容易把它做成Perl的散列了。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题8.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个子程序，检查数组中的数据，如果是FASTA格式就返回\verb|true|。注意FASTA格式使用标准的IUB/IUPAC氨基酸和核苷酸代码，以及代表未知长度的空位的破折号（-）。此外，对于氨基酸来说，星号（*）代表终止密码子。 在正则表达式中使用星号时一定要小心，使用\verb|\*|对它进行转义，来匹配真正的星号。
 \end{adjustwidth}
 
 剩下的问题就是，DNA的突变对它们编码的蛋白质的影响。这需要把\autoref{chap:chapter7}中随机化和突变的主题与本章中遗传密码的主题结合起来。
 
 \textcolor{red}{\textit{习题8.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 对于每一个密码子，看看密码子上单核苷酸的突变会产生什么影响：是编码同样的氨基酸，还是新的密码子会编码一个完全不同的氨基酸？新编码的是那种氨基酸？编写一个子程序，给定一个密码子，返回密码子上任意一个突变导致的编码出的新的所有的氨基酸列表。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题8.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个子程序，给定一个氨基酸，随机把它改变成习题8.7计算出来的氨基酸中的一种。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题8.9}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，随机突变蛋白质中的氨基酸，但是要限定在原始密码子的单核苷酸突变能导致的突变范围内，就像习题8.7和8.8中的那样。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题8.10}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 有些密码子比其他的密码子更容易出现在随机DNA中。比如，在64种可能的密码子中，有6种编码丝氨酸，但只有2中编码苯丙氨酸。编写一个子程序，给定一个氨基酸，返回它被随机生成的密码子编码的可能性（参看\autoref{chap:chapter7}）。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题8.11}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个子程序，以一个氨基酸、位置1、2或3和一个核苷酸作为它的参数。然后，对于编码这个特定氨基酸的每一个密码子（可能有一到六个不等的密码子），都在指定的位置上突变称指定的核苷酸。最后，返回突变后的密码子编码的氨基酸集。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题8.12}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，给定两个氨基酸，返回它们潜在（而非指定）密码子上单核苷酸突变从而导致一个氨基酸的密码子突变成另一个氨基酸的密码子的概率。
 \end{adjustwidth}
 

@@ -37,8 +37,8 @@ DNA的突变可能来源于辐射、化学制剂、复制错误等原因。我�
 
 例子声明了几个包含句子片段的数组，然后把它们随机组合成完整的句子。这是一个微不足道的孩子的游戏，但它演示了一些编程要点。
 
-\textbf{例7-1：使用随机数的儿童游戏}
-\lstinputlisting[label=exam:example7.1]{./scripts/example7-1.pl}
+%\textbf{例7-1：使用随机数的儿童游戏}
+\lstinputlisting[label=exam:example7.1,caption={例7-1：使用随机数的儿童游戏}]{./scripts/example7-1.pl}
 
 下面是\autoref{exam:example7.1}一些典型的输出：
 
@@ -419,8 +419,8 @@ sub randomelement {
 \subsection{组合子程序来模拟突变}
 现在，所有的材料都到位了，所以你要编写如\autoref{exam:example7.2}一样的主程序，来看看新的子程序是否工作。
 
-\textbf{例7-2：突变DNA}
-\lstinputlisting[label=exam:example7.2]{./scripts/example7-2.pl}
+%\textbf{例7-2：突变DNA}
+\lstinputlisting[label=exam:example7.2,caption={例7-2：突变DNA}]{./scripts/example7-2.pl}
 
 下面是\autoref{exam:example7.2}的一些典型的输出：
 
@@ -601,8 +601,8 @@ return $dna
 
 \autoref{exam:example7.3}按照伪代码中自上而下的设计顺序一步步前进，从主程序开始，之后才是子程序。
 
-\textbf{例7-3：生成随机DNA}
-\lstinputlisting[label=exam:example7.3]{./scripts/example7-3.pl}
+%\textbf{例7-3：生成随机DNA}
+\lstinputlisting[label=exam:example7.3,caption={例7-3：生成随机DNA}]{./scripts/example7-3.pl}
 
 下面是\autoref{exam:example7.3}的输出：
 
@@ -661,8 +661,8 @@ return count/length
 
 这个问题已经迎刃而解了。当然，你还需要编写一些代码，来挑选成对的序列，收集计算结果，最终获得结果的平均值并以百分比的形式将它报告出来。所有这些都在主程序中。\autoref{exam:example7.4}就是这样的尝试，所有的内容都在其中。
 
-\textbf{例7-4：计算成对随机DNA序列的平均一致性百分比}
-\lstinputlisting[label=exam:example7.4]{./scripts/example7-4.pl}
+%\textbf{例7-4：计算成对随机DNA序列的平均一致性百分比}
+\lstinputlisting[label=exam:example7.4,caption={例7-4：计算成对随机DNA序列的平均一致性百分比}]{./scripts/example7-4.pl}
 
 \autoref{exam:example7.4}中的代码看起来和前面例子中的代码有些重复，确实是这样的。为了便于描述，我把子程序代码都放在了程序中。（在\autoref{chap:chapter8}中，你将开始使用模块，就会避免这种重复。）
 
@@ -710,44 +710,44 @@ for (my $k = 0 ; $k < scalar @random_DNA - 1 ; ++$k) {
 
 \section{练习题}
 \textcolor{red}{\textit{习题7.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，询问你选取一个氨基酸，然后（随机）猜测你选的是哪个氨基酸。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题7.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，选取四个核苷酸中的一个，然后一直进行提示，直到你正确猜出选取的是哪个核苷酸。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题7.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个子程序，随机打乱数组的元素。子程序以一个数组作为参数，返回具有相同元素、但打乱成随机顺序的数组。原始数组中的每一个元素在输出的数组中都出现且仅出现一次，就像洗牌一样。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题7.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序来突变蛋白质序列，就像\autoref{exam:example7.2}中突变DNA的代码一样。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题7.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个子程序，给定一个密码子（一个长3bp的DNA片段），返回密码子中的一个随机突变。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题7.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 有些版本的Perl为随机数生成器自动设置种子，这样在使用\verb|rand|生成随机数之前就不用多余使用\verb|srand|来设置种子了。实验一下，看看\verb|rand|是否会自动调用\verb|srand|，还是需要你自己明确地去调用\verb|srand|，就像你在本章的代码中看到的那样。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题7.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 有时，在随机选取的时候并不是所有的选项都会被选择到。编写一个子程序，随机返回一个核苷酸，而且是按照指定的每个核苷酸的几率。给这个子程序传递四个数字作为参数，代表每中核苷酸的几率。如果每种核苷酸的几率都是0.25，这个子程序在选取每种核苷酸时就是完全均等的。为了检查错误，子程序还要确保四个几率之和为1。
 
 \textit{提示：}实现这一点的一种方法就是，把从0到1的范围分成四个区间，每个区间的长度和相应核苷酸的几率相对应。然后，简单的从0到1之间随机选取一个数字，看看它落在了哪个区间中，就返回相对应的核苷酸即可。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题7.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 \textit{这是一个有一定难度的练习题。}Perl中的\textit{study}函数可能能提高DNA或蛋白质中基序的查找速度。查看关于这个函数的Perl文档。它的用法非常简单：给定存储在\verb|$sequence|变量中的一些序列数据，在进行搜索之前键入：
 
 \begin{lstlisting}

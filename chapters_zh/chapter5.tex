@@ -28,7 +28,7 @@
 
 本节包含了一些演示Perl条件语句的实例，其中的真-假条件测试就是看看两个数字是否相等。注意，因为一个等号\verb|=|是用来对变量进行赋值的，所以两个数字的相等要用两个等号\verb|==|来表示。
 
-\begin{adjustwidth}{2cm}{2cm}
+\begin{adjustwidth}{4em}{4em}
   \parpic[l]{
   \includegraphics[width=1cm]{warning.png}
 }
@@ -159,8 +159,8 @@ unless( 1 == 0 ) {
 
 回过头来再看看条件语句。就像\autoref{exam:example5.1}中演示的那样，\textit{if-else}还有\textit{if-elsif-else}这样的形式。第一个\textit{if}和\textit{elsifs}中的条件被交替测试，一旦测试结果为\verb|真|，相应的代码块就会被执行，并且剩余的条件测试也会被忽略掉。假设没有一个条件的测试结果为\verb|真|，如果存在\textit{else}代码块，那它就会被执行。\textit{else}代码块是可有可无的。
 
-\textbf{例5-1：if-elsif-else}
-\lstinputlisting[label=exam:example5.1]{./scripts/example5-1.pl}
+%\textbf{例5-1：if-elsif-else}
+\lstinputlisting[label=exam:example5.1,caption={例5-1：if-elsif-else}]{./scripts/example5-1.pl}
 
 注意\textit{else}代码块的\verb|print|语句中的\verb|\"|，它可以在双引号包裹起来的字符串中打印出双引号（"）。反斜线告诉Perl，把后面紧跟的"当成引号本身，而不是把它当做字符串结束的标志。此外还请注意使用了\textit{eq}来检测字符串的相等。
 
@@ -173,8 +173,8 @@ MNIDDKL--the magic word!
 \subsection{循环}
 \textit{循环}允许你重复执行被成对大括号包裹起来的语句块。在Perl中有多种方法实现循环：\textit{while}循环、\textit{for}循环、\textit{foreach}循环等等。\autoref{exam:example5.2}（来源于\autoref{chap:chapter4}）演示了如何使用\textit{while}循环从一个文件读取蛋白质序列数据。
 
-\textbf{例5-2：从文件中读取蛋白质序列数据，第四次尝试}
-\lstinputlisting[label=exam:example5.2]{./scripts/example5-2.pl}
+%\textbf{例5-2：从文件中读取蛋白质序列数据，第四次尝试}
+\lstinputlisting[label=exam:example5.2,caption={例5-2：从文件中读取蛋白质序列数据，第四次尝试}]{./scripts/example5-2.pl}
 
 下面是\autoref{exam:example5.2}的输出：
 
@@ -205,7 +205,7 @@ GLQYALNVPISVKQEITFTDVSEQLMRDKKQIR
 一旦你开始使用循环和条件语句，你就需要认真考虑格式的问题了。当格式化Perl代码时你有多种选择。对于\verb|while|循环中的\textit{if}语句，比较一下下面几种不同的格式化方法：
 
 \textcolor{red}{\textit{格式A}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 \begin{lstlisting}
 while ( $alive ) {
   if ( $needs_nutrients ) {
@@ -216,7 +216,7 @@ while ( $alive ) {
 \end{adjustwidth}
 
 \textcolor{red}{\textit{格式B}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 \begin{lstlisting}
 while ( $alive )
 {
@@ -229,7 +229,7 @@ while ( $alive )
 \end{adjustwidth}
 
 \textcolor{red}{\textit{格式C}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 \begin{lstlisting}
   while ( $alive )
     {
@@ -242,7 +242,7 @@ while ( $alive )
 \end{adjustwidth}
 
 \textcolor{red}{\textit{格式D}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 \begin{lstlisting}
 while($alive){if($needs_nutrients){print "Cell needs nutrients\n";}}
 \end{lstlisting}
@@ -277,8 +277,8 @@ Perl有一系列在字符串中进行查找的便利的特性，这同样使得P
   \item 查找用户通过键盘键入的基序
 \end{itemize}
 
-\textbf{例5-3：查找基序}
-\lstinputlisting[label=exam:example5.3]{./scripts/example5-3.pl}
+%\textbf{例5-3：查找基序}
+\lstinputlisting[label=exam:example5.3,caption={例5-3：查找基序}]{./scripts/example5-3.pl}
 
 这是\autoref{exam:example5.3}典型的一个输出：
 
@@ -525,8 +525,8 @@ print count_of_A, count_of_C, count_of_G, count_of_T
 
 我们已经设计好了程序，现在就把它转化成Perl代码。\autoref{exam:example5.4}是一个可以工作的程序。随着本章的学习，你将看到其他完成该任务的方法，它的速度会更快一些，但此处速度并不是我们关注的焦点。
 
-\textbf{例5-4：确定核苷酸的频率}
-\lstinputlisting[label=exam:example5.4]{./scripts/example5-4.pl}
+%\textbf{例5-4：确定核苷酸的频率}
+\lstinputlisting[label=exam:example5.4,caption={例5-4：确定核苷酸的频率}]{./scripts/example5-4.pl}
 
 为了演示\autoref{exam:example5.4}，我创建了下面这个小的DNA文件，把它命名为\textit{small.dna}：
 
@@ -574,8 +574,8 @@ errors = 1
 
 Perl在判断标量变量是什么时非常智能。比如，你可以把数字\verb|1234|（没有引号）赋值给变量，也可以把字符串\verb|'1234'|（有引号）赋值给它。当打印输出时，Perl把变量当成字符串来处理，而当在算术运算中使用时Perl则会把它看做数字，所有这些你都无需担心。\autoref{exam:example5.5}演示了Perl的这种能力。换句话说，在指定变量的数据类型时，Perl并不是很严格。
 
-\textbf{例5-5：演示Perl对数字和字符串的智能化处理}
-\lstinputlisting[label=exam:example5.5]{./scripts/example5-5.pl}
+%\textbf{例5-5：演示Perl对数字和字符串的智能化处理}
+\lstinputlisting[label=exam:example5.5,caption={例5-5：演示Perl对数字和字符串的智能化处理}]{./scripts/example5-5.pl}
 
 \autoref{exam:example5.5}的输出：
 
@@ -688,8 +688,8 @@ print count_of_A, count_of_C, count_of_G, count_of_T
 
 \autoref{exam:example5.6}是查看DNA字符串中每个碱基的程序。
 
-\textbf{例5-6：确定核苷酸频率，第二次尝试}
-\lstinputlisting[label=exam:example5.6]{./scripts/example5-6.pl}
+%\textbf{例5-6：确定核苷酸频率，第二次尝试}
+\lstinputlisting[label=exam:example5.6,caption={例5-6：确定核苷酸频率，第二次尝试}]{./scripts/example5-6.pl}
 
 下面是\autoref{exam:example5.6}的输出：
 
@@ -784,8 +784,8 @@ close(COUNTBASE);
 
 \autoref{exam:example5.7}检查DNA字符串中每个碱基的第三个版本的Perl程序。
 
-\textbf{例5-7：确定核苷酸频率，第三次尝试}
-\lstinputlisting[label=exam:example5.7]{./scripts/example5-7.pl}
+%\textbf{例5-7：确定核苷酸频率，第三次尝试}
+\lstinputlisting[label=exam:example5.7,caption={例5-7：确定核苷酸频率，第三次尝试}]{./scripts/example5-7.pl}
 
 当你运行\autoref{exam:example5.7}时，会看到类似的输出：
 
@@ -846,13 +846,13 @@ $nonbase = (length $dna) - $basecount)
 
 \section{练习题}
 \textcolor{red}{\textit{习题5.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 使用循环写一个永不挂起的程序。每次迭代时，条件测试都应该永远为\verb|真|。注意，有的系统会注意到你在一个无穷的循环中，从而自动结束程序。依据你使用的操作系统的不同，结束程序的方法也会有所不同。在Unix和Linux、Windows
 MS-DOS命令窗口或者MacOS X shell窗口中，使用Ctrl-C就可以结束程序。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题5.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 提示用户输入两个（短的）DNA字符串。通过使用\verb|.=|赋值操作符，把第二个附加到第一个DNA字符串的后面，从而把两者串联起来。先打印输出串联后的两个字符串，然后打印输出第二个字符串，但要与串联后字符串末尾对应的字符串对齐。举个例子，如果输入的字符串是\verb|AAAA|和\verb|TTTT|，则要打印输出：
 \begin{verbatim}
 AAAATTTT
@@ -861,42 +861,42 @@ AAAATTTT
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题5.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，输出从1到100的所有数字。当然，你的程序代码应该远远小于100行。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题5.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，计算DNA链的反向互补链。不要使用\textit{s///}或者\textit{tr}函数。使用\textit{substr}函数，当你计算反向互补链时，要一次检查原始DNA中的一个碱基。（提示：你可能会发现检查原始DNA字符串时，尽管从左到右也是可以的，但从右向左要更加方便一些) 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题5.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，报告蛋白质序列中疏水氨基酸的百分比。（想要知道哪些氨基酸是疏水性的，可以参看任何关于蛋白质、分子生物学或细胞生物学导论性的介绍。在\autoref{chap:chapteraa}中你会找到一些有用的资源。）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题5.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，检查一下作为参数提供的两个DNA字符串是不是反向互补的。使用Perl的内置函数\textit{split}、\textit{pop}、\textit{shift}和\textit{eq}（\textit{eq}实际上是一个操作符）。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题5.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，报告序列的GC含量。（换言之，就是给出DNA中G和C的百分比）。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题5.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 修改\autoref{exam:example5.3}，使它不仅能通过正则表达式找到基序，还能打印输出它找到的基序。举个例子，如果你使用正则表达式查找基序EE.*EE，你的程序应该输出EETVKNDEE。你可以使用特殊变量\verb|$&|。在一次成功的模式匹配后，这个特殊变量会保存匹配到的模式。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题5.9}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，交换DNA字符串中特定位置的两个碱基。（提示：你可以使用Perl的\verb|substr|函数或\verb|slice|函数。）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题5.10}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，写入一个临时文件然后把它删除掉。\textit{unlink}函数可以删除一个文件，举个例子，这样来使用：
 \begin{lstlisting}
 unlink "tmpfile";

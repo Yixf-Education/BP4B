@@ -56,8 +56,8 @@ print their names
 
 \autoref{exam:example11.1}演示了真实的Perl代码。
 
-\textbf{例11-1：列出文件夹（或目录）的内容}
-\lstinputlisting[label=exam:example11.1]{./scripts/example11-1.pl}
+%\textbf{例11-1：列出文件夹（或目录）的内容}
+\lstinputlisting[label=exam:example11.1,caption={例11-1：列出文件夹（或目录）的内容}]{./scripts/example11-1.pl}
 
 因为你在一个包含PDB文件的文件夹中运行这个程序，所以你将会看到：
 
@@ -108,8 +108,8 @@ for each item in the folder
 
 \autoref{exam:example11.2}演示了这个程序。
 
-\textbf{例11-2：列出文件夹及其子文件夹的内容}
-\lstinputlisting[label=exam:example11.2]{./scripts/example11-2.pl}
+%\textbf{例11-2：列出文件夹及其子文件夹的内容}
+\lstinputlisting[label=exam:example11.2,caption={例11-2：列出文件夹及其子文件夹的内容}]{./scripts/example11-2.pl}
 
 下面是\autoref{exam:example11.2}的输出：
 
@@ -150,8 +150,8 @@ subroutine list_recursively
 }
 \end{lstlisting}
 
-\textbf{例11-3：一个罗列文件系统的递归子程序}
-\lstinputlisting[label=exam:example11.3]{./scripts/example11-3.pl}
+%\textbf{例11-3：一个罗列文件系统的递归子程序}
+\lstinputlisting[label=exam:example11.3,caption={例11-3：一个罗列文件系统的递归子程序}]{./scripts/example11-3.pl}
 
 下面是\autoref{exam:example11.3}的输出（注意它和\autoref{exam:example11.2}的输出是完全一样的）：
 
@@ -193,8 +193,8 @@ Perl有可以处理各种任务的模块。有些模块是作为标准和Perl一
 
 \autoref{exam:example11.4}使用了\textit{File::Find}。对于这个有用的模块的更多例子，可以参考它的文档。这个实例演示的功能和\autoref{exam:example11.3}是完全一样的，只不过现在使用了\textit{File::Find}。它只是简单的把文件和目录罗列出来。注意，你会发现，如果你找到一个好的模块，你只需要编写很少的代码即可，所以开始使用模块吧！
 
-\textbf{例11-4：演示File::Find}
-\lstinputlisting[label=exam:example11.4]{./scripts/example11-4.pl}
+%\textbf{例11-4：演示File::Find}
+\lstinputlisting[label=exam:example11.4,caption={例11-4：演示File::Find}]{./scripts/example11-4.pl}
 
 注意，通过在\textit{my\_sub}子程序前面使用反斜杠字符，把指针传递给了它。就像在\autoref{chap:chapter6}中提到的那样，你还需要在它名字的前面加上\verb|&|字符。
 
@@ -444,22 +444,22 @@ PDB文件有含有80列的多行组成，每一行都以某个预定义的记录
 SEQRES记录类型是一级结构部分（Primary Structure Section）中的四大记录类型之一，它描述了肽或核苷酸序列的一级结构：
 
 \textcolor{red}{\textit{DBREF}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 指向序列数据库中的记录
 \end{adjustwidth}
 
 \textcolor{red}{\textit{SEQADV}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 记录PDB与其他序列数据库的冲突
 \end{adjustwidth}
 
 \textcolor{red}{\textit{SEQRES}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 骨干残基的一级序列
 \end{adjustwidth}
 
 \textcolor{red}{\textit{MODRES}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{4em}{}
 记录标准残基上的修饰
 \end{adjustwidth}
 
@@ -662,8 +662,8 @@ C, G, T, U).
 \section{解析PDB文件}
 首先，\autoref{exam:example11.5}演示了主程序和三个子程序，在本节将会对它们进行讨论。
 
-\textbf{例11-5：从PDB文件中提取序列链}
-\lstinputlisting[label=exam:example11.5]{./scripts/example11-5.pl}
+%\textbf{例11-5：从PDB文件中提取序列链}
+\lstinputlisting[label=exam:example11.5,caption={例11-5：从PDB文件中提取序列链}]{./scripts/example11-5.pl}
 
 一定要注意这一点，调用读取PDB文件的子程序\verb|get_file_data|的主程序中，包含了一个对于大的PDB文件的警告。（比如，PDB文件\textit{1gav}就有3.45
 MB之大。）另外，主程序中，把整个文件读取进来之后，子程序\verb|parsePDBrecordtypes|把输入文件中的所有行都进行了拷贝，用记录类型分隔开。在这一点上，程序运行时会占用文件大小两倍大的内存空间。这种设计的有点在于它的清晰化和模块化，但主内存不够用的时候它也会导致问题。如果不保存从文件中读取进来的结果，而是直接把文件数据传递给\verb|parsePDBrecordtypes|子程序，这样占用的内存会小一些，就想这样：
@@ -779,8 +779,8 @@ ATOM      1  N   GLY A   2       1.888  -8.251  -2.511  1.00 36.63           N
 
 让我们来做一些非常简单的事情：提取出每个原子的x坐标、y坐标和z坐标，以及其序列号（每个原子在分子中独一无二的整数序号）和元素符号。\autoref{exam:example11.6}是一个完成该任务的子程序，以及一个执行该子程序的主程序。
 
-\textbf{例11-6：从PDB文件中提取原子坐标}
-\lstinputlisting[label=exam:example11.6]{./scripts/example11-6.pl}
+%\textbf{例11-6：从PDB文件中提取原子坐标}
+\lstinputlisting[label=exam:example11.6,caption={例11-6：从PDB文件中提取原子坐标}]{./scripts/example11-6.pl}
 
 子程序\textit{parseATOM}非常简短：ATOM记录严格规范的格式使得从中解析信息非常直截了当。首先，你把包含ATOM行的标量参数分割成一个由行组成的数组。
 
@@ -863,8 +863,8 @@ Perl是自动化其他成语的一种杰出的方法。下一小节将演示一�
 
 \autoref{exam:example11.7}是完整的程序，包括两个子程序和一个主程序，程序的后面是讨论。
 
-\textbf{例11-7：调用其他程序进行二级结构预测}
-\lstinputlisting[label=exam:example11.7]{./scripts/example11-7.pl}
+%\textbf{例11-7：调用其他程序进行二级结构预测}
+\lstinputlisting[label=exam:example11.7,caption={例11-7：调用其他程序进行二级结构预测}]{./scripts/example11-7.pl}
 
 正如你在子程序\textit{call\_stride}中看到的那样，针对程序名（\verb|$stride|）和你想传递的选项（\verb|$options|）我们都单独创建了变量。因为这是程序中你可能需要修改的部分，所以把它们做成变量放在代码的顶部，这样就容易找到并修改它们了。子程序的参数是PDB文件的文件名（\verb|$filename|）。（当然，如果你认为选项会经常改变，也可以把它们做成子程序的另外一个参数。）
 
@@ -939,59 +939,59 @@ GGLQVKNFDFTVGKFLTVGGFINNSPQRFSVNVGESMNSLSLHLDHRFNYGADQNTIVMNSTLKGDNGWETEQRSTNFTL
 
 \section{练习题}
 \textcolor{red}{\textit{练习11.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 使用\textit{File::Find}和文件测试操作符来找到你计算机硬盘上最老的和最大的文件。（当你的硬盘空间不够用的时候，你可以删除它们，或者把它们保存到别的地方去。）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{练习11.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 找到你计算机中的所有Perl程序。
 
 \textit{提示}：使用\textit{File::Find}。所有的Perl程序都有什么共同点？
 \end{adjustwidth}
 
 \textcolor{red}{\textit{练习11.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
   解析你计算机上所有PDB文件的HEADER、TITLE和KEYWORDS记录类型。制作一个散列，其\textit{键}就是这些记录类型单词，\textit{值}则是包含这些单词的文件名列表。把它保存为一个DBM文件，并且为它构建一个查询程序。最后，你应该能够在询问一个单词的情况下，比如，sugar这个单词，得到在HEADER、TITLE或者KEYWORDS记录中包含这个单词的所有PDB文件列表。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{练习11.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 使用正则表达式（在\autoref{chap:chapter10}中使用过），而不是对由输入行组成的数组进行循环处理（本章中就是这种方法），解析出PDB文件的记录类型。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{练习11.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，提取出PDB文件中HELIX、SHEET和TURN记录类型中包含的二级结构信息。同时输出二级结构和一级序列，这样就比较容易能看出某个残基是处于哪种二级结构中了。（考虑对二级结构使用一种特殊的字母表，这样的话，举个例子，螺旋中的每个残基就都可以用H来表示了。）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{练习11.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个程序，找到一个给定目录中的所有PDB文件，并且运行一个程序（比如\textit{stride}），或者你在练习11.5中编写的程序，报告每个PDB文件中的二级结构。把结果保存到一个DBM文件中，用文件名作为键。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{练习11.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个子程序，对于给定的两个字符串，把它们输出出来，让一个字符串在另一个字符串的上面，但是要有换行（类似与\textit{stride}程序的输出）。使用这个模块打印出\autoref{exam:example11.7}中的字符串。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{练习11.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个递归的子程序，来确定一个数组的大小。你可能想要使用\verb|pop|或者\verb|unshift|函数。（暂时忽略掉\verb|scalar @array|会返回\verb|@array|的大小这个事实！）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{练习11.9}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 编写一个递归的子程序，从一个PDB文件的SEQRES记录类型中提取出一级氨基酸序列。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{练习11.10}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 （\textit{额外加分}）给定一个原子和距离，找到PDB文件中和这个原子相距距离范围以内的所有其他原子。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{练习11.11}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 （\textit{额外加分}）编写一个程序，找到一级氨基酸序列和$\alpha$-螺旋定位之间的某种相关性。
 \end{adjustwidth}
 
