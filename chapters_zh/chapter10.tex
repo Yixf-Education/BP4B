@@ -188,7 +188,7 @@ MB。总算起啦，GenBank包含了来自12,813,526条报道序列的12,813516�
 \autoref{exam:example10.1}演示了第一种方法，它对包含GenBank记录行的数组进行操作。主程序后面跟着的是真正起作用的子程序。
 
 %\textbf{例10-1：从GenBank文件中提取注释和序列}
-\lstinputlisting[label=exam:example10.1,caption={例10-1：从GenBank文件中提取注释和序列}]{./scripts/example10-1.pl}
+\lstinputlisting[label=exam:example10.1,caption={例10.1：从GenBank文件中提取注释和序列}]{./scripts/example10-1.pl}
 
 下面是\autoref{exam:example10.1}输出的序列数据的开头和结尾部分：
 
@@ -322,7 +322,7 @@ $/ = "//\n";
 在读取完记录后，你要使用\verb|/s|和\verb|/m|模式修饰符，把它解析成注释和序列两个部分。提取注释和序列是比较容易的，而解析注释则将占据本章剩余的大部分内容。
 
 %\textbf{例10-2：从GenBank记录中提取注释和序列}
-\lstinputlisting[label=exam:example10.2,caption={例10-2：从GenBank记录中提取注释和序列}]{./scripts/example10-2.pl}
+\lstinputlisting[label=exam:example10.2,caption={例10.2：从GenBank记录中提取注释和序列}]{./scripts/example10-2.pl}
 
 该程序的输出和前面展示的GenBank文件的内容是完全一样的，但是没有最后一行，也就是没有记录终止分隔符\verb|//|。
 
@@ -367,7 +367,7 @@ $record = /^(LOCUS.*ORIGIN\s*\n)(.*)\/\/\n/s.
 \autoref{exam:example10.3}解析了GenBank文件中注释的一部分信息。它通过把数据保存到数组中完成了该任务。
   
 %\textbf{例10-3：使用数组解析GenBank的注释}
-\lstinputlisting[label=exam:example10.3,caption={例10-3：使用数组解析GenBank的注释}]{./scripts/example10-3.pl}
+\lstinputlisting[label=exam:example10.3,caption={例10.3：使用数组解析GenBank的注释}]{./scripts/example10-3.pl}
 
 下面是\autoref{exam:example10.3}的输出：
 
@@ -383,7 +383,7 @@ Homo sapiens
 现在，我们来稍微扩充一下程序，让它可以处理DEFINITION字段。注意，DEFINITION字段的内容可能不止一行。要收集该字段，使用在\autoref{exam:example10.1}中学到的技巧：当你在收集定义的“状态”时就设置一个标识。毋庸置疑，标识变量还是叫做\verb|$flag|。
 
 %\textbf{例10-4：使用数组解析GenBank注释，第二次尝试}
-\lstinputlisting[label=exam:example10.4,caption={例10-4：使用数组解析GenBank注释，第二次尝试}]{./scripts/example10-4.pl}
+\lstinputlisting[label=exam:example10.4,caption={例10.4：使用数组解析GenBank注释，第二次尝试}]{./scripts/example10-4.pl}
 
 \autoref{exam:example10.4}的输出：
 
@@ -479,7 +479,7 @@ return accession numbers of records meeting the criteria
 让我们使用\autoref{exam:example10.5}来测试一下这些子程序吧，其中的一些子程序定义将会添加到\textit{BeginPerlBioinfo.pm}模块里面：
   
 %\textbf{例10-5：GenBank库的子程序}
-\lstinputlisting[label=exam:example10.5,caption={例10-5：GenBank库的子程序}]{./scripts/example10-5.pl}
+\lstinputlisting[label=exam:example10.5,caption={例10.5：GenBank库的子程序}]{./scripts/example10-5.pl}
 
 对于我们小巧的GenBank库，\autoref{exam:example10.5}会生成以下输出：
 
@@ -536,7 +536,7 @@ Annotation found in record at offset 22340
 \autoref{exam:example10.6}演示了一个子程序，对于给定的存储在标量变量中的GenBank记录的注释部分，它会返回一个散列，散列的键就是顶层的字段名，散列的值就是这些字段的具体内容。
 
 %\textbf{例10-6：解析GenBank注释}
-\lstinputlisting[label=exam:example10.6,caption={例10-6：解析GenBank注释}]{./scripts/example10-6.pl}
+\lstinputlisting[label=exam:example10.6,caption={例10.6：解析GenBank注释}]{./scripts/example10-6.pl}
 
 在子程序\textit{parse\_annotation}中，注意变量\verb|$key|和\verb|$value|是如何限制在\verb|while|代码块作用范围内的。这种做法的一个好处就是，你不需要在每次进行循环的时候都对变量进行重新初始化。此外还要注意，散列的键是字段名，而散列的值则是整个字段的内容。
 
@@ -962,7 +962,7 @@ V-免疫特征区
 比较常见的一种情况是，在一个记录中有多个同样的特征。比如，在一个GenBank记录的FEATURES表中可能会有好几个外显子。正因为如此，我们把特征作为元素存储到一个数组中，而不是以特征名作为键存储到一个散列中（它只允许你存储一个，比如，仅仅一个外显子而已）。
 
 %\textbf{例10-7：测试解析特征的子程序}
-\lstinputlisting[label=exam:example10.7,caption={例10-7：测试解析特征的子程序}]{./scripts/example10-7.pl}
+\lstinputlisting[label=exam:example10.7,caption={例10.7：测试解析特征的子程序}]{./scripts/example10-7.pl}
 
 \autoref{exam:example10.7}会给出下面的输出：
 
@@ -1098,7 +1098,7 @@ unless(dbmopen(%my_hash, 'DBNAME', 0644)) {
 基本上就这些，DBM文件就是这么简单。\autoref{exam:example10.8}演示了一个DBM文件，它存储的键-值对中，键是GenBank记录的索引号，值是记录的字节偏移量。
 
 %\textbf{例10-8：一个GenBank库的DBM索引}
-\lstinputlisting[label=exam:example10.8,caption={例10-8：一个GenBank库的DBM索引}]{./scripts/example10-8.pl}
+\lstinputlisting[label=exam:example10.8,caption={例10.8：一个GenBank库的DBM索引}]{./scripts/example10-8.pl}
 
 下面是\autoref{exam:example10.8}截断的输出：
 
@@ -1120,52 +1120,52 @@ Enter accession number (or quit): q
 
 \section{练习题}
 \textcolor{red}{\textit{习题10.1}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 去逛逛NCBI、EMBL和EBI的网站，熟悉一下它们的使用。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题10.2}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 阅读GenBank格式的文档\textit{gbrel.txt}。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题10.3}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个子程序，通过值传递一个散列。现在重写它，通过指针传递散列。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题 10.4}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 设计由几个子程序构成的模块，来处理下面这些类型的数据：一个包含记录的平面文件，记录由位于一行的基因名和位于后续行的各种附加信息组成，最后是一个空白行。你的子程序应该能够读取数据，之后对和一个基因名相关的信息进行快速查询。你还应该能够添加新的记录到这个平面文件中。现在重用这些模块，来构建一个地址簿程序。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题10.5}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 进一步深入FEATURES表。解析表中特征的下一层信息，主要是特征名、定位和限定词这几个特征。对于字段结构的定义，可以查阅文档\textit{gbrel.txt}。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题10.6}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个程序，以一个长的DNA序列作为输入，输出以频率进行排序的所有四碱基子序列（一共有256个）的计数。一个四碱基子序列可以起始于1、2、3等各个位置。（这种类型的词频分析在许多研究领域都非常常见，包括语言学、计算机科学和音乐学。）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题10.7}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 扩展习题10.6中的程序，让它可以对一个GenBank库中的所有序列进行计数。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题10.8}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 对于给定的一个氨基酸，找到一个DNA序列或者一个GenBank库中它临近氨基酸的出现频率。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题10.9}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
   从GenBank记录库的注释中提取出所有的单词（除了“the”或者其他无用的类似单词以外）。对于找到的每一个单词，都把库中GenBank记录的偏移量添加到DBM文件中，DBM文件的键就是单词，值使用空格分隔开的偏移量字符串。换言之，一个键对应的值可以是用空格分隔开的偏移量列表。然后，通过一个简单的查找，你就可以露艾苏找到含有像“fibroblast”这样的单词的所有记录了，之后，提取出这些偏移量，使用它们在库中进行进行找寻（\textit{seek}）。与GenBank库先比，你的DBM文件有多大？如果要针对所有GenBank中的注释构建一个搜索引擎，又该如何呢？如果是仅仅针对人类的DNA呢？
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题10.10}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个程序，从GenBank的GBPRI分类中构建一个个性化的肿瘤基因库。
 \end{adjustwidth}
 

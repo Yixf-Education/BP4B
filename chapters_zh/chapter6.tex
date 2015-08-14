@@ -47,7 +47,7 @@ addACGT($dna);
 \autoref{exam:example6.1}演示了一个子程序，从中可以看到它的工作细节。
 
 %\textbf{例6-1：把ACGT附加到DNA上的子程序}
-\lstinputlisting[label=exam:example6.1,caption={例6-1：把ACGT附加到DNA上的子程序}]{./scripts/example6-1.pl}
+\lstinputlisting[label=exam:example6.1,caption={例6.1：把ACGT附加到DNA上的子程序}]{./scripts/example6-1.pl}
 
 \autoref{exam:example6.1}会产生这样的输出：
 
@@ -131,21 +131,33 @@ my($dna) = @_;
 
 执行后，传递进去的值就赋给了子程序的额变量\verb|$dna|。接下来的小节将解释为什么这个变量对于子程序来说是一个新的变量。子程序中的变量也可以起任何名字，并不一定非要和参数的名字一样，虽然这个例子中它们是一样的。关于作用域非常酷的一点就是，名字一样不一样是无所谓的。
 
-\begin{adjustwidth}{4em}{4em}
-  \parpic[l]{
-  \includegraphics[width=1cm]{warning.png}
-  }
-\noindent
-当心这个常见的错误，在子程序中为参数命名时忘记使用\verb|@_|数组，换言之，使用语句：
-  \begin{lstlisting}
-my($dna);
-  \end{lstlisting}
-  代替了
-  \begin{lstlisting}
-my($dna) = @_;
-  \end{lstlisting}
-  如果你犯了这种错误，即使已经声明了变量名，参数的值也不会出现在你的子程序中。
-\end{adjustwidth}
+%\begin{adjustwidth}{4em}{4em}
+  %\parpic[l]{
+  %\includegraphics[width=1cm]{warning.png}
+  %}
+%\noindent
+%当心这个常见的错误，在子程序中为参数命名时忘记使用\verb|@_|数组，换言之，使用语句：
+  %\begin{lstlisting}
+%my($dna);
+  %\end{lstlisting}
+  %代替了
+  %\begin{lstlisting}
+%my($dna) = @_;
+  %\end{lstlisting}
+  %如果你犯了这种错误，即使已经声明了变量名，参数的值也不会出现在你的子程序中。
+%\end{adjustwidth}
+
+\vspace{-5pt}
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1.1cm]{warning.png} & 当心这个常见的错误，在子程序中为参数命名时忘记使用\verb|@_|数组，换言之，使用语句\verb|my($dna);|代替了\verb|my($dna) = @_;|。如果你犯了这种错误，即使已经声明了变量名，参数的值也不会出现在你的子程序中。\\
+      \tabucline{-}
+    \end{tabu*}
+  \end{center}
+\end{table}
+\vspace{-20pt}
 
 \subsection{作用域}
 通过保证子程序使用到的所有变量只在子程序中有效，你就可以安全得在任何地方调用子程序了。通过使用\verb|my|来声明这些变量，就可以使它们只在子程序中有效了。\verb|my|是Perl定义的关键字，它可以把变量限制在使用它们的代码块中（在这个例子中，这个代码块就是子程序）。\footnote{作用域有不同的类别。\verb|my|实现的类别叫做\textit{词法作用域}，也叫做\textit{静态作用域}。在Perl中还有一种方法，就是使用\textit{local}来声明变量，但你几乎总会希望使用\verb|my|。} 
@@ -180,18 +192,30 @@ my($x) = @_;
 
 例子中演示的在子程序中收集参数，都用小括号把变量包裹了起来。因为\verb|@_|是一个数组，用小括号把新变量包裹起来就把它们放在了数组上下文\footnote{译者注：即列表上下文。}中，这可以保证它们能被正确地初始化（参看\autoref{chap:chapter4}）。
 
-\begin{adjustwidth}{4em}{4em}
-  \parpic[l]{
-  \includegraphics[width=1cm]{warning.png}
-}
-\noindent
-在子程序中，永远使用\verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。
-\end{adjustwidth}
+%\begin{adjustwidth}{4em}{4em}
+  %\parpic[l]{
+  %\includegraphics[width=1cm]{warning.png}
+%}
+%\noindent
+%在子程序中，永远使用\verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。
+%\end{adjustwidth}
+
+\vspace{-5pt}
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1.1cm]{warning.png} & 在子程序中，永远使用\verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。\\
+      \tabucline{-}
+    \end{tabu*}
+  \end{center}
+\end{table}
+\vspace{-20pt}
 
 为什么使用作用域呢？\autoref{exam:example6.2}演示了不使用作用域带来的麻烦。回忆一下，子程序的优势之一就是，对于那些有用的代码只需写一次，就可以在需要的时候重复使用了。\autoref{exam:example6.2}这个程序，在主程序中的一个变量和它调用的子程序中的一个变量重名了。在你编写完主程序一段时候后（比如说半年后）再编写子程序时，或者调用别人写的子程序时，这种情况非常容易发生。
 
 %\textbf{例6-2：不使用my变量导致的陷阱}
-\lstinputlisting[label=exam:example6.2,caption={例6-2：不使用my变量导致的陷阱}]{./scripts/example6-2.pl}
+\lstinputlisting[label=exam:example6.2,caption={例6.2：不使用my变量导致的陷阱}]{./scripts/example6-2.pl}
 
 \autoref{exam:example6.2}给出这样的输出：
 
@@ -261,7 +285,7 @@ X，现在也提供了一个命令行。（尽管大多数Windows用户并不怎
 \autoref{exam:example6.3}计算DNA字符串中G的数目。
 
 %\textbf{例6-3：通过命令行计算DNA中G的数目}
-\lstinputlisting[label=exam:example6.3,caption={例6-3：通过命令行计算DNA中G的数目}]{./scripts/example6-3.pl}
+\lstinputlisting[label=exam:example6.3,caption={例6.3：通过命令行计算DNA中G的数目}]{./scripts/example6-3.pl}
 
 现在让我们看看程序是如何工作的，同时检查并解释一下其中的新特性。作为开始，注意这新的一行代码：
 
@@ -563,13 +587,25 @@ use strict;
 
 前面已经提到，这会强制你去声明变量。（它还有一些选项，但那已经超出本书的范围了。）它会找到拼错的变量、会干扰程序其他部分的未声明的变量，等等。
 
-\begin{adjustwidth}{4em}{4em}
-  \parpic[l]{
-  \includegraphics[width=1cm]{note.png}
-  }
-\noindent
-当编写Perl代码时，最好永远同时使用\verb|use strict;|和\verb|use warnings;|。
-\end{adjustwidth}
+%\begin{adjustwidth}{4em}{4em}
+  %\parpic[l]{
+  %\includegraphics[width=1cm]{note.png}
+  %}
+%\noindent
+%当编写Perl代码时，最好永远同时使用\verb|use strict;|和\verb|use warnings;|。
+%\end{adjustwidth}
+
+\vspace{-5pt}
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1cm]{note.png} & 当编写Perl代码时，最好永远同时使用\verb|use strict;|和\verb|use warnings;|。\\
+      \tabucline{-}
+    \end{tabu*}
+  \end{center}
+\end{table}
+\vspace{-20pt}
 
 \subsection{使用注释和Print语句修复Bugs}
 有时，通过选择性的把程序的一部分注释掉，你就可以识别出表现异常的代码，最终找到出问题的那一部分。你也可以在有问题的程序的可以部分添加\verb|print|语句，来检查某个变量的行为。这些都是历史悠久的编程技术，在几乎所有的编程语言中都能很好的工作。
@@ -597,7 +633,7 @@ a 48 print "$i $k\n"
 在\autoref{exam:example6.4}中有一个新的东西。\textit{next}语句会影响循环中的控制流，它会立即使程序流进入循环的下一个迭代，直接跳过后面所有的内容。此外，你还需要回忆一下\verb|$_|，在\autoref{exam:example5.5}的\verb|foreach|循环的相关内容中我们对它进行了讨论。
 
 %\textbf{例6-4：有一个或两个bug的程序}
-\lstinputlisting[label=exam:example6.4,caption={例6-4：有一个或两个bug的程序}]{./scripts/example6-4.pl}
+\lstinputlisting[label=exam:example6.4,caption={例6.4：有一个或两个bug的程序}]{./scripts/example6-4.pl}
 
 下面是两次运行\autoref{exam:example6.1}的输出：
 
@@ -1029,51 +1065,51 @@ GACGTCTTCTAAGGCGA
 
 \section{练习题}
 \textcolor{red}{\textit{习题6.1}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个子程序，把两个DNA字符串串联起来。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.2}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个子程序，报告DNA中每种核苷酸的百分比。你已经看到了加法操作符\verb|+|。你也会用到除法操作符\verb|/|和乘法操作符\verb|*|。计算每种核苷酸的数目，除以DNA的总长，然后乘以100就可以得到百分比了。你的参数应该是DNA和你想计算的核苷酸。如果需要的话，可以用\verb|int|函数来删除小数点后的数字。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.3}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个子程序，给用户一些提示信息，并收集用户的答案。子程序的参数应该是提示信息，而返回值应该是用户的（一行的）答案。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.4}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个子程序，来查找\verb|-help|、\verb|-h|和\verb|--help|这样的命令行参数。回忆一下，命令行参数都在\verb|@ARGV|数组中。从主程序中调用你的子程序。如果你给出了任意可用的命令行参数，当你把它们传送到子程序中时，它应该返回一个真值。在这个例子中，可以让程序打印输出\verb|$USAGE|变量中的帮助信息，然后退出。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.5}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个子程序，来检查一下一个文件是否存在、是不是一个普通文件，是不是大小不为零。使用\verb|文件测试|操作符（参看\autoref{chap:chapterab}）。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.6}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 在一个子程序中使用习题6.3，一直进行提示，直到用户输入一个有效的文件，或者已经进行了五次失败的尝试。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.7}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个包含子程序的模块，报告关于DNA序列的多种统计信息，比如它的长度、GC含量、有没有poly-T序列（许多\verb|$DNA|序列5'（左）端大多数是T的长的延伸），或者其他感兴趣的信息。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.8}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个子程序，做一些生物学家通常做的事情。（这是在实验室中逛逛、写一个有用的程序的好机会！）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.9}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 阅读调试器的文档，通过在你的程序中运行它来熟悉调试器的使用。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.10}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个子程序，改变一个文件中存储在数组中的一些行。对于数组来说，通过引用的方式进行传递。给子程序传递数组的引用、一个正则表达式和一个替换正则表达式的字符串。数组中的所有行都应该通过正则表达式的查找，用替换字符串替换掉找到的匹配。
 \end{adjustwidth}

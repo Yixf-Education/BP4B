@@ -148,29 +148,51 @@ GenBank（Genetic Sequence Data Bank）对于现代生物学和生物信息学�
 用于代码实例和展示命令的输出
 \end{adjustwidth}
 
-\begin{adjustwidth}{4em}{4em}
+%\begin{adjustwidth}{4em}{4em}
 %\shadowbox{
-\parpic[l]{
+%\parpic[l]{
 %\includegraphics[width=1cm]{../figures/note.png}
-\includegraphics[width=1cm]{note.png}
-}
-\noindent
-该图标表示提醒，注意旁边的文字非常重要。
+%\includegraphics[width=1cm]{note.png}
 %}
-\end{adjustwidth}
+%\noindent
+%该图标表示提醒，注意旁边的文字非常重要。
+%}
+%\end{adjustwidth}
 
-\vspace*{\baselineskip}
+%\vspace*{\baselineskip}
 
-\begin{adjustwidth}{4em}{4em}
+%\begin{adjustwidth}{4em}{4em}
 %\shadowbox{
-\parpic[l]{
-\includegraphics[width=1.1cm]{warning.png}
-}
-\noindent
-该图表表示和旁边文字相关的一个警告。
+%\parpic[l]{
+%\includegraphics[width=1.1cm]{warning.png}
+%}
+%\noindent
+%该图表表示和旁边文字相关的一个警告。
 %\hspace{2.55cm}
 %}
-\end{adjustwidth}
+%\end{adjustwidth}
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1cm]{note.png} & 该图标表示提醒，注意旁边的文字非常重要。\\
+      \tabucline{-}
+    \end{tabu}
+  \end{center}
+\end{table}
+\vspace{-25pt}
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1.1cm]{warning.png} & 该图标表示和旁边文字相关的一个警告。\\
+      \tabucline{-}
+    \end{tabu}
+  \end{center}
+\end{table}
+\vspace{-25pt}
 
 \section*{评论和问题}
 \markboth{前言}{评论和问题}

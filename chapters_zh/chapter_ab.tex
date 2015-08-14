@@ -135,7 +135,7 @@ $thousand = 1000;
   \caption{复制操作符简写}
   \label{tab:tablea.b1}
   %\begin{tabu}{X[1,c]X[2,l]}
-    \begin{tabu*} to 0.7\linewidth {X[1,c]X[3,l]}
+    \begin{tabu*} to 0.7\linewidth {X[1,c,m]X[3,l,m]}
     \toprule
     操作符实例 & 等同于\\
     \midrule
@@ -410,7 +410,7 @@ Hear ye! Hear ye! Hear ye!
   \begin{center}
   \caption{文件测试操作符}
   \label{tab:tablea.b2}
-    \begin{tabu*} to 0.8\linewidth {X[1,c]X[5,l]}
+    \begin{tabu*} to 0.8\linewidth {X[1,c,m]X[5,l,m]}
     \toprule
     操作符 & 含义\\
     \midrule
@@ -1087,7 +1087,7 @@ Third pattern = a
   \begin{center}
   \caption{字母数字元符号}
   \label{tab:tablea.b3}
-    \begin{tabu*} to \linewidth {X[1,c]X[1,c]X[6,l]}
+    \begin{tabu*} to \linewidth {X[1,c,m]X[1,c,m]X[6,l,m]}
     \toprule
     符号 & 原子型 & 含义\\
     \midrule
@@ -1134,7 +1134,7 @@ Third pattern = a
   \begin{center}
   \caption{扩展正则表达式序列}
   \label{tab:tablea.b4}
-    \begin{tabu*} to 0.9\linewidth {X[2,c]X[1,c]X[3,l]}
+    \begin{tabu*} to 0.9\linewidth {X[2,c,m]X[1,c,m]X[3,l,m]}
     \toprule
     扩展 & 原子型 & 含义\\
     \midrule
@@ -1163,7 +1163,7 @@ Third pattern = a
   \begin{center}
   \caption{模式修饰符}
   \label{tab:tablea.b5}
-    \begin{tabu*} to 0.7\linewidth {X[0.5,c]X[3,l]}
+    \begin{tabu*} to 0.7\linewidth {X[0.5,c,m]X[3,l,m]}
     \toprule
     修饰符 & 含义\\
     \midrule
@@ -1375,7 +1375,10 @@ one two
 \section{内置函数}
 Perl有大量的内置函数。\autoref{tab:tablea.b6}只是罗列了其中的一部分，对它们进行了简短的描述。
 
-\begin{longtabu*} to \linewidth {X[2,l]X[5,l]}
+%\renewcommand*{\arraystretch}{1.4}
+%\setlength{\tabulinesep}{6pt}
+\setlength{\tabulinesep}{0.5em}
+\begin{longtabu*} to \linewidth {X[3.6,l,m]X[5,l,m]}
   \caption{Perl的内置函数}
   \label{tab:tablea.b6}\\
       \toprule
@@ -1467,7 +1470,7 @@ Perl有大量的内置函数。\autoref{tab:tablea.b6}只是罗列了其中的�
     返回文件EXPR或者它的文件句柄FILEHANDLE的统计信息。例子：\verb|($dev,$inode,$mode,$num_of_links,$uid,$gid,$rdev,$size,$accesstime,$modifiedtime,$changetime,$blksize,$blocks) = stat $filename;|\\
     study SCALAR & 尝试对接下来针对字符串SCALAR的模式匹配进行优化\\
     sub NAME BLOCK & 使用BLOCK中的程序代码定义一个名为NAME的子程序\\
-    substr EXPR, OFFSET, LENGTH,REPLACEMENT & 返回字符串EXPR从OFFSET位置开始长度为LENGTH的子字符串；如果有REPLACEMENT就把子字符串替换成RELACEMENT\\
+    substr EXPR, OFFSET, LENGTH, REPLACEMENT & 返回字符串EXPR从OFFSET位置开始长度为LENGTH的子字符串；如果有REPLACEMENT就把子字符串替换成RELACEMENT\\
     system PATHNAME LIST & 使用参数LIST执行程序PATHNAME；返回程序的退出状态而非其输出；使用反引号捕获输出。例子：\verb|@output = `/bin/who`;|\\
     tell FILEHANDLE & 返回在FILEHANDLE中的当前文件位置，以字节表示\\
     tr/ORIGINAL/REPLACEMENT/ & 把ORIGINAL中的每一个字符转换成REPLACEMENT中对应的字符\\

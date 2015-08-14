@@ -238,7 +238,7 @@ S2: 19 (38.2 bits)
 \autoref{exam:example12.1}由一个主程序和两个新的子程序组成。\textit{parse\_blast}和\textit{parse\_blast\_alignment}这两个子程序使用正则表达式来从标量字符串中提取大量的数据位。我之所以选取这种方法，是因为数据本身，数据虽然是结构化的，但是每一行并没有明确指定的功能。（参看\autoref{chap:chapter10}和\autoref{chap:chapter11}中的讨论。）
 
 %\textbf{例12-1：从BLAST输出文件中提取注释和比对}
-\lstinputlisting[label=exam:example12.1,caption={例12-1：从BLAST输出文件中提取注释和比对}]{./scripts/example12-1.pl}
+\lstinputlisting[label=exam:example12.1,caption={例12.1：从BLAST输出文件中提取注释和比对}]{./scripts/example12-1.pl}
 
 主程序仅仅是调用了用来解析的子程序，并且输出结果而已。初始值为空的参数，是通过指针进行传递的。（参看\autoref{chap:chapter6}）。
 
@@ -393,7 +393,7 @@ Sbjct: 235 gcggaagtagttgcgggcgcctttgc 260
 \autoref{exam:example12.2}包含了一对子程序：第一个把比对解析成它们的HSPs，第二个提取出序列和它们终止的位置。主程序对\autoref{exam:example12.1}进行了扩展，使用了这两个新的子程序。
 
 %\textbf{例12-2：从BLAST输出文件中解析比对}
-\lstinputlisting[label=exam:example12.2,caption={例12-2：从BLAST输出文件中解析比对}]{./scripts/example12-2.pl}
+\lstinputlisting[label=exam:example12.2,caption={例12.2：从BLAST输出文件中解析比对}]{./scripts/example12-2.pl}
 
 \autoref{exam:example12.2}给出如下的输出：
 
@@ -494,7 +494,7 @@ A float:  3.1416 An integer: 76    and a string: Hello world!
 现在，我们将简单来看一下\verb|here|文档。这是指定多行输出文本的比较方便的一种方法，在其中还可以嵌入一些变量用于变量内插，用这种方式的话，输出的格式就和你在代码中看到的格式几乎是完全一样的——也就是说，不需要大量的\verb|print|语句以及嵌入的换行符\verb|\n|字符。我们将用\autoref{exam:example12.3}及其输出来进行讨论。
 
 %\textbf{例12-3：here文档示例}
-\lstinputlisting[label=exam:example12.3,caption={例12-3：here文档示例}]{./scripts/example12-3.pl}
+\lstinputlisting[label=exam:example12.3,caption={例12.3：here文档示例}]{./scripts/example12-3.pl}
 
 下面是\autoref{exam:example12.3}的输出：
 
@@ -514,7 +514,7 @@ AAACCCCCCGGGGGGGGTTTTTT
 \autoref{exam:example12.4}是一个简短的例子，生成FASTA样式的输出格式。
 
 %\textbf{例12-4：生出FASTA输出的format函数示例}
-\lstinputlisting[label=exam:example12.4,caption={例12-4：生出FASTA输出的format函数示例}]{./scripts/example12-4.pl}
+\lstinputlisting[label=exam:example12.4,caption={例12.4：生出FASTA输出的format函数示例}]{./scripts/example12-4.pl}
 
 下面是\autoref{exam:example12.4}的输出：
 
@@ -834,42 +834,42 @@ Translating with all codon tables using method defaults:
 
 \section{练习题}
 \textcolor{red}{\textit{习题12.1}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 \textit{基本的字符串匹配}。编写一个程序，在目标字符串中查找一个查询字符串。比如，如果查询字符串是“gone”，它会在目标字符串“goof through the way-gone-osphere”的22位置找到一个匹配。不要使用正则表达式或者任何Perl内置的字符串匹配工具；相反，在字符串中检查每一个单独的位置，比较字符，发明你自己的算法。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题12.2}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 探索 \href{http://www.ncbi.nlm.nih.gov/BLAST}{http://www.ncbi.nlm.nih.gov/BLAST} 上的NCBI BLAST网页。熟悉BLAST各个组成程序的目的和使用，阅读指南信息理解统计结果的含义。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题12.3}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 探索 \href{http://www.bioperl.org}{http://www.bioperl.org} 上的Bioperl网页。下载代码，并在你的计算机上安装它。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题12.4}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 在NCBI网站上进行BLAST检索。先针对DNA数据库检索DNA，然后针对蛋白质数据库检索同样的DNA，最后比较它们的输出。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题12.5}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 对相关的序列进行两次BLAST检索。解析检索的BLAST结果，对于每一个检索都提取出头注释中的前10个击中。编写一个程序，报告两次检索的异同之处。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题12.6}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个程序，使用Bioperl来在NCBI网站上进行BLAST检索，然后使用Bioperl来解析BLAST的输出。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题12.7}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 使用Bioperl模块，混合你自己的代码，编写一个程序，在一个DNA序列集上运行BLAST，对每个BLAST的击中列表进行排序，把排序后的IDs保存进数组。允许用户查看每一个列表、多个列表共有的击中，以及多个列表中每个独有的击中。对于每一个击中，可以让用户获取整个的GenBank记录。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题12.8}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 对子程序\textit{extract\_HSP\_information}中的代码编写解释说明。一定要参考作为代码输入的数据的格式。
 \end{adjustwidth}
 

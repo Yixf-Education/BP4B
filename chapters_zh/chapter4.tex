@@ -112,7 +112,7 @@ ASCII是计算机在内存中存储文本（和控制信息）数据的一种方
 让我们来写一个小程序吧，它把DNA存储在变量中，然后把它打印输出到屏幕上。我们会用最常用的方式——由A、C、G和T四个字母组成的字符串——来书写DNA，并且把存储DNA的变量叫做\verb|$DNA|。换言之，\verb|$DNA|就是程序中DNA序列数据的名称。注意这一点，在Perl中，变量就是你打算处理的数据的名称，使用该名称，你可以对数据进行完全的访问。\autoref{exam:example4.1}是完整的程序。
 
 %\textbf{例4-1：把DNA存储到计算机中}
-\lstinputlisting[label=exam:example4.1,caption={例4-1：把DNA存储到计算机中}]{./scripts/example4-1.pl}
+\lstinputlisting[label=exam:example4.1,caption={例4.1：把DNA存储到计算机中}]{./scripts/example4-1.pl}
 
 在\autoref{chap:chapter2}中，我们已经学习了文本编辑器和运行Perl程序的知识，运用这些知识，输入例子中的代码（或者从书籍官网上把它复制下来）并保存到一个文件中。牢记一定要把程序保存成ASCII或者纯文本格式，否则Perl在读取该文件时可能会出现问题。
 
@@ -239,7 +239,7 @@ print $DNA;
 \autoref{exam:example4.2}演示了关于字符串、变量和打印输出语句的更多内容。
 
 %\textbf{例4-2：串联DNA}
-\lstinputlisting[label=exam:example4.2,caption={例4-2：串联DNA}]{./scripts/example4-2.pl}
+\lstinputlisting[label=exam:example4.2,caption={例4.2：串联DNA}]{./scripts/example4-2.pl}
 
 就像你看到的那样，这里有三个变量：\verb|$DNA1|、\verb|$DNA2|和\verb|$DNA3|。为了对运行过程进行说明，我添加了一些\verb|print|语句，这样打印到计算机屏幕上的输出就不仅仅是一个接一个DNA片段了，看起来会更加明了一些。
 
@@ -304,13 +304,25 @@ $DNA3 = $DNA1 . $DNA2;
 \end{lstlisting}
 演示了点操作符的使用。
 
-\begin{adjustwidth}{4em}{4em}
-  \parpic[l]{
-  \includegraphics[width=1cm]{note.png}
-}
-\noindent
-在计算机语言中，一个操作符需要一些参数——在这个例子中，就是\verb|$DNA1|和\verb|$DNA2|字符串——并对它们进行操作，然后返回一个值——在这个例子中，就是串联后保存在\verb|$DNA3|变量中的字符串。算术中最为常见的操作符加减乘除都是需要两个数字作为参数、并返回一个数字作为返回值的操作符。
-\end{adjustwidth}
+%\begin{adjustwidth}{4em}{4em}
+  %\parpic[l]{
+  %\includegraphics[width=1cm]{note.png}
+%}
+%\noindent
+%在计算机语言中，一个操作符需要一些参数——在这个例子中，就是\verb|$DNA1|和\verb|$DNA2|字符串——并对它们进行操作，然后返回一个值——在这个例子中，就是串联后保存在\verb|$DNA3|变量中的字符串。算术中最为常见的操作符加减乘除都是需要两个数字作为参数、并返回一个数字作为返回值的操作符。
+%\end{adjustwidth}
+
+\vspace{-5pt}
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1cm]{note.png} & 在计算机语言中，一个操作符需要一些参数——在这个例子中，就是\verb|$DNA1|和\verb|$DNA2|字符串——并对它们进行操作，然后返回一个值——在这个例子中，就是串联后保存在\verb|$DNA3|变量中的字符串。算术中最为常见的操作符加减乘除都是需要两个数字作为参数、并返回一个数字作为返回值的操作符。\\
+      \tabucline{-}
+    \end{tabu*}
+  \end{center}
+\end{table}
+\vspace{-20pt}
 
 最后，来练习一下Perl的另外一种方法，仅仅使用\verb|print|语句就可以完成同样的串联任务：
 
@@ -339,7 +351,7 @@ print $number,"\n";
 \autoref{exam:example4.3}是处理DNA的另一个程序：它把DNA转录成RNA。在细胞中，把DNA转录成RNA是由精巧、复杂且有勘误功能的分子机器完成的。\footnote{简要来说，DNA的编码链是另一条链（模板链）的反向互补链，模板链作为合成RNA的模板，把T替换成U，生成反向互补链。两次反向互补后，除了T$\rightarrow$U的替换外，就和模板链完全一样了。}此处仅是简单的替换而已。当DNA转录成RNA时，所有的\verb|T|都会被替换成\verb|U|，这也正是我们的程序所要做的全部工作。\footnote{很明显，我们忽略了切除内含子的过程。\verb|T|代表胸腺嘧啶，\verb|U|代表鸟嘧啶。}
 
 %\textbf{例4-3：把DNA转录成RNA}
-\lstinputlisting[label=exam:example4.3,caption={例4-3：把DNA转录成RNA}]{./scripts/example4-3.pl}
+\lstinputlisting[label=exam:example4.3,caption={例4.3：把DNA转录成RNA}]{./scripts/example4-3.pl}
 
 这是\autoref{exam:example4.3}的输出：
 
@@ -409,7 +421,7 @@ Perl文档中也包含了一些对学习Perl有很大帮助的教程。有时，
 回到正题，这是\autoref{exam:example4.4}，它使用了一些新的Perl特性。就像你将看到的那样，它首先尝试一种方法，失败了，然后尝试另外一种方法，最终取得了成功。
 
 %\textbf{例4-4：计算DNA一条链的反向互补链}
-\lstinputlisting[label=exam:example4.4,caption={例4-4：计算DNA一条链的反向互补链}]{./scripts/example4-4.pl}
+\lstinputlisting[label=exam:example4.4,caption={例4.4：计算DNA一条链的反向互补链}]{./scripts/example4-4.pl}
 
 这是你屏幕上\autoref{exam:example4.4}的输出：
 
@@ -487,7 +499,7 @@ ID。同时，它还表明了这只是数据的一部分，而文件的后缀\te
 你已经创建或者下载了保存有蛋白质序列数据的文件，那我们就来编写一个程序吧，这个程序从文件中读入蛋白质序列数据并把它保存到变量中。\autoref{exam:example4.5}是第一次尝试，随着学习我们会逐步对它进行扩展。
 
 %\textbf{例4-5：从文件中读取蛋白质序列数据}
-\lstinputlisting[label=exam:example4.5,caption={例4-5：从文件中读取蛋白质序列数据}]{./scripts/example4-5.pl}
+\lstinputlisting[label=exam:example4.5,caption={例4.5：从文件中读取蛋白质序列数据}]{./scripts/example4-5.pl}
 
 下面是\autoref{exam:example4.5}的输出：
 
@@ -524,7 +536,7 @@ $protein = <PROTEINFILE>;
 有许多方法可以读取整个文件，\autoref{exam:example4.6}演示了其中的一种。
 
 %\textbf{例4-6：从文件中读取蛋白质序列数据，第二次尝试}
-\lstinputlisting[label=exam:example4.6,caption={例4-6：从文件中读取蛋白质序列数据，第二次尝试}]{./scripts/example4-6.pl}
+\lstinputlisting[label=exam:example4.6,caption={例4.6：从文件中读取蛋白质序列数据，第二次尝试}]{./scripts/example4-6.pl}
 
 下面是\autoref{exam:example4.6}的输出：
 
@@ -550,7 +562,7 @@ GLQYALNVPISVKQEITFTDVSEQLMRDKKQIR
 在计算机语言中，数组是存储多个标量值的变量。这些标量的值可以是数字、字符串，或者，像此处的例子一样，也可以是蛋白质序列数据输入文件中的每一行。让我们看看如何来使用数组吧。\autoref{exam:example4.7}演示了如何使用数组来把输入文件中的所有行都读入进来。
 
 %\textbf{例4-7：从文件中读取蛋白质序列数据，第三次尝试}
-\lstinputlisting[label=exam:example4.7,caption={例4-7：从文件中读取蛋白质序列数据，第三次尝试}]{./scripts/example4-7.pl}
+\lstinputlisting[label=exam:example4.7,caption={例4.7：从文件中读取蛋白质序列数据，第三次尝试}]{./scripts/example4-7.pl}
 
 下面是\autoref{exam:example4.7}的输出：
 
@@ -741,7 +753,7 @@ Here's the array with an element inserted after the 2nd element: A C X G T
 依赖于使用的上下文环境不同，Perl的许多操作符都会有不同的表现。在Perl中有\textit{标量上下文}和\textit{列表上下文}两种上下文环境。在\autoref{exam:example4.8}对它们都进行了演示。
 
 %\textbf{例4-8：变量上下文和列表上下文}
-\lstinputlisting[label=exam:example4.8,caption={例4-8：变量上下文和列表上下文}]{./scripts/example4-8.pl}
+\lstinputlisting[label=exam:example4.8,caption={例4.8：变量上下文和列表上下文}]{./scripts/example4-8.pl}
 
 下面是\autoref{exam:example4.8}的输出：
 
@@ -770,45 +782,38 @@ $a = @bases;
 现在，你已经看到使用字符串和数组来保存序列和文件数据，学习了Perl的基本语法，包括变量、赋值、打印和读入文件。把DNA转录成了RNA，还计算出了DNA一条链的反向互补序列。到\autoref{chap:chapter5}的结尾，你将学习到Perl语言编程的所有基础知识。
 
 \section{练习题}
-\noindent
 \textcolor{red}{\textit{习题4.1}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 探索编程语言对语法错误的敏感性。对于一个可以运行的程序，试着把其中任意一个语句末尾的分号删除掉，看看会产生什么样的错误信息。试着改变其他的语法项：添加一个小括号或者大括号，把“print”或其他保留字拼错，键入或者删除任何一些内容。程序员对这样的错误习以为常。即使精通语言后，在你一点点编写代码时，仍然会常常出现这样的语法错误。注意一个错误是如何导致多行错误报告的。Perl报告的出现错误的行是不是完全准确？
 \end{adjustwidth}
 
-\noindent
 \textcolor{red}{\textit{习题4.2}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个程序，把一个整数保存到变量中并把它打印出来。
 \end{adjustwidth}
 
-\noindent
 \textcolor{red}{\textit{习题4.3}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个把DNA（原始序列可以是大写或者小写）以小写形式（acgt）输出的程序；再编写一个把DNA以大写形式（ACGT）输出的程序。使用\textit{tr///}函数。
 \end{adjustwidth}
 
-\noindent
 \textcolor{red}{\textit{习题4.4}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 任务和练习4.3中的一样，但这次使用\verb|\U|和\verb|\L|字符串指令符来进行大小写的转换。举个例子，\verb|print "\U$DNA"|会把\verb|$DNA|中的数据以大写形式输出出来。
 \end{adjustwidth}
 
-\noindent
 \textcolor{red}{\textit{习题4.5}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 有时，信息也可以从RNA流向DNA。编写一个把RNA反转录成DNA的程序。
 \end{adjustwidth}
 
-\noindent
 \textcolor{red}{\textit{习题4.6}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 读取两个文件的数据，在输出第一个文件的内容后紧接着输出第一个文件的内容。
 \end{adjustwidth}
 
-\noindent
 \textcolor{red}{\textit{习题4.7}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 这是一个更有难度的练习题。编写一个程序，读去一个文件，然后逆序输出它的每一行，也就是首先输出它的最后一行。你可能需要看一下\textit{push}、\textit{pop}、\textit{shift}和\textit{unshift}这四个函数，从中选择一个或多个来完成此练习。你可能需要预习一下\autoref{chap:chapter5}，这样就可以在程序中使用循环了。但取决于你采取的方案，这并不是必需的。或者，你可以对包含所有行的数组使用\textit{reverse}函数。
 \end{adjustwidth}
 

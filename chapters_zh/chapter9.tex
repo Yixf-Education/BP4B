@@ -246,7 +246,7 @@ $site = pop@fields;
 \autoref{exam:example9.1}是一个子程序，对于给定的一个字符串，它会把这样的代码转换成字符集。
 
 %\textbf{例9-1：把IUB的模糊代码翻译成正则表达式}
-\lstinputlisting[label=exam:example9.1,caption={例9-1：把IUB的模糊代码翻译成正则表达式}]{./scripts/example9-1.pl}
+\lstinputlisting[label=exam:example9.1,caption={例9.1：把IUB的模糊代码翻译成正则表达式}]{./scripts/example9-1.pl}
 
 看起来你已经准备好编写一个子程序，从REBASE的数据文件中提取数据。但还有一个重要的问题没有解决：你想要返回的数据有多精确？
 
@@ -255,7 +255,7 @@ $site = pop@fields;
 既然你已经学习了\textit{split}，也许你可以使用一个散列，它的键是酶的名字，它的值是包含用空白分隔开的识别位点和正则表达式的字符串。然后你就可以对数据进行快速的查找，并使用\textit{split}提取出需要的值。\autoref{exam:example9.2}展示了这种方法。
 
 %\textbf{例9-2：解析REBASE数据文件的子程序}
-\lstinputlisting[label=exam:example9.2,caption={例9-2：解析REBASE数据文件的子程序}]{./scripts/example9-2.pl}
+\lstinputlisting[label=exam:example9.2,caption={例9.2：解析REBASE数据文件的子程序}]{./scripts/example9-2.pl}
 
 这个\textit{parseREBASE}子程序做了大量的工作。对于一个子程序来说，做的事情是不是太多了，要不要重新编写它？当你编写代码时，这是你应该问自己的一个很好的问题。在这个例子中，就先这样吧。然而，除了多了大量的事情以外，它也采用了一些新的处理方法，现在我们就来看看吧。
 
@@ -393,7 +393,7 @@ return @positions
 在你之前使用这个技巧的时候，你仅仅计数了有多少匹配，而没有处理匹配的位置。我们来看看文档找点线索，尤其是文档中的内置函数列表。看起来，\verb|pos|函数可以解决这个问题。它给出了\verb|m//g|查找中最后一次变量匹配的位置。\autoref{exam:example9.3}演示了主程序，其后是需要的子程序。这是一个简单的子程序，因为像\textit{pos}这样的Perl函数使得问题简单了许多。
 
 %\textbf{例9-3：为用户的查询制作限制酶切图谱}
-\lstinputlisting[label=exam:example9.3,caption={例9-3：为用户的查询制作限制酶切图谱}]{./scripts/example9-3.pl}
+\lstinputlisting[label=exam:example9.3,caption={例9.3：为用户的查询制作限制酶切图谱}]{./scripts/example9-3.pl}
 
 下面是\autoref{exam:example9.3}的一些示例输出：
 
@@ -440,44 +440,44 @@ Search for what restriction enzyme (or quit)?: quit
 \section{练习题}
 \label{sect:section9.4}
 \textcolor{red}{\textit{习题9.1}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 修改\autoref{exam:example9.3}，让它可以从命令行接收DNA；如果它没有被指定，提示用户键入FASTA文件名并读入DNA序列数据。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题9.2}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
   修改Exercise
   9.1，从\textit{bionet}文件中读入全部的REBASE限制性内切位点数据，并把它制作成一个散列。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题9.3}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 修改Exercise 9.2，如果不存在DBM文件，就通过存储的REBASE散列生成一个DBM文件，如果DBM文件存在，就直接使用DBM文件。（提前查阅\autoref{chap:chapter10}中关于DBM的更多的信息。）
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题9.4}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 修改\autoref{exam:example5.3}，报告它找到的基序的位置，即使基序在序列数据中出现多次。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题9.5}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 通过打印出序列、并用酶的名字把限制性内切位点标记出来，为限制酶切图谱添加一个切割位点的图形化展示。你能制作一个处理多个限制性内切酶的图谱吗？你该如何处理重叠的限制性内切位点呢？
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题9.6}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 编写一个子程序，返回限制酶切消化片段，就是进行限制性酶切反应后留下的DNA片段。记住要考虑切割位点的位置。（这需要你以另一种方式解析REBASE的\textit{bionet}文件。如果你愿意的话，可以把没有用\^~指明切割位点的限制性内切酶忽略掉。）
 \end{adjustwidth}
 
 
 \textcolor{red}{\textit{习题9.7}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 扩展限制酶切图谱软件，对于非回文识别位点，把相反的另一条链也考虑在内。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题9.8}}
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{4em}{}
 对于没有括号的算术运算，编写一个子程序，根据Perl的优先级规则为其添加上合适的括号。（警告：这是一个相当有难度的练习题，除非你确信有足够的课余时间，否则请跳过该题。对于优先级规则，可以参看Perl的文档。）
 \end{adjustwidth}
 
