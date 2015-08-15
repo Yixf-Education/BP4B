@@ -183,8 +183,8 @@ I've put five GenBank records in a file called \textit{library.gb}. As before, y
 \subsection{Using Arrays}
 \autoref{exam:example10.1} shows the first method, which operates on an array containing the lines of the GenBank record. The main program is followed by a subroutine that does the real work.
 
-\textbf{Example 10-1. Extract annotation and sequence from GenBank file}
-\lstinputlisting[label=exam:example10.1]{./scripts/example10-1.pl}
+%\textbf{Example 10-1. Extract annotation and sequence from GenBank file}
+\lstinputlisting[label=exam:example10.1,caption={Example 10.1. Extract annotation and sequence from GenBank file}]{./scripts/example10-1.pl}
 
 Here's the beginning and end of \autoref{exam:example10.1}'s output of the sequence data:
 
@@ -316,8 +316,8 @@ A call to read a scalar from a filehandle takes all the data up to the GenBank e
 
 After reading in the record, you'll parse it into the annotation and sequence parts making use of \verb|/s| and \verb|/m| pattern modifiers. Extracting the annotation and sequence is the easy part; parsing the annotation will occupy most of the remainder of the chapter.
 
-\textbf{Example 10-2. Extract annotation and sequence from Genbank record}
-\lstinputlisting[label=exam:example10.2]{./scripts/example10-2.pl}
+%\textbf{Example 10-2. Extract annotation and sequence from GenBank record}
+\lstinputlisting[label=exam:example10.2,caption={Example 10.2. Extract annotation and sequence from GenBank record}]{./scripts/example10-2.pl}
 
 The output from this program is the same as the GenBank file listed previously, minus the last line, which is the end-of-record separator \verb|//|.
 
@@ -361,8 +361,8 @@ Looking at a GenBank record, it's interesting to think about how to extract the 
 \subsection{Using Arrays}
 \autoref{exam:example10.3} parses a few pieces of information from the annotations in a GenBank file. It does this using the data in the form of an array.
   
-\textbf{Example 10-3. Parsing GenBank annotations using arrays}
-\lstinputlisting[label=exam:example10.3]{./scripts/example10-3.pl}
+%\textbf{Example 10-3. Parsing GenBank annotations using arrays}
+\lstinputlisting[label=exam:example10.3,caption={Example 10.3. Parsing GenBank annotations using arrays}]{./scripts/example10-3.pl}
 
 Here's the output from \autoref{exam:example10.3}:
 
@@ -377,8 +377,8 @@ Homo sapiens
 
 Now let's slightly extend that program to handle the DEFINITION field. Notice that the DEFINITION field can extend over more than one line. To collect that field, use a trick you've already seen in \autoref{exam:example10.1}: set a flag when you're in the ``state" of collecting a definition. The flag variable is called, unsurprisingly, \verb|$flag|.
 
-\textbf{Example 10-4. Parsing GenBank annotations using arrays, take 2}
-\lstinputlisting[label=exam:example10.4]{./scripts/example10-4.pl}
+%\textbf{Example 10-4. Parsing GenBank annotations using arrays, take 2}
+\lstinputlisting[label=exam:example10.4,caption={Example 10.4. Parsing GenBank annotations using arrays, take 2}]{./scripts/example10-4.pl}
 
 \autoref{exam:example10.4} outputs:
 
@@ -473,8 +473,8 @@ This example shows how to use subroutines to answer a question such as: what are
 \subsection{Main Program}
 Let's test these subroutines with \autoref{exam:example10.5}, which has some subroutine definitions that will be added to the \textit{BeginPerlBioinfo.pm} module:
   
-\textbf{Example 10-5. GenBank library subroutines}
-\lstinputlisting[label=exam:example10.5]{./scripts/example10-5.pl}
+%\textbf{Example 10-5. GenBank library subroutines}
+\lstinputlisting[label=exam:example10.5,caption={Example 10.5. GenBank library subroutines}]{./scripts/example10-5.pl}
 
 \autoref{exam:example10.5} generates the following output on our little GenBank library:
 
@@ -530,8 +530,8 @@ So, the two parts of the regular expression combined match the fields with their
 
 \autoref{exam:example10.6} shows a subroutine that, given the annotations section of a GenBank record stored in a scalar variable, returns a hash with keys equal to the names of the top-level fields and values equal to the contents of those fields.
 
-\textbf{Example 10-6. Parsing GenBank annotation}
-\lstinputlisting[label=exam:example10.6]{./scripts/example10-6.pl}
+%\textbf{Example 10-6. Parsing GenBank annotation}
+\lstinputlisting[label=exam:example10.6,caption={Example 10.6. Parsing GenBank annotation}]{./scripts/example10-6.pl}
 
 In the subroutine \textit{parse\_annotation}, note how the variables \verb|$key| and \verb|$value| are scoped within the \verb|while| block. One benefit of this is that you don't have to reinitialize the variables each time through the loop. Also note that the key is the name of the field, and the value is the whole field.
 
@@ -623,327 +623,327 @@ Although our GenBank entry is fairly simple and includes only three features, th
 The following is a list of the features defined for GenBank records. Although lengthy, I think it's important to read through it to get an idea of the range of information that may be present in a GenBank record.
 
 \textcolor{red}{\textit{allele}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Obsolete; see \verb|variation| feature key
 \end{adjustwidth}
 
 \textcolor{red}{\textit{attenuator}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Sequence related to transcription termination
 \end{adjustwidth}
 
 \textcolor{red}{\textit{C\_region}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Span of the C immunological feature
 \end{adjustwidth}
 
 \textcolor{red}{\textit{CAAT\_signal}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 CAAT box in eukaryotic promoters
 \end{adjustwidth}
 
 \textcolor{red}{\textit{CDS}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Sequence coding for amino acids in protein (includes stop codon)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{conflict}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Independent sequence determinations differ
 \end{adjustwidth}
 
 \textcolor{red}{\textit{D-loop}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Displacement loop
 \end{adjustwidth}
 
 \textcolor{red}{\textit{D\_segment}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Span of the D immunological feature
 \end{adjustwidth}
 
 \textcolor{red}{\textit{enhancer}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Cis-acting enhancer of promoter function
 \end{adjustwidth}
 
 \textcolor{red}{\textit{exon}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Region that codes for part of spliced mRNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{gene}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Region that defines a functional gene, possibly including upstream (promoter, enhancer, etc.) and downstream control elements, and for which a name has been assigned
 \end{adjustwidth}
 
 \textcolor{red}{\textit{GC\_signal}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 GC box in eukaryotic promoters
 \end{adjustwidth}
 
 \textcolor{red}{\textit{iDNA}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Intervening DNA eliminated by recombination
 \end{adjustwidth}
 
 \textcolor{red}{\textit{intron}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Transcribed region excised by mRNA splicing
 \end{adjustwidth}
 
 \textcolor{red}{\textit{J\_region}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Span of the J immunological feature
 \end{adjustwidth}
 
 \textcolor{red}{\textit{LTR}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Long terminal repeat
 \end{adjustwidth}
 
 \textcolor{red}{\textit{mat\_peptide}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Mature peptide coding region (doesn't include stop codon)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_binding}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Miscellaneous binding site
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_difference}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Miscellaneous difference feature
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_feature}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Region of biological significance that can't be described by any other feature
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_recomb}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Miscellaneous recombination feature
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_RNA}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Miscellaneous transcript feature not defined by other RNA keys
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_signal}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Miscellaneous signal
 \end{adjustwidth}
 
 \textcolor{red}{\textit{misc\_structure}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Miscellaneous DNA or RNA structure
 \end{adjustwidth}
 
 \textcolor{red}{\textit{modified\_base}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 The indicated base is a modified nucleotide
 \end{adjustwidth}
 
 \textcolor{red}{\textit{mRNA}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Messenger RNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{mutation}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Obsolete: see \verb|variation| feature key
 \end{adjustwidth}
 
 \textcolor{red}{\textit{N\_region}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Span of the N immunological feature
 \end{adjustwidth}
 
 \textcolor{red}{\textit{old\_sequence}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Presented sequence revises a previous version
 \end{adjustwidth}
 
 \textcolor{red}{\textit{polyA\_signal}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Signal for cleavage and polyadenylation
 \end{adjustwidth}
 
 \textcolor{red}{\textit{polyA\_site}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Site at which polyadenine is added to mRNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{precursor\_RNA}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Any RNA species that isn't yet the mature RNA product
 \end{adjustwidth}
 
 \textcolor{red}{\textit{prim\_transcript}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Primary (unprocessed) transcript
 \end{adjustwidth}
 
 \textcolor{red}{\textit{primer}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Primer binding region used with PCR
 \end{adjustwidth}
 
 \textcolor{red}{\textit{primer\_bind}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Noncovalent primer binding site
 \end{adjustwidth}
 
 \textcolor{red}{\textit{promoter}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 A region involved in transcription initiation
 \end{adjustwidth}
 
 \textcolor{red}{\textit{protein\_bind}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Noncovalent protein binding site on DNA or RNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{RBS}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Ribosome binding site
 \end{adjustwidth}
 
 \textcolor{red}{\textit{rep\_origin}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Replication origin for duplex DNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{repeat\_region}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Sequence containing repeated subsequences
 \end{adjustwidth}
 
 \textcolor{red}{\textit{repeat\_unit}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 One repeated unit of a repeat\_region
 \end{adjustwidth}
 
 \textcolor{red}{\textit{rRNA}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Ribosomal RNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{S\_region}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Span of the S immunological feature
 \end{adjustwidth}
 
 \textcolor{red}{\textit{satellite}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Satellite repeated sequence
 \end{adjustwidth}
 
 \textcolor{red}{\textit{scRNA}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Small cytoplasmic RNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{sig\_peptide}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Signal peptide coding region
 \end{adjustwidth}
 
 \textcolor{red}{\textit{snRNA}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Small nuclear RNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{source}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Biological source of the sequence data represented by a GenBank record; mandatory feature, one or more per record; for organisms that have been incorporated within the NCBI taxonomy database, an associated \verb|/db_xref="taxon:NNNN"| qualifier will be present (where \verb|NNNNN| is the numeric identifier assigned to the organism within the NCBI taxonomy database)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{stem\_loop}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Hairpin loop structure in DNA or RNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{STS}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Sequence Tagged Site: operationally unique sequence that identifies the combination of primer spans used in a PCR assay
 \end{adjustwidth}
 
 \textcolor{red}{\textit{TATA\_signal}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 TATA box in eukaryotic promoters
 \end{adjustwidth}
 
 \textcolor{red}{\textit{terminator}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Sequence causing transcription termination
 \end{adjustwidth}
 
 \textcolor{red}{\textit{transit\_peptide}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Transit peptide coding region
 \end{adjustwidth}
 
 \textcolor{red}{\textit{transposon}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Transposable element (TN)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{tRNA}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Transfer RNA
 \end{adjustwidth}
 
 \textcolor{red}{\textit{unsure}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Authors are unsure about the sequence in this region
 \end{adjustwidth}
 
 \textcolor{red}{\textit{V\_region}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Span of the V immunological feature
 \end{adjustwidth}
 
 \textcolor{red}{\textit{variation}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 A related population contains stable mutation
 \end{adjustwidth}
 
 \textcolor{red}{\textit{-}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Placeholder (hyphen)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{-10\_signal}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Pribnow box in prokaryotic promoters
 \end{adjustwidth}
 
 \textcolor{red}{\textit{-35\_signal}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 -35 box in prokaryotic promoters
 \end{adjustwidth}
 
 \textcolor{red}{\textit{3'clip}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 3'-most region of a precursor transcript removed in processing
 \end{adjustwidth}
 
 \textcolor{red}{\textit{3'UTR}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 3' untranslated region (trailer)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{5'clip}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 5'-most region of a precursor transcript removed in processing
 \end{adjustwidth}
 
 \textcolor{red}{\textit{5'UTR}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 5' untranslated region (leader)
 \end{adjustwidth}
 
@@ -954,8 +954,8 @@ These feature keys can have their own additional features, which you'll see here
 
 It's often the case that there are multiple instances of the same feature in a record. For instance, there may be several exons specified in the FEATURES table of a GenBank record. For this reason we'll store the features as elements in an array, rather than in a hash keyed on the feature name (as this allows you to store, for instance, only one instance of an exon).
 
-\textbf{Example 10-7. Testing subroutine parse\_features}
-\lstinputlisting[label=exam:example10.7]{./scripts/example10-7.pl}
+%\textbf{Example 10-7. Testing subroutine parse\_features}
+\lstinputlisting[label=exam:example10.7,caption={Example 10.7. Testing subroutine parse\_features}]{./scripts/example10-7.pl}
 
 \autoref{exam:example10.7} gives the output:
 
@@ -1061,27 +1061,27 @@ unless(dbmopen(%my_hash, 'DBNAME', 0644)) {
 Another parameter is called the \textit{mode}. Unix or Linux users will be familiar with file permissions in this form. Many possibilities exist; here are the most common ones:
 
 \textcolor{red}{\textit{0644}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 You can read and write; others can just read.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{0600}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Only you can read or write.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{0666}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Anyone can read or write.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{0444}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Anyone can read (nobody can write).
 \end{adjustwidth}
 
 \textcolor{red}{\textit{0400}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Only you can read (nobody else can do anything).
 \end{adjustwidth}
 
@@ -1089,8 +1089,8 @@ The \textit{dbmopen} call fails if you try to open a file with a mode that assum
 
 That's pretty much it; DBM files are that simple. \autoref{exam:example10.8} displays a DBM file that stores key-value pairs of accession numbers of GenBank records for keys, and byte offsets of the records as values.
 
-\textbf{Example 10-8. A DBM index of a GenBank library}
-\lstinputlisting[label=exam:example10.8]{./scripts/example10-8.pl}
+%\textbf{Example 10-8. A DBM index of a GenBank library}
+\lstinputlisting[label=exam:example10.8,caption={Example 10.8. A DBM index of a GenBank library}]{./scripts/example10-8.pl}
 
 Here's the truncated output of \autoref{exam:example10.8}:
 
@@ -1112,52 +1112,52 @@ Enter accession number (or quit): q
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 10.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Go to the NCBI, EMBL, and EBI web sites and become familiar with their use.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Read the GenBank format documentation, \textit{gbrel.txt}.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine that passes a hash by value. Now rewrite it to pass the hash by reference.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Design a module of subroutines to handle the following kinds of data: a flat file containing records consisting of gene names on a line and extra information of any sort on succeeding lines, followed by a blank line. Your subroutines should be able to read in the data and then do a fast lookup on the information associated with a gene name. You should also be able to add new records to the flat file. Now reuse this module to build an address book program.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Descend further into the FEATURES table. Parse the features in the table into their next level by parsing the feature names, locations, and qualifiers. Check the document \textit{gbrel.txt} for definitions of the structures of the fields.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that takes a long DNA sequence as input and outputs the counts of all four-base subsequences (256 of them in all), sorted by frequency. A four-base subsequence starts at each location 1, 2, 3, and so on. (This kind of word-frequency analysis is common to many fields of study, including linguistics, computer science, and music.)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Extend the program in Exercise 10.6 to count all the sequences in a GenBank library.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Given an amino acid, find the frequency of occurrence of the adjacent amino acids coded in a DNA sequence; or in a GenBank library.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.9}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Extract all the words (excluding words like ``the" or other unnecessary words) from the annotation of a library of GenBank records. For each word found, add the offset of the GenBank record in the library to a DBM file that has keys equal to the words, and values that are strings with offsets separated by spaces. In other words, one key can have a space-separated list of offsets for a value. Then you can quickly find all records containing a word like ``fibroblast" with a simple lookup, followed by extracting the offsets and \textit{seek}ing into the library with those offsets. How big is your DBM file compared to the GenBank library? What might be involved in constructing a search engine for the annotations in all of GenBank? For human DNA only?
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 10.10}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program to make a custom library of oncogenes from the GBPRI division of GenBank.
 \end{adjustwidth}
 

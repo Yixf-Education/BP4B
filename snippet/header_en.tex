@@ -12,7 +12,7 @@
 %\setlength{\parskip}{1em}
 \setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
 
-\usepackage[a4paper,top=2.5cm,bottom=1.5cm,left=3cm,right=1.5cm,marginparwidth=4.7cm,marginparsep=0.3cm]{geometry}
+\usepackage[a4paper,top=2.5cm,bottom=1.5cm,left=2cm,right=1.5cm,marginparwidth=4.7cm,marginparsep=0.3cm]{geometry}
 
 %在每一章的开头列出section的列表
 \usepackage{minitoc}
@@ -20,14 +20,15 @@
 
 %修改目录中的章节格式
 \usepackage{titletoc}
-%\usepackage{tocloft}
-%\titlecontents{chapter}[0pt]{\vspace{0.1\baselineskip}\bfseries}{第 \thecontentslabel 章\quad}{}{\hspace{.5em}\titlerule*[8pt]{$\cdot$}\contentspage}
-%\titlecontents{chapter}[0pt]{\vspace{0.3\baselineskip}\bfseries}{Chapter \thecontentslabel\quad}{}{\hfill\contentspage}
-%\titlecontents{section}[2em]{\vspace{0.05\baselineskip}}{\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*{\cftdot}\contentspage}
-%\titlecontents{subsection}[4em]{\vspace{0.02\baselineskip}}{\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*{\cftdot}\contentspage}
+\titlecontents{chapter}[0pt]{\vspace{0.3\baselineskip}\bfseries}{Chapter \thecontentslabel\quad}{}{\hfill\contentspage}
+\titlecontents{section}[2em]{\vspace{0.05\baselineskip}}{\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*{\ldots}\contentspage}
+\titlecontents{subsection}[4em]{\vspace{0.02\baselineskip}}{\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*{\ldots}\contentspage}
+\titlecontents{figure}[0pt]{\vspace{0.05\baselineskip}}{\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*[8pt]{\ldots}\contentspage}
+\titlecontents{table}[0pt]{\vspace{0.05\baselineskip}}{\thecontentslabel\quad}{}{\hspace{.5em}\titlerule*[8pt]{\ldots}\contentspage}
 
 %附录
-\usepackage[title,titletoc]{appendix}
+%\usepackage[title,titletoc]{appendix}
+\usepackage{appendix}
 
 %整段缩进
 \usepackage{changepage}
@@ -37,12 +38,11 @@
 
 %在footnote中使用verb
 \usepackage{fancyvrb}
-
-%文本框
-\usepackage{fancybox}
-
 %在section中使用\verb
 \usepackage{cprotect}
+
+%文本框
+%\usepackage{fancybox}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -58,38 +58,41 @@
 %\setfoot{}{}{}\headrule}
 %\pagestyle{main}
 
+\usepackage{titlesec}
+\titleformat{\chapter}{\centering\LARGE\bfseries}{Chapter \thechapter}{1em}{}
+
 \usepackage{xcolor}
 \usepackage{graphicx}
 \graphicspath{{figures/}}
 %\usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
-\usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks]{hyperref}
-%\def\sectionautorefname{Section}
+\usepackage[xetex,bookmarksnumbered=true,bookmarksopen=true,pdfborder=1,breaklinks,colorlinks]{hyperref}
+
 \def\chapterautorefname{Chapter}
 \def\sectionautorefname{Section}
 \def\subsectionautorefname{Subsection}
 \def\subsubsectionautorefname{Subsubsection}
+\def\figureautorefname{Figure}
 \def\tableautorefname{Table}
+\def\Appendixautorefname{Appendix}
 \def\lstlistingautorefname{Example}
 %\def\chapterautorefname{Chap.}
 %\def\sectionautorefname{Sec.}
 %\def\subsectionautorefname{sub--Sec.}
 %\def\figureautorefname{Fig.}
 %\def\tableautorefname{Tab.}
-%\def\equationautorefname{Eq.}
+
+\renewcommand{\listfigurename}{Figures}
+\renewcommand{\listtablename}{Tables}
+\renewcommand{\listtablename}{Tables}
 
 %使表格可以跨页
-%\usepackage{booktabs,longtable}
-\usepackage{booktabs,tabu, longtable}
+\usepackage{booktabs,tabu,longtable}
 %调整表头和表格之间的间距
 \setlength\belowcaptionskip{5pt}
-%\usepackage{caption} 
-%\captionsetup[table]{skip=5pt}
-
 %调整表格行高
 \renewcommand{\arraystretch}{0.8}
 
 %调整列表间及其上下的间距
-%\usepackage{mdwlist}
 \usepackage{enumitem}
 \setlist{nosep}
 
@@ -106,39 +109,10 @@
 
 %插入源代码
 \usepackage{listings}
-%\lstset{
-  %language=Perl,                  % 程序语言名称：TeX, Perl, R, sh, bash, Awk
-  %basicstyle=\normalsize\tt,      %\tt指monospace字体族，程序源代码使用此族字体表示更加美观
-  %numbers=left,                   % 行号位置(左侧)
-  %numberstyle=\small,             % 行号字体的字号
-  %stepnumber=1,                   % 行号的显示步长
-  %numbersep=5pt,                  % 行号与代码间距
-  %backgroundcolor=\color{white},  % 背景色;需要 \usepackage{color}
-  %showspaces=false,               % 不显示空格
-  %showstringspaces=false,         % 不显示代码字符串中的空格标记
-  %showtabs=false,                 % 不显示 TAB
-  %tabsize=4, 
-  %frame=shadowbox,                % 把代码用带有阴影的框圈起来
-  %captionpos=b,                   % 标题位置
-  %breaklines=true,                % 对过长的代码自动断行
-  %breakatwhitespace=false,        % 断行只在空格处
-  %extendedchars=false,            % 解决代码跨页时，章节标题，页眉等汉字不显示的问题
-  %%escapeinside={\%*}{*},         % 跳脱字符，添加注释，暂时离开 listings 
-  %%escapeinside=``,
-  %commentstyle=\color{red!50!green!50!blue!50}\tt,  %浅灰色的注释
-  %rulesepcolor=\color{red!20!green!20!blue!20},     %代码块边框为淡青色
-  %keywordstyle=\color{blue!70}\bfseries\tt,         %代码关键字的颜色为蓝色，粗体
-  %identifierstyle=\tt,
-  %stringstyle=\tt,                % 代码字符串的特殊格式
-  %keepspaces=true,
-  %breakindent=22pt,
-  %%breakindent=4em,
-  %breakautoindent=true,
-  %flexiblecolumns=true,
-  %aboveskip=1em,                  %代码块边框
-  %xleftmargin=2em,
-  %xrightmargin=2em
-%}
+\renewcommand{\lstlistlistingname}{Programs}
+%\renewcommand{\lstlistingname}{Example}
+\contentsuse{lstlisting}{lol}
+\titlecontents{lstlising}[0pt]{\vspace{0.05\baselineskip}}{}{\thecontentslabel\quad}{\hspace{.5em}\titlerule*[8pt]{\ldots}\contentspage}
 \lstset{
   language=Perl,
   basicstyle=\small\tt,
@@ -147,15 +121,14 @@
   numberstyle=\footnotesize,
   showstringspaces=false,
   %breaklines=ture,
+  breaklines=false,
   breakatwhitespace=false,
 }
-%\renewcommand\lstlistingname{Example}
-%\renewcommand\lstlistlistingname{Examples}
-
-%\usepackage{chngcntr}% http://ctan.org/pkg/chngcntr
-%\AtBeginDocument{\counterwithin{lstlisting}{chapter}}
+\usepackage{caption}
+\captionsetup[lstlisting]{labelformat=empty,labelsep=none,format=plain,font=bf}
+%\captionsetup[lstlising]{labelformat=empty,labelsep=none,textformat=empty,skip=-20pt}
 
 \usepackage{textcomp}
-%\usepackage[toc,page]{appendix}
 
-%\usepackage{wallpaper}
+\usepackage{emptypage}
+

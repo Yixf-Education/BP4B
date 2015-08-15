@@ -28,12 +28,24 @@ However, "What is truth?" It's a question that programming languages may answer 
 
 This section contains a few examples that demonstrate some of Perl's conditionals. The true-false condition in each example is equality between two numbers. Notice that equality of numbers is represented by two equal signs \verb|==|, because the single equal sign \verb|=| is already used for assignment to a variable. 
 
-\begin{adjustwidth}{2cm}{2cm}
-  \parpic[l]{
-  \includegraphics[width=1cm]{warning.png}
-  }
-  Confusion between = for assignment and == for numeric equality is a frequent programming bug, so watch for it! 
-\end{adjustwidth}
+%\begin{adjustwidth}{2cm}{2cm}
+  %\parpic[l]{
+  %\includegraphics[width=2em]{warning.png}
+  %}
+  %Confusion between = for assignment and == for numeric equality is a frequent programming bug, so watch for it! 
+%\end{adjustwidth}
+
+\vspace{-5pt}
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1.1cm]{note.png} & Confusion between = for assignment and == for numeric equality is a frequent programming bug, so watch for it!\\
+      \tabucline{-}
+    \end{tabu}
+  \end{center}
+\end{table}
+\vspace{-20pt}
 
 The following examples demonstrate whether the conditional will evaluate to \verb|true| or \verb|false|. You don't ordinarily have much use for such simple tests. Usually you test the values that have been read into variables or the return value of function calls—things you don't necessarily know beforehand.
 
@@ -158,8 +170,8 @@ Matching braces are easy to lose track of, so don't be surprised if you miss som
 
 Back to the conditional statements. The \textit{if-else} also has an \textit{if-elsif-else} form, as in \autoref{exam:example5.1}. The conditionals, first the \textit{if} and then the \textit{elsifs}, are evaluated in turn, and as soon as one evaluates to \verb|true|, its block is executed, and the rest of the conditionals are ignored. If none of the conditionals evaluates to \verb|true|, the \textit{else} block is executed if there is one—it's optional. 
 
-\textbf{Example 5-1. if-elsif-else}
-\lstinputlisting[label=exam:example5.1]{./scripts/example5-1.pl}
+%\textbf{Example 5-1. if-elsif-else}
+\lstinputlisting[label=exam:example5.1,caption={Example 5.1. if-elsif-else}]{./scripts/example5-1.pl}
 
 Notice the \verb|\"| in the \textit{else} block's \verb|print| statement; it lets you print a double-quote sign (") within a double-quoted string. The backslash character tells Perl to treat the following " as the sign itself and not interpret it as the marker for the end of the string. Also note the use of \textit{eq} to check for equality between strings.
 
@@ -172,8 +184,8 @@ MNIDDKL--the magic word!
 \subsection{Loops}
 A \textit{loop} allows you to repeatedly execute a block of statements enclosed within matching curly braces. There are several ways to loop in Perl: \textit{while} loops, \textit{for} loops, \textit{foreach} loops, and more. \autoref{exam:example5.2} (from \autoref{chap:chapter4}) displays the \textit{while} loop and how it's used while reading protein sequence data in from a file. 
 
-\textbf{Example 5-2. Reading protein sequence data from a file, take 4}
-\lstinputlisting[label=exam:example5.2]{./scripts/example5-2.pl}
+%\textbf{Example 5-2. Reading protein sequence data from a file, take 4}
+\lstinputlisting[label=exam:example5.2,caption={Example 5.2. Reading protein sequence data from a file, take 4}]{./scripts/example5-2.pl}
 
 Here's the output of \autoref{exam:example5.2}:
 
@@ -204,7 +216,7 @@ To sum up, conditionals and loops are simple ideas and not difficult to learn in
 Once you start using loops and conditional statements, you need to think seriously about formatting. You have many options when formatting Perl code on the page. Compare these variant ways of formatting an \textit{if} statement inside a \verb|while| loop:
 
 \textcolor{red}{\textit{Format A}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 \begin{lstlisting}
 while ( $alive ) {
   if ( $needs_nutrients ) {
@@ -215,7 +227,7 @@ while ( $alive ) {
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Format B}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 \begin{lstlisting}
 while ( $alive )
 {
@@ -228,7 +240,7 @@ while ( $alive )
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Format C}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 \begin{lstlisting}
   while ( $alive )
     {
@@ -241,7 +253,7 @@ while ( $alive )
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Format D}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 \begin{lstlisting}
 while($alive){if($needs_nutrients){print "Cell needs nutrients\n";}}
 \end{lstlisting}
@@ -276,8 +288,8 @@ Perl has a handy set of features for finding things in strings. This, as much as
   \item Looks for motifs the user types in at the keyboard
 \end{itemize}
 
-\textbf{Example 5-3. Searching for motifs}
-\lstinputlisting[label=exam:example5.3]{./scripts/example5-3.pl}
+%\textbf{Example 5-3. Searching for motifs}
+\lstinputlisting[label=exam:example5.3,caption={Example 5.3. Searching for motifs}]{./scripts/example5-3.pl}
 
 Here's some typical output from \autoref{exam:example5.3}:
 
@@ -523,8 +535,8 @@ As promised, this version of the pseudocode is a bit more detailed. It suggests 
 
 We now have a design for the program, let's turn it into Perl code. \autoref{exam:example5.4} is a workable program; you'll see other ways to accomplish the same task more quickly as you proceed in this chapter, but speed is not the main concern at this point. 
 
-\textbf{Example 5-4. Determining frequency of nucleotides}
-\lstinputlisting[label=exam:example5.4]{./scripts/example5-4.pl}
+%\textbf{Example 5-4. Determining frequency of nucleotides}
+\lstinputlisting[label=exam:example5.4,caption={Example 5.4. Determining frequency of nucleotides}]{./scripts/example5-4.pl}
 
 To demonstrate \autoref{exam:example5.4}, I have created the following small file of DNA and called it \textit{small.dna}: 
 
@@ -571,8 +583,8 @@ To \textit{declare} a variable means to specify its name and other attributes su
 
 Perl is written to be smart about what's in a scalar variable. For instance, you can assign the number \verb|1234| (without quotes) to a variable, or you can assign the string \verb|'1234'| (with quotes). Perl treats the variable as a string for printing, and as a number for using in arithmetic operations, without your having to worry about it. \autoref{exam:example5.5} demonstrates this ability. In other words, Perl isn't strict about specifying the type of data a variable is used for. 
 
-\textbf{Example 5-5. Demonstration of Perl's built-in knowledge about numbers and strings}
-\lstinputlisting[label=exam:example5.5]{./scripts/example5-5.pl}
+%\textbf{Example 5-5. Demonstration of Perl's built-in knowledge about numbers and strings}
+\lstinputlisting[label=exam:example5.5,caption={Example 5.5. Demonstration of Perl's built-in knowledge about numbers and strings}]{./scripts/example5-5.pl}
 
 \autoref{exam:example5.5} produces the output:
 
@@ -684,9 +696,8 @@ print count_of_A, count_of_C, count_of_G, count_of_T
 \end{lstlisting}
 
 \autoref{exam:example5.6} shows a program that examines each base in a string of DNA. 
-
-\textbf{Example 5-6. Determining frequency of nucleotides, take 2}
-\lstinputlisting[label=exam:example5.6]{./scripts/example5-6.pl}
+%\textbf{Example 5-6. Determining frequency of nucleotides, take 2}
+\lstinputlisting[label=exam:example5.6,caption={Example 5.6. Determining frequency of nucleotides, take 2}]{./scripts/example5-6.pl}
 
 Here's the output of \autoref{exam:example5.6}:
 
@@ -779,8 +790,8 @@ As you see, to write to a file, you do an \textit{open} call, just as when readi
 
 \autoref{exam:example5.7} is the third version of the Perl program that examines each base in a string of DNA. 
 
-\textbf{Example 5-7. Determining frequency of nucleotides, take 3}
-\lstinputlisting[label=exam:example5.7]{./scripts/example5-7.pl}
+%\textbf{Example 5-7. Determining frequency of nucleotides, take 3}
+\lstinputlisting[label=exam:example5.7,caption={Example 5.7. Determining frequency of nucleotides, take 3}]{./scripts/example5-7.pl}
 
 \autoref{exam:example5.7} looks like this when you run it:
 
@@ -841,12 +852,12 @@ You may find it a bit much to have three (really, four) versions of this base-co
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 5.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Use a loop to write a nonhalting program. The conditional must always evaluate to \verb|true|, every time through the loop. Note that some systems will catch that you're in an infinite loop and will stop the program automatically. You will stop your program differently, depending on which operating system you use. Ctrl-C works on Unix and Linux, a Windows MS-DOS command window, or a MacOS X shell window. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Prompt the user to enter two (short) strings of DNA. Concatenate the two strings of DNA by appending the second to the first using the \verb|.=| assignment operator. Print the two strings as concatenated, and then print the second string lined up over its copy at the end of the concatenated strings. For example, if the input strings are \verb|AAAA| and \verb|TTTT|, print:
 \begin{verbatim}
 AAAATTTT
@@ -856,42 +867,42 @@ AAAATTTT
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that prints all the numbers from 1 to 100. Your program should have much fewer than 100 lines of code! 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program to calculate the reverse complement of a strand of DNA. Do not use the \textit{s///} or the \textit{tr} functions. Use the \textit{substr} function, and examine each base one at a time in the original while you build up the reverse complement. (Hint: you might find it easier to examine the original right to left, rather than left to right, although either is possible.) 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program to report on the percentage of hydrophobic amino acids in a protein sequence. (To find which amino acids are hydrophobic, consult any introductory text on proteins, molecular biology, or cell biology. You will find information sources in \autoref{chap:chapteraa}.) 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that checks if two strings given as arguments are reverse complements of each other. Use the Perl built-in functions \textit{split}, \textit{pop}, \textit{shift}, and \textit{eq} (\textit{eq} actually an operator). 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program to report how GC-rich some sequence is. (In other words, just give the percentage of G and C in the DNA.)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Modify \autoref{exam:example5.3} to not only find motifs by regular expressions but to print out the motif that was found. For example, if you search, using regular expressions, for the motif EE.*EE, your program should print EETVKNDEE. You can use the special variable \verb|$&|. After a successful pattern match, this special variable is set to hold the pattern that was matched. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.9}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that switches two bases in a DNA string at specified positions. (Hint: you can use the Perl functions \verb|substr| or \verb|slice|. )
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 5.10}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that writes a temporary file and then deletes it. The \textit{unlink} function removes a file: just say, for example:
 \begin{lstlisting}
 unlink "tmpfile";

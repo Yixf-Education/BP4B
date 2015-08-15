@@ -1,4 +1,4 @@
-\chapter{Appendix B. Perl Summary}
+\chapter{Perl Summary}
 \label{chap:chapterab}
 \minitoc
 
@@ -135,7 +135,7 @@ There are several assignment operators besides \verb|=| that are shorthand for l
   \caption{Assignment operator shorthands}
   \label{tab:tablea.b1}
   %\begin{tabu}{X[1,c]X[2,l]}
-    \begin{tabu*} to 0.7\linewidth {X[1,c]X[3,l]}
+    \begin{tabu*} to 0.7\linewidth {X[1,c,m]X[3,l,m]}
     \toprule
     Example of operator & Equivalent\\
     \midrule
@@ -317,23 +317,23 @@ For more information on how operators work, consult the \verb|perlop| documentat
 Perl has the basic five arithmetic operators:
 
 \textcolor{red}{+}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Addition
 \end{adjustwidth}
 \textcolor{red}{-}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Subtraction
 \end{adjustwidth}
 \textcolor{red}{*}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Multiplication
 \end{adjustwidth}
 \textcolor{red}{/}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Division
 \end{adjustwidth}
 \textcolor{red}{**}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Exponentiation
 \end{adjustwidth}
 
@@ -360,23 +360,23 @@ Unlike the previous six operators, these change a variable's value. \verb|$x++| 
 All scalars, whether numbers or strings, are represented as sequences of individual bits "under the hood." Every once in a while, you need to manipulate those bits, and Perl provides five operators to help:
 
 \textcolor{red}{\&}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Bitwise and
 \end{adjustwidth}
 \textcolor{red}{|}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Bitwise or
 \end{adjustwidth}
 \textcolor{red}{\^{}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Bitwise xor
 \end{adjustwidth}
 \textcolor{red}{\textgreater\textgreater}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Right shift
 \end{adjustwidth}
 \textcolor{red}{\textless\textless}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Left shift
 \end{adjustwidth}
 
@@ -408,7 +408,7 @@ File test operators are unary operators that test files for certain characterist
   \begin{center}
   \caption{File test operators}
   \label{tab:tablea.b2}
-    \begin{tabu*} to 0.8\linewidth {X[1,c]X[5,l]}
+    \begin{tabu*} to 0.8\linewidth {X[1,c,m]X[5,l,m]}
     \toprule
     Operator & Meaning\\
     \midrule
@@ -1085,7 +1085,7 @@ Metasymbols are sequences of two or more characters consisting of backslashes be
   \begin{center}
   \caption{Alphanumeric metasymbols}
   \label{tab:tablea.b3}
-    \begin{tabu*} to \linewidth {X[1,c]X[1,c]X[3,l]}
+    \begin{tabu*} to \linewidth {X[1,c,m]X[1,c,m]X[3,l,m]}
     \toprule
     Symbol & Atomic & Meaning\\
     \midrule
@@ -1132,7 +1132,7 @@ Metasymbols are sequences of two or more characters consisting of backslashes be
   \begin{center}
   \caption{Extended regular-expression sequences}
   \label{tab:tablea.b4}
-    \begin{tabu*} to 0.9\linewidth {X[2,c]X[1,c]X[3,l]}
+    \begin{tabu*} to 0.9\linewidth {X[2,c,m]X[1,c,m]X[3,l,m]}
     \toprule
     Extension & Atomic & Meaning\\
     \midrule
@@ -1161,7 +1161,7 @@ Pattern modifiers are single-letter commands placed after the forward slashes. T
   \begin{center}
   \caption{Pattern modifiers}
   \label{tab:tablea.b5}
-    \begin{tabu*} to 0.7\linewidth {X[0.5,c]X[3,l]}
+    \begin{tabu*} to 0.7\linewidth {X[0.5,c,m]X[3,l,m]}
     \toprule
     Modifier & Meaning\\
     \midrule
@@ -1374,7 +1374,8 @@ one two
 \section{Built-in Functions}
 Perl has a great many built-in functions. \autoref{tab:tablea.b6} is a partial list with short descriptions.
 
-\begin{longtabu*} to \linewidth {X[2,l]X[5,l]}
+\setlength{\tabulinesep}{0.6em}
+\begin{longtabu*} to \linewidth {X[3.6,l,m]X[5,l,m]}
   \caption{Perl built-in functions}
   \label{tab:tablea.b6}\\
       \toprule
@@ -1414,7 +1415,7 @@ Perl has a great many built-in functions. \autoref{tab:tablea.b6} is a partial l
     exp EXPR & Return the value of e raised to the exponent EXPR\\
     format & Declare a format for use by the write function\\
     grep EXPR, LIST & Return list of elements of LIST for which EXPR is true\\
-    gmtime & Get Greenwich mean time; Sunday is day 0, January is month 0, year is number of years since 1900—example: \verb|($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdaylightsavingstime) = gmtime;|\\
+    gmtime & Get Greenwich mean time; Sunday is day 0, January is month 0, year is number of years since 1900—example: \verb|($sec,$min,$hour,$mday,$mon,$year,$wday,| \verb|$yday,$isdaylightsavingstime) = gmtime;|\\
     goto LABEL & Program control goes to statement marked with LABEL\\
     hex EXPR & Return decimal value of hexadecimal EXPR\\
     index STR, SUBSTR & Give the position of the first occurrence of SUBSTR in STR\\
@@ -1461,7 +1462,7 @@ Perl has a great many built-in functions. \autoref{tab:tablea.b6} is a partial l
     sprintf FORMAT, LIST & Return a string formatted as in the printf function\\
     sqrt EXPR & Return the square root of the number EXPR\\
     srand EXPR & Set random number seed for rand operator; only needed in versions of Perl before 5.004\\
-    stat (FILEHANDLE or EXPR) & Return statistics on file EXPR or its FILEHANDLE—example: \verb|($dev,$inode,$mode,$num_of_links,$uid,$gid,$rdev,$size,$accesstime,$modifiedtime,$changetime,$blksize,$blocks) = stat $filename;|\\
+    stat (FILEHANDLE or EXPR) & Return statistics on file EXPR or its FILEHANDLE—example: \verb|($dev,$inode,$mode,$num_of_links,$uid,$gid,| \verb|$rdev,$size,$accesstime,$modifiedtime,| \verb|$changetime,$blksize,$blocks) = stat $filename;|\\
     study SCALAR & Try to optimize subsequent pattern matches on string SCALAR\\
     sub NAME BLOCK & Define a subroutine named NAME with program code in BLOCK\\
     substr EXPR, OFFSET, LENGTH,REPLACEMENT & Return substring of string EXPR at position OFFSET and length LENGTH; the substring is replaced with REPLACEMENT if used\\

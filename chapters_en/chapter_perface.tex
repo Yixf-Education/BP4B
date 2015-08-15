@@ -1,4 +1,4 @@
-\setcounter{page}{1}
+\setcounter{page}{2}
 \chapter*{Perface}
 \markboth{Perface}{}
 %\minitoc % Creating an actual minitoc
@@ -11,7 +11,7 @@ Biological data is proliferating rapidly. Public databases such as GenBank and t
 
 \subsection*{What Bioinformatics Can Do}
 \markboth{Perface}{What Bioinformatics Can Do}
-Here's a short example of bioinformatics in action. Let's say you have discovered a very interesting segment of mouse DNA and you suspect it may hold a clue to the development of fatal brain tumors in humans. After sequencing the DNA, you perform a search of GenBank and other data sources using web-based sequence alignment tools such as BLAST. Although you find a few related sequences, you don't get a direct match or any information that indicates a link to the brain tumors you suspect exist. You know that the public genetic databases are growing daily and rapidly. You would like to perform your searches every day, comparing the results to the previous searches, to see if anything new appears in the databases. But this could take an hour or two each day! Luckily, you know Perl. With a day's work, you write a program (using the Bioperl module among other things) that automatically conducts a daily BLAST search of GenBank for your DNA sequence, compares the results with the previous day's results, and sends you email if there has been any change. This program is so useful that you start running it for other sequences as well, and your colleagues also start using it. Within a few months, your day's worth of work has saved many weeks of work for your community. This example is taken from real life. There are now existing programs you can use for this purpose, even web sites where you can submit your DNA sequence and your email address, and they'll do all the work for you!
+Here's a short example of bioinformatics in action. Let's say you have discovered a very interesting segment of mouse DNA and you suspect it may hold a clue to the development of fatal brain tumors in humans. After sequencing the DNA, you perform a search of GenBank and other data sources using web-based sequence alignment tools such as BLAST. Although you find a few related sequences, you don't get a direct match or any information that indicates a link to the brain tumors you suspect exist. You know that the public genetic databases are growing daily and rapidly. You would like to perform your searches every day, comparing the results to the previous searches, to see if anything new appears in the databases. But this could take an hour or two each day! Luckily, you know Perl. With a day's work, you write a program (using the BioPerl module among other things) that automatically conducts a daily BLAST search of GenBank for your DNA sequence, compares the results with the previous day's results, and sends you email if there has been any change. This program is so useful that you start running it for other sequences as well, and your colleagues also start using it. Within a few months, your day's worth of work has saved many weeks of work for your community. This example is taken from real life. There are now existing programs you can use for this purpose, even web sites where you can submit your DNA sequence and your email address, and they'll do all the work for you!
 
 This is only a small example of what happens when you apply the power of computation to a biological problem. This is bioinformatics.
 
@@ -58,77 +58,77 @@ Many scientists start out writing small programs and find that they really like 
 There are thirteen chapters and two appendixes in this book. The following provides a brief introduction:
 
 \autoref{chap:chapter1}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 This chapter covers some key concepts in molecular biology, as well as how biology and computer science fit together.
 \end{adjustwidth}
 
 \autoref{chap:chapter2}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 This chapter shows you how to get Perl up and running on your computer.
 \end{adjustwidth}
 
 \autoref{chap:chapter3}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 \autoref{chap:chapter3} provides an overview as to how programmers accomplish their jobs. Some of the most important practical strategies good programmers use are explained, and where to find answers to questions that arise while you are programming is carefully laid out. These ideas are made concrete by brief narrative case studies that show how programmers, given a problem, find its solution.
 \end{adjustwidth}
 
 \autoref{chap:chapter4}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 In \autoref{chap:chapter4} you start writing Perl programs with DNA and proteins. The programs transcribe DNA to RNA, concatenate sequences, make the reverse complement of DNA, read sequences data from files, and more.
 \end{adjustwidth}
 
 \autoref{chap:chapter5}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 This chapter continues demonstrating the basics of the Perl language with programs that search for motifs in DNA or protein, interact with users at the keyboard, write data to files, use loops and conditional tests, use regular expressions, and operate on strings and arrays.
 \end{adjustwidth}
 
 \autoref{chap:chapter6}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 This chapter extends the basic knowledge of Perl in two main directions: subroutines, which are an important way to structure programs, and the use of the Perl debugger, which can examine in detail a running Perl program.
 \end{adjustwidth}
 
 \autoref{chap:chapter7}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 Genetic mutations, fundamental to biology, are modelled as random events using the random number generator in Perl. This chapter uses random numbers to generate DNA sequence data sets, and to repeatedly mutate DNA sequence. Loops, subroutines, and lexical scoping are also discussed.
 \end{adjustwidth}
 
 \autoref{chap:chapter8}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 This chapter shows how to translate DNA to proteins, using the genetic code. It also covers a good bit more of the Perl programming language, such as the hash data type, sorted and unsorted arrays, binary search, relational databases, and DBM, and how to handle FASTA formatted sequence data.
 \end{adjustwidth}
 
 \autoref{chap:chapter9}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 This chapter contains an introduction to Perl regular expressions. The main focus of the chapter is the development of a program to calculate a restriction map for a DNA sequence.
 \end{adjustwidth}
 
 \autoref{chap:chapter10}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 The Genetic Sequence Data Bank (GenBank) is central to modern biology and bioinformatics. In this chapter, you learn how to write programs to extract information from GenBank files and libraries. You will also make a database to create your own rapid access lookups on a GenBank library.
 \end{adjustwidth}
 
 \autoref{chap:chapter11}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 This chapter develops a program that can parse Protein Data Bank (PDB) files. Some interesting Perl techniques are encountered while doing so, such as finding and iterating over lots of files and controlling other bioinformatics programs from a Perl program.
 \end{adjustwidth}
 
 \autoref{chap:chapter12}
-\begin{adjustwidth}{1cm}{0cm}
-\autoref{chap:chapter12} develops some code to parse a BLAST output file. Also mentioned are the Bioperl project and its BLAST parser, and some additional ways to format output in Perl.
+\begin{adjustwidth}{2em}{0cm}
+\autoref{chap:chapter12} develops some code to parse a BLAST output file. Also mentioned are the BioPerl project and its BLAST parser, and some additional ways to format output in Perl.
 \end{adjustwidth}
 
 \autoref{chap:chapter13}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 \autoref{chap:chapter13} looks ahead to topics beyond the scope of this book.
 \end{adjustwidth}
 
-Appendix \autoref{chap:chapteraa}
-\begin{adjustwidth}{1cm}{0cm}
+\autoref{chap:chapteraa}
+\begin{adjustwidth}{2em}{0cm}
 Collected here are resources for Perl and for bioinformatics programming, such as books and Internet sites.
 \end{adjustwidth}
 
-Appendix \autoref{chap:chapterab}
-\begin{adjustwidth}{1cm}{0cm}
+\autoref{chap:chapterab}
+\begin{adjustwidth}{2em}{0cm}
 This is a summary of the parts of Perl covered in this book, plus a little more.
 \end{adjustwidth}
 
@@ -137,35 +137,57 @@ This is a summary of the parts of Perl covered in this book, plus a little more.
 The following conventions are used in this book:
 
 \textit{Italic}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 Used for commands, filenames, directory names, variables, modules, URLs, and for the first use of a term 
 \end{adjustwidth}
 
 \texttt{Constant width}
-\begin{adjustwidth}{1cm}{0cm}
+\begin{adjustwidth}{2em}{0cm}
 Used in code examples and to show the output of commands
 \end{adjustwidth}
 
-\begin{adjustwidth}{2cm}{2cm}
+%\begin{adjustwidth}{2cm}{2cm}
 %\shadowbox{
-\parpic[l]{
-%\includegraphics[width=1cm]{../figures/note.png}
-\includegraphics[width=1cm]{note.png}
-}
-This icon designates a note, which is an important aside to the nearby text.
+%\parpic[l]{
+%\includegraphics[width=2em]{../figures/note.png}
+%\includegraphics[width=2em]{note.png}
 %}
-\end{adjustwidth}
+%This icon designates a note, which is an important aside to the nearby text.
+%}
+%\end{adjustwidth}
 
-\begin{adjustwidth}{2cm}{2cm}
+%\begin{adjustwidth}{2cm}{2cm}
 %\shadowbox{
-\parpic[l]{
-%\includegraphics[width=1cm]{../figures/warning.png}
-\includegraphics[width=1cm]{warning.png}
-}
-This icon designates a warning relating to the nearby text.
+%\parpic[l]{
+%\includegraphics[width=2em]{../figures/warning.png}
+%\includegraphics[width=2em]{warning.png}
+%}
+%This icon designates a warning relating to the nearby text.
 %\hspace{2.55cm}
 %}
-\end{adjustwidth}
+%\end{adjustwidth}
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1cm]{note.png} & This icon designates a warning relating to the nearby text.\\
+      \tabucline{-}
+    \end{tabu}
+  \end{center}
+\end{table}
+\vspace{-25pt}
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1.1cm]{warning.png} & This icon designates a note, which is an important aside to the nearby text.\\
+      \tabucline{-}
+    \end{tabu}
+  \end{center}
+\end{table}
+\vspace{-25pt}
 
 \section*{Comments and Questions}
 \markboth{Perface}{Comments and Questions}

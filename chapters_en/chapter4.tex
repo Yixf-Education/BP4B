@@ -38,7 +38,7 @@ For expediency, the names of the nucleic acids and the amino acids are often rep
   \caption{Standard IUB/IUPAC nucleic acid codes}
   \label{tab:table4.1}
   %\begin{tabu}{X[1,c]X[2,l]}
-  \begin{tabu} to 0.5\linewidth {X[1,c]X[2,c]}
+  \begin{tabu} to 0.5\linewidth {X[1,c,m]X[2,c,m]}
   \toprule
   Code & Nucleic Acid(s)\\
   \midrule
@@ -70,7 +70,7 @@ The nucleic acid codes in \autoref{tab:table4.1} include letters for the four ba
   \caption{Standard IUB/IUPAC amino acid codes}
   \label{tab:table4.2}
   %\begin{tabu}{X[1,c]X[2,l]}
-  \begin{tabu} to 0.8\linewidth {X[1,c]X[2,c]X[1,c]}
+  \begin{tabu} to 0.8\linewidth {X[1,c,m]X[2,c,m]X[1,c,m]}
   \toprule
   One-letter code & Amino acid & Three-letter code\\
   \midrule
@@ -111,8 +111,8 @@ ASCII is a way for computers to store textual (and control) data in their memory
 \section{A Program to Store a DNA Sequence}
 Let's write a small program that stores some DNA in a variable and prints it to the screen. The DNA is written in the usual fashion, as a string made of the letters A, C, G, and T, and we'll call the variable \verb|$DNA|. In other words, \verb|$DNA| is the name of the DNA sequence data used in the program. Note that in Perl, a variable is really the name for some data you wish to use. The name gives you full access to the data. \autoref{exam:example4.1} shows the entire program.
 
-\textbf{Example 4-1. Putting DNA into the computer}
-\lstinputlisting[label=exam:example4.1]{./scripts/example4-1.pl}
+%\textbf{Example 4-1. Putting DNA into the computer}
+\lstinputlisting[label=exam:example4.1,caption={Example 4.1. Putting DNA into the computer}]{./scripts/example4-1.pl}
 
 Using what you've already learned about text editors and running Perl programs in \autoref{chap:chapter2}, enter the code (or copy it from the book's web site) and save it to a file. Remember to save the program as ASCII or text-only format, or Perl may have trouble reading the resulting file.
 
@@ -241,8 +241,8 @@ Now we'll make a simple modification of \autoref{exam:example4.1} to show how to
 
 \autoref{exam:example4.2} demonstrates a few more things to do with strings, variables, and print statements. 
 
-\textbf{Example 4-2. Concatenating DNA}
-\lstinputlisting[label=exam:example4.2]{./scripts/example4-2.pl}
+%\textbf{Example 4-2. Concatenating DNA}
+\lstinputlisting[label=exam:example4.2,caption={Example 4.2. Concatenating DNA}]{./scripts/example4-2.pl}
 
 As you can see, there are three variables here, \verb|$DNA1|, \verb|$DNA2|, and \verb|$DNA3|. I've added \verb|print| statements for a running commentary, so that the output of the program that appears on the computer screen makes more sense and isn't simply some DNA fragments one after the other.
 
@@ -308,12 +308,24 @@ $DNA3 = $DNA1 . $DNA2;
 
 illustrates the use of this operator.
 
-\begin{adjustwidth}{2cm}{2cm}
-  \parpic[l]{
-  \includegraphics[width=1cm]{note.png}
-}
-An operator in a computer language takes some arguments—in this case, the strings \verb|$DNA1| and \verb|$DNA2|—and does something to them, returning a value—in this case, the concatenated string placed in the variable \verb|$DNA3|. The most familiar operators from arithmetic—plus, minus, multiply, and divide—are all operators that take two numbers as arguments and return a number as a value. 
-\end{adjustwidth}
+%\begin{adjustwidth}{2cm}{2cm}
+  %\parpic[l]{
+  %\includegraphics[width=2em]{note.png}
+%}
+%An operator in a computer language takes some arguments—in this case, the strings \verb|$DNA1| and \verb|$DNA2|—and does something to them, returning a value—in this case, the concatenated string placed in the variable \verb|$DNA3|. The most familiar operators from arithmetic—plus, minus, multiply, and divide—are all operators that take two numbers as arguments and return a number as a value. 
+%\end{adjustwidth}
+
+\vspace{-5pt}
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1cm]{note.png} & An operator in a computer language takes some arguments—in this case, the strings \verb|$DNA1| and \verb|$DNA2|—and does something to them, returning a value—in this case, the concatenated string placed in the variable \verb|$DNA3|. The most familiar operators from arithmetic—plus, minus, multiply, and divide—are all operators that take two numbers as arguments and return a number as a value.\\
+      \tabucline{-}
+    \end{tabu*}
+  \end{center}
+\end{table}
+\vspace{-20pt}
 
 Finally, just to exercise the different parts of the language, let's accomplish the same concatenation using only the \verb|print| statement:
 
@@ -342,9 +354,8 @@ A large part of what you, the Perl bioinformatics programmer, will spend your ti
 
 \autoref{exam:example4.3} is another program that manipulates DNA; it transcribes DNA to RNA. In the cell, this transcription of DNA to RNA is the outcome of the workings of a delicate, complex, and error-correcting molecular machinery.\footnote{Briefly, the coding DNA strand is the reverse complement of the other strand, which is used as a template to synthesize its reverse complement as RNA, with T's replaced as U's. With the two reverse complements, this is the same as the coding strand with the TU replacement.} Here it's a simple substitution. When DNA is transcribed to RNA, all the \verb|T|'s are changed to \verb|U|'s, and that's all that our program needs to know.\footnote{We're ignoring the mechanism of the splicing out of introns, obviously. The \verb|T| stands for thymine; the \verb|U| stands for uracil.}
 
-\textbf{Example 4-3. Transcribing DNA into RNA}
-
-\lstinputlisting[label=exam:example4.3]{./scripts/example4-3.pl}
+%\textbf{Example 4-3. Transcribing DNA into RNA}
+\lstinputlisting[label=exam:example4.3,caption={Example 4.3. Transcribing DNA into RNA}]{./scripts/example4-3.pl}
 
 Here's the output of \autoref{exam:example4.3}:
 
@@ -413,9 +424,8 @@ As you recall from \autoref{chap:chapter1}, a DNA polymer is composed of nucleot
 
 Without further ado, here's \autoref{exam:example4.4}, which uses a few new Perl features. As you'll see, it first tries one method, which fails, and then tries another method, which succeeds. 
 
-\textbf{Example 4-4. Calculating the reverse complement of a strand of DNA}
-
-\lstinputlisting[label=exam:example4.4]{./scripts/example4-4.pl}
+%\textbf{Example 4-4. Calculating the reverse complement of a strand of DNA}
+\lstinputlisting[label=exam:example4.4,caption={Example 4.4. Calculating the reverse complement of a strand of DNA}]{./scripts/example4-4.pl}
 
 Here's what the output of \autoref{exam:example4.4} should look like on your screen:
 
@@ -491,9 +501,8 @@ The filename \textit{NM\_021964fragment.pep} is taken from the GenBank ID of the
 
 Now that you've created or downloaded a file with protein sequence data in it, let's develop a program that reads the protein sequence data from the file and stores it into a variable. \autoref{exam:example4.5} shows a first attempt, which will be added to as we progress.
 
-\textbf{Example 4-5. Reading protein sequence data from a file}
-
-\lstinputlisting[label=exam:example4.5]{./scripts/example4-5.pl}
+%\textbf{Example 4-5. Reading protein sequence data from a file}
+\lstinputlisting[label=exam:example4.5,caption={Example 4.5. Reading protein sequence data from a file}]{./scripts/example4-5.pl}
 
 Here's the output of \autoref{exam:example4.5}:
 
@@ -529,9 +538,8 @@ However, as you've already noticed, only the first line of this multiline file i
 
 There are several ways to read in a whole file. \autoref{exam:example4.6} shows one way.
 
-\textbf{Example 4-6. Reading protein sequence data from a file, take 2}
-
-\lstinputlisting[label=exam:example4.6]{./scripts/example4-6.pl}
+%\textbf{Example 4-6. Reading protein sequence data from a file, take 2}
+\lstinputlisting[label=exam:example4.6,caption={Example 4.6. Reading protein sequence data from a file, take 2}]{./scripts/example4-6.pl}
 
 Here's the output of \autoref{exam:example4.6}:
 
@@ -556,9 +564,8 @@ On the other hand, the drawbacks of this program are obvious. Having to write a 
 \section{Arrays}
 In computer languages an array is a variable that stores multiple scalar values. The values can be numbers, strings, or, in this case, lines of an input file of protein sequence data. Let's examine how they can be used. \autoref{exam:example4.7} shows how to use an array to read all the lines of an input file.
 
-\textbf{Example 4-7. Reading protein sequence data from a file, take 3}
-
-\lstinputlisting[label=exam:example4.7]{./scripts/example4-7.pl}
+%\textbf{Example 4-7. Reading protein sequence data from a file, take 3}
+\lstinputlisting[label=exam:example4.7,caption={Example 4.7. Reading protein sequence data from a file, take 3}]{./scripts/example4-7.pl}
 
 Here's the output of \autoref{exam:example4.7}:
 
@@ -748,9 +755,8 @@ Here's the array with an element inserted after the 2nd element: A C X G T
 \section{Scalar and List Context}
 Many Perl operations behave differently depending on the context in which they are used. Perl has \textit{scalar context} and \textit{list context}; both are listed in \autoref{exam:example4.8}.
 
-\textbf{Example 4-8. Scalar context and list context}
-
-\lstinputlisting[label=exam:example4.8]{./scripts/example4-8.pl}
+%\textbf{Example 4-8. Scalar context and list context}
+\lstinputlisting[label=exam:example4.8,caption={Example 4.8. Scalar context and list context}]{./scripts/example4-8.pl}
 
 Here's the output of \autoref{exam:example4.8}:
 
@@ -780,37 +786,37 @@ Now you've seen the use of strings and arrays to hold sequence and file data, an
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 4.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Explore the sensitivity of programming languages to errors of syntax. Try removing the semicolon from the end of any statement of one of our working programs and examining the error messages that result, if any.  Try changing other syntactical items: add a parenthesis or a curly brace; misspell "print" or some other reserved word; just type in, or delete, anything. Programmers get used to seeing such errors; even after getting to know the language well, it is still common to have some syntax errors as you gradually add code to a program. Notice how one error can lead to many lines of error reporting. Is Perl accurately reporting the line where the error is? 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 4.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that stores an integer in a variable and then prints it out. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 4.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that prints DNA (which could be in upper- or lowercase originally) in lowercase (acgt); write another that prints the DNA in uppercase (ACGT). Use the function \textit{tr///}. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 4.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Do the same thing as Exercise 4.3, but use the string directives \verb|\U| and \verb|\L| for upper- and lowercase. For instance, \verb|print "\U$DNA"| prints the data in \verb|$DNA| in uppercase. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 4.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Sometimes information flows from RNA to DNA. Write a program to reverse transcribe RNA to DNA. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 4.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Read two files of data, and print the contents of the first followed by the contents of the second. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 4.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 This is a more difficult exercise. Write a program to read a file, and then print its lines in reverse order, the last line first. Or you may want to look up the functions \textit{push}, \textit{pop}, \textit{shift}, and \textit{unshift}, and choose one or more of them to accomplish this exercise. You may want to look ahead to \autoref{chap:chapter5} so you can use a loop in this program, but this may not be necessary depending on the approach you take. Or, you may want to use \textit{reverse} on an array of lines. 
 \end{adjustwidth}
 

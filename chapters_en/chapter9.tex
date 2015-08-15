@@ -30,17 +30,17 @@ if( $dna =~ /CT[CGT]ACG/ ) {
 Regular expressions are based on three fundamental ideas:
 
 \textcolor{red}{\textit{Repetition (or closure)}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 The asterisk (*), also called Kleene closure or star, indicates 0 or more repetitions of the character just before it. For example, \verb|abc*| matches any of these strings: \verb|ab|, \verb|abc|, \verb|abcc|, \verb|abccc|, \verb|abcccc|, and so on. The regular expression matches an infinite number of strings. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Alternation}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 In Perl, the pattern \verb=(a|b)= (read: \verb|a or b|) matches the string \verb|a| or the string \verb|b|.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Concatenation}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 This is a real obvious one. In Perl, the string \verb|ab| means the character \verb|a| followed by (concatenated with) the character \verb|b|.
 \end{adjustwidth}
 
@@ -69,27 +69,27 @@ We'll now write a program that does something useful in the lab: it will look fo
 Back in \autoref{chap:chapter5}, you saw how to look for regular expressions in text. So you've an idea of how to find motifs in sequences with Perl. Now let's think about how to use those techniques to create restriction maps. Here are some questions to ask:
 
 \textcolor{red}{\textit{Where do I find restriction enzyme data?}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Restriction enzyme data can be found at the Restriction Enzyme Database, (REBASE), which is on the Web at \href{http://www.neb.com/rebase/rebase.html}{http://www.neb.com/rebase/rebase.html}.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{How do I represent restriction enzymes in regular expressions?}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Exploring that site, you'll see that restriction enzymes are represented in their own language. We'll try to translate that language into the language of regular expressions.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{How do I store restriction enzyme data?}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 There are about 1,000 restriction enzymes with names and definitions. This makes them candidates for the fast key-value type of lookup hashes provide. When you write a real application, say for the Web, it's a good idea to create a DBM file to store the information, ready to use when a program needs a lookup. I will cover DBM files in \autoref{chap:chapter10}; here, I'll just demonstrate the principle. We'll keep only a few restriction enzyme definitions in the program.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{How do I accept queries from the user?}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 You can ask for a restriction enzyme name, or you can allow the user to type in a regular expression directly. We'll do the first. Also, you want to let the user specify which sequence to use. Again, to simplify matters, you'll just read in the data from a sample DNA file. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{How do I report back the restriction map to the user?}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 This is an important question. The simplest way is to generate a list of positions with the names of the restriction enzymes found there. This is useful for further processing, as it presents the information very simply.
 
 But what if you don't want to do further processing; you just want to communicate the restriction map to the user? Then, perhaps it'd be more useful to present a graphical display, perhaps print out the sequence with a line above it that flags the presence of the enzymes.
@@ -244,8 +244,8 @@ Of course, REBASE uses them, because a given restriction enzyme might well match
 
 \autoref{exam:example9.1} is a subroutine that, given a string, translates these codes into character classes. 
 
-\textbf{Example 9-1. Translate IUB ambiguity codes to regular expressions}
-\lstinputlisting[label=exam:example9.1]{./scripts/example9-1.pl}
+%\textbf{Example 9-1. Translate IUB ambiguity codes to regular expressions}
+\lstinputlisting[label=exam:example9.1,caption={Example 9.1. Translate IUB ambiguity codes to regular expressions}]{./scripts/example9-1.pl}
 
 It seems you're almost ready to write a subroutine to get the data from the REBASE datafile. But there's one important item you haven't addressed: what exactly is the data you want to return?
 
@@ -253,8 +253,8 @@ You plan to return three data items per line of the original REBASE file: the en
 
 Since you've learned about \textit{split}, maybe you can have a hash in which the key is the enzyme name, and the value is a string with the recognition site and the regular expression separated by whitespace. Then you can look up the data fast and just extract the desired values using \textit{split}. \autoref{exam:example9.2} shows this method. 
 
-\textbf{Example 9-2. Subroutine to parse a REBASE datafile}
-\lstinputlisting[label=exam:example9.2]{./scripts/example9-2.pl}
+%\textbf{Example 9-2. Subroutine to parse a REBASE datafile}
+\lstinputlisting[label=exam:example9.2,caption={Example 9.2. Subroutine to parse a REBASE datafile}]{./scripts/example9-2.pl}
 
 This \textit{parseREBASE} subroutine does quite a lot. Is there, however, too much in one subroutine; should it be rewritten? It's a good question to ask yourself as you're writing code. In this case, let's leave it as it is. However, in addition to doing a lot, it also does it in a few new ways, which we'll look at now. 
 
@@ -390,8 +390,8 @@ return @positions
 
 When you used this trick before, you just counted how many matches there were, not what the positions were. Let's check the documentation for clues, specifically the list of built-in functions in the documentation. It looks like the \verb|pos| function will solve the problem. It gives the location of the last match of a variable in an \verb|m//g| search. \autoref{exam:example9.3} shows the main program followed by the required subroutine. It's a simple subroutine, given the Perl functions like \textit{pos} that make it easy. 
 
-\textbf{Example 9-3. Make restriction map from user queries}
-\lstinputlisting[label=exam:example9.3]{./scripts/example9-3.pl}
+%\textbf{Example 9-3. Make restriction map from user queries}
+\lstinputlisting[label=exam:example9.3,caption={Example 9.3. Make restriction map from user queries}]{./scripts/example9-3.pl}
 
 Here is some sample output from \autoref{exam:example9.3}:
 
@@ -438,43 +438,43 @@ Remember to use parentheses in complicated expressions to specify the order of o
 \section{Exercises}
 \label{sect:section9.4}
 \textcolor{red}{\textit{Exercise 9.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Modify \autoref{exam:example9.3} to accept DNA from the command line; if it's not specified there, prompt the user for a FASTA filename and read in the DNA sequence data. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 9.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Modify Exercise 9.1 to read in, and make a hash of, the entire REBASE restriction site data from the \textit{bionet} file. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 9.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Modify Exercise 9.2 to store the REBASE hash created in a DBM file if it doesn't exist or to use the DBM file if it does exist. (Look ahead to \autoref{chap:chapter10} for more information about DBM.) 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 9.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Modify \autoref{exam:example5.3} to report on the locations of the motifs that it finds, even if motif appears multiple times in the sequence data. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 9.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Include a graphic display of the cut sites in the restriction map by printing the sequence and labeling the recognition sites with the enzyme name. Can you make a map that handles multiple restriction enzymes? How can you handle overlapping restriction sites? 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 9.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine that returns a restriction digest, the fragments of DNA left after performing a restriction reaction. Remember to take into account the location of the cut site. (This requires you to parse the REBASE \textit{bionet} in a different manner. You may, if you wish, ignore restriction enzymes that are not given with a \^~ indicating a cut site.) 
 \end{adjustwidth}
 
 
 \textcolor{red}{\textit{Exercise 9.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Extend the restriction map software to take into account the opposite strand for nonpalindromic recognition sites. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 9.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Given an arithmetic expression without parentheses, write a subroutine that adds the appropriate parentheses to conform to Perl's precedence rules. (Warning: this is a pretty hard exercise and should be skipped by all but the true believers who have extra time on their hands. See the Perl documentation for the precedence rules.) 
 \end{adjustwidth}
 

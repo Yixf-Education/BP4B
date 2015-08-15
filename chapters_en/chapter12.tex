@@ -8,7 +8,7 @@ The Basic Local Alignment Search Tool (BLAST) is one of the most popular softwar
 
 This chapter examines the output from the nucleotide-nucleotide version of the program, \textit{BLASTN}. For simplicity's sake, I'll simply refer to it here as BLAST. The main goal of this chapter is to show how to write code to parse a BLAST output file using regular expressions. The code is simple and basic, but it does the job. Once you understand the basics, you can build more features into your parser or obtain one of the fancier BLAST output parsers that's available via the Web. In either case, you'll know enough about output parsers to use or extend them.
 
-This chapter also gives you a brief introduction to Bioperl, which is a collection of Perl bioinformatics modules. The Bioperl project is an example of an open source project that you, the Perl bioinformatics programmer, can put to good use. The Perl programming language is itself an open source project. The program and its source code are available for use and modification with only very reasonable restrictions and at no cost.
+This chapter also gives you a brief introduction to BioPerl, which is a collection of Perl bioinformatics modules. The BioPerl project is an example of an open source project that you, the Perl bioinformatics programmer, can put to good use. The Perl programming language is itself an open source project. The program and its source code are available for use and modification with only very reasonable restrictions and at no cost.
 
 \section{Obtaining BLAST}
 There are a several implementations of BLAST. The most popular is probably the one offered free of charge by the National Center for Biotechnology Information (NCBI): \href{http://www.ncbi.nlm.nih.gov/BLAST/}{http://www.ncbi.nlm.nih.gov/BLAST/}. The NCBI web site features a publicly available BLAST server, a comprehensive set of databases, and a well-organized collection of documents and tutorials, in addition to the BLAST software available for downloading.
@@ -237,8 +237,8 @@ So why parse BLAST output? One reason is to see if your DNA has any new matches 
 \subsection{Extracting Annotation and Alignments}
 \autoref{exam:example12.1} consists of a main program and two new subroutines. The subroutines—\textit{parse\_blast} and \textit{parse\_blast\_alignment}—use regular expressions to extract the various bits of data from a scalar string. I chose this method because the data, although structured, does not clearly identify each line with its function. (See the discussion in \autoref{chap:chapter10} and \autoref{chap:chapter11}.) 
 
-\textbf{Example 12-1. Extract annotation and alignments from BLAST output file}
-\lstinputlisting[label=exam:example12.1]{./scripts/example12-1.pl}
+%\textbf{Example 12-1. Extract annotation and alignments from BLAST output file}
+\lstinputlisting[label=exam:example12.1,caption={Example 12.1. Extract annotation and alignments from BLAST output file}]{./scripts/example12-1.pl}
 
 The main program does little more than call the parsing subroutine and print the results. The arguments, initialized as empty, are passed by reference (see \autoref{chap:chapter6}).  
 
@@ -392,8 +392,8 @@ Each HSP also contains some annotation, and then the HSP itself. Let's parse eac
 
 \autoref{exam:example12.2} includes a pair of subroutines: one to parse the alignments into their HSPs, and the second to extract the sequences and their end positions. The main program extends \autoref{exam:example12.1} using these new subroutines. 
 
-\textbf{Example 12-2. Parse alignments from BLAST output file}
-\lstinputlisting[label=exam:example12.2]{./scripts/example12-2.pl}
+%\textbf{Example 12-2. Parse alignments from BLAST output file}
+\lstinputlisting[label=exam:example12.2,caption={Example 12.2. Parse alignments from BLAST output file}]{./scripts/example12-2.pl}
 
 \autoref{exam:example12.2} gives the following output:
 
@@ -493,8 +493,8 @@ The \verb|%-5d| directive specifies an integer to be printed in a field of width
 \subsection{here Documents}
 Now we'll briefly examine \verb|here| documents. These are convenient ways to specify multiline text for output with perhaps some variables to be interpolated, in a way that looks pretty much the same in your code as it will in the output—that is, without a lot of \verb|print| statements or embedded newline \verb|\n| characters. We'll follow \autoref{exam:example12.3} and its output with a discussion. 
 
-\textbf{Example 12-3. Example of here document}
-\lstinputlisting[label=exam:example12.3]{./scripts/example12-3.pl}
+%\textbf{Example 12-3. Example of here document}
+\lstinputlisting[label=exam:example12.3,caption={Example 12.3. Example of here document}]{./scripts/example12-3.pl}
 
 Here's the output from \autoref{exam:example12.3}:
 
@@ -513,8 +513,8 @@ Finally, let's take a look at the \textit{format} and \textit{write} functions. 
 
 \autoref{exam:example12.4} is a short example of a format that creates a FASTA-style output. 
 
-\textbf{Example 12-4. Example of format function to produce FASTA output}
-\lstinputlisting[label=exam:example12.4]{./scripts/example12-4.pl}
+%\textbf{Example 12-4. Example of format function to produce FASTA output}
+\lstinputlisting[label=exam:example12.4,caption={Example 12.4. Example of format function to produce FASTA output}]{./scripts/example12-4.pl}
 
 Here's the output of \autoref{exam:example12.4}:
 
@@ -566,29 +566,30 @@ The \verb|write| command simply prints the previously defined format. By default
 
 The upcoming release of Perl 6 will move formats out of the core of the language and make them into a module. Details are not available as of this writing, but this change will probably entail adding a statement such as \verb|use Formats;| near the top of your code in order to load the module for using formats.
 
-\section{Bioperl}
-The \textit{Bioperl} project is an important collection of Perl code for bioinformatics that has been in development since 1998. Although Bioperl uses the more advanced object-oriented style of Perl program design, it's possible to take an introductory look here at how it's organized and used.
+\section{BioPerl}
+The \textit{BioPerl} project is an important collection of Perl code for bioinformatics that has been in development since 1998. Although BioPerl uses the more advanced object-oriented style of Perl program design, it's possible to take an introductory look here at how it's organized and used.
 
-The main focus of Bioperl modules is to perform sequence manipulation, provide access to various biology databases (both local and web-based), and parse the output of various programs.
+The main focus of BioPerl modules is to perform sequence manipulation, provide access to various biology databases (both local and web-based), and parse the output of various programs.
 
-Bioperl is available at \href{http://www.bioperl.org/}{http://www.bioperl.org/}. Some of its features rely on having additional Perl modules—available from CPAN (\href{http://www.cpan.org/}{http://www.cpan.org/})—installed. This situation is quite common, and as you do more Perl programming, you'll become familiar with installing modules from CPAN. The Bioperl tutorials include information on installing Bioperl and additional modules for the three major operating systems: Unix or Linux, Mac, and Windows.
+BioPerl is available at \href{http://www.bioperl.org/}{http://www.bioperl.org/}. Some of its features rely on having additional Perl modules—available from CPAN (\href{http://www.cpan.org/}{http://www.cpan.org/})—installed. This situation is quite common, and as you do more Perl programming, you'll become familiar with installing modules from CPAN. The BioPerl tutorials include information on installing BioPerl and additional modules for the three major operating systems: Unix or Linux, Mac, and Windows.
 
-Bioperl doesn't provide complete programs. Rather, it provides a fairly large—and growing—set of modules for accomplishing common tasks, including some tasks you've seen in this book. You're responsible for writing the code that holds the modules together. By providing these ready and (usually) easy-to-use modules, Bioperl makes developing bioinformatics applications in Perl faster and easier. There are example programs for most of the modules, which can be examined and modified to get started.
+BioPerl doesn't provide complete programs. Rather, it provides a fairly large—and growing—set of modules for accomplishing common tasks, including some tasks you've seen in this book. You're responsible for writing the code that holds the modules together. By providing these ready and (usually) easy-to-use modules, BioPerl makes developing bioinformatics applications in Perl faster and easier. There are example programs for most of the modules, which can be examined and modified to get started.
 
-Like many open source projects, Bioperl has suffered from fragmentation and uneven documentation, due to the strictly volunteer and geographically dispersed group of contributors. But recent work on the project leading up to Release 0.7 in March 2001 has significantly improved the project. In particular, there is now enough tutorial information on using the modules to enable you to make good use of the code.
+Like many open source projects, BioPerl has suffered from fragmentation and uneven documentation, due to the strictly volunteer and geographically dispersed group of contributors. But recent work on the project leading up to Release 0.7 in March 2001 has significantly improved the project. In particular, there is now enough tutorial information on using the modules to enable you to make good use of the code.
 
-Some difficulties still remain. Most of the code has been developed on Unix or Linux systems. Not all of it works on Macs or Windows operating systems, but most will. There are some documents available at the Bioperl web site that discuss using Bioperl on non-Unix computers, but the bottom line is that you might find that some things don't work.
+Some difficulties still remain. Most of the code has been developed on Unix or Linux systems. Not all of it works on Macs or Windows operating systems, but most will. There are some documents available at the BioPerl web site that discuss using BioPerl on non-Unix computers, but the bottom line is that you might find that some things don't work.
 
-If you're going to give Bioperl a try (and I strongly recommend you do), you should make sure you have a fairly recent version of Perl installed. You'll need at least Version 5.004; it would be much better to install the latest stable release from the Perl web site \href{http://www.perl.com}{http://www.perl.com}. 
+If you're going to give BioPerl a try (and I strongly recommend you do), you should make sure you have a fairly recent version of Perl installed. You'll need at least Version 5.004; it would be much better to install the latest stable release from the Perl web site \href{http://www.perl.com}{http://www.perl.com}. 
 
 \subsection{Sample Modules}
-To give you an idea of what tasks Bioperl can make easier for you, \autoref{tab:table12.1} displays a representative sample of some of the most useful modules available. 
+To give you an idea of what tasks BioPerl can make easier for you, \autoref{tab:table12.1} displays a representative sample of some of the most useful modules available. 
 
 \begin{table}[!htbp]
   \begin{center}
-  \caption{Bioperl modules}
+  \caption{BioPerl modules}
   \label{tab:table12.1}
-  \begin{tabu}{X[2,l]X[3,l]}
+  \setlength{\tabulinesep}{0.2em}
+  \begin{tabu}{X[1.5,l,m]X[3,l,m]}
   \toprule
   Module & Description\\
   \midrule
@@ -613,22 +614,22 @@ To give you an idea of what tasks Bioperl can make easier for you, \autoref{tab:
   Bio::SeqFeature::Gene::GeneStructure & Feature representing an arbitrarily complex structure of a gene\\
   Bio::SeqFeature::Gene::Transcript & Feature representing a transcript\\
   Bio::SeqFeature::Gene::TranscriptI & Interface for a feature representing a transcript of exons, promoter, UTR, and a poly-adenylation site\\
-  Bio::Tools::Blast & Bioperl BLAST sequence analysis object\\
+  Bio::Tools::Blast & BioPerl BLAST sequence analysis object\\
   Bio::Tools::BPbl2seq & Lightweight BLAST parser for pair-wise sequence alignment using the BLAST algorithm\\
   Bio::Tools::BPlite & Lightweight BLAST parser\\
   Bio::Tools::BPpsilite & Lightweight BLAST parser for PSIBLAST reports\\
-  Bio::Tools::CodonTable & Bioperl codon table object\\
-  Bio::Tools::Fasta & Bioperl FASTA utility object\\
+  Bio::Tools::CodonTable & BioPerl codon table object\\
+  Bio::Tools::Fasta & BioPerl FASTA utility object\\
   Bio::Tools::IUPAC & Generates unique seq objects from an ambiguous seq object\\
-  Bio::Tools::RestrictionEnzyme & Bioperl object for a restriction endonuclease object\\
-  Bio::Tools::SeqPattern & Bioperl object for a sequence pattern or motif\\
+  Bio::Tools::RestrictionEnzyme & BioPerl object for a restriction endonuclease object\\
+  Bio::Tools::SeqPattern & BioPerl object for a sequence pattern or motif\\
   Bio::Tools::SeqStats & Object holding statistics for one particular sequence\\
   Bio::Tools::SeqWords & Object holding n-mer statistics for one sequence\\
-  Bio::Tools::Blast::HSP & Bioperl BLAST high-scoring segment pair object\\
-  Bio::Tools::Blast::HTML & Bioperl utility module for HTML-formatting BLAST reports\\
-  Bio::Tools::Blast::Sbjct & Bioperl BLAST ``hit" object\\
-  Bio::Tools::Blast::Run::LocalBlast & Bioperl module for running BLAST analyses locally\\
-  Bio::Tools::Blast::Run::Webblast & Bioperl module for running BLAST analyses using an HTTP interface\\
+  Bio::Tools::Blast::HSP & BioPerl BLAST high-scoring segment pair object\\
+  Bio::Tools::Blast::HTML & BioPerl utility module for HTML-formatting BLAST reports\\
+  Bio::Tools::Blast::Sbjct & BioPerl BLAST ``hit" object\\
+  Bio::Tools::Blast::Run::LocalBlast & BioPerl module for running BLAST analyses locally\\
+  Bio::Tools::Blast::Run::Webblast & BioPerl module for running BLAST analyses using an HTTP interface\\
   Bio::Tools::Prediction::Exon & Predicted exon feature\\
   Bio::Tools::Prediction::Gene & Predicted gene structure feature\\
   Bio::Variation::AAChange & Sequence change class for polypeptides\\
@@ -641,16 +642,16 @@ To give you an idea of what tasks Bioperl can make easier for you, \autoref{tab:
   \end{center}
 \end{table}
 
-\subsection{Bioperl Tutorial Script}
-Bioperl has a tutorial script to help you try out various parts of the package. In this section, I'll show how to start up and run some example computations.
+\subsection{BioPerl Tutorial Script}
+BioPerl has a tutorial script to help you try out various parts of the package. In this section, I'll show how to start up and run some example computations.
 
-I've mentioned already that you should learn how to download code from CPAN in order to add modules such as Bioperl. A great deal of the usefulness of the Perl programming environment now resides in these modules available on CPAN. This was a design decision: by concentrating on the core Perl language, the Perl designers can focus on making the language as good as they can. The Perl module developers can then concentrate on their many modules. By all means, take a look around the CPAN web site for an idea of the wealth of Perl modules available to you.
+I've mentioned already that you should learn how to download code from CPAN in order to add modules such as BioPerl. A great deal of the usefulness of the Perl programming environment now resides in these modules available on CPAN. This was a design decision: by concentrating on the core Perl language, the Perl designers can focus on making the language as good as they can. The Perl module developers can then concentrate on their many modules. By all means, take a look around the CPAN web site for an idea of the wealth of Perl modules available to you.
 
-I won't give the details of how to install Bioperl here: as mentioned, they are available at the Bioperl web site, or you can visit the CPAN web site for information.  
+I won't give the details of how to install BioPerl here: as mentioned, they are available at the BioPerl web site, or you can visit the CPAN web site for information.  
 
-So, let's assume you've installed the Bioperl module and looked over the tutorial at the Bioperl web site. Now, let's see how to try out some Bioperl programs.
+So, let's assume you've installed the BioPerl module and looked over the tutorial at the BioPerl web site. Now, let's see how to try out some BioPerl programs.
 
-Go to the directory where the Bioperl software has been built on your system. For instance, on my Linux computer, I put the download file \textit{bioperl-0.7.0.tar.gz} into the directory \textit{/usr/local/src}, and then unpacked it with the command: 
+Go to the directory where the BioPerl software has been built on your system. For instance, on my Linux computer, I put the download file \textit{bioperl-0.7.0.tar.gz} into the directory \textit{/usr/local/src}, and then unpacked it with the command: 
 
 \begin{lstlisting}[language=bash]
 tar xvzf bioperl-0.7.0.tar.gz
@@ -671,7 +672,7 @@ Change to the source directory and type \verb|perl bptutorial.pl|. Here's the re
   Copyright Peter Schattner
 
    This tutorial includes "snippets" of code and text from various
-   Bioperl documents including module documentation, example scripts
+   BioPerl documents including module documentation, example scripts
 % perl bptutorial.pl 
 
 The following numeric arguments can be passed to run the corresponding demo-script.
@@ -828,48 +829,48 @@ Translating with all codon tables using method defaults:
 % 
 \end{lstlisting}
 
-That was more fun, because this part of Bioperl is doing several things we've done in this book.
+That was more fun, because this part of BioPerl is doing several things we've done in this book.
 
-I hope this brief look at Bioperl has whetted your appetite for more. It's a good idea to explore this set of modules. A Perl module for parsing BLAST output called \textit{BPLite.pm} may also be of interest: it's now part of the Bioperl project. 
+I hope this brief look at BioPerl has whetted your appetite for more. It's a good idea to explore this set of modules. A Perl module for parsing BLAST output called \textit{BPLite.pm} may also be of interest: it's now part of the BioPerl project. 
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 12.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 \textit{Basic string matching}. Write a program that looks for a query string in a target string. For instance, if the query string is ``gone", it finds a match at position 22 of the target string ``goof through the way-gone-osphere." Don't use regular expressions or any of Perl's built-in string-matching abilities; instead, examine individual positions in the strings, compare characters, and invent your own algorithm. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 12.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Explore the NCBI BLAST web pages at \href{http://www.ncbi.nlm.nih.gov/BLAST}{http://www.ncbi.nlm.nih.gov/BLAST}. Familiarize yourself with the purpose and use of the various component programs and read the tutorial information on the meaning of the statistics. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 12.3}}
-\begin{adjustwidth}{1cm}{}
-Explore the Bioperl web pages at \href{http://www.bioperl.org}{http://www.bioperl.org}. Download the code and install it on your computer. 
+\begin{adjustwidth}{2em}{}
+Explore the BioPerl web pages at \href{http://www.bioperl.org}{http://www.bioperl.org}. Download the code and install it on your computer. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 12.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Perform BLAST searches at the NCBI web site. Search with DNA against DNA databases; then search with the same DNA against protein databases, and compare the output.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 12.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Perform two BLAST searches with related sequences. Parse the BLAST output of the searches and extract the top 10 hits in the header annotation of each search. Write a program that reports on the differences and similarities between the two searches.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 12.6}}
-\begin{adjustwidth}{1cm}{}
-Write a program that uses Bioperl to perform a BLAST search at the NCBI web site, then use Bioperl to parse the BLAST output. 
+\begin{adjustwidth}{2em}{}
+Write a program that uses BioPerl to perform a BLAST search at the NCBI web site, then use BioPerl to parse the BLAST output. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 12.7}}
-\begin{adjustwidth}{1cm}{}
-Using Bioperl modules mixed with your own code, write a program that runs BLAST on a set of DNA sequences and saves the IDs of the list of hits of each BLAST run sorted in arrays. Allow the user to view each list, to view hits in common between multiple lists and hits unique to one of multiple lists. For each hit, enable the user to fetch its entire GenBank record. 
+\begin{adjustwidth}{2em}{}
+Using BioPerl modules mixed with your own code, write a program that runs BLAST on a set of DNA sequences and saves the IDs of the list of hits of each BLAST run sorted in arrays. Allow the user to view each list, to view hits in common between multiple lists and hits unique to one of multiple lists. For each hit, enable the user to fetch its entire GenBank record. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 12.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write an explanation of the code for the subroutine \textit{extract\_HSP\_information}. Be sure to refer to the format of the data the code uses as input. 
 \end{adjustwidth}
 

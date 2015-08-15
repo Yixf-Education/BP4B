@@ -501,7 +501,7 @@ Annotation found in record at offset 22340
 \subsection{在顶层解析注释}
 现在，让我们来解析注释。
 
-前面已经提到过，NCBI上有一个文档，对GenBank记录结构的细节进行了描述。这个文件就是\textit{gbrel.txt}，它是GenBank发布的一部分，可以从NCBI网站或者它们的FTP站点上找到这个文件。每次发布的时候（现在是每两个月发布一个新版本），它都会更新，其中会注明格式发生的变化。如果你编程处理GenBank记录，你应该读读这个文档，并且在手边保留一份拷贝供参考用，还要定期去查看一下宣告的Genbank记录格式的变化。
+前面已经提到过，NCBI上有一个文档，对GenBank记录结构的细节进行了描述。这个文件就是\textit{gbrel.txt}，它是GenBank发布的一部分，可以从NCBI网站或者它们的FTP站点上找到这个文件。每次发布的时候（现在是每两个月发布一个新版本），它都会更新，其中会注明格式发生的变化。如果你编程处理GenBank记录，你应该读读这个文档，并且在手边保留一份拷贝供参考用，还要定期去查看一下宣告的GenBank记录格式的变化。
 
 如果你回头去看看本章前面部分那个完整的GenBank记录，你会发现注释部分有特定的结构。其中有一些字段，像是LOCUS、DEFINITION、ACCESSION、VERSION、KEYWORDS、SOURCE、REFERENCE、FEATURES和BASE COUNT等，这些字段都起始于一行的开头。有些字段还有子字段，尤其是FEATURE字段，它的结构异常复杂。
 

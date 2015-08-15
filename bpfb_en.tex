@@ -12,10 +12,14 @@
 \input{./chapters_en/chapter0.tex}
 \input{./chapters_en/chapter_perface.tex}
 
+\clearpage
 \setcounter{page}{0}                                                      
 \tableofcontents                                                          
 \clearpage
-\thispagestyle{empty}
+
+\listoffigures
+\listoftables
+\lstlistoflistings
 
 \mainmatter
 \input{./chapters_en/chapter1.tex}
@@ -33,7 +37,9 @@
 \input{./chapters_en/chapter13.tex}
 
 %\appendix
-%\renewcommand{\thechapter}{\Alph{chapter}}
+\renewcommand{\thechapter}{\Alph{chapter}}
+\titleformat{\chapter}{\centering\LARGE\bfseries}{Appendix \thechapter}{2em}{}
+\titlecontents{chapter}[0pt]{\vspace{0.3\baselineskip}\bfseries}{Appendix \thecontentslabel\quad}{}{\hfill\contentspage}
 \begin{appendices}
 \input{./chapters_en/chapter_aa.tex}
 \input{./chapters_en/chapter_ab.tex}

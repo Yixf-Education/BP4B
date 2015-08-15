@@ -46,8 +46,8 @@ When calling a subroutine, older versions of Perl required starting the name of 
 
 \autoref{exam:example6.1} demonstrates a subroutine that shows in detail how this works. 
 
-\textbf{Example 6-1. A subroutine to append ACGT to DNA}
-\lstinputlisting[label=exam:example6.1]{./scripts/example6-1.pl}
+%\textbf{Example 6-1. A subroutine to append ACGT to DNA}
+\lstinputlisting[label=exam:example6.1,caption={Example 6.1. A subroutine to append ACGT to DNA}]{./scripts/example6-1.pl}
 
 \autoref{exam:example6.1} produces the following output:
 
@@ -131,20 +131,32 @@ my($dna) = @_;
 
 executes in the subroutine, the passed-in value is assigned to the subroutine's variable \verb|$dna|. The next section explains why this is a new variable specific to the subroutine. The subroutine's variable can be called anything; it certainly doesn't have to be the same name as the argument, as it happens to be in this example. What's cool about scoping is that it doesn't matter if it is or not. 
 
-\begin{adjustwidth}{2cm}{2cm}
-  \parpic[l]{
-  \includegraphics[width=1cm]{warning.png}
-  }
-  Beware the common mistake of forgetting the \verb|@_| array when naming your arguments in a subroutine, that is, using the statement:
-  \begin{lstlisting}
-my($dna);
-  \end{lstlisting}
-  instead of:
-  \begin{lstlisting}
-my($dna) = @_;
-  \end{lstlisting}
-  If you make this mistake, the values of the arguments won't appear in your subroutine, even though their names are declared. 
-\end{adjustwidth}
+%\begin{adjustwidth}{2cm}{2cm}
+  %\parpic[l]{
+  %\includegraphics[width=2em]{warning.png}
+  %}
+  %Beware the common mistake of forgetting the \verb|@_| array when naming your arguments in a subroutine, that is, using the statement:
+  %\begin{lstlisting}
+%my($dna);
+  %\end{lstlisting}
+  %instead of:
+  %\begin{lstlisting}
+%my($dna) = @_;
+  %\end{lstlisting}
+  %If you make this mistake, the values of the arguments won't appear in your subroutine, even though their names are declared. 
+%\end{adjustwidth}
+
+\vspace{-5pt}
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1.1cm]{warning.png} & Beware the common mistake of forgetting the \verb|@_| array when naming your arguments in a subroutine, that is, using the statement: \verb|my($dna);| instead of: \verb|my($dna) = @_;|. If you make this mistake, the values of the arguments won't appear in your subroutine, even though their names are declared.\\
+      \tabucline{-}
+    \end{tabu*}
+  \end{center}
+\end{table}
+\vspace{-20pt}
 
 \subsection{Scoping}
 By keeping all variables a subroutine uses active only within the subroutine, you can make it safe to call the subroutines from anywhere. You make the variables specific only to the subroutine by declaring them as \verb|my| variables. \verb|my| is a keyword defined in Perl that limits variables to the block in which they are used (in this case, the block is the subroutine). \footnote{There are different models of scoping; \verb|my| implements a type called \textit{lexical scoping}, also known as \textit{static scoping}. Another method is available in Perl via the \textit{local} construct, but you almost always want to use \verb|my|.} 
@@ -179,17 +191,29 @@ Once a variable is declared in this fashion, it exists only until the end of the
 
 The example that showed collecting an argument in a subroutine uses parentheses around the variable. Because \verb|@_| is an array, the parentheses around the new variables put them in array context and ensure that they are initialized correctly (see \autoref{chap:chapter4}).
 
-\begin{adjustwidth}{2cm}{2cm}
-  \parpic[l]{
-  \includegraphics[width=1cm]{warning.png}
-  }
-  Always declare all your variables in your subroutines—even those variables that don't come in as arguments—such as the \verb|my| construct. 
-\end{adjustwidth}
+%\begin{adjustwidth}{2cm}{2cm}
+  %\parpic[l]{
+  %\includegraphics[width=2em]{warning.png}
+  %}
+  %Always declare all your variables in your subroutines—even those variables that don't come in as arguments—such as the \verb|my| construct. 
+%\end{adjustwidth}
+
+\vspace{-5pt}
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1.1cm]{warning.png} & Always declare all your variables in your subroutines—even those variables that don't come in as arguments—such as the \verb|my| construct.\\
+      \tabucline{-}
+    \end{tabu*}
+  \end{center}
+\end{table}
+\vspace{-20pt}
 
 Why use scoping? \autoref{exam:example6.2} shows the trouble that can happen when you don't. Recall that one of the advantages of subroutines is writing a useful bit of code once and then using it whenever you need it. \autoref{exam:example6.2} is a program that has a variable in the main program with the same name as a variable in a subroutine it calls. This can easily happen if you write the subroutine at a time other than the main program (say six months later) or if you call a subroutine someone else wrote. 
 
-\textbf{Example 6-2. The pitfalls of not using my variables}
-\lstinputlisting[label=exam:example6.2]{./scripts/example6-2.pl}
+%\textbf{Example 6-2. The pitfalls of not using my variables}
+\lstinputlisting[label=exam:example6.2,caption={Example 6.2. The pitfalls of not using my variables}]{./scripts/example6-2.pl}
 
 \autoref{exam:example6.2} gives the following output:
 
@@ -257,8 +281,8 @@ However, many programs are run from a command line. Even the newer MacOS X, whic
 
 \autoref{exam:example6.3} counts the number of G's in a string of DNA. 
 
-\textbf{Example 6-3. Counting the G's in some DNA on the command line}
-\lstinputlisting[label=exam:example6.3]{./scripts/example6-3.pl}
+%\textbf{Example 6-3. Counting the G's in some DNA on the command line}
+\lstinputlisting[label=exam:example6.3,caption={Example 6.3. Counting the G's in some DNA on the command line}]{./scripts/example6-3.pl}
 
 Now let's look at how this program works, while examining and explaining the new features. For starters, notice the new line:
 
@@ -559,12 +583,24 @@ use strict;
 
 As mentioned previously, this forces you to declare your variables. (It has some options, that are beyond the scope of this book.) It finds misspelled variables, undeclared variables that may be interfering with other parts of the program, and so on. 
 
-\begin{adjustwidth}{2cm}{2cm}
-  \parpic[l]{
-  \includegraphics[width=1cm]{note.png}
-  }
-  It's best to always use both \verb|use strict;| and \verb|use warnings;| when writing your Perl code. 
-\end{adjustwidth}
+%\begin{adjustwidth}{2cm}{2cm}
+  %\parpic[l]{
+  %\includegraphics[width=2em]{note.png}
+  %}
+  %It's best to always use both \verb|use strict;| and \verb|use warnings;| when writing your Perl code. 
+%\end{adjustwidth}
+
+\vspace{-5pt}
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1cm]{note.png} & It's best to always use both \verb|use strict;| and \verb|use warnings;| when writing your Perl code.\\
+      \tabucline{-}
+    \end{tabu*}
+  \end{center}
+\end{table}
+\vspace{-20pt}
 
 \subsection{Fixing Bugs with Comments and Print Statements}
 Sometimes you can identify misbehaving code by selectively commenting out sections of the program until you find the part that seems to cause the problem. You can also add \verb|print| statements at suspicious parts of a misbehaving program to check what certain variables are doing. Both of these are time-honored programming techniques, and they work well in almost any programming language.
@@ -591,8 +627,8 @@ For most purposes, the Perl debugger is a great, essential, programming tool. Th
 
 There is one new thing in \autoref{exam:example6.4}. The \textit{next} statement affects the control flow in a loop. It immediately returns the control flow to the next iteration of the loop, skipping whatever else would have followed. Also, you may want to recall \verb|$_|, which we discussed back in \autoref{exam:example5.5} in the context of a \verb|foreach| loop. 
 
-\textbf{Example 6-4. A program with a bug or two}
-\lstinputlisting[label=exam:example6.4]{./scripts/example6-4.pl}
+%\textbf{Example 6-4. A program with a bug or two}
+\lstinputlisting[label=exam:example6.4,caption={Example 6.4. A program with a bug or two}]{./scripts/example6-4.pl}
 
 Here's the output of two runs of \autoref{exam:example6.1}:
 
@@ -1024,51 +1060,51 @@ You can see that \verb|use strict;| didn't help for the other bug. Remember, it'
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 6.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine to concatenate two strings of DNA.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 6.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine to report the percentage of each nucleotide in DNA. You've seen the plus operator \verb|+|. You will also want to use the divide operator \verb|/| and the multiply operator \verb|*|. Count the number of each nucleotide, divide by the total length of the DNA, then multiply by 100 to get the percentage. Your arguments should be the DNA and the nucleotide you want to report on. The \verb|int| function can be used to discard digits after the decimal point, if needed.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 6.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine to prompt a user with any message, and collect the user's answer. The subroutine's argument should be the message, and the return value should be the (one-line) answer. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 6.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine to look for command-line arguments such as \verb|-help|, \verb|-h|, and \verb|--help|. Recall that command-line arguments appear in the \verb|@ARGV| array. Call your subroutine from a main program. If you give the program any of the named command-line arguments, when you pass them into the subroutine it should return a true value. If this is the case, have the program print out a help message in a \verb|$USAGE| variable and exit. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 6.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine to check if a file exists, is a regular file, and is nonzero in size. Use the \verb|file test| operators (See \autoref{chap:chapterab}). 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 6.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Use Exercise 6.3 in a subroutine that keeps prompting until a valid file is entered by the user or until five attempts have failed. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 6.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a module that contains subroutines that report various statistics on DNA sequences, for instance length, GC content, presence or absence of poly-T sequences (long stretches of mostly T's at the 5' (left) end of many \verb|$DNA| sequences), or other measures of interest. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 6.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine to do something a biologist normally does. (Here's an opportunity to look around the lab and write a useful program!) 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 6.9}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Read the documentation about the debugger and become familiar with its use by applying it during your programming. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 6.10}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine that alters an array of lines in a file. Use pass by reference for the array. Pass the subroutine a reference to the array, a regular expression, and a string to replace the regular expression. All the lines of the array should be altered by substituting the matches found for the regular expression by the replacement string.
 \end{adjustwidth}

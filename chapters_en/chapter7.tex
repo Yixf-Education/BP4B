@@ -37,8 +37,8 @@ In the examples that follow, I use a simple method for seed picking that's okay 
 
 The example declares a few arrays filled with parts of sentences, then randomizes their assembly into complete sentences. It's a trivial children's game; yet it teaches several programming points.
 
-\textbf{Example 7-1. Children's game with random numbers}
-\lstinputlisting[label=exam:example7.1]{./scripts/example7-1.pl}
+%\textbf{Example 7-1. Children's game with random numbers}
+\lstinputlisting[label=exam:example7.1,caption={Example 7.1. Children's game with random numbers}]{./scripts/example7-1.pl}
 
 Here is some typical output from \autoref{exam:example7.1}:
 
@@ -419,8 +419,8 @@ Look back and notice that you didn't have to change your subroutine \textit{muta
 \subsection{Combining the Subroutines to Simulate Mutation}
 Now you've got all your ducks in place, so you write your main program as in \autoref{exam:example7.2} and see if your new subroutine works.
 
-\textbf{Example 7-2. Mutate DNA}
-\lstinputlisting[label=exam:example7.2]{./scripts/example7-2.pl}
+%\textbf{Example 7-2. Mutate DNA}
+\lstinputlisting[label=exam:example7.2,caption={Example 7.2. Mutate DNA}]{./scripts/example7-2.pl}
 
 Here's some typical output from \autoref{exam:example7.2}:
 
@@ -601,8 +601,8 @@ Now that we've got a top-down design, how to proceed with the coding? Let's foll
 
 \autoref{exam:example7.3} starts with the main program and proceeds, following the order of the top-down design you did in pseudocode, then followed by the subroutines. 
 
-\textbf{Example 7-3. Generate random DNA}
-\lstinputlisting[label=exam:example7.3]{./scripts/example7-3.pl}
+%\textbf{Example 7-3. Generate random DNA}
+\lstinputlisting[label=exam:example7.3,caption={Example 7.3. Generate random DNA}]{./scripts/example7-3.pl}
 
 Here's the output from \autoref{exam:example7.3}:
 
@@ -661,8 +661,8 @@ return count/length
 
 The whole problem now seems eminently do-able. You also have to write the code that picks each pair of sequences, collects the results, and finally takes the mean of the results and report it as a percentage. That can all go into the main program. \autoref{exam:example7.4} gives it a try, all in one shot. 
 
-\textbf{Example 7-4. Calculate average \% identity between pairs of random DNA sequences}
-\lstinputlisting[label=exam:example7.4]{./scripts/example7-4.pl}
+%\textbf{Example 7-4. Calculate average \% identity between pairs of random DNA sequences}
+\lstinputlisting[label=exam:example7.4,caption={Example 7.4. Calculate average \% identity between pairs of random DNA sequences}]{./scripts/example7-4.pl}
 
 If the code in \autoref{exam:example7.4} seems somewhat repetitive of code from previous examples, it is. In the interest of presentation, I included the subroutine code in the program. (You'll start using modules in \autoref{chap:chapter8} as a way to avoid this repetition.) 
 
@@ -710,44 +710,44 @@ You might find it a worthwhile exercise to let the number of sequences be some s
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 7.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that asks you to pick an amino acid and then keeps (randomly) guessing which amino acid you picked. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 7.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that picks one of the four nucleotides and then keeps prompting until you correctly guess the nucleotide it picked.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 7.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine to randomly shuffle the elements of an array. The subroutine should take an array as an argument and return an array with the same elements but shuffled in a random order. Each element of the original array should appear exactly once in the output array, just like shuffling a deck of cards. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 7.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program to mutate protein sequence, similar to the code in \autoref{exam:example7.2} that mutates DNA. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 7.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine that, given a codon (a fragment of DNA of length 3), returns a random mutation in the codon. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 7.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Some versions of Perl automatically seed the random number generator, making it superfluous to call \verb|srand| for that purpose before using \verb|rand| to generate random numbers. Experiment to see if your implementation of \verb|rand| calls \verb|srand| automatically, or if you have to explicitly call \verb|srand| yourself, as you have seen done in the code in this chapter. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 7.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Sometimes not all choices are will be picked in a random selection. Write a subroutine that randomly returns a nucleotide, in which the probability of each nucleotide can be specified. Pass the subroutine four numbers as arguments, representing the probabilities of each nucleotide; if each probability is 0.25, the subroutine is equally likely to pick each nucleotide. As error checking, have the subroutine ensure that the sum of the four probabilities is 1.
 
 \textit{Hint:} one way to accomplish this is to divide the range between 0 and 1 into four intervals with lengths corresponding to the probability of the respective nucleotides. Then, simply pick a random number between 0 and 1, see in which interval it falls, and return the corresponding nucleotide.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 7.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 \textit{This is a more difficult exercise.} The \textit{study} function in Perl may speed up searches for motifs in DNA or protein. Read the Perl documentation on this function. Its use is simple: given some sequence data in a variable \verb|$sequence|, type:
 
 \begin{lstlisting}

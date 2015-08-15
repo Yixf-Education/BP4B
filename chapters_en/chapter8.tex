@@ -465,8 +465,8 @@ Now that we've got a satisfactory way to translate codons to amino acids, we'll 
 \section{Translating DNA into Proteins}
 \autoref{exam:example8.1} shows how the new \textit{codon2aa} subroutine translates a whole DNA sequence into protein. 
 
-\textbf{Example 8-1. Translate DNA into protein }
-\lstinputlisting[label=exam:example8.1]{./scripts/example8-1.pl}
+%\textbf{Example 8-1. Translate DNA into protein }
+\lstinputlisting[label=exam:example8.1,caption={Example 8.1. Translate DNA into protein }]{./scripts/example8-1.pl}
 
 To make this work, you'll need the \textit{BeginPerlBioinfo.pm} module for your subroutines in a separate file the program can find, as discussed in \autoref{chap:chapter6}. You also have to add the \textit{codon2aa} subroutine to it. Alternatively, you can add the code for the subroutine \textit{condon2aa} directly to the program in \autoref{exam:example8.1} and remove the reference to the \textit{BeginPerlBioinfo.pm} module.
 
@@ -577,32 +577,32 @@ Over the fairly short history of bioinformatics, several different biologists an
 There are many such formats, perhaps as many as 20 in regular use for DNA alone. The very multiplicity of these formats can be an annoyance when you're analyzing a sequence in the lab: it becomes necessary to translate from one format to another for the various programs you use to examine the sequence. Here are some of the most popular: 
 
 \textcolor{red}{\textit{FASTA}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 The FASTA and Basic Local Alignment Search Technique (BLAST) programs are popular; they both use the FASTA format. Because of its simplicity, the FASTA format is perhaps the most widely used of all formats, aside from GenBank. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Genetic Sequence Data Bank (GenBank)}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 GenBank is a collection of all publicly released genetic data. It includes lots of information in addition to the DNA sequence. It's very important, and we'll be looking closely at GenBank files in \autoref{chap:chapter10}. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{European Molecular Biology Laboratory (EMBL)}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 The EMBL database has substantially the same data as the GenBank and the DDBJ (DNA Data Bank of Japan), but the format is somewhat different. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Simple data, or Applied Biosystems (ABI) sequencer output}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 This is DNA sequence data that has no formatting whatsoever, just the characters that represent the bases; it is output into files by the sequencing machines from ABI and from other machines and programs. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Protein Identification Resource (PIR)}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 PIR is a well-curated collection of protein sequence data.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Genetics Computer Group (GCG)}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 The GCG program (a.k.a. the GCG Wisconsin package) from Accelrys is used at many large research institutions. Data must be in GCG format to be usable by their programs. 
 \end{adjustwidth}
 
@@ -825,8 +825,8 @@ sub print_sequence {
 
 The code depends on the behavior of \textit{substr}, which gives the partial substring at the end of the string, even if it's less than the requested length. You can see there's a new \textit{print\_sequence} subroutine in the \textit{BeginPerlBioinfo.pm} module (see \autoref{chap:chapter6}). We remembered to keep the statement \verb|1;| as the last line of the module. \autoref{exam:example8.2} shows the main program. 
 
-\textbf{Example 8-2. Read a FASTA file and extract the sequence data}
-\lstinputlisting[label=exam:example8.2]{./scripts/example8-2.pl}
+%\textbf{Example 8-2. Read a FASTA file and extract the sequence data}
+\lstinputlisting[label=exam:example8.2,caption={Example 8.2. Read a FASTA file and extract the sequence data}]{./scripts/example8-2.pl}
 
 Here's the output of \autoref{exam:example8.2}:
 
@@ -880,8 +880,8 @@ accta
 \subsection{A Main Program for Reading DNA and Writing Protein}
 Now, one final program for this section. Let's add to the preceding program a translation from DNA to protein and print out the protein instead. Notice how short \autoref{exam:example8.3} is! As you accumulate useful subroutines in our modules, programs get easier and easier to write. 
 
-\textbf{Example 8-3. Read a DNA FASTA file, translate to protein, and format output}
-\lstinputlisting[label=exam:example8.3]{./scripts/example8-3.pl}
+%\textbf{Example 8-3. Read a DNA FASTA file, translate to protein, and format output}
+\lstinputlisting[label=exam:example8.3,caption={Example 8.3. Read a DNA FASTA file, translate to protein, and format output}]{./scripts/example8-3.pl}
 
 Here's the output of \autoref{exam:example8.3}:
 
@@ -967,13 +967,24 @@ Note that the length of the sequence is \verb|end-start+1|. To give a small exam
 
 Dealing with indices like this has to be done carefully, or the code won't work. For many programs, this is the worst the mathematics gets. 
 
+%\begin{adjustwidth}{2cm}{2cm}
+  %\parpic[l]{
+  %\includegraphics[width=2em]{warning.png}
+  %}
+%Pay attention to the indices!
+%\end{adjustwidth}
 
-\begin{adjustwidth}{2cm}{2cm}
-  \parpic[l]{
-  \includegraphics[width=1cm]{warning.png}
-  }
-Pay attention to the indices!
-\end{adjustwidth}
+\vspace{-5pt}
+\begin{table}[h]
+  \begin{center}
+    \begin{tabu} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
+      \tabucline{-}
+      \includegraphics[width=1.1cm]{warning.png} & Pay attention to the indices!\\
+      \tabucline{-}
+    \end{tabu}
+  \end{center}
+\end{table}
+\vspace{-20pt}
 
 You have to decide if you wish to keep the numbering of positions from 0, which is Perl's way to do it, or the first character of the sequence is in position 1, which is the biologist's way to do it. Let's do it the biologist's way. The positions will be decreased by one when passed to the Perl function \textit{substr}, which, of course, does it Perl's way.
 
@@ -1023,8 +1034,8 @@ sub translate_frame {
 
 \autoref{exam:example8.4} translates the DNA in all six reading frames. 
 
-\textbf{Example 8-4. Translate a DNA sequence in all six reading frames}
-\lstinputlisting[label=exam:example8.4]{./scripts/example8-4.pl}
+%\textbf{Example 8-4. Translate a DNA sequence in all six reading frames}
+\lstinputlisting[label=exam:example8.4,caption={Example 8.4. Translate a DNA sequence in all six reading frames}]{./scripts/example8-4.pl}
 
 Here's the output of \autoref{exam:example8.4}:
 
@@ -1086,64 +1097,64 @@ PPRPLSAAI
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 8.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine that checks a string and returns \verb|true| if it's a DNA sequence. Write another that checks for protein sequence data. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that can search by name for a gene in an unsorted array.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that can search by name for a gene in a sorted array; use the Perl \textit{sort} function to sort an array. For extra credit: write a binary search subroutine to do the searching. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine that inserts an element into a sorted array. Hint: use the \textit{splice} Perl function to insert the element, as shown in \autoref{chap:chapter4}. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that searches by name for a gene in a hash. Get the genes from your own work or try downloading a list of all genes for a given organism from \href{www.ncbi.nlm.nih.gov}{www.ncbi.nlm.nih.gov} or one of the web sites given in \autoref{chap:chapteraa}. Make a hash of all the genes (key=name, value=gene ID or sequence). Hint: you may have to write a short Perl program to reformat the list of genes you start with to make it easy to populate the Perl hash. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine that checks an array of data and returns \verb|true| if it's in FASTA format. Note that FASTA expects the standard IUB/IUPAC amino acid and nucleic acid codes, plus the dash (-) that represents a gap of unknown length. Also, the asterisk (*) represents a stop codon for amino acids. Be careful using an asterisk in regular expressions; use a \verb|\*| to escape it to match an actual asterisk. 
 \end{adjustwidth}
 
 The remaining problems deal with the effect of mutations in DNA on the proteins they encode. They combine the subject of randomization and mutations from \autoref{chap:chapter7} plus the subject of the genetic code from this chapter. 
 
 \textcolor{red}{\textit{Exercise 8.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 For each codon, make note of what effect single nucleotide mutations have on the codon: does the same amino acid result, or does the codon now encode a different amino acid? Which one? Write a subroutine that, given a codon, returns a list of all the amino acids that may result from any single mutation in the codon. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine that, given an amino acid, randomly changes it to one of the amino acids calculated in Exercise 8.7. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.9}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that randomly mutates the amino acids in a protein but restricts the possibilities to those that can occur due to a single mutation in the original codons, as in Exercises 8.7 and 8.8.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.10}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Some codons are more likely than others to occur in random DNA. For instance, there are 6 of the 64 possible codons that code for the amino acid serine, but only 2 of the 64 codes for phenylalanine. Write a subroutine that, given an amino acid, returns the probability that it's coded by a randomly generated codon (see \autoref{chap:chapter7}). 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.11}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine that takes as arguments an amino acid; a position 1, 2, or 3; and a nucleotide. It then takes each codon that encodes the specified amino acid (there may be from one to six such codons), and mutates it at the specified position to the specified nucleotide. Finally, it returns the set of amino acids that are encoded by the mutated codons. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 8.12}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that, given two amino acids, returns the probability that a single mutation in their underlying (but unspecified) codons results in the codon of one amino acid mutating to the codon of the other amino acid. 
 \end{adjustwidth}
 

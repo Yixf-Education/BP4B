@@ -55,8 +55,8 @@ print their names
 
 \autoref{exam:example11.1} shows the actual Perl code.
 
-\textbf{Example 11-1. Listing the contents of a folder (or directory)}
-\lstinputlisting[label=exam:example11.1]{./scripts/example11-1.pl}
+%\textbf{Example 11-1. Listing the contents of a folder (or directory)}
+\lstinputlisting[label=exam:example11.1,caption={Example 11.1. Listing the contents of a folder (or directory)}]{./scripts/example11-1.pl}
 
 Since you're running this program on a folder that contains PDB files, this is what you'll see: 
 
@@ -107,8 +107,8 @@ for each item in the folder
 
 \autoref{exam:example11.2} shows the program.
 
-\textbf{Example 11-2. List contents of a folder and its subfolders}
-\lstinputlisting[label=exam:example11.2]{./scripts/example11-2.pl}
+%\textbf{Example 11-2. List contents of a folder and its subfolders}
+\lstinputlisting[label=exam:example11.2,caption={Example 11.2. List contents of a folder and its subfolders}]{./scripts/example11-2.pl}
 
 Here's the output of \autoref{exam:example11.2}:
 
@@ -149,8 +149,8 @@ subroutine list_recursively
 }
 \end{lstlisting}
 
-\textbf{Example 11-3. A recursive subroutine to list a filesystem}
-\lstinputlisting[label=exam:example11.3]{./scripts/example11-3.pl}
+%\textbf{Example 11-3. A recursive subroutine to list a filesystem}
+\lstinputlisting[label=exam:example11.3,caption={Example 11.3. A recursive subroutine to list a filesystem}]{./scripts/example11-3.pl}
 
 Here's the output of \autoref{exam:example11.3} (notice that it's the same as the output of \autoref{exam:example11.2}): 
 
@@ -190,8 +190,8 @@ Perl has modules for a variety of tasks. Some come standard with Perl; more can 
 
 \autoref{exam:example11.4} uses \textit{File::Find}. Consult the documentation for more examples of this useful module. The example shows the same functionality as \autoref{exam:example11.3} but now uses \textit{File::Find}. It simply lists the files and directories. Notice how much less code you have to write if you find a good module, ready to use! 
 
-\textbf{Example 11-4. Demonstrate File::Find}
-\lstinputlisting[label=exam:example11.4]{./scripts/example11-4.pl}
+%\textbf{Example 11-4. Demonstrate File::Find}
+\lstinputlisting[label=exam:example11.4,caption={Example 11.4. Demonstrate File::Find}]{./scripts/example11-4.pl}
 
 Notice that a reference is passed to the \textit{my\_sub} subroutine by prefacing it with the backslash character. You also need to preface the name with the ampersand character, as mentioned in \autoref{chap:chapter6}.
 
@@ -441,22 +441,22 @@ PDB files are composed of lines of 80 columns that begin with one of several pre
 The SEQRES record type is one of four record types in the Primary Structure Section, which presents the primary structure of the peptide or nucleotide sequence: 
 
 \textcolor{red}{\textit{DBREF}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Reference to the entry in the sequence database(s)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{SEQADV}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Identification of conflicts between PDB and the named sequence database 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{SEQRES}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Primary sequence of backbone residues 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{MODRES}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Identification of modifications to standard residues 
 \end{adjustwidth}
 
@@ -477,7 +477,7 @@ Links between databases are important in bioinformatics. \autoref{tab:table11.1}
   \begin{center}
   \caption{Databases referenced in PDB files}
   \label{tab:table11.1}
-  \begin{tabu} to 0.6\linewidth {X[3,l]X[1,l]}
+  \begin{tabu} to 0.6\linewidth {X[3,l,m]X[1,l,m]}
   \toprule
   Database & PDB code\\
   \midrule
@@ -659,8 +659,8 @@ Apart from the fairly standard problem of accumulating the sequence, there is th
 \section{Parsing PDB Files}
 First, \autoref{exam:example11.5} shows the main program and three subroutines that will be discussed in this section. 
 
-\textbf{Example 11-5. Extract sequence chains from PDB file}
-\lstinputlisting[label=exam:example11.5]{./scripts/example11-5.pl}
+%\textbf{Example 11-5. Extract sequence chains from PDB file}
+\lstinputlisting[label=exam:example11.5,caption={Example 11.5. Extract sequence chains from PDB file}]{./scripts/example11-5.pl}
 
 It's important to note that the main program, which calls the subroutine \verb|get_file_data| to read in the PDB file, has included a warning about the potentially large size of any given PDB file. (For instance, the PDB file \textit{1gav} weighs in at 3.45 MB.) Plus, the main program follows the reading in of the entire file, with the subroutine \verb|parsePDBrecordtypes| that makes copies of all lines in the input file, separated by record type. At this point, the running program is using twice the amount of memory as the size of the file. This design has the advantage of clarity and modularity, but it can cause problems if main memory is in short supply. The use of memory can be lessened by not saving the results of reading in the file, but instead passing the file data directly to the \verb|parsePDBrecordtypes| subroutine, like so: 
 
@@ -775,8 +775,8 @@ ATOM      1  N   GLY A   2       1.888  -8.251  -2.511  1.00 36.63           N
 
 Let's do something fairly simple: let's extract all x, y, and z coordinates for each atom, plus the serial number (a unique integer for each atom in the molecule) and the element symbol. \autoref{exam:example11.6} is a subroutine that accomplishes that, with a main program to exercise the subroutine. 
 
-\textbf{Example 11-6. Extract atomic coordinates from PDB file}
-\lstinputlisting[label=exam:example11.6]{./scripts/example11-6.pl}
+%\textbf{Example 11-6. Extract atomic coordinates from PDB file}
+\lstinputlisting[label=exam:example11.6,caption={Example 11.6. Extract atomic coordinates from PDB file}]{./scripts/example11-6.pl}
 
 The \textit{parseATOM} subroutine is quite short: the strict format of these ATOM records makes parsing the information quite straightforward. You first split the scalar argument, which contains the ATOM lines, into an array of lines.
 
@@ -858,8 +858,8 @@ We will use an external program to calculate the secondary structure from the 3D
 
 \autoref{exam:example11.7} is the entire program: two subroutines and a main program, followed by a discussion. 
 
-\textbf{Example 11-7. Call another program for secondary structure prediction}
-\lstinputlisting[label=exam:example11.7]{./scripts/example11-7.pl}
+%\textbf{Example 11-7. Call another program for secondary structure prediction}
+\lstinputlisting[label=exam:example11.7,caption={Example 11.7. Call another program for secondary structure prediction}]{./scripts/example11-7.pl}
 
 As you can see in the subroutine \textit{call\_stride}, variables have been made for the program name (\verb|$stride|) and for the options you may want to pass (\verb|$options|). Since these are parts of the program you may want to change, put them as variables near the top of the code, to make them easy to find and alter. The argument to the subroutine is the PDB filename (\verb|$filename|). (Of course, if you expect the options to change frequently, you can make them another argument to the subroutine.)
 
@@ -897,7 +897,7 @@ The following list shows the one-letter secondary structure codes used by \texti
 
 \begin{table}[!htbp]
   \begin{center}
-  \begin{tabu} to 0.5\linewidth {X[1,l]X[2,l]}
+  \begin{tabu} to 0.5\linewidth {X[1,l,m]X[2,l,m]}
   \toprule
   H & Alpha helix\\
   G & 3-10 helix\\
@@ -934,59 +934,59 @@ The first line shows the amino acids, and the second line shows the prediction o
 
 \section{Exercises}
 \textcolor{red}{\textit{Exercise 11.1}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Use \textit{File::Find} and the file test operators to find the oldest and largest files on the hard drive of your computer. (You can delete them or store them elsewhere if you're running short on disk space.)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 11.2}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Find all the Perl programs on your computer.
 
 \textit{Hint}: Use \textit{File::Find}. What do all Perl programs have in common?
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 11.3}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Parse the HEADER, TITLE, and KEYWORDS record types of all PDB files on your computer. Make a hash with \textit{key} as a word from those record types and \textit{value} as a list of filenames that contained that word. Save it as a DBM file and build a query program for it. In the end, you should be able to ask for, say, sugar, and get a list of all PDB files that contain that word in the HEADER, TITLE, or KEYWORDS records.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 11.4}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Parse out the record types of a PDB file using regular expressions (as used in \autoref{chap:chapter10}) instead of iterating through an array of input lines (as in this chapter.) 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 11.5}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that extracts the secondary structure information contained in the HELIX, SHEET, and TURN record types of PDB files. Print out the secondary structure and the primary sequence together, so that it's easy to see by what secondary structure a given residue is included. (Consider using a special alphabet for secondary structure, so that every residue in a helix is represented by H, for example.)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 11.6}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a program that finds all PDB files under a given folder and runs a program (such as \textit{stride}, or the program you wrote in Exercise 11.5) that reports on the secondary structure of each PDB file. Store the results in a DBM file keyed on the filename.
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 11.7}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a subroutine that, given two strings, prints them out one over the other, but with line breaks (similar to the \textit{stride} program output). Use this subroutine to print out the strings from \autoref{exam:example11.7}. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 11.8}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a recursive subroutine to determine the size of an array. You may want to use the \verb|pop| or \verb|unshift| functions. (Ignore the fact that the \verb|scalar @array| returns the size of \verb|@array|!)
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 11.9}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 Write a recursive subroutine that extracts the primary amino acid sequence from the SEQRES record type of a PDB file. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 11.10}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 (\textit{Extra credit}) Given an atom and a distance, find all other atoms in a PDB file that are within that distance of the atom. 
 \end{adjustwidth}
 
 \textcolor{red}{\textit{Exercise 11.11}}
-\begin{adjustwidth}{1cm}{}
+\begin{adjustwidth}{2em}{}
 (\textit{Extra credit}) Write a program to find some correlation between the primary amino acid sequence and the location of alpha helices. 
 \end{adjustwidth}
 
