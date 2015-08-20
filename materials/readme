@@ -1,0 +1,49 @@
+The files here are gzipped tar files of examples and exercise solutions
+for the book Beginning Perl for Bioinformatics by James Tisdall, published
+by O'Reilly & Associates in 2001.
+All the code here is copyright (c) 2002 by James Tisdall.
+
+If you have trouble downloading these files, contact bookquestions@oreilly.com
+
+MODULE
+
+BeginPerlBioinfo.pm	module containing subroutines from the text
+
+You'll need the module BegPerlBioinfo.pm for most of the examples and exercises.
+Place it in the same directory (or folder) as the programs you're trying to
+run; if you'd prefer, other places to install the module can be found in the book
+or in the Perl documentation.
+
+EXAMPLES
+
+The file begperlbio_examples.tar.gz contains all the numbered examples
+from the book in ASCII format.
+
+EXERCISES
+
+The exercises are in a few different files:
+Chapters 4 to 8:	begperlbio_exercises_part1.tar.gz
+Chapter 9:		begperlbio_exercises_ch09.tar.gz
+Chapter 10:		begperlbio_exercises_ch10.tar.gz
+Chapter 11:		begperlbio_exercises_ch11.tar.gz
+Chapter 12:		begperlbio_exercises_ch12.tar.gz
+
+
+
+I expect to post revised forms of these solutions, as readers find bugs or
+improvements in the code.  But I should remind you that since this is a book
+for beginners, the code may promote clarity and simplicity to the detriment
+of completeness, or robustness in the presence of unexpected input; this is
+by design.
+
+SEND ME YOUR SOLUTIONS
+
+I also invite you to send in your favorite solutions to selected exercises.
+After I've collected enough of them, I'll post some of them -- with due credit given --
+in this place, for the dual purpose of encouraging your work, and for showing
+how alternate solutions to a programming problem can all be "correct".
+
+Thanks for your interest, and good luck with the material!
+
+Sincerely,
+Jim
