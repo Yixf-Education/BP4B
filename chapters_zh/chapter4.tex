@@ -35,7 +35,7 @@
 
 \begin{table}[!htbp]
   \begin{center}
-  \caption{标准的IUB/IUPAC核算代码}
+  \caption{标准的IUB/IUPAC核酸代码}
   \label{tab:table4.1}
   %\begin{tabu}{X[1,c]X[2,l]}
   \begin{tabu} to 0.7\linewidth {X[1,c,m]X[2,c,m]}
@@ -106,7 +106,7 @@
 
 如同你在表格中看到的那样，我们会使用简单的字母来表征数据，这和在纸张上手写时使用的方式是一样的。计算机实际上会用另外的代码来表征简单的字母，但你不用担心这些，只要记住在使用文本编辑器时将它们保存为ASCII或者纯文本即可。
 
-ASCII是计算机在内存中存储文本（和控制信息）数据的一种方式。当文本编辑器等程序读取数据时，计算机知道它正在读取ASCII，因为计算机知道每个代码代表什么，所以它就会在屏幕上以一种容易识别的方式把相应的母显示出来。总而言之，知道ASCII是计算机表征文本的一种代码就足够。\footnote{一种新的编码字符叫做Unicode，它可以表征世界上所有语言中的所有符号，因此现在已得到广泛使用，并且Perl对Unicode也有很好的支持。}
+ASCII是计算机在内存中存储文本（和控制信息）数据的一种方式。当文本编辑器等程序读取数据时，计算机知道它正在读取ASCII，因为计算机知道每个代码代表什么，所以它就会在屏幕上以一种容易识别的方式把相应的母显示出来。总而言之，知道ASCII是计算机表征文本的一种代码就足够了。\footnote{一种新的编码字符叫做Unicode，它可以表征世界上所有语言中的所有符号，因此现在已得到广泛使用，并且Perl对Unicode也有很好的支持。}
 
 \section{存储DNA序列的程序}
 让我们来写一个小程序吧，它把DNA存储在变量中，然后把它打印输出到屏幕上。我们会用最常用的方式——由A、C、G和T四个字母组成的字符串——来书写DNA，并且把存储DNA的变量叫做\verb|$DNA|。换言之，\verb|$DNA|就是程序中DNA序列数据的名称。注意这一点，在Perl中，变量就是你打算处理的数据的名称，使用该名称，你可以对数据进行完全的访问。\autoref{exam:example4.1}是完整的程序。
@@ -145,7 +145,7 @@ perl example4-1
 $DNA = 'ACGGGAGGACGGGAAAATTACTACGGCATTAGC'; print $DNA; exit;
 \end{lstlisting}
 
-在\autoref{exam:example4.1}中，我使用了大量的注释。代码开始的注释指明了程序的用途、作者以及其他信息，但其他人需要理解代码时，这些信息会对他有很大的帮助。注释还解释了代码每一部分的作用，有时还对代码的工作原理进行了阐释。
+在\autoref{exam:example4.1}中，我使用了大量的注释。代码开始的注释指明了程序的用途、作者以及其他信息，当其他人需要理解代码时，这些信息会对他有很大的帮助。注释还解释了代码每一部分的作用，有时还对代码的工作原理进行了阐释。
 
 了解注释的重要性是非常必要的。在大多数高校的计算机科学课程的课堂作业中，没有注释的程序通常会得到很低的分数甚至不及格；而在工作中不对代码进行注释的程序员，他的职业生涯将是短暂而失败的。
 
@@ -159,7 +159,7 @@ $DNA = 'ACGGGAGGACGGGAAAATTACTACGGCATTAGC'; print $DNA; exit;
 
 这是比较特殊的一行，叫做命令解释，它告诉运行Unix或者Linux的计算机，这是一个Perl程序。在不同的计算机中，这一行可能会有些许的差异。在某些计算机中，这一行并不是必需的，因为计算机可以通过其他信息识别出Perl。在Windows计算机中，通常会配置成把以\textit{.pl}结尾的任何程序都假定成Perl程序。在Unix或Linux中、Windows的命令窗口中、或者MacOS X的shell中，你可以键入\verb|perl my_program|，这样你的Perl程序\verb|my_program|中就不需要这样特殊的一行了。然而，通常都会写上这一行，所以在我们所有程序的开头也都会有它。
 
-注意在第一行代码中使用了\verb|-w|标志。“w”代表警告warnings，它会使得Perl在遇到错误时打印出相应的信息。通常来说，错误信息都会给出出现错误的对应行号。有的时候，行号是错误的，但错误一般就出现信息指出的对应行的附近。在本书的后面，你会看到\verb|-w|的另一种写法：\verb|use warnings|。
+注意在第一行代码中使用了\verb|-w|标志。“w”代表警告warnings，它会使得Perl在遇到错误时打印出相应的信息。通常来说，错误信息都会给出出现错误的对应行号。有的时候，行号是错误的，但错误一般就出现信息指出的对应行的附近。在本书的后面，你会看到\verb|-w|的另一种写法：\verb|use warnings;|。
 
 \subsection{语句}
 \autoref{exam:example4.1}中的下一行代码把DNA存储到了一个变量中：
@@ -251,18 +251,15 @@ Here are the original two DNA fragments:
 ACGGGAGGACGGGAAAATTACTACGGCATTAGC
 ATAGTGCCGTGAGAGTGATGTAGTA
 
-Here is the concatenation of the first two fragments
-(version 1):
+Here is the concatenation of the first two fragments (version 1):
 
 ACGGGAGGACGGGAAAATTACTACGGCATTAGCATAGTGCCGTGAGAGTGATGTAGTA
 
-Here is the concatenation of the first two fragments
-(version 2):
+Here is the concatenation of the first two fragments (version 2):
 
 ACGGGAGGACGGGAAAATTACTACGGCATTAGCATAGTGCCGTGAGAGTGATGTAGTA
 
-Here is the concatenation of the first two fragments
-(version 3):
+Here is the concatenation of the first two fragments (version 3):
 
 ACGGGAGGACGGGAAAATTACTACGGCATTAGCATAGTGCCGTGAGAGTGATGTAGTA
 \end{lstlisting}
@@ -296,8 +293,7 @@ $DNA3 = "$DNA1$DNA2";
 print "$DNA3\n\n";
 \end{lstlisting}
 
-Perl的中心思想之一就是"There's more than one way to do
-it."（不只一种方法来做一件事）。所以，程序的下面一部分就演示了串联两个字符串的另外一种办法——使用点操作符。当把点操作符放在两个字符串中间时，它会把原来的两个字符串串联起来，产生一个新的字符串。所以这一行：
+Perl的中心思想之一就是“There's more than one way to do it.”（不只一种方法来做一件事）。所以，程序的下面一部分就演示了串联两个字符串的另外一种办法——使用点操作符。当把点操作符放在两个字符串中间时，它会把原来的两个字符串串联起来，产生一个新的字符串。所以这一行：
 
 \begin{lstlisting}
 $DNA3 = $DNA1 . $DNA2;
@@ -348,7 +344,7 @@ print $number,"\n";
 \section{转录：从DNA到RNA}
 作为生物信息学中的Perl程序员，你很大一部分时间都是在做类似于\autoref{exam:example4.1}和\autoref{exam:example4.2}那样的事情：你获取一些数据，可能是DNA、蛋白质、GenBank条目或者其他数据，处理这些数据，并把处理结果输出打印出来。
 
-\autoref{exam:example4.3}是处理DNA的另一个程序：它把DNA转录成RNA。在细胞中，把DNA转录成RNA是由精巧、复杂且有勘误功能的分子机器完成的。\footnote{简要来说，DNA的编码链是另一条链（模板链）的反向互补链，模板链作为合成RNA的模板，把T替换成U，生成反向互补链。两次反向互补后，除了T$\rightarrow$U的替换外，就和模板链完全一样了。}此处仅是简单的替换而已。当DNA转录成RNA时，所有的\verb|T|都会被替换成\verb|U|，这也正是我们的程序所要做的全部工作。\footnote{很明显，我们忽略了切除内含子的过程。\verb|T|代表胸腺嘧啶，\verb|U|代表鸟嘧啶。}
+\autoref{exam:example4.3}是处理DNA的另一个程序：它把DNA转录成RNA。在细胞中，把DNA转录成RNA是由精巧、复杂且有勘误功能的分子机器完成的。\footnote{简要来说，DNA的编码链是另一条链（模板链）的反向互补链，模板链作为合成RNA的模板，把T替换成U，生成反向互补链。两次反向互补后，除了T$\rightarrow$U的替换外，就和编码链完全一样了。}此处仅是简单的替换而已。当DNA转录成RNA时，所有的\verb|T|都会被替换成\verb|U|，这也正是我们的程序所要做的全部工作。\footnote{很明显，我们忽略了切除内含子的过程。\verb|T|代表胸腺嘧啶，\verb|U|代表鸟嘧啶。}
 
 %\textbf{例4-3：把DNA转录成RNA}
 \lstinputlisting[label=exam:example4.3,caption={例4.3：把DNA转录成RNA}]{./scripts/example4-3.pl}
@@ -385,9 +381,9 @@ $RNA = $DNA;
 $RNA =~ s/T/U/g;
 \end{lstlisting}
 
-在这个语句中有两个新的项目：绑定操作符（=~）和替换命令\verb|s/T/U/g|。
+在这个语句中有两个新的项目：绑定操作符（\verb|=~|）和替换命令\verb|s/T/U/g|。
 
-很明显，\textit{绑定操作符}=~用于包含字符串的变量，如此处的\verb|$RNA|变量包含DNA序列数据。绑定操作符表示“把右边的操作应用到左边变量中的字符串上”。
+很明显，\textit{绑定操作符}\verb|=~|用于包含字符串的变量，如此处的\verb|$RNA|变量包含DNA序列数据。绑定操作符表示“把右边的操作应用到左边变量中的字符串上”。
 
 如\autoref{fig:figure4.1}所示，对\textit{替换操作符}需要进行一些详细的解释。该命令的不同部分用正斜线相分隔（或限定）。首先，\verb|s|表明这是一个替换（substitution）。在第一个正斜线\verb|/|后面跟着的是\verb|T|，它代表字符串中要被替换的元素。在第二个正斜线\verb|/|后面跟着的是\verb|U|，它代表将要取代\verb|T|的元素。最后，在第三个正斜线后面跟着的是\verb|g|，这个\verb|g|代表全局（global）替换，它是可以出现在语句该部分中众多可能的修饰符中的一个。全局替换表示“从头到尾对字符串进行替换”，也就是说，对字符串中每一处可能的地方都进行替换。
 
@@ -405,11 +401,11 @@ $RNA =~ s/T/U/g;
 \section{使用Perl文档}
 对于Perl程序员来说，最重要的资源便是Perl的文档。它应该已经安装在了你的电脑上，另外通过因特网在Perl网站上也可以找到它。对于不同的计算机系统来说，Perl文档的格式可能有少许的差别，但网络版对任何一个人来说都是一样的，这也正式我在本书中参考的版本。参看\autoref{chap:chapteraa}中的参考资料，你会找到对于Perl文档不同资源的讨论。
 
-来试一下，让我们找找\textit{print}操作符的文档吧。首先，打开你的网页浏览器，进入 \href{http://www.perl.com}{http://www.perl.com} 网站，然后点击文档链接，依次选择“Perl的内置函数”（"Perl's Builtin Functions"）和“按字母顺序罗列的Perl函数”（"Alphabetical Listing of Perl's Functions"）。你会看到一个把Perl函数按字母顺序进行排列的一个冗长的列表。一旦你找到这个页面，你可能需要把它收藏到浏览器的书签中，因为你会频繁地访问该页面。现在点击Print来查看\verb|print|操作符的文档吧。
+来试一下，让我们找找\textit{print}操作符的文档吧。首先，打开你的网页浏览器，进入 \href{http://www.perl.com}{http://www.perl.com} 网站，然后点击文档链接，依次选择“Perl的内置函数”（"Perl's Builtin Functions"）和“按字母顺序罗列的Perl函数”（"Alphabetical Listing of Perl's Functions"）\footnote{译者注：打开\href{http://www.perl.com}{http://www.perl.com}网站，点击右侧的“Document”链接，之后点击左侧的“Functions”链接，最后点击“Perl functions A-Z”即可。}。你会看到一个把Perl函数按字母顺序进行排列的一个冗长的列表。一旦你找到这个页面，你可能需要把它收藏到浏览器的书签中，因为你会频繁地访问该页面。现在点击print来查看\verb|print|操作符的文档吧。
 
 看一下文档中的例子，看看Perl语言的特性是如何被运用的。这往往是你找到所需内容的最快方法。
 
-一定在你的屏幕中打开了文档，你会发现通过阅读它会找到一些答案，但也会产生其他一些疑问。文档试图以一种简洁的形式把所有的内容都包含进去，但这却会让初学者们心生胆怯。比如，\verb|print|函数文档的开头还比较简单：“打印输出一个字符串或者一个逗号分隔的字符串列表。如果成功将返回TRUE”。但之后就是一堆的胡言乱语了（在你学习的现阶段它看起来确实是这样）：文件句柄？输出流？列表上下文？
+一旦在你的屏幕中打开了文档，你会发现通过阅读它会找到一些答案，但也会产生其他一些疑问。文档试图以一种简洁的形式把所有的内容都包含进去，但这却会让初学者们心生胆怯。比如，\verb|print|函数文档的开头还比较简单：“打印输出一个字符串或者一个逗号分隔的字符串列表。如果成功将返回TRUE”。但之后就是一堆的胡言乱语了（在你学习的现阶段它看起来确实是这样）：文件句柄？输出流？列表上下文？
 
 文档中的所有信息都是必需的，毕竟，你需要在某个地方找到这样的全部内容！通常情况下，你可以忽略掉那些对你来说毫无意义的内容。
 
@@ -450,7 +446,7 @@ This time it worked!
 
 这是在你程序中经常要经历的一种体验。你写一个程序来完成某项任务，但却发现它并没有像你期望的那样工作。在这种情况下，我们需要运用已掌握的知识来尝试解决全新的问题。它并没有如期望那样完成任务，哪里出错了呢？
 
-你会发现这样的经历会非常相似：你编写代码，但它并不工作！然后你就修正语法（这通常是最简单的，而且利用错误信息提供的线索就可以轻松修正语法），或者对问题进行思考，找到问题所在，并尝试设计一种新的可以成功的方法。通常情况下，这需要你浏览语言的文档，查找语言工作过程的细节内容，同时期望能找到一个解决问题的特性。如果这个问题在计算机上能够解决，那没你用Perl也可以将它解决。问题是，能够精确到什么程度？
+你会发现这样的经历会非常相似：你编写代码，但它并不工作！然后你就修正语法（这通常是最简单的，而且利用错误信息提供的线索就可以轻松修正语法），或者对问题进行思考，找到问题所在，并尝试设计一种新的可以成功的方法。通常情况下，这需要你浏览语言的文档，查找语言工作过程的细节内容，同时期望能找到一个解决问题的特性。如果这个问题在计算机上能够解决，那么你用Perl也可以将它解决。问题是，能够精确到什么程度？
 
 在\autoref{exam:example4.4}中，计算反向互补的第一次尝试失败了。使用四个全局替换，序列中的每一个碱基都作为一个整体进行了处理。还需要另外的方法。你可以从左向右查阅DNA，每次只查找一种碱基，把它替换成互补的碱基，然后再在DNA中查找另外一种碱基，一直到字符串的结尾。然后把字符串反转过来，任务就完成了。事实上，这是一个非常好的方法，在Perl中也不难实现。但还需要学习语言的其他内容才行，这将在\autoref{chap:chapter5}中进行讲解。.
 
@@ -521,7 +517,7 @@ open(PROTEINFILE, $proteinfilename);
 
 如果你查阅\verb|open|函数的文档，你会看到好多选项，大多数选项都是在打开文件后让你精确指定如何使用文件的。
 
-让我们来看一下\verb|PROTEINFILE|这个数据，它叫做\textit{文件句柄}。没有必要理解文件句柄真正是什么，它们就是你处理文件时使用的东西。对于文件句柄，比一定必须使用大写字母，但这是一个广为接受的惯例。在使用\textit{open}语句对文件句柄赋值后，对文件进行的任何交互操作都将通过使用文件句柄来进行。
+让我们来看一下\verb|PROTEINFILE|这个数据，它叫做\textit{文件句柄}。没有必要理解文件句柄真正是什么，它们就是你处理文件时使用的东西。对于文件句柄，不一定必须使用大写字母，但这是一个广为接受的惯例。在使用\textit{open}语句对文件句柄赋值后，对文件进行的任何交互操作都将通过使用文件句柄来进行。
 
 使用这个语句，就可以把数据读入到程序中了：
 
@@ -529,7 +525,7 @@ open(PROTEINFILE, $proteinfilename);
 $protein = <PROTEINFILE>;
 \end{lstlisting}
 
-为什么要把文件句柄\verb|PROTEINFILE|包裹在尖括号中呢？这些尖括号叫做\textit{输入操作符}。通过把文件句柄包裹在尖括号中，你就可以从程序外部的来源中读入数据了。在这个例子中，我们读入了\verb|NM\_021964fragment.pep|文件中的数据，该文件的名字保存在\verb|$proteinfilename|变量中，而\verb|open|语句则把它和文件句柄关联了起来。数据现在就保存到了\verb|$protein|变量中，之后可以把它打印输出出来。
+为什么要把文件句柄\verb|PROTEINFILE|包裹在尖括号中呢？这些尖括号叫做\textit{输入操作符}。通过把文件句柄包裹在尖括号中，你就可以从程序外部的来源中读入数据了。在这个例子中，我们读入了\verb|NM_021964fragment.pep|文件中的数据，该文件的名字保存在\verb|$proteinfilename|变量中，而\verb|open|语句则把它和文件句柄关联了起来。数据现在就保存到了\verb|$protein|变量中，之后可以把它打印输出出来。
 
 然而，就像我们前面已经注意到的那样，只有这个多行文件的第一行被打印了出来。这是问什么呢？因为对于读取文件还有一些知识需要学习。
 
@@ -556,7 +552,7 @@ GLQYALNVPISVKQEITFTDVSEQLMRDKKQIR
 
 这个程序中比较有趣的一点就是，它演示了如何成功得从文件中读取数据。每当把数据读取到\verb|$protein|这样的标量变量中后，都会对文件的下一行进行读取。上一次读取到哪儿了，现在需要读取哪一行，程序对这些信息都有所记录。
 
-另一方面，程序的缺陷也是显而易见的。对于输入文件的每一个行，都需要编写一行代码来读入，这样太不方便了。但是，在Perl中有两个特性可以很好的解决这个问题：数据（下一小节进行介绍）和循环（参看\autoref{chap:chapter5}）。
+另一方面，程序的缺陷也是显而易见的。对于输入文件的每一个行，都需要编写一行代码来读入，这样太不方便了。但是，在Perl中有两个特性可以很好的解决这个问题：数组（下一小节进行介绍）和循环（参看\autoref{chap:chapter5}）。
 
 \section{数组}
 在计算机语言中，数组是存储多个标量值的变量。这些标量的值可以是数字、字符串，或者，像此处的例子一样，也可以是蛋白质序列数据输入文件中的每一行。让我们看看如何来使用数组吧。\autoref{exam:example4.7}演示了如何使用数组来把输入文件中的所有行都读入进来。
@@ -621,7 +617,7 @@ print @bases;
 Here are the array elements: ACGT
 \end{lstlisting}
 
-你也可以输出用空格分隔的元素（注意\verb|print|语句中的双引号）：
+你也可以输出用空格分隔的元素（注意 \verb|print|语句中的双引号）：
 
 \begin{lstlisting}
 @bases = ('A', 'C', 'G', 'T');
