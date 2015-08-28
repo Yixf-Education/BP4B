@@ -36,13 +36,13 @@
 \subsection{编写子程序}
 让我们看看子程序是如何使用及定义的吧。
 
-要使用一个子程序，你需要把数据作为\textit{参数}传递给子程序，然后收集子程序的运算结果值。举个例子，你想要一个子程序，可以把“ACGT”附加到给定DNA的末尾，并返回得到的新的、更长的DNA。让我们把这个子程序叫做\textit{addACGT}吧。在Perl中，你要调用一个子程序，通常只需要键入它的名字，并在后面跟上用小括号包裹起来的参数列表就可以了（如果有参数的话）。比如，这是带着  \verb|$dna|这个参数调用  \verb|addACGT|子程序的方法：
+要使用一个子程序，你需要把数据作为\textit{参数}传递给子程序，然后收集子程序的运算结果值。举个例子，你想要一个子程序，可以把“ACGT”附加到给定DNA的末尾，并返回得到的新的、更长的DNA。让我们把这个子程序叫做\textit{addACGT}吧。在Perl中，你要调用一个子程序，通常只需要键入它的名字，并在后面跟上用小括号包裹起来的参数列表就可以了（如果有参数的话）。比如，这是带着\verb|$dna|这个参数调用\verb|addACGT|子程序的方法：
 
 \begin{lstlisting}
 addACGT($dna);
 \end{lstlisting}
 
-当调用子程序时，较旧版本的Perl要求在子程序名称的前面加上\&字符（与字符）。现在这样写也是可以的（比如写成：\textit{\&addACGT}），但如今一般都把与字符省略掉。\footnote{即使在较新版本的Perl中，有时也需要加上与字符。在\autoref{chap:chapter11}的\autoref{sect:section11.2.3}中你会看到这样的例子，那一小节介绍的是\textit{File::Find}模块。（还可以参看文档中的\textit{defined}和\textit{undef}函数，或者\textit{perlref}手册页）。}
+当调用子程序时，较旧版本的Perl要求在子程序名称的前面加上\&字符（与字符）。现在这样写也是可以的（比如携程：\textit{\&addACGT}），但如今一般都把与字符省略掉。\footnote{即使在较新版本的Perl中，有时也需要加上与字符。在\autoref{chap:chapter11}的\autoref{sect:section11.2.3}中你会看到这样的例子，那一小节介绍的是\textit{File::Find}模块。（还可以参看文档中的\textit{defined}和\textit{undef}函数，或者\textit{perlref}手册页）。}
 
 \autoref{exam:example6.1}演示了一个子程序，从中可以看到它的工作细节。
 
@@ -57,20 +57,20 @@ I added ACGT to CGACGTCTTCTCAGGCGA and got CGACGTCTTCTCAGGCGAACGT
 
 现在我们来看看这些代码，看看子程序是如何被定义的、以及在Perl程序中使用的。
 
-首先注意的一点，从宏观上来看，程序现在有两小部分。第一部分从程序的开头开始，到  \verb|exit|命令结束。随后的一部分是子程序的定义（为了便于理解在开头添加了大量的注释），在这个例子中，就是\textit{addACGT}子程序的定义。为了方便阅读，通常把所有的子程序定义都集中放在程序的末尾，而且会以字母顺序或其他方便的形式对子程序进行排列。
+首先注意的一点，从宏观上来看，程序现在有两小部分。第一部分从程序的开头开始，到\verb|exit|命令结束。随后的一部分是子程序的定义（为了便于理解在开头添加了大量的注释），在这个例子中，就是\textit{addACGT}子程序的定义。为了方便阅读，通常把所有的子程序定义都集中放在程序的末尾，而且会以字母顺序或其他方便的形式对子程序进行排列。
 
 实际上，把子程序的定义放在程序中的任何地方都是合法的。这是因为Perl首先通读代码，在开始运行程序之前，做一些检查语法、学习子程序定义之类的事情。特别的，子程序代码可以紧跟在程序中使用它们的地方的后面（许多人认为法则是放在其前面，但并不需要这样）。并且，不一定非要把子程序都集中放在一起，可以散落在程序代码的各个地方。但是把它们集中放在程序末尾的这种方法，会使阅读程序更加容易一些。可能的一个例外就是，在代码的某一部分使用一个小的子程序，比如使用\textit{sort}函数时这种情况就时有发生。像这种情况，把子程序的定义放在使用它的地方，可以避免读者在子程序定义和它的使用之处两个地方来回翻页。通常，不看子程序定义而把程序整个阅读一遍会更加方便，先对程序的整个流程有个了解，需要时再回去仔细看看子程序。
 
-如你所见，\autoref{exam:example6.1}非常简单。它首先把某个DNA保存到变量  \verb|$dna|中，然后把那个变量作为参数去调用子程序，看起来就像这样：  \verb|addACGT($dna)|。子函数的调用是通过它的名字来实现的，并在其后紧跟用小括号包裹起来的子程序参数。也有可能没有参数，或者有不止一个参数，这时要用逗号把它们分割开来。可以把子程序的返回值保存起来。在这个程序中，子程序的返回值保存在了叫做  \verb|$longer_dna|的变量中，随后就把这个变量打印了出来，然后程序就退出了。
+如你所见，\autoref{exam:example6.1}非常简单。它首先把某个DNA保存到变量\verb|$dna|中，然后把那个变量作为参数去调用子程序，看起来就像这样：\verb|addACGT($dna)|。子函数的调用是通过它的名字来实现的，并在其后紧跟用小括号包裹起来的子程序参数。也有可能没有参数，或者有不止一个参数，这时要用逗号把它们分割开来。可以把子程序的返回值保存起来。在这个程序中，子程序的返回值保存在了叫做\verb|$longer_dna|的变量中，随后就把这个变量打印了出来，然后程序就退出了。
 
 从程序开始到\textit{exit}语句的这一部分叫做\textit{主程序}或程序的\textit{主体}。通过查看这一部分代码，而不需要去看子程序的细节，你就可以看出程序从头到尾发生了什么。
 
 既然你已经看完了\autoref{exam:example6.1}中的主程序，是时候去看一下子程序的定义、以及它是如何使用作用域这个概念的了。
 
 \section{作用域和子程序}
-一个子程序的定义包括三部分：子程序定义的\textit{保留字}\footnote{保留字是Perl语言中定义的基本字，如  \verb|if|、 \verb|while|、 \verb|foreach|和  \verb|sub|。}—— \verb|sub|，子程序的名字——在这里是\textit{addACGT}和一个包裹在成对大括号中的\textit{代码块}。这里的代码块和前面看到的循环和条件语句中把语句集中在一起的代码块是一样的。
+一个子程序的定义包括三部分：子程序定义的\textit{保留字}\footnote{保留字是Perl语言中定义的基本字，如\verb|if|、\verb|while|、\verb|foreach|和\verb|sub|。}——\verb|sub|，子程序的名字——在这里是\textit{addACGT}和一个包裹在成对大括号中的\textit{代码块}。这里的代码块和前面看到的循环和条件语句中把语句集中在一起的代码块是一样的。
 
-在\autoref{exam:example6.1}中，子程序的名字是  \verb|addACGT|，而代码块就是名字后面的所有代码。下面把子程序的定义重复了一遍：
+在\autoref{exam:example6.1}中，子程序的名字是\verb|addACGT|，而代码块就是名字后面的所有代码。下面把子程序的定义重复了一遍：
 
 \begin{lstlisting}
 sub addACGT {
@@ -83,29 +83,29 @@ sub addACGT {
 
 现在，让我们来看看子程序的代码块吧。
 
-一个子程序就像是单独的一个主程序的辅助程序一样，它需要有自己的变量。在本书的子程序中你将使用两种类型的变量：\footnote{在本书的子程序中，我们不会使用全局变量，全局变量能同时被主程序和子程序看到；我们也不会使用通过  \verb|local|声明的变量，它和  \verb|my|的作用域限制有所不同。}
+一个子程序就像是单独的一个主程序的辅助程序一样，它需要有自己的变量。在本书的子程序中你将使用两种类型的变量：\footnote{在本书的子程序中，我们不会使用全局变量，全局变量能同时被主程序和子程序看到；我们也不会使用通过\verb|local|声明的变量，它和\verb|my|的作用域限制有所不同。}
 
 \begin{itemize}
   \item 传递给子程序的参数
-  \item 其他通过 \verb|my|声明的变量，它们的作用域会被限制在子程序中
+  \item 其他通过\verb|my|声明的变量，它们的作用域会被限制在子程序中
 \end{itemize}
 
-参数就是使用或调用子程序时传递给它的值。参数值通过 \verb|@_|这个特殊变量传递给子程序，在下一小节你将会看到。
+参数就是使用或调用子程序时传递给它的值。参数值通过\verb|@_|这个特殊变量传递给子程序，在下一小节你将会看到。
 
-其他子程序可能使用到的变量，需要与程序其他部分使用到的变量区分开来，这样它们就只能在子程序自己的范围内发挥作用了。这可以通过使用 \verb|my|声明变量来实现，稍后再对此进行详细解释。
+其他子程序可能使用到的变量，需要与程序其他部分使用到的变量区分开来，这样它们就只能在子程序自己的范围内发挥作用了。这可以通过使用\verb|my|声明变量来实现，稍后再对此进行详细解释。
 
-最后，大部分子程序都通过\textit{return}函数返回它们的结果。就像我们的子程序\textit{addACGT}中 \verb|return $dna;|一样，它可以返回单独的一个标量，也可以像 \verb|return ($dna1, $dna2);|这样返回一个标量列表，或者像 \verb|return @lines;|这样返回一个数组，等等。
+最后，大部分子程序都通过\textit{return}函数返回它们的结果。就像我们的子程序\textit{addACGT}中\verb|return $dna;|一样，它可以返回单独的一个标量，也可以像\verb|return ($dna1, $dna2);|这样返回一个标量列表，或者像\verb|return @lines;|这样返回一个数组，等等。
 
 \subsection{参数}
-\textit{调用}子函数意味着要键入它的名字，给它适当的参数，通常还要收集它的结果。\textit{参数（argument，parameter）}\footnote{译者注：parameter是指函数定义中的参数，而argument指的是函数调用时的实际参数。简略描述为：parameter=形参(formal parameter)，argument=实参(actual parameter)。在不很严格的情况下，现在二者可以混用，一般用argument，而parameter则比较少用。While defining method, variables passed in the method are called parameters.当定义方法时，传递到方法中的变量称为参数。While using those methods, values passed to those variables are called arguments.当调用方法时，传给变量的值称为引数。（有时argument被翻译为“引数“）}通常包含子程序要计算的数据。在\autoref{exam:example6.1}中，使用参数 \verb|$dna|调用子程序\textit{addACGT}：
+\textit{调用}子函数意味着要键入它的名字，给它适当的参数，通常还要收集它的结果。\textit{参数（argument，parameter）}\footnote{译者注：parameter是指函数定义中的参数，而argument指的是函数调用时的实际参数。简略描述为：parameter=形参(formal parameter)，argument=实参(actual parameter)。在不很严格的情况下，现在二者可以混用，一般用argument，而parameter则比较少用。While defining method, variables passed in the method are called parameters.当定义方法时，传递到方法中的变量称为参数。While using those methods, values passed to those variables are called arguments.当调用方法时，传给变量的值称为引数。（有时argument被翻译为“引数“）}通常包含子程序要计算的数据。在\autoref{exam:example6.1}中，使用参数\verb|$dna|调用子程序\textit{addACGT}：
 
 \begin{lstlisting}
 $longer_dna = addACGT($dna);
 \end{lstlisting}
 
-最基本的一点，当程序员想要使用子程序时，可以使用子程序可以接受的任何参数、你需要计算的数据（在这个例子中就是需要把 \verb|ACGT|附加上去的任何DNA）、出现在子程序 \verb|@_|数组中的每一个参数的值来调用它。
+最基本的一点，当程序员想要使用子程序时，可以使用子程序可以接受的任何参数、你需要计算的数据（在这个例子中就是需要把\verb|ACGT|附加上去的任何DNA）、出现在子程序\verb|@_|数组中的每一个参数的值来调用它。
 
-当使用特定参数调用子程序时，你在调用中使用的参数的名字在子程序内部就无关紧要了，只有被实际传递到子程序内部的参数的值才是最重要的。子程序通常从 \verb|@_|数组中收集这些值，并把它们赋给新的变量，这些变量的名字和你调用子程序时使用的变量名可能一样、也可能不一样。唯一保持不变的是值的顺序，而非包含值的变量的名字。
+当使用特定参数调用子程序时，你在调用中使用的参数的名字在子程序内部就无关紧要了，只有被实际传递到子程序内部的参数的值才是最重要的。子程序通常从\verb|@_|数组中收集这些值，并把它们赋给新的变量，这些变量的名字和你调用子程序时使用的变量名可能一样、也可能不一样。唯一保持不变的是值的顺序，而非包含值的变量的名字。
 
 下面是它的工作原理。子程序代码块的第一行是：
 
@@ -113,9 +113,9 @@ $longer_dna = addACGT($dna);
 my($dna) = @_; 
 \end{lstlisting}
 
-调用子程序时的参数的值被传递到了子程序中的特殊数组变量 \verb|@_|中。因为它以 \verb|@|字符开头，所以你知道这是一个数组。它有一个简短的名字“\_”，这是一个特殊的数组变量，是Perl程序预先定义好的。（你不能再为自己的数组起这样的名字了。） \verb|@_|数组包含着传递到子程序中所有的标量值，这些标量值就是调用子程序时参数的值。在这个例子中，只有一个标量值：DNA字符串，是作为参数传递给子程序的 \verb|$dna|变量的值。
+调用子程序时的参数的值被传递到了子程序中的特殊数组变量\verb|@_|中。因为它以\verb|@|字符开头，所以你知道这是一个数组。它有一个简短的名字“\_”，这是一个特殊的数组变量，是Perl程序预先定义好的。（你不能再为自己的数组起这样的名字了。）\verb|@_|数组包含着传递到子程序中所有的标量值，这些标量值就是调用子程序时参数的值。在这个例子中，只有一个标量值：DNA字符串，是作为参数传递给子程序的\verb|$dna|变量的值。
 
-如果子程序有更多的参数——比如一个DNA的参数，一个相关蛋白的参数，还有一个基因名的参数——它们都被传递了进去，并在子程序内部被赋给了用 \verb|my|声明的变量：
+如果子程序有更多的参数——比如一个DNA的参数，一个相关蛋白的参数，还有一个基因名的参数——它们都被传递了进去，并在子程序内部被赋给了用\verb|my|声明的变量：
 
 \begin{lstlisting}
 my($dna,$protein,$name_of_gene) = @_;
@@ -129,14 +129,14 @@ my($dna,$protein,$name_of_gene) = @_;
 my($dna) = @_;
 \end{lstlisting}
 
-执行后，传递进去的值就赋给了子程序的变量 \verb|$dna|。接下来的小节将解释为什么这个变量对于子程序来说是一个新的变量。子程序中的变量也可以起任何名字，并不一定非要和参数的名字一样，虽然这个例子中它们是一样的。关于作用域非常酷的一点就是，名字一样不一样是无所谓的。
+执行后，传递进去的值就赋给了子程序的额变量\verb|$dna|。接下来的小节将解释为什么这个变量对于子程序来说是一个新的变量。子程序中的变量也可以起任何名字，并不一定非要和参数的名字一样，虽然这个例子中它们是一样的。关于作用域非常酷的一点就是，名字一样不一样是无所谓的。
 
 %\begin{adjustwidth}{4em}{4em}
   %\parpic[l]{
   %\includegraphics[width=1cm]{warning.png}
   %}
 %\noindent
-%当心这个常见的错误，在子程序中为参数命名时忘记使用 \verb|@_|数组，换言之，使用语句：
+%当心这个常见的错误，在子程序中为参数命名时忘记使用\verb|@_|数组，换言之，使用语句：
   %\begin{lstlisting}
 %my($dna);
   %\end{lstlisting}
@@ -152,7 +152,7 @@ my($dna) = @_;
   \begin{center}
     \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
       \tabucline{-}
-      \includegraphics[width=1.1cm]{warning.png} & 当心这个常见的错误，在子程序中为参数命名时忘记使用 \verb|@_|数组，换言之，使用语句 \verb|my($dna);|代替了 \verb|my($dna) = @_;|。如果你犯了这种错误，即使已经声明了变量名，参数的值也不会出现在你的子程序中。\\
+      \includegraphics[width=1.1cm]{warning.png} & 当心这个常见的错误，在子程序中为参数命名时忘记使用\verb|@_|数组，换言之，使用语句\verb|my($dna);|代替了\verb|my($dna) = @_;|。如果你犯了这种错误，即使已经声明了变量名，参数的值也不会出现在你的子程序中。\\
       \tabucline{-}
     \end{tabu*}
   \end{center}
@@ -160,11 +160,11 @@ my($dna) = @_;
 \vspace{-20pt}
 
 \subsection{作用域}
-通过保证子程序使用到的所有变量只在子程序中有效，你就可以安全得在任何地方调用子程序了。通过使用 \verb|my|来声明这些变量，就可以使它们只在子程序中有效了。 \verb|my|是Perl定义的关键字，它可以把变量限制在使用它们的代码块中（在这个例子中，这个代码块就是子程序）。\footnote{作用域有不同的类别。 \verb|my|实现的类别叫做\textit{词法作用域}，也叫做\textit{静态作用域}。在Perl中还有一种方法，就是使用\textit{local}来声明变量，但你几乎总会希望使用 \verb|my|。} 
+通过保证子程序使用到的所有变量只在子程序中有效，你就可以安全得在任何地方调用子程序了。通过使用\verb|my|来声明这些变量，就可以使它们只在子程序中有效了。\verb|my|是Perl定义的关键字，它可以把变量限制在使用它们的代码块中（在这个例子中，这个代码块就是子程序）。\footnote{作用域有不同的类别。\verb|my|实现的类别叫做\textit{词法作用域}，也叫做\textit{静态作用域}。在Perl中还有一种方法，就是使用\textit{local}来声明变量，但你几乎总会希望使用\verb|my|。} 
 
-把变量隐藏起来，使它们仅局限在程序的特定部分，这就是\textit{作用域}的概念。在Perl中，使用 \verb|my|声明变量就是所谓的\textit{词法作用域}，这是使你的程序模块化的一个至关重要的部分。
+把变量隐藏起来，使它们仅局限在程序的特定部分，这就是\textit{作用域}的概念。在Perl中，使用\verb|my|声明变量就是所谓的\textit{词法作用域}，这是使你的程序模块化的一个至关重要的部分。
 
-像这样用 \verb|my|来声明一个变量：
+像这样用\verb|my|来声明一个变量：
 
 \begin{lstlisting}
 my($x); 
@@ -188,16 +188,16 @@ my($x) = '49';
 my($x) = @_; 
 \end{lstlisting}
 
-一旦通过这种方式声明了一个变量，它就只存在于声明所在的代码块中，直到代码块的末尾。所以，在一个子程序中，如果你像这样声明了所有的变量（包括参数和其他所有的变量），它们就只在子程序中有效。如果某个变量和程序别处的另一个变量同名，你也无须担心什么，因为 \verb|my|声明实际上创建了一个新的变量，它只在包裹起来的代码块中有效，代码块外面使用的任何重名的变量都和它完全无关。
+一旦通过这种方式声明了一个变量，它就只存在于声明所在的代码块中，直到代码块的末尾。所以，在一个子程序中，如果你像这样声明了所有的变量（包括参数和其他所有的变量），它们就只在子程序中有效。如果某个变量和程序别处的另一个变量同名，你也无须担心什么，因为\verb|my|声明实际上创建了一个新的变量，它只在包裹起来的代码块中有效，代码块外面使用的任何重名的变量都和它完全无关。
 
-例子中演示的在子程序中收集参数，都用小括号把变量包裹了起来。因为 \verb|@_|是一个数组，用小括号把新变量包裹起来就把它们放在了数组上下文\footnote{译者注：即列表上下文。}中，这可以保证它们能被正确地初始化（参看\autoref{chap:chapter4}）。
+例子中演示的在子程序中收集参数，都用小括号把变量包裹了起来。因为\verb|@_|是一个数组，用小括号把新变量包裹起来就把它们放在了数组上下文\footnote{译者注：即列表上下文。}中，这可以保证它们能被正确地初始化（参看\autoref{chap:chapter4}）。
 
 %\begin{adjustwidth}{4em}{4em}
   %\parpic[l]{
   %\includegraphics[width=1cm]{warning.png}
 %}
 %\noindent
-%在子程序中，永远使用 \verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。
+%在子程序中，永远使用\verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。
 %\end{adjustwidth}
 
 \vspace{-5pt}
@@ -205,7 +205,7 @@ my($x) = @_;
   \begin{center}
     \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
       \tabucline{-}
-      \includegraphics[width=1.1cm]{warning.png} & 在子程序中，永远使用 \verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。\\
+      \includegraphics[width=1.1cm]{warning.png} & 在子程序中，永远使用\verb|my|这样的关键字来声明你的所有变量，即使这些变量并不是作为参数传递进来的。\\
       \tabucline{-}
     \end{tabu*}
   \end{center}
@@ -229,7 +229,7 @@ I changed all the A's in TTTTT to T's and got TTTTT
 I changed all the A's in AAAAA to T's and got TTTTT 
 \end{lstlisting}
 
-要想获得这个期望的输出，可以把子程序\textit{A\_to\_T}的定义改成下面这样，使用 \verb|my|声明变量把子程序中的 \verb|$dna|变成 \verb|my|变量：
+要想获得这个期望的输出，可以把子程序\textit{A\_to\_T}的定义改成下面这样，使用\verb|my|声明变量把子程序中的\verb|$dna|变成\verb|my|变量：
 
 \begin{lstlisting}
 sub A_to_T {
@@ -240,29 +240,29 @@ sub A_to_T {
 }
 \end{lstlisting}
 
-\autoref{exam:example6.2}错在哪儿了呢？当程序进入子程序后，使用变量 \verb|$dna|进行字符串处理来把A变成T时，Perl语言看到在主程序中已经有一个叫做 \verb|$dna|的变量了，因此就继续使用它了。当程序从子程序中返回后，运行 \verb|print|语句时，它仍然使用这同一个（仅此一个）变量 \verb|$dna|。所以，当它打印输出结果时，变量 \verb|$dna|中就不是原来的DNA了，而是在子程序中经过处理已经改变了的DNA。
+\autoref{exam:example6.2}错在哪儿了呢？当程序进入子程序后，使用变量\verb|$dna|进行字符串处理来把A变成T时，Perl语言看到在主程序中已经有一个叫做\verb|$dna|的变量了，因此就继续使用它了。当程序从子程序中返回后，运行\verb|print|语句时，它仍然使用这同一个（仅此一个）变量\verb|$dna|。所以，当它打印输出结果时，变量\verb|$dna|中就不是原来的DNA了，而是在子程序中经过处理已经改变了的DNA。
 
-现在类似的事情经常会发生。程序员倾向于大量使用特定的变量名：常见的变量名如 \verb|$tmp|、 \verb|$temp|、 \verb|$x|、 \verb|$a|、 \verb|$number|、 \verb|$variable|、 \verb|$var|、 \verb|$array|、 \verb|$input|、 \verb|$output|、 \verb|$result|、 \verb|$data|、 \verb|$file|、 \verb|$filename|等等。生物信息学家则偏爱 \verb|$dna|、 \verb|$protein|、 \verb|$motif|、 \verb|$sequence|这样的变量名。当你开始使用别人写的子程序库、你的程序越来越庞大时，让Perl语言来考虑避免重名的问题会更加容易、也更加安全一些。
+现在类似的事情经常会发生。程序员倾向于大量使用特定的变量名：常见的变量名如\verb|$tmp|、\verb|$temp|、\verb|$x|、\verb|$a|、\verb|$number|、\verb|$variable|、\verb|$var|、\verb|$array|、\verb|$input|、\verb|$output|、\verb|$result|、\verb|$data|、\verb|$file|、\verb|$filename|等等。生物信息学家则偏爱\verb|$dna|、\verb|$protein|、\verb|$motif|、\verb|$sequence|这样的变量名。当你开始使用别人写的子程序库、你的程序越来越庞大时，让Perl语言来考虑避免重名的问题会更加容易、也更加安全一些。
 
-事实上，从现在开始，我们将不在使用未经声明的变量。从这里开始，我们的所有变量，即使是主程序中的变量，我们都会用 \verb|my|来声明。通过在你的程序中添加下面这条指令，可以使这条纪律得到强制执行：
+事实上，从现在开始，我们将不在使用未经声明的变量。从这里开始，我们的所有变量，即使是主程序中的变量，我们都会用\verb|my|来声明。通过在你的程序中添加下面这条指令，可以使这条纪律得到强制执行：
 
 \begin{lstlisting}
 use strict;
 \end{lstlisting}
 
-它会有这样的效果，要求把程序中的所有变量都声明为 \verb|my|变量。
+它会有这样的效果，要求把程序中的所有变量都声明为\verb|my|变量。
 
 和学习\autoref{chap:chapter4}与\autoref{chap:chapter5}的简单而快乐的日子相比，这些代码中看似无关紧要、稍显杂乱的东西可能会让你倍感束缚，但你应该知道许多语言都要求对它们的所有变量进行声明。事实上，当你编写简短的Perl程序时，不强制使用严格的作用域还是非常方便的，比如，在你尝试教授编程时，不会想一开始就让成千上万的细节把学生压的喘不过气来。
 
-你编写程序时不小心把变量名拼写错了，使用严格的作用域的另一个好处就会凸显出来。如果变量没有被声明过，Perl就会使用拼错的名字创建一个新的变量。程序可能不能正常工作，而且要找出问题所在可能会比较困难。通过使用严格的作用域，对于所有没有声明的、拼错的变量，Perl都会进行抱怨给出提示信息，这会节省你数小时甚至数天抓耳挠腮的工作，向惨不忍睹的代码说再见吧。
+你编写程序时不小心把变量名拼写错了，使用严格的作用域的另一个好处就会凸显出来。如果变量没有被声明过，Perl就会使用拼错的名字创建一个新的变量。程序可能不能正常工作，而且要找出问题所在可能会比较困难。通过使用严格的作用域，对于所有没有声明的、拼错的变量，Perl都会进行抱怨给出提示信息，这会节省你数小时甚至数天抓耳挠腮的工作，向惨不忍睹的代码说再见。
 
-最后，让我们再通过\autoref{exam:example6.1}来回顾一下作用域、参数和子程序的工作原理吧。要调用子程序，需要键入它的名字\textit{addACGT}，把参数 \verb|$dna|传递给它，并且通过给 \verb|$longer_dna|赋值把结果（如果有的话）收集起来：
+最后，让我们再通过\autoref{exam:example6.1}来回顾一下作用域、参数和子程序的工作原理吧。要调用子程序，需要键入它的名字\textit{addACGT}，把参数\verb|$dna|传递给它，并且通过给\verb|$longer_dna|赋值把结果（如果有的话）收集起来：
 
 \begin{lstlisting}
 $longer_dna = addACGT($dna); 
 \end{lstlisting}
 
-子程序的第一行，从特殊变量 \verb|@_|中获取参数的值，并把它保存到自己的变量 \verb|$dna|中，因为使用了 \verb|my|，所以这个变量在子程序外是看不到的。尽管子程序外的原始变量也叫做 \verb|$dna|，子程序中叫做 \verb|$dna|的变量实际上是一个全新的变量（只不过名字相同而已），因为 \verb|my|的使用使得它只属于子程序。这个新变量只在程序进入子程序运行时是有效的。注意\autoref{exam:example6.2}末尾 \verb|print|语句的输出，尽管子程序中叫做 \verb|$dna|的变量被延长了，但子程序外的原始变量 \verb|$dna|并没有被改变。
+子程序的第一行，从特殊变量\verb|@_|中获取参数的值，并把它保存到自己的变量\verb|$dna|中，因为使用了\verb|my|，所以这个变量在子程序外是看不到的。尽管子程序外的原始变量也叫做\verb|$dna|，子程序中叫做\verb|$dna|的变量实际上是一个全新的变量（只不过名字相同而已），因为\verb|my|的使用使得它只属于子程序。这个新变量只在程序进入子程序运行时是有效地。注意\autoref{exam:example6.2}末尾\verb|print|语句的输出，尽管子程序中叫做\verb|$dna|的变量被延长了，但子程序外的原始变量\verb|$dna|并没有被改变。
 
 \section{命令行参数和数组}
 \autoref{exam:example6.3}是使用子程序的另一个程序。不需要交互式回答程序的提示，你使用命令行就可以把程序需要的信息（比如文件名，或DNA字符串）告诉它。比如，当你计划在特定时间运行程序、而你又不在的时候，这会非常有用。
@@ -293,13 +293,13 @@ X，现在也提供了一个命令行。（尽管大多数Windows用户并不怎
 use strict;
 \end{lstlisting}
 
-从现在开始，我将使用它来确保所有的变量都用 \verb|my|进行了声明，这样就可以强制执行词法作用域了。
+从现在开始，我将使用它来确保所有的变量都用\verb|my|进行了声明，这样就可以强制执行词法作用域了。
 
-Perl预先设置了一些特殊变量，这样你就可以轻而易举得从命令行中使用参数了。每一个Perl程序都有一个数组变量 \verb|@ARGV|，它包含了所有的命令行参数。此外，还有一个叫做 \verb|$0|（是零不是字母o）的特殊变量，它包含的是在命令行中调用程序时的程序名。
+Perl预先设置了一些特殊变量，这样你就可以轻而易举得从命令行中使用参数了。每一个Perl程序都有一个数组变量\verb|@ARGV|，它包含了所有的命令行参数。此外，还有一个叫做\verb|$0|（是零不是字母o）的特殊变量，它包含的是在命令行中调用程序时的程序名。
 
-注意，在\autoref{exam:example6.3}中，在 \verb|$USAGE|变量中定义了一个提示信息，开头就是变量 \verb|$0|的值，后面紧跟着程序需要的参数的指示。这是非常常用且实用的做法。如果用户没有给程序提供所需的信息，通过某种形式的测试进行检测后，程序会打印输出如何正确使用它的信息提示，然后退出。
+注意，在\autoref{exam:example6.3}中，在\verb|$USAGE|变量中定义了一个提示信息，开头就是变量\verb|$0|的值，后面紧跟着程序需要的参数的指示。这是非常且使用的做法。如果用户没有给程序提供所需的信息，通过某种形式的测试进行检测后，程序会打印输出如何正确使用它的信息提示，然后退出。
 
-事实上，这个程序确实进行了检测，看看在命令行上是否键入了参数。它检测 \verb|@ARGV|中是否包含内容，这种情况下它会被测试为 \verb|真|；或者如果它完全是空的，这种情况下它就会被测试为 \verb|假|。如果程序需要用户提供一个参数，你可以使用 \verb|unless|条件测试，如果 \verb|@ARGV|是空的，就打印输出 \verb|$USAGE|语句并退出程序：
+事实上，这个程序确实进行了检测，看看在命令行上是否键入了参数。它检测\verb|@ARGV|中是否包含内容，这种情况下它会被测试为\verb|真|；或者如果它完全是空的，这种情况下它就会被测试为\verb|假|。如果程序需要用户提供一个参数，你可以使用\verb|unless|条件测试，如果\verb|@ARGV|是空的，就打印输出\verb|$USAGE|语句并退出程序：
 
 \begin{lstlisting}
 unless(@ARGV) {
@@ -314,9 +314,9 @@ unless(@ARGV) {
 my($dna) = $ARGV[0];
 \end{lstlisting}
 
-你已经检测确保数组不是空的，那就已经知道肯定有第一个元素了。为了获取数组 \verb|@ARGV|中的第一个元素，把 \verb|@|换成 \verb|$|，并在其后跟上用中括号包裹起来的所需的下标：第一个元素的下标是0，第二个元素的下标是1,依此类推。这个语法表明，既然你现在想看数组中的一个元素，并且它是一个标量变量，那你就使用美元符号，就像在其他标量变量上那样使用。
+你已经检测确保数组不是空的，那就已经知道肯定有第一个元素了。为了获取数组\verb|@ARGV|中的第一个元素，把\verb|@|换成\verb|$|，并在其后跟上用中括号包裹起来的所需的下标：第一个元素的下标是0，第二个元素的下标是1,依此类推。这个语法表明，既然你现在想看数组中的一个元素，并且它是一个标量变量，那你就使用美元符号，就像在其他标量变量上那样使用。
 
-在\autoref{exam:example6.3}中，你把命令行数组 \verb|@ARGV|的第一个（也是唯一的一个）元素复制到了变量 \verb|$dna|中。
+在\autoref{exam:example6.3}中，你把命令行数组\verb|@ARGV|的第一个（也是唯一的一个）元素复制到了变量\verb|$dna|中。
 
 最后是子程序的调用，其中并没有什么新的东西，但却实现了\autoref{chap:chapter5}最后一段的梦想：
 
@@ -367,7 +367,7 @@ In main program, after the subroutine call, $i equals 2
 \end{lstlisting}
 
 \subsection{子程序：通过引用传递}
-如果你的参数更加复杂，比如说混合了标量、数组和散列，对于Perl来说通常不能把它们区分开来。Perl把所有的参数当成一个单独的数组，就是 \verb|@_|这个特殊数组，传递给子程序，如果参数中有数组或者散列，在子程序中，它们的元素就会“扁平化”后保存进 \verb|@_|这一个数组中。下面是一个例子：
+如果你的参数更加复杂，比如说混合了标量、数组和散列，对于Perl来说通常不能把它们区分开来。Perl把所有的参数当成一个单独的数组，就是\verb|@_|这个特殊数组，传递给子程序，如果参数中数组或者散列，在子程序中，它们的元素就会“扁平化”后保存进\verb|@_|这一个数组中。下面是一个例子：
 
 \begin{lstlisting}
 #!/usr/bin/perl -w
@@ -378,13 +378,13 @@ use strict;
 my @i = ('1', '2', '3');
 my @j = ('a', 'b', 'c');
 
-print "In main program before calling subroutine: i = " . "@i\n";
-print "In main program before calling subroutine: j = " . "@j\n";
+print "In main program before calling subroutine: i = " .  "@i\n";
+print "In main program before calling subroutine: j = " .  "@j\n";
 
 reference_sub(@i, @j);
 
-print "In main program after calling subroutine: i = " . "@i\n";
-print "In main program after calling subroutine: j = " . "@j\n";
+print "In main program after calling subroutine: i = " .  "@i\n";
+print "In main program after calling subroutine: j = " .  "@j\n";
 
 exit;
 
@@ -416,15 +416,15 @@ In main program after calling subroutine: i = 1 2 3
 In main program after calling subroutine: j = a b c
 \end{lstlisting}
 
-如你所见，在子程序中， \verb|@i|和 \verb|@j|中的所有元素都被组合进了 \verb|@_|这个数组中。你开始使用的这两个数组之间的区别，在子程序中荡然无存。当你通过下面这一语句试图把这两个数组找回来时：
+如你所见，在子程序中，\verb|@i|和\verb|@j|中的所有元素都被组合进了\verb|@_|这个数组中。你开始使用的这两个数组之间的区别，在子程序中荡然无存。当你通过下面这一语句试图把这两个数组找回来时：
 
 \begin{lstlisting}
 my(@i, @j) = @_;
 \end{lstlisting}
 
-Perl把所有的元素都赋给了第一个数组 \verb|@i|。这种行为使得向子程序中传递多个数组变得有些不确定。
+Perl把所有的元素都赋给了第一个数组\verb|@i|。这种行为使得向子程序中传递多个数组变得有些不确定。
 
-此外，一切照旧，因为你使用了词法作用域（ \verb|my|变量），主程序中原始的数组并不会被子程序所影响。
+此外，一切照旧，因为你使用了词法作用域（\verb|my|变量），主程序中原始的数组并不会被子程序所影响。
 
 为了避免这种问题，你可以以一种叫做\textit{通过引用传递}或\textit{通过引用调用}的方式向子程序中传递参数。通过使用引用，你可以向子程序中传递标量、数组、散列等各种组合形式的参数，子程序可以将它们区分开来。这也是有代价的：代码看起来会有一些复杂。但它的回报通常值得我们这么去做。
 
@@ -438,23 +438,23 @@ reference_sub(\@i, \@j);
 
 就像你在这里看到的一样，参数是两个数组，为了保持传递给\textit{reference\_sub}子程序后两者的区别，通过引用的形式进行了传递，方法就是在它们的名字前加上反斜线。
 
-在子程序中，也有一些变化。首先，参数从 \verb|@_|数组中收集起来，并保存为标量变量，这是因为不管引用的是标量、数组、散列或者其他什么，引用都是存储在标量变量中的一种特殊类型的数据。如下所示，进行参数的收集：
+在子程序中，也有一些变化。首先，参数从\verb|@_|数组中收集起来，并保存为标量变量，这是因为不管引用的是标量、数组、散列或者其他什么，引用都是存储在标量变量中的一种特殊类型的数据。如下所示，进行参数的收集：
 
 \begin{lstlisting}
 my($i, $j) = @_;
 \end{lstlisting}
 
 
-从 \verb|@_|数组中读取参数后，保存为标量。
+从\verb|@_|数组中读取参数后，保存为标量。
 
-对于这些引用的参数，子程序还要进行进一步的处理。当使用它们时，需要对它们进行解引用。要解引用一个被引用的参数，你需要在引用前添加上表明变量类型的符号：对于标量来说是 \verb|$|，对于数组来说是 \verb|@|，对于散列来说是 \verb|%|。所以在这些变量的名字前有两个符号：从左到右分别是它们本来的符号和表明这个变量是引用的 \verb|$|符号。这些行：
+对于这些引用的参数，子程序还要进行进一步的处理。当使用它们时，需要对它们进行解引用。要解引用一个被引用的参数，你需要在引用前添加上表明变量类型的符号：对于标量来说是\verb|$|，对于数组来说是\verb|@|，对于散列来说是\verb|%|。所以在这些变量的名字前有两个符号：从左到右分别是它们本来的符号和表明这个变量是引用的\verb|$|符号。这些行：
 
 \begin{lstlisting}
 push(@$i, '4');
 shift(@$j);
 \end{lstlisting}
 
-就是子程序中操作变量的代码。\textit{push}向 \verb|@i|数组的末尾添加了“4”这个元素，而\textit{shift}则移除了 \verb|@j|数组的第一个元素。因为这些数组是以引用的形式传递进来的，所以在子程序中它们的名字就是 \verb|@$i|和 \verb|@$j|。（如果你想看一下 \verb|@j|数组的第三个元素，通常情况下它就是 \verb|$j[2]|，所以你应该使用 \verb|$j[2]|。）
+就是子程序中操作变量的代码。\textit{push}向\verb|@i|数组的末尾添加了'4'这个元素，而\textit{shift}则移除了\verb|@j|数组的第一个元素。因为这些数组是以引用的形式传递进来的，所以在子程序中它们的名字就是\verb|@$i|和\verb|@$j|。（如果你想看一下\verb|@j|数组的第三个元素，通常情况下它就是\verb|$j[2]|，所以你应该使用\verb|$j[2]|。）
 
 在子程序中你对参数做的任何改变都会在主程序中产生影响。因为引用就是对实际参数的引用，它们并不是通过值进行传递时它们的值的拷贝。所以，就像你在例子中看到的那样，在调用子程序后，主程序中的数组也被相应的改变了：
 
@@ -468,13 +468,13 @@ use warnings;
 my @i = ('1', '2', '3');
 my @j = ('a', 'b', 'c');
 
-print "In main program before calling subroutine: i = " . "@i\n";
-print "In main program before calling subroutine: j = " . "@j\n";
+print "In main program before calling subroutine: i = " .  "@i\n";
+print "In main program before calling subroutine: j = " .  "@j\n";
 
 reference_sub(\@i, \@j);
 
-print "In main program after calling subroutine: i = " . "@i\n";
-print "In main program after calling subroutine: j = " . "@j\n";
+print "In main program after calling subroutine: i = " .  "@i\n";
+print "In main program after calling subroutine: j = " .  "@j\n";
 
 exit;
 
@@ -513,14 +513,14 @@ In main program after calling subroutine: j = b c
 
 这是它的工作原理。你把所有可以重复使用的子程序放进一个单独的文件里。（或者，随着你编写越来越多的代码，事情会变得复杂起来，你可能会想把它们组织到不同的文件中。）之后在你的程序只需要把文件的名字写上，然后说声\textit{变}：子程序的定义就被读进来了，就像它们本身就在你的程序中一样。要实现这一点，使用Perl的内置函数\textit{use}即可，它会把子程序的库文件读进来。
 
-让我们把这个模块叫做\textit{BeginPerlBioinfo.pm}吧。你可以把所有的子程序定义都放在里面，就像它们出现在程序代码中一样。然后就像在本书的学习过程中键入子程序的定义，你就可以创建模块了；或者，更加简便的方法，从书籍的网页上直接把它下载下来。但需要牢记一点，当创建模块或者向模块中添加东西时，\textit{模块的最后一行必须是\texttt{1;}，否则它不会工作}。这个 \verb|1;|应该是\textit{.pm}文件的最后一行，而不是最后一个子程序的一部分。如果你忘记了这一行，你会看到类似这样的错误信息：
+让我们把这个模块叫做\textit{BeginPerlBioinfo.pm}吧。你可以把所有的子程序定义都放在里面，就像它们出现在程序代码中一样。然后就像在本书的学习过程中键入子程序的定义，你就可以创建模块了；或者，更加简便的方法，从属鸡的网页上直接把它下载下来。但需要牢记一点，当创建模块或者向模块中添加东西时，\textit{模块的最后一行必须是\texttt{1;}，否则它不会工作}。这个\verb|1;|应该是\textit{.pm}文件的最后一行，而不是最后一个子程序的一部分。如果你忘记了这一行，你会看到类似这样的错误信息：
 
 \begin{lstlisting}
 BeginPerlBioinfo.pm did not return a true value at jkl line 14.
 BEGIN failed--compilation aborted at jkl line 14.
 \end{lstlisting}
 
-现在，要使用\textit{BeginPerlBioinfo.pm}中的任何子程序，你只需要在靠近代码顶部（靠近 \verb|use strict|语句）的地方中加上这样一条语句：
+现在，要使用\textit{BeginPerlBioinfo.pm}中的任何子程序，你只需要在靠近代码顶部（靠近\verb|use strict|语句）的地方中加上这样一条语句：
 
 \begin{lstlisting}
 use BeginPerlBioinfo;
@@ -535,9 +535,9 @@ use lib '/home/tisdall/book';
 use BeginPerlBioinfo;
 \end{lstlisting}
 
-还有其他告诉Perl去哪里寻找模块的方法，去查阅一下 \verb|use|的Perl文档吧。
+还有其他告诉Perl去哪里寻找模块的方法，去查阅一下\verb|use|的Perl文档吧。
 
-从\autoref{chap:chapter8}开始，我会定义子程序并给出代码，但你应该把它们放到模块中，然后键入：
+在\autoref{chap:chapter8}的开头，我会定义子程序并给出代码，但你应该把它们放到模块中，然后键入：
 
 \begin{lstlisting}
 use BeginPerlBioinfo;
@@ -554,7 +554,7 @@ use BeginPerlBioinfo;
 
 然而，有的时候问题可能不是明显，这时你就不得不开挂了。
 
-幸运的是，Perl有好多方法可以帮助你寻找并修复程序中的bugs。语句 \verb|use strict;|和 \verb|use warnings;|的使用应该成为一种习惯，因为使用它们你可以捕获许多错误。Perl调试器则给了你完全的自由，可以在程序运行时对程序进行详细的检查。
+幸运的是，Perl有好多方法可以帮助你寻找并修复程序中的bugs。语句\verb|use strict;|和\verb|use warnings;|的使用应该成为一种习惯，因为使用它们你可以捕获许多错误。Perl调试器则给了你完全的自由，可以在程序运行时对程序进行详细的检查。
 
 \subsection{use warnings;和use strict;}
 一般来说，当程序的语法出现错误时，可以很容易的进行识别，因为Perl解释器给出的错误信息通常就可以指引你找到问题的所在。但是当程序不以你期望的形式工作时，要找到问题所在通常会更加困难一些。如果你开启了警告功能、并且强制使用严格的声明，许多这样的问题都可以被捕获。
@@ -565,7 +565,7 @@ use BeginPerlBioinfo;
 #!/usr/bin/perl -w
 \end{lstlisting}
 
- \verb|-w|开启了Perl的警告功能，这会尝试寻找代码中潜在的问题，并对此给出警告。它会找出常见的问题，比如声明了不止一次的变量之类的问题，以及不是语法错误但会导致bugs的东西。
+\verb|-w|开启了Perl的警告功能，这会尝试寻找代码中潜在的问题，并对此给出警告。它会找出常见的问题，比如声明了不止一次的变量之类的问题，以及不是语法错误但会导致bugs的东西。
 
 开启警告的另外一种方法就是在靠近程序顶部的地方加上下面这个语句：
 
@@ -573,13 +573,13 @@ use BeginPerlBioinfo;
 use warnings;
 \end{lstlisting}
 
-如果你使用的Perl的版本比较老， \verb|use warnings;|语句可能在其中并不存在。所以如果你的Perl对此进行抱怨，那就把这个语句删掉，用\textit{-w}命令来替代吧。你既可以在命令解释器行上使用它，也可以在命令行中使用它：
+如果你使用的Perl的版本比较老，\verb|use warnings;|语句可能在其中并不存在。所以如果你的Perl对此进行抱怨，那就把这个语句删掉，用\textit{-w}命令来替代吧。你既可以在命令解释器行上使用它，也可以在命令行中使用它：
 
 \begin{lstlisting}[language=bash]
 $ perl -w my_program
 \end{lstlisting}
 
-然而，在不同的操作系统之间，使用 \verb|use warnings;|会更加灵活一些。所以，从现在开始，这就是我在代码中开启警告功能的方式。另外一个你应该使用的重要的帮手是下面这个语句，也把它放在靠近程序顶部（紧邻 \verb|use warnings;|）的地方：
+然而，在不同的操作系统之间，使用\verb|use warnings;|会更加灵活一些。所以，从现在开始，这就是我在代码中开启警告功能的方式。另外一个你应该使用的重要的帮手是下面这个语句，也把它放在靠近程序顶部（紧邻\verb|use warnings;|）的地方：
 
 \begin{lstlisting}
 use strict;
@@ -592,7 +592,7 @@ use strict;
   %\includegraphics[width=1cm]{note.png}
   %}
 %\noindent
-%当编写Perl代码时，最好永远同时使用 \verb|use strict;|和 \verb|use warnings;|。
+%当编写Perl代码时，最好永远同时使用\verb|use strict;|和\verb|use warnings;|。
 %\end{adjustwidth}
 
 \vspace{-5pt}
@@ -600,7 +600,7 @@ use strict;
   \begin{center}
     \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
       \tabucline{-}
-      \includegraphics[width=1cm]{note.png} & 当编写Perl代码时，最好永远同时使用 \verb|use strict;|和 \verb|use warnings;|。\\
+      \includegraphics[width=1cm]{note.png} & 当编写Perl代码时，最好永远同时使用\verb|use strict;|和\verb|use warnings;|。\\
       \tabucline{-}
     \end{tabu*}
   \end{center}
@@ -608,17 +608,17 @@ use strict;
 \vspace{-20pt}
 
 \subsection{使用注释和Print语句修复Bugs}
-有时，通过选择性的把程序的一部分注释掉，你就可以识别出表现异常的代码，最终找到出问题的那一部分。你也可以在有问题的程序的可以部分添加 \verb|print|语句，来检查某个变量的行为。这些都是历史悠久的编程技术，在几乎所有的编程语言中都能很好的工作。
+有时，通过选择性的把程序的一部分注释掉，你就可以识别出表现异常的代码，最终找到出问题的那一部分。你也可以在有问题的程序的可以部分添加\verb|print|语句，来检查某个变量的行为。这些都是历史悠久的编程技术，在几乎所有的编程语言中都能很好的工作。
 
 把代码的一部分注释掉，这会非常有用，尤其是当你从Perl中得到的错误信息没有直接指出出问题的那行代码时，而这时有发生。当出现这种情况时，你可以通过不断的试验，发现当注释掉代码的一小部分时，错误信息消失了，这样你就知道是哪一部分出错了。
 
-通过添加 \verb|print|语句，也可以很快查明问题所在，尤其是当你差不多已经知道是哪儿出问题时。然而，作为程序员菜鸟，你可能会发现使用Perl调试器要比添加 \verb|print|语句更容易一些。在调试器中，你可以在任意行轻松得设置 \verb|print|语句。比如，下面的调试器命令是要在48行之前打印出 \verb|$i|和 \verb|$k|的值：
+通过添加\verb|print|语句，也可以很快查明问题所在，尤其是当你差不多已经知道是哪儿出问题时。然而，作为程序员菜鸟，你可能会发现使用Perl调试器要比添加\verb|print|语句更容易一些。在调试器中，你可以在任意行轻松得设置\verb|print|语句。比如，下面的调试器命令是要在48行之前打印出\verb|$i|和\verb|$k|的值：
 
 \begin{lstlisting}
 a 48 print "$i $k\n"
 \end{lstlisting}
 
-一旦你学会了如何使用它，这种方法通常就会比手工编辑Perl程序来添加 \verb|print|语句更加快捷和容易一些。使用这种方法部分是出于个人喜好的关系，因为有些极端的好的Perl程序员更加喜欢使用添加 \verb|print|语句这种古典的方法。
+一旦你学会了如何使用它，这种方法通常就会比手工编辑Perl程序来添加\verb|print|语句更加快捷和容易一些。使用这种方法部分是出于个人喜好的关系，因为有些极端的好的Perl程序员更加喜欢使用添加\verb|print|语句这种古典的方法。
 
 \subsection{Perl调试器}
 处理程序中那些不是很明显的bugs使，我最喜欢的方法还是使用Perl调试器。对于代码中存在bugs的程序来说，问题在于一旦程序开始运行，你看到的所有内容就是它的输出了，你无法看到程序运行的具体步骤。Perl调试器可以让你一步一步仔细的检查程序，而这往往可以让你快速找到问题所在。你也会发现，仅需少许的练习，就可以轻松得使用它。
@@ -628,12 +628,12 @@ a 48 print "$i $k\n"
 对于大多数情况来说，Perl调试器都是强大、基本的编程工具。本小节将介绍它的最主要的特性。
 
 \subsubsection{有bugs的程序}
-\autoref{exam:example6.4}程序中有一些bugs，我们来对其进行检查。程序会处理一条序列和两个碱基，（如果它能够在序列中找到这两个碱基的话）就把从这两个碱基到序列末尾的所有内容都输出出来。这两个碱基可以以命令行参数的形式传递给程序，如果不给参数的话，程序将默认使用TA这两个碱基。
+\autoref{exam:example6.4}程序中有一些bugs，我们来对其进行检查。程序会处理一条序列和两个碱基，（如果它能够在序列中找到这两个碱基的话）就把从这两个碱基到序列末尾的所有内容都输出出来。这两个碱基可以以参数的形式传递给程序，如果不给参数的话，程序将默认使用TA这两个碱基。
 
-在\autoref{exam:example6.4}中有一个新的东西。\textit{next}语句会影响循环中的控制流，它会立即使程序流进入循环的下一个迭代，直接跳过后面所有的内容。此外，你还需要回忆一下 \verb|$_|，在\autoref{exam:example5.5}的 \verb|foreach|循环的相关内容中我们对它进行了讨论。
+在\autoref{exam:example6.4}中有一个新的东西。\textit{next}语句会影响循环中的控制流，它会立即使程序流进入循环的下一个迭代，直接跳过后面所有的内容。此外，你还需要回忆一下\verb|$_|，在\autoref{exam:example5.5}的\verb|foreach|循环的相关内容中我们对它进行了讨论。
 
 %\textbf{例6-4：有一个或两个bug的程序}
-\lstinputlisting[label=exam:example6.4,caption={例6.4：有一两个bug的程序}]{./scripts/example6-4.pl}
+\lstinputlisting[label=exam:example6.4,caption={例6.4：有一个或两个bug的程序}]{./scripts/example6-4.pl}
 
 下面是两次运行\autoref{exam:example6.1}的输出：
 
@@ -644,7 +644,7 @@ $ perl example 6-4
 TA
 \end{lstlisting}
 
-嗯？当使用参数 \verb|AA|调用程序时，应该输出 \verb|AAGGCGA|，而没有参数运行程序时，应该输出 \verb|TAAGGCGA|。在这个程序中肯定有一个bug。但是，如果你仔细检查这个程序，其中并没有什么明显的错误。是时候使用调试器了。接下来就针对\autoref{exam:example6.4}的真实的调试会话，其中穿插着解释发生了什么及其原因的注释。
+嗯？当使用参数\verb|AA|调用程序时，应该输出\verb|AAGGCGA|，而没有参数运行程序时，应该输出\verb|TAAGGCGA|。在这个程序中肯定有一个bug。但是，如果你仔细检查这个程序，其中并没有什么明显的错误。是时候使用调试器了。接下来就针对\autoref{exam:example6.4}的真实的调试会话，其中穿插着解释发生了什么及其原因的注释。
 
 \subsubsection{如何启动和停止调试器}
 调试器以交互的形式运行，你可以通过键盘控制它。\footnote{你也可以让它自动运行，把调试结果保存到文件中去。}启动调试器的最常用的方法，就是在命令行中给Perl添加\textit{-d}开关。既然使用有bug的\autoref{exam:example6.4}来演示调试器的使用，下面就是启动程序的方式：
@@ -661,7 +661,7 @@ perl -d example6-4
 
 在类似Unix和Linux这种命令解释器起作用的系统上，这种写法会自动启动调试器。
 
-要停止调试器，输入 \verb|q|即可。
+要停止调试器，输入\verb|q|即可。
 
 \subsubsection{调试器命令总结}
 首先，让我们试着找找当不使用参数调用\autoref{exam:example6.4}时其中的bug吧：
@@ -690,7 +690,7 @@ main::(example6-4.pl:11):	my $dna = 'CGACGTCTTCTAAGGCGA';
   DB<1> 
 \end{lstlisting}
 
-这是刚刚开始，让我们先停在这里，看看其中的一些东西。开始是一些信息，现在看来它们可能毫无意义，之后，就是一个非常棒的信息——使用命令 \verb|h|和 \verb|h h|可以获得更多的帮助。让我们试试 \verb|h|：
+这是刚刚开始，让我们先停在这里，看看其中的一些东西。开始是一些信息，现在看来它们可能毫无意义，之后，就是一个非常棒的信息——使用命令\verb|h|和\verb|h h|可以获得更多的帮助。让我们试试\verb|h|：
 
 %\begin{lstlisting}
   %DB<1> h h
@@ -751,7 +751,7 @@ For more help, type h cmd_letter, or run man perldebug for all docs.
   DB<1> 
 \end{lstlisting}
 
-这有点不容易阅读，但是你看到了调试器命令的简要总结。你也可以使用 \verb|h h|命令，它会给出数屏的大量信息。 \verb=| h=命令会逐页显示这些信息，一次只显示一页。调试器命令开头的管道会把输出传送给分页器，当你敲击键盘上的空格键时分页器通常会显示下一页。你最好尝试一下。但是现在，我们要把精力集中在少数几个最有用的命令上。但是别忘了，键入 \verb|h|\textit{命令}会给你关于命令的帮助信息。
+这有点不容易阅读，但是你看到了调试器命令的简要总结。你也可以使用\verb|h h|命令，它会给出数屏的大量信息。\verb=| h=命令会逐页显示这些信息，一次只显示一页。调试器命令开头的管道会把输出传送给分页器，当你敲击键盘上的空格键时分页器通常会显示下一页。你最好尝试一下。但是现在，我们要把精力集中在少数几个最有用的命令上。但是别忘了，键入\verb|h|\textit{命令}会给你关于命令的帮助信息。
 
 \subsubsection{使用调试器逐步运行语句}
 言归正传。当你启动调试器后，你会看到它停止在真实的Perl代码的第一行上：
@@ -762,7 +762,7 @@ For more help, type h cmd_letter, or run man perldebug for all docs.
 
 现在，对于调试器，有重要的一点你需要理解：它显示的是将要执行的那一行，而不是已经执行的行。
 
-所以，实际上，\autoref{exam:example6.4}现在还什么事情也没有做。你从命令总结中可以看到， \verb|p|会让调试器打印出值。如果你想让它打印 \verb|$dna|的值，你可以这么做：
+所以，实际上，\autoref{exam:example6.4}现在还什么事情也没有做。你从命令总结中可以看到，\verb|p|会让调试器打印出值。如果你想让它打印\verb|$dna|的值，你可以这么做：
 
 \begin{lstlisting}
   DB<1> p $dna
@@ -770,9 +770,9 @@ For more help, type h cmd_letter, or run man perldebug for all docs.
   DB<2> 
 \end{lstlisting}
 
-因为其中没有任何东西，所以它不会有什么显示，现在它还没有看到 \verb|$dna|变量呢。所以你应该执行这个语句。有两个命令可以使用： \verb|n|和 \verb|s|都可以执行显示的语句。（两者的区别在于： \verb|n|或“next”在子程序调用时不会进入子程序，而把它看做一个单独的语句；而 \verb|s|或“single step”会进入子程序，并且一步步运行它。）一旦你使用了其中的一个命令，你就可以敲击Enter键来重复同样的命令了。
+因为其中没有任何东西，所以它不会有什么显示，现在它还没有看到\verb|$dna|变量呢。所以你应该执行这个语句。有两个命令可以使用：\verb|n|和\verb|s|都可以执行显示的语句。（两者的区别在于：\verb|n|或“next”在子程序调用不会进入子程序，而把它看做一个单独的语句；而\verb|s|或“single step”会进入子程序，并且一步步运行它。）一旦你使用了其中的一个命令，你就可以敲击Enter键来重复同样的命令了。
 
-因为没有子程序，所以在选择 \verb|n|和 \verb|s|时不用左右为难，我们使用 \verb|n|：
+因为没有子程序，所以在选择\verb|n|和\verb|s|时不用左右为难，我们使用\verb|n|：
 
 \begin{lstlisting}
   DB<2> n
@@ -780,7 +780,7 @@ main::(example6-4:12):    my @dna;
   DB<3> 
 \end{lstlisting}
 
-这会显示下一行（在提示符的末尾你可以看到程序的行号）。如果你想看更多的行，可以使用 \verb|v|或者“view”命令：
+这会显示下一行（在提示符的末尾你可以看到程序的行号）。如果你想看更多的行，可以使用\verb|v|或者“view”命令：
 
 \begin{lstlisting}
   DB<2> v
@@ -797,9 +797,9 @@ main::(example6-4:12):    my @dna;
   DB<2>
 \end{lstlisting}
 
-当前行——接下来将被执行的行——会以箭头（ \verb|==>|）突出显示。
+当前行——接下来将被执行的行——会以箭头（\verb|==>|）突出显示。
 
- \verb|v|看起来是一个非常有用的命令。通过帮助命令 \verb|h v|，让我们来看看它的更多信息吧。
+\verb|v|看起来是一个非常有用的命令。通过帮助命令\verb|h v|，让我们来看看它的更多信息吧。
 
 \begin{lstlisting}
   DB<2> h v
@@ -807,9 +807,9 @@ v [line]        View window around line.
   DB<3> 
 \end{lstlisting}
 
-实际上，不止这些——通过重复键入 \verb|v|可以持续显示程序的更多代码，减号（ \verb|-|）会上翻一屏。这些足够了。
+实际上，不止这些——通过重复键入\verb|v|可以持续显示程序的更多代码，减号（\verb|-|）会上翻一屏。这些足够了。
 
-既然 \verb|$dna|已经声明和初始化了，程序的第一个语句看起来出了一点错误：
+既然\verb|$dna|已经声明和初始化了，程序的第一个语句看起来出了一点错误：
 
 \begin{lstlisting}
   DB<3> p $dna
@@ -896,7 +896,7 @@ A
   DB<8> 
 \end{lstlisting}
 
-到现在为止，一切都和预期一样：使用的是默认子序列 \verb|TA|， \verb|$base1|和 \verb|$base2|变量也被设成了子程序的第一个碱基 \verb|T|和第二个碱基 \verb|A|。让我们继续：
+到现在为止，一切都和预期一样：使用的是默认子序列\verb|TA|，\verb|$base1|和\verb|$base2|变量也被设成了子程序的第一个碱基\verb|T|和第二个碱基\verb|A|。让我们继续：
 
 \begin{lstlisting}
   DB<8> n
@@ -908,7 +908,7 @@ C G A C G T C T T C T A A G G C G A
   DB<10> 
 \end{lstlisting}
 
-这里展示了一个Perl和打印数组的技巧：通常打印出来时元素之间没有空格，但是在 \verb|print|语句中通过把数组包裹进双引号中会使元素以空格分隔的形式展示出来。
+这里展示了一个Perl和打印数组的技巧：通常打印出来时元素之间没有空格，但是在\verb|print|语句中通过把数组包裹进双引号中会使元素以空格分隔的形式展示出来。
 
 一如既往，一切看起来都还正常，并且我们要进入循环了。先让我们看一下这整个的循环：
 
@@ -963,12 +963,12 @@ C G A C G T C T T C T A A G G C G A
   DB<10> 
 \end{lstlisting}
 
-尽管 \verb|v|命令的输出结果中有一些重复的行，你还是看到了整个的循环。现在你知道这里的某个地方出现了问题：就像现在运行的这样，当你不给参数测试程序时，它会使用默认参数 \verb|TA|，到现在为止它看起来还是正常的。然而，在你的测试中，它本应该打印出从 \verb|TA|第一次出现到最后的所有字符串，但实际上它却只打印出了 \verb|TA|。哪里错了呢？
+尽管\verb|v|命令的输出结果中有一些重复的行，你还是看到了整个的循环。现在你知道这里的某个地方出现了问题：就像现在运行的这样，当你不给参数测试程序时，它会使用默认参数\verb|TA|，到现在为止它看起来还是正常的。然而，在你的测试中，它本应该打印出从\verb|TA|第一次出现到最后的所有字符串，但实际上它却只打印出了\verb|TA|。哪里错了呢？
 
 \subsubsection{设置断点}
 要找出出错的地方，你可以在代码中设置断点。所谓\textit{断点}指的就是程序中的一个点，你告诉调试器在这个地方停止执行，这样你就可以在其附近检查代码了。Perl调试器允许你以多种方式设置断点。它们让你运行程序，只在语句到达断点的时候停止检查。通过这种方式，你就不用一步一步执行代码中的每一行了。（如果你有5000行的代码，而错误则发生在你读入输入的第12000行、敲击一行首次使用到的代码时，你会为有这样的特性而感到高兴。）
 
-注意一旦发现起始的两个碱基、循环中打印输出剩余字符串的部分，就是开始于第41行的 \verb|if|代码块：
+注意一旦发现起始的两个碱基、循环中打印输出剩余字符串的部分，就是开始于第41行的\verb|if|代码块：
 
 \begin{lstlisting}
 if ($receivingcommittment) {
@@ -977,9 +977,9 @@ if ($receivingcommittment) {
 }
 \end{lstlisting}
 
-让我们看看 \verb|$receivingcommittment|变量。
+让我们看看\verb|$receivingcommittment|变量。
 
-这里是实现的一种方法。我们在第40行设置断点。键入 \verb|b 41|，然后键入 \verb|c|继续，程序会持续运行直到它到达第40行：
+这里是实现的一种方法。我们在第40行设置断点。键入\verb|b 41|，然后键入\verb|c|继续，程序会持续运行直到它到达第40行：
 
 \begin{lstlisting}
   DB<10> b 41
@@ -990,9 +990,9 @@ C
   DB<11> 
 \end{lstlisting}
 
-最后的命令 \verb|p|，会打印输出 \verb|foreach|循环到达的 \verb|@dna|数组的那个元素。既然你并没有为循环指定特定的变量，那么它就使用默认的 \verb|$_|变量。许多Perl命令，比如 \verb|print|和模式匹配，在没有其他变量可用的情况下，会操作默认的 \verb|$_|变量。（它是子程序用来存储参数的默认数组 \verb|@_|的表亲。）所以 \verb|p|这个调试器命令显示，你正在操作 \verb|@dna|数组中的第一个字符C。
+最后的命令\verb|p|，会打印输出\verb|foreach|循环到达的\verb|@dna|数组的那个元素。既然你并没有为循环指定特定的变量，那么它就使用默认的\verb|$_|变量。许多Perl命令，比如\verb|print|和模式匹配，在没有其他变量可用的情况下，会操作默认的\verb|$_|变量。（它是子程序用来存储参数的默认数组\verb|@_|的表亲。）所以\verb|p|这个调试器命令显示，你正在操作\verb|@dna|数组中的第一个字符C。
 
-一切正常。但最好在变量 \verb|$receivingcommittment|的值发生改变时，程序能够暂停，然后一步一步运行，看看为什么程序没有打印出剩余的字符串。回忆一下，这个变量是一个标志，它的改变会让程序打印出剩余的字符串。首先让我们删除所有其他的断点：
+一切正常。但最好在变量\verb|$receivingcommittment|的值发生改变时，程序能够暂停，然后一步一步运行，看看为什么程序没有打印出剩余的字符串。回忆一下，这个变量是一个标志，它的改变会让程序打印出剩余的字符串。首先让我们删除所有其他的断点：
 
 %\begin{lstlisting}
   %DB<12> D
@@ -1004,7 +1004,7 @@ Deleting all breakpoints...
   DB<12> 
 \end{lstlisting}
 
-你可以像这样使用 \verb|w|来“watch”一下变量：
+你可以像这样使用\verb|w|来“watch”一下变量：
 
 %\begin{lstlisting}
 %  DB<12> W $receivingcommittment
@@ -1024,7 +1024,7 @@ use o inhibit_exit to avoid stopping after program termination,
 h q, h R or h o to get additional info.
   DB<13> 
 
-等一会！当 \verb|$receivingcommittment|改变值时， \verb|W|命令应该有所显示。但是当使用 \verb|c|命令继续运行程序时，它直接运行到了结尾，这意味着 \verb|$receivingcommittment|的值从没有发生改变。所以让我们重新运行程序，并在改变值的那一行暂停一下：
+等一会！当\verb|$receivingcommittment|改变值时，\verb|W|命令应该有所显示。但是当使用\verb|c|命令继续运行程序时，它直接运行到了结尾，这意味着\verb|$receivingcommittment|的值从没有发生改变。所以让我们重新运行程序，并在改变值的那一行暂停一下：
 
 %\begin{lstlisting}
 %  DB<13> R
@@ -1088,9 +1088,9 @@ TA
   DB<15> 
 \end{lstlisting}
 
-嗯?代码说它把1这个值赋给了变量，但是在你使用 \verb|n|执行代码后，尝试打印出它的值时，并没有输出正确的值。
+嗯?代码说它把1这个值赋给了变量，但是在你使用\verb|n|执行代码后，尝试打印出它的值时，并没有输出正确的值。
 
-如果你仔细检查程序，会看到在第66行，你把 \verb|$receivingcommittment|错误的拼写成了 \verb|$recievingcommitment|。这就就是了所有的一切；修正它并重新运行一次：
+如果你仔细检查程序，会看到在第66行，你把\verb|$receivingcommittment|错误的拼写成了\verb|$recievingcommitment|。这就就是了所有的一切；修正它并重新运行一次：
 
 \begin{lstlisting}[language=bash]
 $ perl example6-4
@@ -1107,7 +1107,7 @@ $ perl example6-4 AA
 GACGTCTTCTAAGGCGA
 \end{lstlisting}
 
-又一次，嗯？你期望的是 \verb|AAGGCGA|。在程序中是不是有另外一个bug？让我们再一次尝试一下调试器：
+又一次，嗯？你期望的是\verb|AAGGCGA|。在程序中是不是有另外一个bug？让我们再一次尝试一下调试器：
 
 %\begin{lstlisting}
 %$ perl -d example6-4 AA
@@ -1181,11 +1181,11 @@ main::(example6-4_fix1.pl:29):	@dna = split( '', $dna );
   DB<4> 
 \end{lstlisting}
 
-好了，因为某种原因， \verb|$subsequence|、 \verb|$base1|和 \verb|$base2|变量都没有设置正确。为什么会这样呢？
+好了，因为某种原因，\verb|$subsequence|、\verb|$base1|和\verb|$base2|变量都没有设置正确。为什么会这样呢？
 
-检查一下第19行，在 \verb|if|语句的代码块中，你使用同样的名字 \verb|$subsequence|声明了一个新的 \verb|my|变量。这就是你设置的变量，但在 \verb|if|语句结束后它就消失了，因为它是一个 \verb|my|变量，所以它的作用域只在代码块中。
+检查一下第19行，在\verb|if|语句的代码块中，你使用同样的名字\verb|$subsequence|声明了一个新的\verb|my|变量。这就是你设置的变量，但在\verb|if|语句结束后它就消失了，因为它是一个\verb|my|变量，所以它的作用域只在代码块中。
 
-所以，又一次，通过删除第19行中的 \verb|my|声明，把它改成 \verb|$subsequence = $ARGV[0];|这个赋值，你修复了问题。重新运行程序：
+所以，又一次，通过删除第19行中的\verb|my|声明，把它改成\verb|$subsequence = $ARGV[0];|这个赋值，你修复了问题。重新运行程序：
 
 \begin{lstlisting}
 $ perl example6-4
@@ -1197,10 +1197,9 @@ AAGGCGA
 最后终于成功了。
 
 \subsubsection{再说use warnings;和use strict;}
-\autoref{exam:example6.4}某种程度上是人为的。它证明，如果开启了警告模式，这些问题都可以轻松地被报告出来。所以，让我们来看一个实际的例子，它展示了
-\verb|use strict;|和 \verb|use warnings;|的优势，就像在本章前面讨论的那样。
+\autoref{exam:example6.4}某种程度上是人为的。它证明，如果开启了警告模式，这些问题都可以轻松的被报告出来。所以，让我们来看一个实际的例子，它展示了\verb|use strict;|和\verb|use warnings;|的优势，就在本章前面讨论的那样。
 
-如果你在最原始的\autoref{exam:example6.4}靠近程序顶部的地方添加上 \verb|use warnings;|指令，你会得到下面的输出：
+如果你在最原始的\autoref{exam:example6.4}靠近程序顶部的地方添加上\verb|use warnings;|指令，你会得到下面的输出：
 
 \begin{lstlisting}
 $ perl example6-4 
@@ -1233,11 +1232,11 @@ GACGTCTTCTAAGGCGA
 my $base2 = substr($subsequence, 1, 1);
 \end{lstlisting}
 
-所以， \verb|$subsequence|有一些问题。通常，错误信息有一行的错位，所以很可能错误开始于之前的那一行，就是 \verb|$subsequence|被\textit{substr}初次操作的那行。但此处并不是这种情况。
+所以，\verb|$subsequence|有一些问题。通常，错误信息有一行的错位，所以很可能错误开始于之前的那一行，就是\verb|$subsequence|被\textit{substr}初次操作的那行。但此处并不是这种情况。
 
-不过，警告已经直接指出了问题的所在。在这个例子中，你还要主动一些，回去看看 \verb|$subsequence|变量，注意到第20行 \verb|if|代码块中多了一次 \verb|my|声明，这导致变量不能够被正确的初始化。现在这并不一定总是一个bug——在代码块中声明一个有作用域的变量，覆盖掉代码块外面重名的另一个变量。事实上，这是完全合法的，所以编写警告的程序员并没有把它标识成一个明显的错误。然而，在这里它看起来却导致了一个真正的问题！
+不过，警告已经直接指出了问题的所在。在这个例子中，你还要主动一些，回去看看\verb|$subsequence|变量，注意到第20行\verb|if|代码块中多了一次\verb|my|声明，这导致变量不能够被正确的初始化。现在这并不一定总是一个bug——在代码块中声明一个有作用域的变量，覆盖掉代码块外面重名的另一个变量。事实上，这是完全合法的，所以编写警告的程序员并没有把它标识成一个明显的错误。然而，在这里它看起来却导致了一个真正的问题！
 
-最后一点：如果你回去看最原始的、有bug的程序，注意到在程序中没有 \verb|use strict;|。如果你把它添加上，然后在无参数的情况下运行程序，你看得到如下信息：
+最后一点：如果你回去看最原始的、有bug的程序，注意到在程序中没有\verb|use strict;|。如果你把它添加上，然后在无参数的情况下运行程序，你看得到如下信息：
 
 \begin{lstlisting}
 $ perl example6-4   
@@ -1252,7 +1251,7 @@ $ perl example6-4 AA
 GACGTCTTCTAAGGCGA
 \end{lstlisting}
 
-你会看到 \verb|use strict;|对修复另一个bug毫无帮助。记住，最好同时使用 \verb|use strict;|和 \verb|use warnings;|。
+你会看到\verb|use strict;|对修复另一个bug毫无帮助。记住，最好同时使用\verb|use strict;|和\verb|use warnings;|。
 
 \section{练习题}
 \textcolor{red}{\textit{习题6.1}}
@@ -1262,7 +1261,7 @@ GACGTCTTCTAAGGCGA
 
 \textcolor{red}{\textit{习题6.2}}
 \begin{adjustwidth}{4em}{}
-编写一个子程序，报告DNA中每种核苷酸的百分比。你已经看到了加法操作符 \verb|+|。你也会用到除法操作符 \verb|/|和乘法操作符 \verb|*|。计算每种核苷酸的数目，除以DNA的总长，然后乘以100就可以得到百分比了。你的参数应该是DNA和你想计算的核苷酸。如果需要的话，可以用 \verb|int|函数来删除小数点后的数字。
+编写一个子程序，报告DNA中每种核苷酸的百分比。你已经看到了加法操作符\verb|+|。你也会用到除法操作符\verb|/|和乘法操作符\verb|*|。计算每种核苷酸的数目，除以DNA的总长，然后乘以100就可以得到百分比了。你的参数应该是DNA和你想计算的核苷酸。如果需要的话，可以用\verb|int|函数来删除小数点后的数字。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.3}}
@@ -1272,12 +1271,12 @@ GACGTCTTCTAAGGCGA
 
 \textcolor{red}{\textit{习题6.4}}
 \begin{adjustwidth}{4em}{}
-编写一个子程序，来查找 \verb|-help|、 \verb|-h|和 \verb|--help|这样的命令行参数。回忆一下，命令行参数都在 \verb|@ARGV|数组中。从主程序中调用你的子程序。如果你给出了任意可用的命令行参数，当你把它们传送到子程序中时，它应该返回一个真值。在这个例子中，可以让程序打印输出 \verb|$USAGE|变量中的帮助信息，然后退出。
+编写一个子程序，来查找\verb|-help|、\verb|-h|和\verb|--help|这样的命令行参数。回忆一下，命令行参数都在\verb|@ARGV|数组中。从主程序中调用你的子程序。如果你给出了任意可用的命令行参数，当你把它们传送到子程序中时，它应该返回一个真值。在这个例子中，可以让程序打印输出\verb|$USAGE|变量中的帮助信息，然后退出。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.5}}
 \begin{adjustwidth}{4em}{}
-编写一个子程序，来检查一下一个文件是否存在、是不是一个普通文件，是不是大小不为零。使用 \verb|文件测试|操作符（参看\autoref{chap:chapterab}）。
+编写一个子程序，来检查一下一个文件是否存在、是不是一个普通文件，是不是大小不为零。使用\verb|文件测试|操作符（参看\autoref{chap:chapterab}）。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.6}}
@@ -1287,7 +1286,7 @@ GACGTCTTCTAAGGCGA
 
 \textcolor{red}{\textit{习题6.7}}
 \begin{adjustwidth}{4em}{}
-编写一个包含子程序的模块，报告关于DNA序列的多种统计信息，比如它的长度、GC含量、有没有poly-T序列（许多 \verb|$DNA|序列5'（左）端大多数是T的长的延伸），或者其他感兴趣的信息。
+编写一个包含子程序的模块，报告关于DNA序列的多种统计信息，比如它的长度、GC含量、有没有poly-T序列（许多\verb|$DNA|序列5'（左）端大多数是T的长的延伸），或者其他感兴趣的信息。
 \end{adjustwidth}
 
 \textcolor{red}{\textit{习题6.8}}

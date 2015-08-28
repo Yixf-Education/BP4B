@@ -73,7 +73,7 @@ print 'ACCTGGTAACCCGGAGATTCCAGCT';
 \subsection{Perl的版本}
 向其他所有流行软件一样，Perl也在不断成长，在近15年的历史中不断发展变化\footnote{译者注：Perl诞生于1987年。}。Perl的作者拉里$\textbullet$沃尔和庞大的开发社区会定期发布新的版本。这些新的版本都进行了认真的设计，以便向下兼容旧版本写成的大部分程序，但是偶尔也会添加一些新的特性，这些特性在旧版本的Perl中无法正常工作。
 
-本书假设你安装了Perl 5或者更高的版本。如果你的计算机中安装了Perl，那很有可能是Perl 5，但最好去确认一下。在Unix或者Linux系统中，以及MS-DOS或者MacOS X的命令行窗口中，命令\verb|perl -v|会显示Perl的版本号。在我的计算机中，使用的是Perl 5.6.1\footnote{译者注：现在最新的版本是5.22.0（2015-06-01）。}。数字5.6.1比5“大”，也就是说它满足要求。如何计算机中Perl的版本号小（很有可能是4.036），你最好安装一个最新版本的Perl，这样本书中的大部分程序才能正常运行。
+本书假设你安装了Perl 5或者更高的版本。如果你的计算机中安装了Perl，那很有可能是Perl 5，但最好去确认一下。在Unix或者Linux系统中，以及MS-DOS或者MacOS X的命令行窗口中，命令 \verb|perl -v|会显示Perl的版本号。在我的计算机中，使用的是Perl 5.6.1\footnote{译者注：现在最新的版本是5.22.0（2015-06-01）。}。数字5.6.1比5“大”，也就是说它满足要求。如何计算机中Perl的版本号小（很有可能是4.036），你最好安装一个最新版本的Perl，这样本书中的大部分程序才能正常运行。
 
 未来的版本会如何呢？Perl总实在进化，Perl 6已经近在眼前了\footnote{译者注：Perl 6正在开发中，它将会与现在的Perl版本有很大的不同，但相信还要开发一段很长的时间。}。本书中的代码在Perl 6中能否依然正常工作？答案是肯定的。尽管Perl 6要添加一些新的东西进去，运行本书中的Perl 5代码不会存在太大的问题。
 
@@ -114,7 +114,7 @@ perl: command not found
 
 如果你看到这样的信息，并且你使用的是大学或公司的公用Unix系统，一定要向系统管理员进行确认，也许Perl已经安装上了，但是你的环境设置导致你无法找到它。（或者，系统管理员可能会说：“你要用Perl？没问题，我来给你安装。”）
 
-在Windows或者Macintosh中，可以在程序目录中或者使用查找程序查找\textit{perl}。在MS-DOS的命令窗口或者MacOS X的shell窗口中，你同样可以尝试输入\verb|perl -v|。（注意MacOS X其实是Unix系统！）
+在Windows或者Macintosh中，可以在程序目录中或者使用查找程序查找\textit{perl}。在MS-DOS的命令窗口或者MacOS X的shell窗口中，你同样可以尝试输入 \verb|perl -v|。（注意MacOS X其实是Unix系统！）
 
 \subsection{没有网络可用？}
 如果你没有网络可用，你可以把计算机给你可以联网的朋友，让他帮忙安装Perl。你也可以利用朋友的计算机，通过Zip磁盘片或者刻录一张光盘把Perl软件复制到你的计算机中。通过各种途径（咨询当地的软件商店），你也可以获得商业的含有Perl的包装光盘，此外，像O'Reilly出版的《Perl Resource Kits》等书籍中也会包含Perl的光盘。
@@ -147,7 +147,7 @@ Perl是一个应用程序，所以在你的计算机中下载和安装Perl的过
 接下来的几个小节是在特定平台上安装Perl的操作指南。
 
 \subsubsection{Unix和Linux}
-如果你的Unix或者Linux计算机中没有安装Perl，首先去寻找二进制包进行安装。在 \href{http://www.perl.com}{http://www.perl.com} 站点的下载页面上，你会看到二进制发行版的副标题。选择Unix或Linux，看看是否有适用于你的操作系统的二进制版本。有许多版本可以下载安装，一旦你下载了二进制版本，根据网站上的指南就可以把Perl安装上了。许多Linux发行版都在它们的网站上维护着最新的Perl二进制版本。比如，如果你使用的是红帽Linux系统，你需要首先确认系统的版本（使用\verb|uname -a|），然后找到对应的rpm文件，下载之后进行安装。红帽Linux系统有Perl的rpm文件，用户可以使用以下命令进行安装：
+如果你的Unix或者Linux计算机中没有安装Perl，首先去寻找二进制包进行安装。在 \href{http://www.perl.com}{http://www.perl.com} 站点的下载页面上，你会看到二进制发行版的副标题。选择Unix或Linux，看看是否有适用于你的操作系统的二进制版本。有许多版本可以下载安装，一旦你下载了二进制版本，根据网站上的指南就可以把Perl安装上了。许多Linux发行版都在它们的网站上维护着最新的Perl二进制版本。比如，如果你使用的是红帽Linux系统，你需要首先确认系统的版本（使用 \verb|uname -a|），然后找到对应的rpm文件，下载之后进行安装。红帽Linux系统有Perl的rpm文件，用户可以使用以下命令进行安装：
 
 %\noindent
 \begin{lstlisting}[language=bash]
@@ -175,7 +175,7 @@ MacPerl网站 \href{http://www.macperl.com/}{http://www.macperl.com/} 上（你�
 如何运行Perl的详细步骤，取决于你的操作系统。你安装Perl时参考的操作指南中包含了你需要知道的所有相关内容，此处我仅进行简短的总结，这对于起步来说足够了。
 
 \subsection{Unix或Linux}
-在Unix或Linux中，你通常会在命令行中运行Perl程序。如果你位于程序所在的目录中，假设这个Perl程序文件叫做\textit{this\_program}，你通过输入\verb|perl this_program|就可以运行它。如果你在另外的目录中，就必须要给出程序的路径名，比如：
+在Unix或Linux中，你通常会在命令行中运行Perl程序。如果你位于程序所在的目录中，假设这个Perl程序文件叫做\textit{this\_program}，你通过输入 \verb|perl this_program|就可以运行它。如果你在另外的目录中，就必须要给出程序的路径名，比如：
 
 \begin{lstlisting}[language=]
 perl /usr/local/bin/this_program
@@ -187,7 +187,7 @@ perl /usr/local/bin/this_program
 #!/usr/bin/perl
 \end{lstlisting}
 
-你可以通过键入\verb|which perl|来找到你系统中Perl的安装路径。
+你可以通过键入 \verb|which perl|来找到你系统中Perl的安装路径。
 
 使用\textit{chmod}命令，你可以赋予程序可执行权限。比如，你可以键入：
 
@@ -195,7 +195,7 @@ perl /usr/local/bin/this_program
 chmod 755 this_program
 \end{lstlisting}
 
-如果你的第一行设置正确，并且也使用了\textit{chmod}命令，你可以直接键入Perl程序的文件名来运行它。所以，如果你在程序所在的目录中，你可以键入\verb|./this_program|；如果程序所在的目录包含在\verb|$PATH|或者\verb|$path|环境变量中，你可以键入\verb|this_program|。\footnote{\verb|$PATH|是sh、bash和ksh等shell的环境变量；而\verb|$path|则适用于csh和tcsh。}
+如果你的第一行设置正确，并且也使用了\textit{chmod}命令，你可以直接键入Perl程序的文件名来运行它。所以，如果你在程序所在的目录中，你可以键入 \verb|./this_program|；如果程序所在的目录包含在 \verb|$PATH|或者 \verb|$path|环境变量中，你可以键入 \verb|this_program|。\footnote{ \verb|$PATH|是sh、bash和ksh等shell的环境变量；而 \verb|$path|则适用于csh和tcsh。}
 
 如果你的Perl程序没有正常运行，命令窗口中的shell会给出错误信息，这些错误信息也许会让你晕头转向。比如，我的Linux系统中的bash给出了如下所示的错误信息：
 
@@ -203,23 +203,23 @@ chmod 755 this_program
 bash: ./my_program: No such file or directory
 \end{lstlisting}
 
-出现该错误信息有两种可能：在当前目录中确实没有叫做\textit{my\_program}的程序，或者\textit{my\_program}的第一行没有给出Perl的正确路径。你需要好好检查一下，尤其是当运行来源于CPAN（参看\autoref{chap:chapteraa}）的程序时，这些程序第一行中Perl的路径往往都不相同。另外，如果你键入\verb|my_program|，可能会得到这样的错误信息：
+出现该错误信息有两种可能：在当前目录中确实没有叫做\textit{my\_program}的程序，或者\textit{my\_program}的第一行没有给出Perl的正确路径。你需要好好检查一下，尤其是当运行来源于CPAN（参看\autoref{chap:chapteraa}）的程序时，这些程序第一行中Perl的路径往往都不相同。另外，如果你键入 \verb|my_program|，可能会得到这样的错误信息：
 
 \begin{lstlisting}[language=]
 bash: my_program: command not found
 \end{lstlisting}
 
-这表示操作系统找不到该程序。但它就在当前目录中呀！问题可能出在你的\verb|$PATH|或\verb|$path|环境变量并不包含当前目录，所以系统根本就没在当前路径中寻找该程序。这种情况下，根据使用的shell不同，你需要修改\verb|$PATH|或\verb|$path|环境变量，或者键入\verb|./my_program|而非\verb|my_program|。
+这表示操作系统找不到该程序。但它就在当前目录中呀！问题可能出在你的 \verb|$PATH|或 \verb|$path|环境变量并不包含当前目录，所以系统根本就没在当前路径中寻找该程序。这种情况下，根据使用的shell不同，你需要修改 \verb|$PATH|或 \verb|$path|环境变量，或者键入 \verb|./my_program|而非 \verb|my_program|。
 
 \subsection{Macs}
 在Mac系统中，保存Perl程序时，推荐使用的方式是作为“droplets”；MacPerl文档中给出了简要的说明。基本上你只需要用MacPerl应用程序打开Perl程序，另存为时选择Droplet类型选项即可。
 
-你可以通过拖放文件到droplet上来把它作为输入文件（通过\verb|@ARGV|数组，参看\autoref{chap:chapter6}的讨论）。
+你可以通过拖放文件到droplet上来把它作为输入文件（通过 \verb|@ARGV|数组，参看\autoref{chap:chapter6}的讨论）。
 
 最新的MacOS X其实是一个Unix系统，因此你也可以通过命令行来运行Perl程序，就像前述在Unix和Linux系统中的操作那样。
 
 \subsection{Windows}
-在Windows系统中，Perl程序通常和\textit{.pl}文件名后缀相关联。在Perl安装过程中，通过修改注册表的设置实现了这种关联。有了这种关联，在MS-DOS命令窗口中，你就可以键入\verb|this_program|或者\verb|perl this_program.pl|来运行\textit{this\_program.pl}程序。Windows中有一个PATH变量，存储着系统从中寻找程序的文件夹，在Perl安装过程中，该变量被修改以便收录包含Perl应用程序的文件夹的路径，该路径通常为\textit{c:$\backslash$perl}。如果你想运行一个Perl程序，该程序所在的文件夹并为被PATH变量所收录，你可以键入该程序的完整路径，如\textit{perl c:$\backslash$windows$\backslash$desktop$\backslash$my\_program.pl}.
+在Windows系统中，Perl程序通常和\textit{.pl}文件名后缀相关联。在Perl安装过程中，通过修改注册表的设置实现了这种关联。有了这种关联，在MS-DOS命令窗口中，你就可以键入 \verb|this_program|或者 \verb|perl this_program.pl|来运行\textit{this\_program.pl}程序。Windows中有一个PATH变量，存储着系统从中寻找程序的文件夹，在Perl安装过程中，该变量被修改以便收录包含Perl应用程序的文件夹的路径，该路径通常为\textit{c:$\backslash$perl}。如果你想运行一个Perl程序，该程序所在的文件夹并为被PATH变量所收录，你可以键入该程序的完整路径，如\textit{perl c:$\backslash$windows$\backslash$desktop$\backslash$my\_program.pl}.
 
 \section{文本编辑器}
 既然已经设置好了计算机，也安装上了Perl，接下来就需要选择一个文本编辑器并学习其基本知识了。文本编辑器用来键入程序等文档，并把文档内容保存到文件中。所以要编写一个Perl程序，你需要使用一个文本编辑器。尽管某些文本编辑器学习起来比较容易，但如果以前你从未使用过文本编辑器，学习起来工作量也是不小的。下面是一些最为流行的编辑器，此处依然按照操作系统的类型进行介绍：
