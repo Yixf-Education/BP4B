@@ -41,14 +41,14 @@ if( $dna =~ /CT[CGT]ACG/ ) {
 \hspace*{2em}在Perl中，模式 \verb=(a|b)=（读作： \verb|a or b|）匹配字符串 \verb|a|或者字符串 \verb|b|。
 \end{adjustwidth}
 
-\textcolor{red}{\textit{串联}}
+\textcolor{red}{\textit{连接}}
 \begin{adjustwidth}{4em}{}
-\hspace*{2em}这是显而易见的一点。在Perl中，字符串 \verb|ab|表示字符 \verb|a|后面跟着（与之相串联）字符 \verb|b|。
+\hspace*{2em}这是显而易见的一点。在Perl中，字符串 \verb|ab|表示字符 \verb|a|后面跟着（与之相连接）字符 \verb|b|。
 \end{adjustwidth}
 
-使用小括号进行分组是非常重要的：它们也是元字符。所以，举个例子，字符串 \verb|(abc|def)z*x|匹配 \verb|abcx|、 \verb|abczx|、 \verb|abczzx|、 \verb|defx|、 \verb|defzx|、 \verb|defzzzzzx|等等这样的字符串。用白话来说，它匹配的是 \verb|abc|或者 \verb|def|后面跟着零个或多个 \verb|z|，并且最后是一个 \verb|x|。这个例子把分组、择一、闭包和串联的理念整合在了一起。通过把这三个基础的理念整合起来，就可以真正看出正则表达式的强大之处来了。
+使用小括号进行分组是非常重要的：它们也是元字符。所以，举个例子，字符串 \verb|(abc|def)z*x|匹配 \verb|abcx|、 \verb|abczx|、 \verb|abczzx|、 \verb|defx|、 \verb|defzx|、 \verb|defzzzzzx|等等这样的字符串。用白话来说，它匹配的是 \verb|abc|或者 \verb|def|后面跟着零个或多个 \verb|z|，并且最后是一个 \verb|x|。这个例子把分组、择一、闭包和连接的理念整合在了一起。通过把这三个基础的理念整合起来，就可以真正看出正则表达式的强大之处来了。
 
-Perl有许多正则表达式的特性。它们基本上都是我们刚刚提到的三个基础理念——重复、择一和串联的快捷键而已。比如，前面演示的字符集使用择一可以写成 \verb|(C|G|T)|。另外一个常见的特性是点号，它可以用来表示除换行符以外的任意字符。所以 \verb|ACG.*GCA|表示任意起始于 \verb|ACG|、终止于 \verb|GCA|的DNA。用白话来说，它读作： \verb|ACG|后面跟着0或多个字符，然后是 \verb|GCA|。
+Perl有许多正则表达式的特性。它们基本上都是我们刚刚提到的三个基础理念——重复、择一和连接的快捷键而已。比如，前面演示的字符集使用择一可以写成 \verb|(C|G|T)|。另外一个常见的特性是点号，它可以用来表示除换行符以外的任意字符。所以 \verb|ACG.*GCA|表示任意起始于 \verb|ACG|、终止于 \verb|GCA|的DNA。用白话来说，它读作： \verb|ACG|后面跟着0或多个字符，然后是 \verb|GCA|。
 
 在Perl中，正则表达式通常被用作模式匹配界定符的正斜线包裹在中间。查看 \verb|m//|的文档（或者是\autoref{chap:chapterab}），其中包括影响正则表达式行为的一些选项。就像你将看到的那样，正则表达式也被用在许多Perl的内置命令中。
 

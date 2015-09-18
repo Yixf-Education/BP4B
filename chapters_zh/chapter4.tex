@@ -8,7 +8,7 @@
 
 \begin{itemize}
   \item 把DNA转录成RNA
-  \item 把序列串联起来
+  \item 把序列连接起来
   \item 获取反向互补序列
   \item 从文件中读取序列
 \end{itemize}
@@ -233,13 +233,13 @@ print $DNA;
 \subsubsection{退出}
 最后， \verb|exit;|语句告诉计算机退出程序。在Perl语言中，在程序的最后并不需要 \verb|exit|语句，一旦运行到结尾，程序就会自动退出。但放上这么一个语句也没什么坏处，还明确表示了程序的结束。你会看到，在正常结束之前，程序会因为某些错误而退出，所以 \verb|exit|语句还是非常有用的。
 
-\section{串联DNA片段}
-现在，我们对\autoref{exam:example4.1}进行简单的修改，来演示一下如何把DNA片段串联起来。所谓串联指的就是把一个东西附加在另一个东西的结尾上。生物学家都知道，在生物学实验室中把DNA序列连接起来是非常常见的工作，比如把克隆插入到细胞载体中，或者在基因表达过程中把剪切的外显子连接起来。许多生物信息学的软件包都能够进行这样的工作，因此这里只是把它作为一个实例来讲解。
+\section{连接DNA片段}
+现在，我们对\autoref{exam:example4.1}进行简单的修改，来演示一下如何把DNA片段连接起来。所谓连接指的就是把一个东西附加在另一个东西的结尾上。生物学家都知道，在生物学实验室中把DNA序列连接起来是非常常见的工作，比如把克隆插入到细胞载体中，或者在基因表达过程中把剪切的外显子连接起来。许多生物信息学的软件包都能够进行这样的工作，因此这里只是把它作为一个实例来讲解。
 
 \autoref{exam:example4.2}演示了关于字符串、变量和打印输出语句的更多内容。
 
-%\textbf{例4-2：串联DNA}
-\lstinputlisting[label=exam:example4.2,caption={例4.2：串联DNA}]{./scripts/example4-2.pl}
+%\textbf{例4-2：连接DNA}
+\lstinputlisting[label=exam:example4.2,caption={例4.2：连接DNA}]{./scripts/example4-2.pl}
 
 就像你看到的那样，这里有三个变量： \verb|$DNA1|、 \verb|$DNA2|和 \verb|$DNA3|。为了对运行过程进行说明，我添加了一些 \verb|print|语句，这样打印到计算机屏幕上的输出就不仅仅是一个接一个DNA片段了，看起来会更加明了一些。
 
@@ -277,7 +277,7 @@ print $DNA2, "\n\n";
 
 注意在 \verb|print|语句中还有逗号。逗号分隔列表中的项目， \verb|print|语句会打印输出列表中的所有项目。仅此而已。
 
-现在，让我们看一下把 \verb|$DNA1|和 \verb|$DNA2|两个DNA片段串联到 \verb|$DNA3|变量中的语句吧：
+现在，让我们看一下把 \verb|$DNA1|和 \verb|$DNA2|两个DNA片段连接到 \verb|$DNA3|变量中的语句吧：
 
 \begin{lstlisting}
 $DNA3 = "$DNA1$DNA2"; 
@@ -285,15 +285,15 @@ $DNA3 = "$DNA1$DNA2";
 
 对 \verb|$DNA3|进行的赋值是一个典型的赋值操作，就像你在\autoref{exam:example4.1}看到的那样，变量名后面跟着=符号，=后则是要被赋予的值。
 
-赋值语句中右边的值是包裹在双引号中的字符串。双引号会把字符串中的变量替换为变量的值，这叫做字符串内插。\footnote{有时在字符串内插时你会加上大括号。大括号可以确保变量名不会与双引号中的字符串混在一起。举个例子，你有一个叫做 \verb|$prefix|的变量，想把它内插到 \verb|I am $prefixinterested|字符串中，Perl可能无法识别出这个变量，而把它错当成一个并不存在的 \verb|$prefixinterested|变量。但是 \verb|I am ${prefix}interested|对于Perl来说就没有歧义了。}所以事实上，此处的字符串就是 \verb|$DNA1|变量中的DNA，后面紧跟着 \verb|$DNA2|变量中的DNA。两个DNA片段串联后就被赋值给了变量 \verb|$DNA3|。
+赋值语句中右边的值是包裹在双引号中的字符串。双引号会把字符串中的变量替换为变量的值，这叫做字符串内插。\footnote{有时在字符串内插时你会加上大括号。大括号可以确保变量名不会与双引号中的字符串混在一起。举个例子，你有一个叫做 \verb|$prefix|的变量，想把它内插到 \verb|I am $prefixinterested|字符串中，Perl可能无法识别出这个变量，而把它错当成一个并不存在的 \verb|$prefixinterested|变量。但是 \verb|I am ${prefix}interested|对于Perl来说就没有歧义了。}所以事实上，此处的字符串就是 \verb|$DNA1|变量中的DNA，后面紧跟着 \verb|$DNA2|变量中的DNA。两个DNA片段连接后就被赋值给了变量 \verb|$DNA3|。
 
-在把串联结果赋值给 \verb|$DNA3|变量后，你把她打印出来，后面跟着一个空行：
+在把连接结果赋值给 \verb|$DNA3|变量后，你把她打印出来，后面跟着一个空行：
 
 \begin{lstlisting}
 print "$DNA3\n\n";
 \end{lstlisting}
 
-Perl的中心思想之一就是“There's more than one way to do it.”（不只一种方法来做一件事）。所以，程序的下面一部分就演示了串联两个字符串的另外一种办法——使用点操作符。当把点操作符放在两个字符串中间时，它会把原来的两个字符串串联起来，产生一个新的字符串。所以这一行：
+Perl的中心思想之一就是“There's more than one way to do it.”（不只一种方法来做一件事）。所以，程序的下面一部分就演示了连接两个字符串的另外一种办法——使用点操作符。当把点操作符放在两个字符串中间时，它会把原来的两个字符串连接起来，产生一个新的字符串。所以这一行：
 
 \begin{lstlisting}
 $DNA3 = $DNA1 . $DNA2;
@@ -305,7 +305,7 @@ $DNA3 = $DNA1 . $DNA2;
   %\includegraphics[width=1cm]{note.png}
 %}
 %\noindent
-%在计算机语言中，一个操作符需要一些参数——在这个例子中，就是 \verb|$DNA1|和 \verb|$DNA2|字符串——并对它们进行操作，然后返回一个值——在这个例子中，就是串联后保存在 \verb|$DNA3|变量中的字符串。算术中最为常见的操作符加减乘除都是需要两个数字作为参数、并返回一个数字作为返回值的操作符。
+%在计算机语言中，一个操作符需要一些参数——在这个例子中，就是 \verb|$DNA1|和 \verb|$DNA2|字符串——并对它们进行操作，然后返回一个值——在这个例子中，就是连接后保存在 \verb|$DNA3|变量中的字符串。算术中最为常见的操作符加减乘除都是需要两个数字作为参数、并返回一个数字作为返回值的操作符。
 %\end{adjustwidth}
 
 \vspace{-5pt}
@@ -313,14 +313,15 @@ $DNA3 = $DNA1 . $DNA2;
   \begin{center}
     \begin{tabu*} to 0.85\linewidth {|X[1,r,m]X[15,l,m]|}
       \tabucline{-}
-      \includegraphics[width=1cm]{note.png} & 在计算机语言中，一个操作符需要一些参数——在这个例子中，就是 \verb|$DNA1|和 \verb|$DNA2|字符串——并对它们进行操作，然后返回一个值——在这个例子中，就是串联后保存在 \verb|$DNA3|变量中的字符串。算术中最为常见的操作符加减乘除都是需要两个数字作为参数、并返回一个数字作为返回值的操作符。\\
+      \includegraphics[width=1cm]{note.png} &
+      在计算机语言中，一个操作符需要一些参数——在这个例子中，就是 \verb|$DNA1|和 \verb|$DNA2|字符串——并对它们进行操作，然后返回一个值——在这个例子中，就是连接后保存在 \verb|$DNA3|变量中的字符串。算术中最为常见的操作符加减乘除都是需要两个数字作为参数、并返回一个数字作为返回值的操作符。\\
       \tabucline{-}
     \end{tabu*}
   \end{center}
 \end{table}
 \vspace{-20pt}
 
-最后，来练习一下Perl的另外一种方法，仅仅使用 \verb|print|语句就可以完成同样的串联任务：
+最后，来练习一下Perl的另外一种方法，仅仅使用 \verb|print|语句就可以完成同样的连接任务：
 
 \begin{lstlisting}
 print $DNA1, $DNA2, "\n";
