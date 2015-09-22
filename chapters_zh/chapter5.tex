@@ -846,8 +846,8 @@ $t = ($dna =~ tr/Tt//);
 \textit{tr}函数返回它在字符串中找到的特定字符的数目，并且，如果替换的字符集为空的话，原始的字符串并不会被改变。这使得它成为一个很好的字符计数器。注意使用\textit{tr}时，你需要同时指定大小写字母。此外，因为\textit{tr}并不接受字符组，所以没法直接对非碱基的字符进行计数。但是，你可以这样做：
 
 \begin{lstlisting}
-$basecount = ($dna = ~ tr/ACGTacgt//);
-$nonbase = (length $dna) - $basecount)
+$basecount = ($dna =~ tr/ACGTacgt//);
+$nonbase = (length $dna) - $basecount;
 \end{lstlisting}
 
 使用\textit{tr}的这个程序要比\autoref{exam:example5.7}中使用\textit{while}循环的程序运行快。

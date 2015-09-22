@@ -842,8 +842,8 @@ $t = ($dna =~ tr/Tt//);
 The \textit{tr} function returns the count of the specified characters it finds in the string, and if the set of replacement characters is empty, it doesn't actually change the string. So it makes a good character counter. Notice that with \textit{tr}, you have to spell out the upper- and lowercase letters. Also, because \textit{tr} doesn't accept character classes, there's no direct way to count nonbases. You could, however, say: 
 
 \begin{lstlisting}
-$basecount = ($dna = ~ tr/ACGTacgt//);
-$nonbase = (length $dna) - $basecount)
+$basecount = ($dna =~ tr/ACGTacgt//);
+$nonbase = (length $dna) - $basecount;
 \end{lstlisting}
 
 The program however, runs faster using \textit{tr} than using the \textit{while} loops of \autoref{exam:example5.7}.
