@@ -751,7 +751,7 @@ For more help, type h cmd_letter, or run man perldebug for all docs.
   DB<1> 
 \end{lstlisting}
 
-这有点不容易阅读，但是你看到了调试器命令的简要总结。你也可以使用 \verb|h h|命令，它会给出数屏的大量信息。 \verb=| h=命令会逐页显示这些信息，一次只显示一页。调试器命令开头的管道会把输出传送给分页器，当你敲击键盘上的空格键时分页器通常会显示下一页。你最好尝试一下。但是现在，我们要把精力集中在少数几个最有用的命令上。但是别忘了，键入 \verb|h|\textit{命令}会给你关于命令的帮助信息。
+这有点不容易阅读，但是你看到了调试器命令的简要总结。你也可以使用 \verb|h h|命令，它会给出数屏的大量信息。 \verb=| h h=命令会逐页显示这些信息，一次只显示一页。调试器命令开头的管道会把输出传送给分页器，当你敲击键盘上的空格键时分页器通常会显示下一页。你最好尝试一下。但是现在，我们要把精力集中在少数几个最有用的命令上。但是别忘了，键入 \verb|h|\textit{命令}会给你关于命令的帮助信息。
 
 \subsubsection{使用调试器逐步运行语句}
 言归正传。当你启动调试器后，你会看到它停止在真实的Perl代码的第一行上：
@@ -979,7 +979,7 @@ if ($receivingcommittment) {
 
 让我们看看 \verb|$receivingcommittment|变量。
 
-这里是实现的一种方法。我们在第40行设置断点。键入 \verb|b 41|，然后键入 \verb|c|继续，程序会持续运行直到它到达第40行：
+这里是实现的一种方法。我们在第41行设置断点。键入 \verb|b 41|，然后键入 \verb|c|继续，程序会持续运行直到它到达第41行：
 
 \begin{lstlisting}
   DB<10> b 41
@@ -1023,6 +1023,7 @@ Debugged program terminated.  Use q to quit or R to restart,
 use o inhibit_exit to avoid stopping after program termination,
 h q, h R or h o to get additional info.
   DB<13> 
+\end{lstlisting}
 
 等一会！当 \verb|$receivingcommittment|改变值时， \verb|W|命令应该有所显示。但是当使用 \verb|c|命令继续运行程序时，它直接运行到了结尾，这意味着 \verb|$receivingcommittment|的值从没有发生改变。所以让我们重新运行程序，并在改变值的那一行暂停一下：
 
